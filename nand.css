@@ -19,3 +19,9 @@
     user-select: none;
     cursor: default;
 }
+
+#controls
+{
+    z-index: 101;
+    position: absolute;
+}
