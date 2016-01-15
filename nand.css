@@ -9,7 +9,7 @@
     cursor: pointer;
 }
 
-.output
+.intermediate, .output
 {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
