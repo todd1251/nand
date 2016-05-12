@@ -3,16 +3,10 @@
 <head>
     <title>NAND</title>
     <link rel="stylesheet" href="nand.css">
-    <script type="text/javascript" src="lib/raphael-min.js"></script>
-    <script type="text/javascript" src="lib/c.min.js"></script>
+    <script type="text/javascript" src="lib/paper-full.min.js"></script>
     <script type="text/javascript" src="nand-min.js"></script>
 </head>
 <body>
-    <div id="controls">
-        <button id="backward">&laquo; Backward</button>
-        <span id="time">t = 0</span>
-        <button id="forward">Forward &raquo;</button>
-        <input id="slider" type="range" value="0" max="0" min="0" />
-    </div>
+    <canvas id="paper" resize></canvas>
 </body>
 </html>
