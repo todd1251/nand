@@ -7764,6 +7764,12 @@ var _elm_lang$svg$Svg_Attributes$accumulate = _elm_lang$virtual_dom$VirtualDom$a
 var _elm_lang$svg$Svg_Attributes$accelerate = _elm_lang$virtual_dom$VirtualDom$attribute('accelerate');
 var _elm_lang$svg$Svg_Attributes$accentHeight = _elm_lang$virtual_dom$VirtualDom$attribute('accent-height');
 var _user$project$Main$view = function (model) {
+	var width = A2(_elm_lang$core$Debug$log, 'width', 100);
+	var wireWidth = A2(_elm_lang$core$Debug$log, 'wireWidth', width / 5);
+	var gateWidth = A2(_elm_lang$core$Debug$log, 'gateWidth', width - (wireWidth / 2));
+	var height = A2(_elm_lang$core$Debug$log, 'height', (gateWidth * 4) / 5);
+	var halfHeight = A2(_elm_lang$core$Debug$log, 'halfHeight', height / 2);
+	var wideSegmentWidth = A2(_elm_lang$core$Debug$log, 'wideSegmentWidth', (width * 3) / 5);
 	return A2(
 		_elm_lang$svg$Svg$svg,
 		_elm_lang$core$Native_List.fromArray(
@@ -7778,7 +7784,66 @@ var _user$project$Main$view = function (model) {
 				_elm_lang$svg$Svg$path,
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$svg$Svg_Attributes$d('M 10 10 h 40 a 25 25 0 0 1 25 25 a 25 25 0 0 1 -25 25 h -40 v -50 Z'),
+						_elm_lang$svg$Svg_Attributes$transform('translate(100, 100)'),
+						_elm_lang$svg$Svg_Attributes$d(
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'M 0 0 ',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								'h ',
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									_elm_lang$core$Basics$toString(wideSegmentWidth),
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										' A ',
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											_elm_lang$core$Basics$toString(halfHeight),
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												' ',
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													_elm_lang$core$Basics$toString(halfHeight),
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														' 0 0 1 ',
+														A2(
+															_elm_lang$core$Basics_ops['++'],
+															_elm_lang$core$Basics$toString(gateWidth),
+															A2(
+																_elm_lang$core$Basics_ops['++'],
+																' ',
+																A2(
+																	_elm_lang$core$Basics_ops['++'],
+																	_elm_lang$core$Basics$toString(halfHeight),
+																	A2(
+																		_elm_lang$core$Basics_ops['++'],
+																		' A ',
+																		A2(
+																			_elm_lang$core$Basics_ops['++'],
+																			_elm_lang$core$Basics$toString(halfHeight),
+																			A2(
+																				_elm_lang$core$Basics_ops['++'],
+																				' ',
+																				A2(
+																					_elm_lang$core$Basics_ops['++'],
+																					_elm_lang$core$Basics$toString(halfHeight),
+																					A2(
+																						_elm_lang$core$Basics_ops['++'],
+																						' 0 0 1 ',
+																						A2(
+																							_elm_lang$core$Basics_ops['++'],
+																							_elm_lang$core$Basics$toString(wideSegmentWidth),
+																							A2(
+																								_elm_lang$core$Basics_ops['++'],
+																								' ',
+																								A2(
+																									_elm_lang$core$Basics_ops['++'],
+																									_elm_lang$core$Basics$toString(height),
+																									A2(_elm_lang$core$Basics_ops['++'], ' H 0 ', ' Z'))))))))))))))))))))),
 						_elm_lang$svg$Svg_Attributes$stroke('black'),
 						_elm_lang$svg$Svg_Attributes$strokeWidth('2'),
 						_elm_lang$svg$Svg_Attributes$fill('none')
