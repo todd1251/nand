@@ -7773,6 +7773,10 @@ var _user$project$Main$view = function (model) {
 	var indentWidth = A2(_elm_lang$core$Debug$log, 'indentWidth', gateWidth / 7);
 	var wideSegmentWidth = A2(_elm_lang$core$Debug$log, 'wideSegmentWidth', (width * 3) / 5);
 	var strokeWidth = A2(_elm_lang$core$Debug$log, 'strokeWidth', width / 25);
+	var offset = A2(_elm_lang$core$Debug$log, 'offset', strokeWidth * 2);
+	var right = A2(_elm_lang$core$Debug$log, 'right', indentWidth - offset);
+	var left = A2(_elm_lang$core$Debug$log, 'left', ((strokeWidth / 2) - offset) * 1.2);
+	var hack = A2(_elm_lang$core$Debug$log, 'hack', strokeWidth / 10);
 	return A2(
 		_elm_lang$svg$Svg$svg,
 		_elm_lang$core$Native_List.fromArray(
@@ -7960,7 +7964,7 @@ var _user$project$Main$view = function (model) {
 																											' A ',
 																											A2(
 																												_elm_lang$core$Basics_ops['++'],
-																												_elm_lang$core$Basics$toString(4 * indentWidth),
+																												_elm_lang$core$Basics$toString(2 * indentWidth),
 																												A2(
 																													_elm_lang$core$Basics_ops['++'],
 																													' ',
@@ -8058,7 +8062,7 @@ var _user$project$Main$view = function (model) {
 																											' A ',
 																											A2(
 																												_elm_lang$core$Basics_ops['++'],
-																												_elm_lang$core$Basics$toString(4 * indentWidth),
+																												_elm_lang$core$Basics$toString(2 * indentWidth),
 																												A2(
 																													_elm_lang$core$Basics_ops['++'],
 																													' ',
@@ -8082,32 +8086,122 @@ var _user$project$Main$view = function (model) {
 																																			' Z',
 																																			A2(
 																																				_elm_lang$core$Basics_ops['++'],
-																																				' M -5 ',
+																																				' M ',
 																																				A2(
 																																					_elm_lang$core$Basics_ops['++'],
-																																					_elm_lang$core$Basics$toString(0),
+																																					_elm_lang$core$Basics$toString(left + hack),
 																																					A2(
 																																						_elm_lang$core$Basics_ops['++'],
-																																						' A ',
+																																						' ',
 																																						A2(
 																																							_elm_lang$core$Basics_ops['++'],
-																																							_elm_lang$core$Basics$toString(4 * indentWidth),
+																																							_elm_lang$core$Basics$toString(0),
 																																							A2(
 																																								_elm_lang$core$Basics_ops['++'],
-																																								' ',
+																																								' L ',
 																																								A2(
 																																									_elm_lang$core$Basics_ops['++'],
-																																									_elm_lang$core$Basics$toString(height),
+																																									_elm_lang$core$Basics$toString(left),
 																																									A2(
 																																										_elm_lang$core$Basics_ops['++'],
-																																										' 0 0 1 ',
+																																										' ',
 																																										A2(
 																																											_elm_lang$core$Basics_ops['++'],
-																																											_elm_lang$core$Basics$toString(-5),
+																																											_elm_lang$core$Basics$toString(0),
 																																											A2(
 																																												_elm_lang$core$Basics_ops['++'],
-																																												' ',
-																																												_elm_lang$core$Basics$toString(height)))))))))))))))))))))))))))))))))))))))),
+																																												' A ',
+																																												A2(
+																																													_elm_lang$core$Basics_ops['++'],
+																																													_elm_lang$core$Basics$toString(right),
+																																													A2(
+																																														_elm_lang$core$Basics_ops['++'],
+																																														' ',
+																																														A2(
+																																															_elm_lang$core$Basics_ops['++'],
+																																															_elm_lang$core$Basics$toString(halfHeight),
+																																															A2(
+																																																_elm_lang$core$Basics_ops['++'],
+																																																' 0 0 1 ',
+																																																A2(
+																																																	_elm_lang$core$Basics_ops['++'],
+																																																	_elm_lang$core$Basics$toString(left),
+																																																	A2(
+																																																		_elm_lang$core$Basics_ops['++'],
+																																																		' ',
+																																																		A2(
+																																																			_elm_lang$core$Basics_ops['++'],
+																																																			_elm_lang$core$Basics$toString(height),
+																																																			A2(
+																																																				_elm_lang$core$Basics_ops['++'],
+																																																				' L ',
+																																																				A2(
+																																																					_elm_lang$core$Basics_ops['++'],
+																																																					_elm_lang$core$Basics$toString(left + hack),
+																																																					A2(
+																																																						_elm_lang$core$Basics_ops['++'],
+																																																						' ',
+																																																						A2(
+																																																							_elm_lang$core$Basics_ops['++'],
+																																																							_elm_lang$core$Basics$toString(height),
+																																																							A2(
+																																																								_elm_lang$core$Basics_ops['++'],
+																																																								' A ',
+																																																								A2(
+																																																									_elm_lang$core$Basics_ops['++'],
+																																																									_elm_lang$core$Basics$toString(right),
+																																																									A2(
+																																																										_elm_lang$core$Basics_ops['++'],
+																																																										' ',
+																																																										A2(
+																																																											_elm_lang$core$Basics_ops['++'],
+																																																											_elm_lang$core$Basics$toString(halfHeight),
+																																																											A2(
+																																																												_elm_lang$core$Basics_ops['++'],
+																																																												' 0 0 0 ',
+																																																												A2(
+																																																													_elm_lang$core$Basics_ops['++'],
+																																																													_elm_lang$core$Basics$toString(left),
+																																																													A2(
+																																																														_elm_lang$core$Basics_ops['++'],
+																																																														' ',
+																																																														A2(
+																																																															_elm_lang$core$Basics_ops['++'],
+																																																															_elm_lang$core$Basics$toString(0),
+																																																															A2(
+																																																																_elm_lang$core$Basics_ops['++'],
+																																																																' L ',
+																																																																A2(
+																																																																	_elm_lang$core$Basics_ops['++'],
+																																																																	_elm_lang$core$Basics$toString(left + hack),
+																																																																	A2(
+																																																																		_elm_lang$core$Basics_ops['++'],
+																																																																		' ',
+																																																																		A2(
+																																																																			_elm_lang$core$Basics_ops['++'],
+																																																																			_elm_lang$core$Basics$toString(0),
+																																																																			A2(
+																																																																				_elm_lang$core$Basics_ops['++'],
+																																																																				' A ',
+																																																																				A2(
+																																																																					_elm_lang$core$Basics_ops['++'],
+																																																																					_elm_lang$core$Basics$toString(right),
+																																																																					A2(
+																																																																						_elm_lang$core$Basics_ops['++'],
+																																																																						' ',
+																																																																						A2(
+																																																																							_elm_lang$core$Basics_ops['++'],
+																																																																							_elm_lang$core$Basics$toString(halfHeight),
+																																																																							A2(
+																																																																								_elm_lang$core$Basics_ops['++'],
+																																																																								' 0 0 1 ',
+																																																																								A2(
+																																																																									_elm_lang$core$Basics_ops['++'],
+																																																																									_elm_lang$core$Basics$toString(left),
+																																																																									A2(
+																																																																										_elm_lang$core$Basics_ops['++'],
+																																																																										' ',
+																																																																										_elm_lang$core$Basics$toString(height)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))),
 						_elm_lang$svg$Svg_Attributes$stroke('black'),
 						_elm_lang$svg$Svg_Attributes$strokeWidth(
 						_elm_lang$core$Basics$toString(strokeWidth)),
