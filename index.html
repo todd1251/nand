@@ -7770,6 +7770,7 @@ var _user$project$Main$view = function (model) {
 	var height = A2(_elm_lang$core$Debug$log, 'height', (gateWidth * 4) / 5);
 	var halfHeight = A2(_elm_lang$core$Debug$log, 'halfHeight', height / 2);
 	var quarterHeight = A2(_elm_lang$core$Debug$log, 'quarterHeight', height / 4);
+	var threeQuarterHeight = A2(_elm_lang$core$Debug$log, 'threeQuarterHeight', height - quarterHeight);
 	var narrowSegmentWidth = A2(_elm_lang$core$Debug$log, 'narrowSegmentWidth', (gateWidth * 2) / 5);
 	var indentWidth = A2(_elm_lang$core$Debug$log, 'indentWidth', gateWidth / 7);
 	var inverterRadius = A2(_elm_lang$core$Debug$log, 'inverterRadius', gateWidth / 12);
@@ -8055,10 +8056,10 @@ var _user$project$Main$view = function (model) {
 						_elm_lang$svg$Svg_Attributes$x1(
 						_elm_lang$core$Basics$toString(0 - wireWidth)),
 						_elm_lang$svg$Svg_Attributes$y1(
-						_elm_lang$core$Basics$toString(height - quarterHeight)),
+						_elm_lang$core$Basics$toString(threeQuarterHeight)),
 						_elm_lang$svg$Svg_Attributes$x2('0'),
 						_elm_lang$svg$Svg_Attributes$y2(
-						_elm_lang$core$Basics$toString(height - quarterHeight)),
+						_elm_lang$core$Basics$toString(threeQuarterHeight)),
 						_elm_lang$svg$Svg_Attributes$stroke('black'),
 						_elm_lang$svg$Svg_Attributes$strokeWidth(
 						_elm_lang$core$Basics$toString(wireStrokeWidth)),
@@ -8183,10 +8184,29 @@ var _user$project$Main$view = function (model) {
 						_elm_lang$svg$Svg_Attributes$x1(
 						_elm_lang$core$Basics$toString(0 - wireWidth)),
 						_elm_lang$svg$Svg_Attributes$y1(
-						_elm_lang$core$Basics$toString(halfHeight)),
+						_elm_lang$core$Basics$toString(quarterHeight)),
 						_elm_lang$svg$Svg_Attributes$x2('0'),
 						_elm_lang$svg$Svg_Attributes$y2(
-						_elm_lang$core$Basics$toString(halfHeight)),
+						_elm_lang$core$Basics$toString(quarterHeight)),
+						_elm_lang$svg$Svg_Attributes$stroke('black'),
+						_elm_lang$svg$Svg_Attributes$strokeWidth(
+						_elm_lang$core$Basics$toString(wireStrokeWidth)),
+						_elm_lang$svg$Svg_Attributes$fill('none')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[])),
+				A2(
+				_elm_lang$svg$Svg$line,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$svg$Svg_Attributes$transform('translate(200, 200)'),
+						_elm_lang$svg$Svg_Attributes$x1(
+						_elm_lang$core$Basics$toString(0 - wireWidth)),
+						_elm_lang$svg$Svg_Attributes$y1(
+						_elm_lang$core$Basics$toString(threeQuarterHeight)),
+						_elm_lang$svg$Svg_Attributes$x2('0'),
+						_elm_lang$svg$Svg_Attributes$y2(
+						_elm_lang$core$Basics$toString(threeQuarterHeight)),
 						_elm_lang$svg$Svg_Attributes$stroke('black'),
 						_elm_lang$svg$Svg_Attributes$strokeWidth(
 						_elm_lang$core$Basics$toString(wireStrokeWidth)),
