@@ -7764,6 +7764,11 @@ var _elm_lang$svg$Svg_Attributes$accumulate = _elm_lang$virtual_dom$VirtualDom$a
 var _elm_lang$svg$Svg_Attributes$accelerate = _elm_lang$virtual_dom$VirtualDom$attribute('accelerate');
 var _elm_lang$svg$Svg_Attributes$accentHeight = _elm_lang$virtual_dom$VirtualDom$attribute('accent-height');
 var _user$project$Main$view = function (model) {
+	var wireStrokeWidth = 1;
+	var strokeWidth = 1;
+	var offset = A2(_elm_lang$core$Debug$log, 'offset', strokeWidth * 2.75);
+	var left = A2(_elm_lang$core$Debug$log, 'left', ((strokeWidth / 2) - offset) * 1.5);
+	var hack = A2(_elm_lang$core$Debug$log, 'hack', strokeWidth / 10);
 	var width = A2(_elm_lang$core$Debug$log, 'width', 50);
 	var wireWidth = A2(_elm_lang$core$Debug$log, 'wireWidth', width / 5);
 	var gateWidth = A2(_elm_lang$core$Debug$log, 'gateWidth', width - (wireWidth / 2));
@@ -7773,16 +7778,11 @@ var _user$project$Main$view = function (model) {
 	var threeQuarterHeight = A2(_elm_lang$core$Debug$log, 'threeQuarterHeight', height - quarterHeight);
 	var narrowSegmentWidth = A2(_elm_lang$core$Debug$log, 'narrowSegmentWidth', (gateWidth * 2) / 5);
 	var indentWidth = A2(_elm_lang$core$Debug$log, 'indentWidth', gateWidth / 7);
+	var right = A2(_elm_lang$core$Debug$log, 'right', indentWidth - offset);
 	var inverterRadius = A2(_elm_lang$core$Debug$log, 'inverterRadius', gateWidth / 12);
 	var diameter = A2(_elm_lang$core$Debug$log, 'diameter', inverterRadius * 2);
 	var wideSegmentWidth = A2(_elm_lang$core$Debug$log, 'wideSegmentWidth', (width * 3) / 5);
 	var bufferOffset = A2(_elm_lang$core$Debug$log, 'bufferOffset', (gateWidth - wideSegmentWidth) / 2);
-	var strokeWidth = A2(_elm_lang$core$Debug$log, 'strokeWidth', width / 25);
-	var wireStrokeWidth = A2(_elm_lang$core$Debug$log, 'wireStrokeWidth', strokeWidth / 2);
-	var offset = A2(_elm_lang$core$Debug$log, 'offset', strokeWidth * 2.75);
-	var right = A2(_elm_lang$core$Debug$log, 'right', indentWidth - offset);
-	var left = A2(_elm_lang$core$Debug$log, 'left', ((strokeWidth / 2) - offset) * 1.5);
-	var hack = A2(_elm_lang$core$Debug$log, 'hack', strokeWidth / 10);
 	return A2(
 		_elm_lang$svg$Svg$svg,
 		_elm_lang$core$Native_List.fromArray(
@@ -8302,6 +8302,26 @@ var _user$project$Main$view = function (model) {
 				_elm_lang$core$Native_List.fromArray(
 					[])),
 				A2(
+				_elm_lang$svg$Svg$line,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$svg$Svg_Attributes$transform('translate(100, 300)'),
+						_elm_lang$svg$Svg_Attributes$x1(
+						_elm_lang$core$Basics$toString(gateWidth)),
+						_elm_lang$svg$Svg_Attributes$y1(
+						_elm_lang$core$Basics$toString(halfHeight)),
+						_elm_lang$svg$Svg_Attributes$x2(
+						_elm_lang$core$Basics$toString(gateWidth + wireWidth)),
+						_elm_lang$svg$Svg_Attributes$y2(
+						_elm_lang$core$Basics$toString(halfHeight)),
+						_elm_lang$svg$Svg_Attributes$stroke('black'),
+						_elm_lang$svg$Svg_Attributes$strokeWidth(
+						_elm_lang$core$Basics$toString(wireStrokeWidth)),
+						_elm_lang$svg$Svg_Attributes$fill('none')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[])),
+				A2(
 				_elm_lang$svg$Svg$path,
 				_elm_lang$core$Native_List.fromArray(
 					[
@@ -8403,13 +8423,53 @@ var _user$project$Main$view = function (model) {
 				_elm_lang$svg$Svg$line,
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$svg$Svg_Attributes$transform('translate(100, 300)'),
+						_elm_lang$svg$Svg_Attributes$transform('translate(200, 300)'),
 						_elm_lang$svg$Svg_Attributes$x1(
-						_elm_lang$core$Basics$toString(gateWidth)),
+						_elm_lang$core$Basics$toString(0 - wireWidth)),
+						_elm_lang$svg$Svg_Attributes$y1(
+						_elm_lang$core$Basics$toString(quarterHeight)),
+						_elm_lang$svg$Svg_Attributes$x2(
+						_elm_lang$core$Basics$toString(indentWidth)),
+						_elm_lang$svg$Svg_Attributes$y2(
+						_elm_lang$core$Basics$toString(quarterHeight)),
+						_elm_lang$svg$Svg_Attributes$stroke('black'),
+						_elm_lang$svg$Svg_Attributes$strokeWidth(
+						_elm_lang$core$Basics$toString(wireStrokeWidth)),
+						_elm_lang$svg$Svg_Attributes$fill('none')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[])),
+				A2(
+				_elm_lang$svg$Svg$line,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$svg$Svg_Attributes$transform('translate(200, 300)'),
+						_elm_lang$svg$Svg_Attributes$x1(
+						_elm_lang$core$Basics$toString(0 - wireWidth)),
+						_elm_lang$svg$Svg_Attributes$y1(
+						_elm_lang$core$Basics$toString(threeQuarterHeight)),
+						_elm_lang$svg$Svg_Attributes$x2(
+						_elm_lang$core$Basics$toString(indentWidth)),
+						_elm_lang$svg$Svg_Attributes$y2(
+						_elm_lang$core$Basics$toString(threeQuarterHeight)),
+						_elm_lang$svg$Svg_Attributes$stroke('black'),
+						_elm_lang$svg$Svg_Attributes$strokeWidth(
+						_elm_lang$core$Basics$toString(wireStrokeWidth)),
+						_elm_lang$svg$Svg_Attributes$fill('none')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[])),
+				A2(
+				_elm_lang$svg$Svg$line,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$svg$Svg_Attributes$transform('translate(200, 300)'),
+						_elm_lang$svg$Svg_Attributes$x1(
+						_elm_lang$core$Basics$toString(gateWidth + (2 * inverterRadius))),
 						_elm_lang$svg$Svg_Attributes$y1(
 						_elm_lang$core$Basics$toString(halfHeight)),
 						_elm_lang$svg$Svg_Attributes$x2(
-						_elm_lang$core$Basics$toString(gateWidth + wireWidth)),
+						_elm_lang$core$Basics$toString((gateWidth + (2 * inverterRadius)) + wireWidth)),
 						_elm_lang$svg$Svg_Attributes$y2(
 						_elm_lang$core$Basics$toString(halfHeight)),
 						_elm_lang$svg$Svg_Attributes$stroke('black'),
@@ -8513,7 +8573,7 @@ var _user$project$Main$view = function (model) {
 						_elm_lang$svg$Svg_Attributes$stroke('black'),
 						_elm_lang$svg$Svg_Attributes$strokeWidth(
 						_elm_lang$core$Basics$toString(strokeWidth)),
-						_elm_lang$svg$Svg_Attributes$fill('none')
+						_elm_lang$svg$Svg_Attributes$fill('white')
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[])),
@@ -8531,67 +8591,7 @@ var _user$project$Main$view = function (model) {
 						_elm_lang$svg$Svg_Attributes$stroke('black'),
 						_elm_lang$svg$Svg_Attributes$strokeWidth(
 						_elm_lang$core$Basics$toString(strokeWidth)),
-						_elm_lang$svg$Svg_Attributes$fill('none')
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[])),
-				A2(
-				_elm_lang$svg$Svg$line,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$svg$Svg_Attributes$transform('translate(200, 300)'),
-						_elm_lang$svg$Svg_Attributes$x1(
-						_elm_lang$core$Basics$toString(0 - wireWidth)),
-						_elm_lang$svg$Svg_Attributes$y1(
-						_elm_lang$core$Basics$toString(quarterHeight)),
-						_elm_lang$svg$Svg_Attributes$x2(
-						_elm_lang$core$Basics$toString(indentWidth - (strokeWidth * 2))),
-						_elm_lang$svg$Svg_Attributes$y2(
-						_elm_lang$core$Basics$toString(quarterHeight)),
-						_elm_lang$svg$Svg_Attributes$stroke('black'),
-						_elm_lang$svg$Svg_Attributes$strokeWidth(
-						_elm_lang$core$Basics$toString(wireStrokeWidth)),
-						_elm_lang$svg$Svg_Attributes$fill('none')
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[])),
-				A2(
-				_elm_lang$svg$Svg$line,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$svg$Svg_Attributes$transform('translate(200, 300)'),
-						_elm_lang$svg$Svg_Attributes$x1(
-						_elm_lang$core$Basics$toString(0 - wireWidth)),
-						_elm_lang$svg$Svg_Attributes$y1(
-						_elm_lang$core$Basics$toString(threeQuarterHeight)),
-						_elm_lang$svg$Svg_Attributes$x2(
-						_elm_lang$core$Basics$toString(indentWidth - (strokeWidth * 2))),
-						_elm_lang$svg$Svg_Attributes$y2(
-						_elm_lang$core$Basics$toString(threeQuarterHeight)),
-						_elm_lang$svg$Svg_Attributes$stroke('black'),
-						_elm_lang$svg$Svg_Attributes$strokeWidth(
-						_elm_lang$core$Basics$toString(wireStrokeWidth)),
-						_elm_lang$svg$Svg_Attributes$fill('none')
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[])),
-				A2(
-				_elm_lang$svg$Svg$line,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$svg$Svg_Attributes$transform('translate(200, 300)'),
-						_elm_lang$svg$Svg_Attributes$x1(
-						_elm_lang$core$Basics$toString(gateWidth + (2 * inverterRadius))),
-						_elm_lang$svg$Svg_Attributes$y1(
-						_elm_lang$core$Basics$toString(halfHeight)),
-						_elm_lang$svg$Svg_Attributes$x2(
-						_elm_lang$core$Basics$toString((gateWidth + (2 * inverterRadius)) + wireWidth)),
-						_elm_lang$svg$Svg_Attributes$y2(
-						_elm_lang$core$Basics$toString(halfHeight)),
-						_elm_lang$svg$Svg_Attributes$stroke('black'),
-						_elm_lang$svg$Svg_Attributes$strokeWidth(
-						_elm_lang$core$Basics$toString(wireStrokeWidth)),
-						_elm_lang$svg$Svg_Attributes$fill('none')
+						_elm_lang$svg$Svg_Attributes$fill('white')
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[])),
