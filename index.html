@@ -8252,7 +8252,7 @@ var _user$project$Main$update = F2(
 	});
 var _user$project$Main$init = {
 	ctor: '_Tuple2',
-	_0: {width: 50, spacing: 50},
+	_0: {width: 50, spacing: 80},
 	_1: _elm_lang$core$Platform_Cmd$none
 };
 var _user$project$Main$Model = F2(
@@ -8302,8 +8302,20 @@ var _user$project$Main$view = function (model) {
 						_elm_lang$html$Html_Attributes$type$('text'),
 						_elm_lang$html$Html_Attributes$placeholder('width'),
 						_elm_lang$html$Html_Attributes$value(
-						_elm_lang$core$Basics$toString(model)),
+						_elm_lang$core$Basics$toString(model.width)),
 						_elm_lang$html$Html_Events$onInput(_user$project$Main$Width)
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[])),
+				A2(
+				_elm_lang$html$Html$input,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$type$('text'),
+						_elm_lang$html$Html_Attributes$placeholder('spacing'),
+						_elm_lang$html$Html_Attributes$value(
+						_elm_lang$core$Basics$toString(model.spacing)),
+						_elm_lang$html$Html_Events$onInput(_user$project$Main$Spacing)
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[])),
@@ -8447,7 +8459,20 @@ var _user$project$Main$view = function (model) {
 						_elm_lang$svg$Svg$path,
 						_elm_lang$core$Native_List.fromArray(
 							[
-								_elm_lang$svg$Svg_Attributes$transform('translate(200, 100)'),
+								_elm_lang$svg$Svg_Attributes$transform(
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									'translate(',
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										_elm_lang$core$Basics$toString(2 * spacing),
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											', ',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(1 * spacing),
+												')'))))),
 								_elm_lang$svg$Svg_Attributes$d(
 								A2(
 									_elm_lang$core$Basics_ops['++'],
@@ -8494,7 +8519,20 @@ var _user$project$Main$view = function (model) {
 						_elm_lang$svg$Svg$line,
 						_elm_lang$core$Native_List.fromArray(
 							[
-								_elm_lang$svg$Svg_Attributes$transform('translate(200, 100)'),
+								_elm_lang$svg$Svg_Attributes$transform(
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									'translate(',
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										_elm_lang$core$Basics$toString(2 * spacing),
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											', ',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(1 * spacing),
+												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString(0 - wireWidth)),
 								_elm_lang$svg$Svg_Attributes$y1(
@@ -8514,7 +8552,20 @@ var _user$project$Main$view = function (model) {
 						_elm_lang$svg$Svg$line,
 						_elm_lang$core$Native_List.fromArray(
 							[
-								_elm_lang$svg$Svg_Attributes$transform('translate(200, 100)'),
+								_elm_lang$svg$Svg_Attributes$transform(
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									'translate(',
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										_elm_lang$core$Basics$toString(2 * spacing),
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											', ',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(1 * spacing),
+												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString((gateWidth + wireWidth) + inverterRadius)),
 								_elm_lang$svg$Svg_Attributes$y1(
@@ -8534,7 +8585,20 @@ var _user$project$Main$view = function (model) {
 						_elm_lang$svg$Svg$circle,
 						_elm_lang$core$Native_List.fromArray(
 							[
-								_elm_lang$svg$Svg_Attributes$transform('translate(200, 100)'),
+								_elm_lang$svg$Svg_Attributes$transform(
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									'translate(',
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										_elm_lang$core$Basics$toString(2 * spacing),
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											', ',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(1 * spacing),
+												')'))))),
 								_elm_lang$svg$Svg_Attributes$cx(
 								_elm_lang$core$Basics$toString((bufferOffset + wideSegmentWidth) + inverterRadius)),
 								_elm_lang$svg$Svg_Attributes$cy(
