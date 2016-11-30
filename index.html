@@ -8220,53 +8220,72 @@ var _user$project$Main$subscriptions = function (model) {
 var _user$project$Main$update = F2(
 	function (msg, model) {
 		var _p0 = msg;
-		if (_p0.ctor === 'Width') {
-			var _p1 = _elm_lang$core$String$toFloat(_p0._0);
-			if (_p1.ctor === 'Ok') {
-				var _p2 = _p1._0;
-				return _elm_lang$core$Basics$isNaN(_p2) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{width: _p2}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			} else {
-				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-			}
-		} else {
-			var _p3 = _elm_lang$core$String$toFloat(_p0._0);
-			if (_p3.ctor === 'Ok') {
-				var _p4 = _p3._0;
-				return _elm_lang$core$Basics$isNaN(_p4) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{spacing: _p4}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			} else {
-				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-			}
+		switch (_p0.ctor) {
+			case 'Width':
+				var _p1 = _elm_lang$core$String$toFloat(_p0._0);
+				if (_p1.ctor === 'Ok') {
+					var _p2 = _p1._0;
+					return _elm_lang$core$Basics$isNaN(_p2) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{width: _p2}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			case 'HorizontalSpacing':
+				var _p3 = _elm_lang$core$String$toFloat(_p0._0);
+				if (_p3.ctor === 'Ok') {
+					var _p4 = _p3._0;
+					return _elm_lang$core$Basics$isNaN(_p4) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{horizontalSpacing: _p4}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			default:
+				var _p5 = _elm_lang$core$String$toFloat(_p0._0);
+				if (_p5.ctor === 'Ok') {
+					var _p6 = _p5._0;
+					return _elm_lang$core$Basics$isNaN(_p6) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{verticalSpacing: _p6}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
 		}
 	});
 var _user$project$Main$init = {
 	ctor: '_Tuple2',
-	_0: {width: 50, spacing: 80},
+	_0: {width: 50, horizontalSpacing: 100, verticalSpacing: 100},
 	_1: _elm_lang$core$Platform_Cmd$none
 };
-var _user$project$Main$Model = F2(
-	function (a, b) {
-		return {width: a, spacing: b};
+var _user$project$Main$Model = F3(
+	function (a, b, c) {
+		return {width: a, horizontalSpacing: b, verticalSpacing: c};
 	});
-var _user$project$Main$Spacing = function (a) {
-	return {ctor: 'Spacing', _0: a};
+var _user$project$Main$VerticalSpacing = function (a) {
+	return {ctor: 'VerticalSpacing', _0: a};
+};
+var _user$project$Main$HorizontalSpacing = function (a) {
+	return {ctor: 'HorizontalSpacing', _0: a};
 };
 var _user$project$Main$Width = function (a) {
 	return {ctor: 'Width', _0: a};
 };
 var _user$project$Main$view = function (model) {
-	var spacing = A2(_elm_lang$core$Debug$log, 'spacing', model.spacing);
+	var verticalSpacing = A2(_elm_lang$core$Debug$log, 'verticalSpacing', model.verticalSpacing);
+	var horizontalSpacing = A2(_elm_lang$core$Debug$log, 'horizontalSpacing', model.horizontalSpacing);
 	var width = A2(_elm_lang$core$Debug$log, 'width', model.width);
 	var wireWidth = A2(_elm_lang$core$Debug$log, 'wireWidth', width / 5);
 	var gateWidth = A2(_elm_lang$core$Debug$log, 'gateWidth', width - (wireWidth / 2));
@@ -8312,10 +8331,22 @@ var _user$project$Main$view = function (model) {
 				_elm_lang$core$Native_List.fromArray(
 					[
 						_elm_lang$html$Html_Attributes$type$('text'),
-						_elm_lang$html$Html_Attributes$placeholder('spacing'),
+						_elm_lang$html$Html_Attributes$placeholder('horizontalSpacing'),
 						_elm_lang$html$Html_Attributes$value(
-						_elm_lang$core$Basics$toString(model.spacing)),
-						_elm_lang$html$Html_Events$onInput(_user$project$Main$Spacing)
+						_elm_lang$core$Basics$toString(model.horizontalSpacing)),
+						_elm_lang$html$Html_Events$onInput(_user$project$Main$HorizontalSpacing)
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[])),
+				A2(
+				_elm_lang$html$Html$input,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$type$('text'),
+						_elm_lang$html$Html_Attributes$placeholder('verticalSpacing'),
+						_elm_lang$html$Html_Attributes$value(
+						_elm_lang$core$Basics$toString(model.verticalSpacing)),
+						_elm_lang$html$Html_Events$onInput(_user$project$Main$VerticalSpacing)
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[])),
@@ -8339,13 +8370,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(1 * spacing),
+										_elm_lang$core$Basics$toString(1 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(1 * spacing),
+												_elm_lang$core$Basics$toString(1 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$d(
 								A2(
@@ -8399,13 +8430,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(1 * spacing),
+										_elm_lang$core$Basics$toString(1 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(1 * spacing),
+												_elm_lang$core$Basics$toString(1 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString(0 - wireWidth)),
@@ -8432,13 +8463,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(1 * spacing),
+										_elm_lang$core$Basics$toString(1 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(1 * spacing),
+												_elm_lang$core$Basics$toString(1 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString(gateWidth + wireWidth)),
@@ -8465,13 +8496,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(2 * spacing),
+										_elm_lang$core$Basics$toString(2 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(1 * spacing),
+												_elm_lang$core$Basics$toString(1 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$d(
 								A2(
@@ -8525,13 +8556,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(2 * spacing),
+										_elm_lang$core$Basics$toString(2 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(1 * spacing),
+												_elm_lang$core$Basics$toString(1 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString(0 - wireWidth)),
@@ -8558,13 +8589,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(2 * spacing),
+										_elm_lang$core$Basics$toString(2 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(1 * spacing),
+												_elm_lang$core$Basics$toString(1 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString((gateWidth + wireWidth) + inverterRadius)),
@@ -8591,13 +8622,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(2 * spacing),
+										_elm_lang$core$Basics$toString(2 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(1 * spacing),
+												_elm_lang$core$Basics$toString(1 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$cx(
 								_elm_lang$core$Basics$toString((bufferOffset + wideSegmentWidth) + inverterRadius)),
@@ -8622,13 +8653,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(1 * spacing),
+										_elm_lang$core$Basics$toString(1 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(2 * spacing),
+												_elm_lang$core$Basics$toString(2 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$d(
 								A2(
@@ -8706,13 +8737,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(1 * spacing),
+										_elm_lang$core$Basics$toString(1 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(2 * spacing),
+												_elm_lang$core$Basics$toString(2 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString(0 - wireWidth)),
@@ -8738,13 +8769,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(1 * spacing),
+										_elm_lang$core$Basics$toString(1 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(2 * spacing),
+												_elm_lang$core$Basics$toString(2 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString(0 - wireWidth)),
@@ -8770,13 +8801,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(1 * spacing),
+										_elm_lang$core$Basics$toString(1 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(2 * spacing),
+												_elm_lang$core$Basics$toString(2 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString(gateWidth)),
@@ -8803,13 +8834,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(2 * spacing),
+										_elm_lang$core$Basics$toString(2 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(2 * spacing),
+												_elm_lang$core$Basics$toString(2 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$d(
 								A2(
@@ -8887,13 +8918,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(2 * spacing),
+										_elm_lang$core$Basics$toString(2 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(2 * spacing),
+												_elm_lang$core$Basics$toString(2 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$cx(
 								_elm_lang$core$Basics$toString(gateWidth + inverterRadius)),
@@ -8918,13 +8949,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(2 * spacing),
+										_elm_lang$core$Basics$toString(2 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(2 * spacing),
+												_elm_lang$core$Basics$toString(2 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString(0 - wireWidth)),
@@ -8950,13 +8981,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(2 * spacing),
+										_elm_lang$core$Basics$toString(2 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(2 * spacing),
+												_elm_lang$core$Basics$toString(2 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString(0 - wireWidth)),
@@ -8982,13 +9013,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(2 * spacing),
+										_elm_lang$core$Basics$toString(2 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(2 * spacing),
+												_elm_lang$core$Basics$toString(2 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString(gateWidth + (2 * inverterRadius))),
@@ -9015,13 +9046,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(1 * spacing),
+										_elm_lang$core$Basics$toString(1 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(3 * spacing),
+												_elm_lang$core$Basics$toString(3 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString(0 - wireWidth)),
@@ -9048,13 +9079,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(1 * spacing),
+										_elm_lang$core$Basics$toString(1 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(3 * spacing),
+												_elm_lang$core$Basics$toString(3 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString(0 - wireWidth)),
@@ -9081,13 +9112,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(1 * spacing),
+										_elm_lang$core$Basics$toString(1 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(3 * spacing),
+												_elm_lang$core$Basics$toString(3 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString(gateWidth)),
@@ -9114,13 +9145,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(1 * spacing),
+										_elm_lang$core$Basics$toString(1 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(3 * spacing),
+												_elm_lang$core$Basics$toString(3 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$d(
 								A2(
@@ -9225,13 +9256,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(2 * spacing),
+										_elm_lang$core$Basics$toString(2 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(3 * spacing),
+												_elm_lang$core$Basics$toString(3 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString(0 - wireWidth)),
@@ -9258,13 +9289,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(2 * spacing),
+										_elm_lang$core$Basics$toString(2 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(3 * spacing),
+												_elm_lang$core$Basics$toString(3 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString(0 - wireWidth)),
@@ -9291,13 +9322,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(2 * spacing),
+										_elm_lang$core$Basics$toString(2 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(3 * spacing),
+												_elm_lang$core$Basics$toString(3 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString(gateWidth + (2 * inverterRadius))),
@@ -9324,13 +9355,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(2 * spacing),
+										_elm_lang$core$Basics$toString(2 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(3 * spacing),
+												_elm_lang$core$Basics$toString(3 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$d(
 								A2(
@@ -9435,13 +9466,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(2 * spacing),
+										_elm_lang$core$Basics$toString(2 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(3 * spacing),
+												_elm_lang$core$Basics$toString(3 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$cx(
 								_elm_lang$core$Basics$toString(gateWidth + inverterRadius)),
@@ -9466,13 +9497,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(1 * spacing),
+										_elm_lang$core$Basics$toString(1 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(4 * spacing),
+												_elm_lang$core$Basics$toString(4 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString(0 - wireWidth)),
@@ -9499,13 +9530,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(1 * spacing),
+										_elm_lang$core$Basics$toString(1 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(4 * spacing),
+												_elm_lang$core$Basics$toString(4 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString(0 - wireWidth)),
@@ -9532,13 +9563,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(1 * spacing),
+										_elm_lang$core$Basics$toString(1 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(4 * spacing),
+												_elm_lang$core$Basics$toString(4 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString(gateWidth)),
@@ -9565,13 +9596,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(1 * spacing),
+										_elm_lang$core$Basics$toString(1 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(4 * spacing),
+												_elm_lang$core$Basics$toString(4 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$d(
 								A2(
@@ -9676,13 +9707,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(1 * spacing),
+										_elm_lang$core$Basics$toString(1 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(4 * spacing),
+												_elm_lang$core$Basics$toString(4 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$d(
 								A2(
@@ -9808,13 +9839,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(2 * spacing),
+										_elm_lang$core$Basics$toString(2 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(4 * spacing),
+												_elm_lang$core$Basics$toString(4 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$cx(
 								_elm_lang$core$Basics$toString(gateWidth + inverterRadius)),
@@ -9839,13 +9870,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(2 * spacing),
+										_elm_lang$core$Basics$toString(2 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(4 * spacing),
+												_elm_lang$core$Basics$toString(4 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString(0 - wireWidth)),
@@ -9872,13 +9903,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(2 * spacing),
+										_elm_lang$core$Basics$toString(2 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(4 * spacing),
+												_elm_lang$core$Basics$toString(4 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString(0 - wireWidth)),
@@ -9905,13 +9936,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(2 * spacing),
+										_elm_lang$core$Basics$toString(2 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(4 * spacing),
+												_elm_lang$core$Basics$toString(4 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$x1(
 								_elm_lang$core$Basics$toString(gateWidth + (2 * inverterRadius))),
@@ -9938,13 +9969,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(2 * spacing),
+										_elm_lang$core$Basics$toString(2 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(4 * spacing),
+												_elm_lang$core$Basics$toString(4 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$d(
 								A2(
@@ -10049,13 +10080,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(2 * spacing),
+										_elm_lang$core$Basics$toString(2 * horizontalSpacing),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											', ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(4 * spacing),
+												_elm_lang$core$Basics$toString(4 * verticalSpacing),
 												')'))))),
 								_elm_lang$svg$Svg_Attributes$d(
 								A2(
