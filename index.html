@@ -8249,7 +8249,7 @@ var _user$project$Main$update = F2(
 				} else {
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
-			default:
+			case 'VerticalSpacing':
 				var _p5 = _elm_lang$core$String$toFloat(_p0._0);
 				if (_p5.ctor === 'Ok') {
 					var _p6 = _p5._0;
@@ -8263,17 +8263,37 @@ var _user$project$Main$update = F2(
 				} else {
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
+			default:
+				var _p7 = _elm_lang$core$String$toFloat(_p0._0);
+				if (_p7.ctor === 'Ok') {
+					var _p8 = _p7._0;
+					return _elm_lang$core$Basics$isNaN(_p8) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{strokeWidth: _p8}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
 		}
 	});
-var _user$project$Main$init = {
-	ctor: '_Tuple2',
-	_0: {width: 50, horizontalSpacing: 100, verticalSpacing: 100},
-	_1: _elm_lang$core$Platform_Cmd$none
-};
-var _user$project$Main$Model = F3(
-	function (a, b, c) {
-		return {width: a, horizontalSpacing: b, verticalSpacing: c};
+var _user$project$Main$init = function () {
+	var defaultWidth = 50;
+	return {
+		ctor: '_Tuple2',
+		_0: {width: defaultWidth, horizontalSpacing: 100, verticalSpacing: 100, strokeWidth: defaultWidth / 25},
+		_1: _elm_lang$core$Platform_Cmd$none
+	};
+}();
+var _user$project$Main$Model = F4(
+	function (a, b, c, d) {
+		return {width: a, horizontalSpacing: b, verticalSpacing: c, strokeWidth: d};
 	});
+var _user$project$Main$StrokeWidth = function (a) {
+	return {ctor: 'StrokeWidth', _0: a};
+};
 var _user$project$Main$VerticalSpacing = function (a) {
 	return {ctor: 'VerticalSpacing', _0: a};
 };
@@ -8284,6 +8304,14 @@ var _user$project$Main$Width = function (a) {
 	return {ctor: 'Width', _0: a};
 };
 var _user$project$Main$view = function (model) {
+	var strokeWidth = A2(_elm_lang$core$Debug$log, 'strokeWidth', model.strokeWidth);
+	var wireStrokeWidth = A2(_elm_lang$core$Debug$log, 'wireStrokeWidth', strokeWidth / 2);
+	var offset = A2(
+		_elm_lang$core$Debug$log,
+		'offset',
+		A2(_elm_lang$core$Basics$max, strokeWidth, 1.5) * 2.75);
+	var left = A2(_elm_lang$core$Debug$log, 'left', (strokeWidth / 2) - offset);
+	var hack = A2(_elm_lang$core$Debug$log, 'hack', strokeWidth / 10);
 	var verticalSpacing = A2(_elm_lang$core$Debug$log, 'verticalSpacing', model.verticalSpacing);
 	var horizontalSpacing = A2(_elm_lang$core$Debug$log, 'horizontalSpacing', model.horizontalSpacing);
 	var width = A2(_elm_lang$core$Debug$log, 'width', model.width);
@@ -8295,19 +8323,11 @@ var _user$project$Main$view = function (model) {
 	var threeQuarterHeight = A2(_elm_lang$core$Debug$log, 'threeQuarterHeight', height - quarterHeight);
 	var narrowSegmentWidth = A2(_elm_lang$core$Debug$log, 'narrowSegmentWidth', (gateWidth * 2) / 5);
 	var indentWidth = A2(_elm_lang$core$Debug$log, 'indentWidth', gateWidth / 7);
+	var right = A2(_elm_lang$core$Debug$log, 'right', indentWidth - offset);
 	var inverterRadius = A2(_elm_lang$core$Debug$log, 'inverterRadius', gateWidth / 12);
 	var diameter = A2(_elm_lang$core$Debug$log, 'diameter', inverterRadius * 2);
 	var wideSegmentWidth = A2(_elm_lang$core$Debug$log, 'wideSegmentWidth', (width * 3) / 5);
 	var bufferOffset = A2(_elm_lang$core$Debug$log, 'bufferOffset', (gateWidth - wideSegmentWidth) / 2);
-	var strokeWidth = A2(_elm_lang$core$Debug$log, 'strokeWidth', width / 25);
-	var wireStrokeWidth = A2(_elm_lang$core$Debug$log, 'wireStrokeWidth', strokeWidth / 2);
-	var offset = A2(
-		_elm_lang$core$Debug$log,
-		'offset',
-		A2(_elm_lang$core$Basics$max, strokeWidth, 1.5) * 2.75);
-	var right = A2(_elm_lang$core$Debug$log, 'right', indentWidth - offset);
-	var left = A2(_elm_lang$core$Debug$log, 'left', (strokeWidth / 2) - offset);
-	var hack = A2(_elm_lang$core$Debug$log, 'hack', strokeWidth / 10);
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
@@ -8347,6 +8367,18 @@ var _user$project$Main$view = function (model) {
 						_elm_lang$html$Html_Attributes$value(
 						_elm_lang$core$Basics$toString(model.verticalSpacing)),
 						_elm_lang$html$Html_Events$onInput(_user$project$Main$VerticalSpacing)
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[])),
+				A2(
+				_elm_lang$html$Html$input,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$type$('text'),
+						_elm_lang$html$Html_Attributes$placeholder('strokeWidth'),
+						_elm_lang$html$Html_Attributes$value(
+						_elm_lang$core$Basics$toString(model.strokeWidth)),
+						_elm_lang$html$Html_Events$onInput(_user$project$Main$StrokeWidth)
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[])),
