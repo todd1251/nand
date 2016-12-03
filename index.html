@@ -8214,6 +8214,14 @@ var _elm_lang$svg$Svg_Attributes$additive = _elm_lang$virtual_dom$VirtualDom$att
 var _elm_lang$svg$Svg_Attributes$accumulate = _elm_lang$virtual_dom$VirtualDom$attribute('accumulate');
 var _elm_lang$svg$Svg_Attributes$accelerate = _elm_lang$virtual_dom$VirtualDom$attribute('accelerate');
 var _elm_lang$svg$Svg_Attributes$accentHeight = _elm_lang$virtual_dom$VirtualDom$attribute('accent-height');
+var _user$project$Main$controls = _elm_lang$core$Native_List.fromArray(
+	[
+		{ctor: '_Tuple2', _0: 'float', _1: 'left'}
+	]);
+var _user$project$Main$viewport = _elm_lang$core$Native_List.fromArray(
+	[
+		{ctor: '_Tuple2', _0: 'float', _1: 'left'}
+	]);
 var _user$project$Main$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$none;
 };
@@ -8335,57 +8343,67 @@ var _user$project$Main$view = function (model) {
 		_elm_lang$core$Native_List.fromArray(
 			[
 				A2(
-				_elm_lang$html$Html$input,
+				_elm_lang$html$Html$div,
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html_Attributes$type$('text'),
-						_elm_lang$html$Html_Attributes$placeholder('width'),
-						_elm_lang$html$Html_Attributes$value(
-						_elm_lang$core$Basics$toString(model.width)),
-						_elm_lang$html$Html_Events$onInput(_user$project$Main$Width)
+						_elm_lang$html$Html_Attributes$style(_user$project$Main$controls)
 					]),
-				_elm_lang$core$Native_List.fromArray(
-					[])),
-				A2(
-				_elm_lang$html$Html$input,
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html_Attributes$type$('text'),
-						_elm_lang$html$Html_Attributes$placeholder('horizontalSpacing'),
-						_elm_lang$html$Html_Attributes$value(
-						_elm_lang$core$Basics$toString(model.horizontalSpacing)),
-						_elm_lang$html$Html_Events$onInput(_user$project$Main$HorizontalSpacing)
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[])),
-				A2(
-				_elm_lang$html$Html$input,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$type$('text'),
-						_elm_lang$html$Html_Attributes$placeholder('verticalSpacing'),
-						_elm_lang$html$Html_Attributes$value(
-						_elm_lang$core$Basics$toString(model.verticalSpacing)),
-						_elm_lang$html$Html_Events$onInput(_user$project$Main$VerticalSpacing)
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[])),
-				A2(
-				_elm_lang$html$Html$input,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$type$('text'),
-						_elm_lang$html$Html_Attributes$placeholder('strokeWidth'),
-						_elm_lang$html$Html_Attributes$value(
-						_elm_lang$core$Basics$toString(model.strokeWidth)),
-						_elm_lang$html$Html_Events$onInput(_user$project$Main$StrokeWidth)
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[])),
+						A2(
+						_elm_lang$html$Html$input,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$type$('text'),
+								_elm_lang$html$Html_Attributes$placeholder('width'),
+								_elm_lang$html$Html_Attributes$value(
+								_elm_lang$core$Basics$toString(model.width)),
+								_elm_lang$html$Html_Events$onInput(_user$project$Main$Width)
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[])),
+						A2(
+						_elm_lang$html$Html$input,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$type$('text'),
+								_elm_lang$html$Html_Attributes$placeholder('horizontalSpacing'),
+								_elm_lang$html$Html_Attributes$value(
+								_elm_lang$core$Basics$toString(model.horizontalSpacing)),
+								_elm_lang$html$Html_Events$onInput(_user$project$Main$HorizontalSpacing)
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[])),
+						A2(
+						_elm_lang$html$Html$input,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$type$('text'),
+								_elm_lang$html$Html_Attributes$placeholder('verticalSpacing'),
+								_elm_lang$html$Html_Attributes$value(
+								_elm_lang$core$Basics$toString(model.verticalSpacing)),
+								_elm_lang$html$Html_Events$onInput(_user$project$Main$VerticalSpacing)
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[])),
+						A2(
+						_elm_lang$html$Html$input,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$type$('text'),
+								_elm_lang$html$Html_Attributes$placeholder('strokeWidth'),
+								_elm_lang$html$Html_Attributes$value(
+								_elm_lang$core$Basics$toString(model.strokeWidth)),
+								_elm_lang$html$Html_Events$onInput(_user$project$Main$StrokeWidth)
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[]))
+					])),
 				A2(
 				_elm_lang$svg$Svg$svg,
 				_elm_lang$core$Native_List.fromArray(
 					[
+						_elm_lang$html$Html_Attributes$style(_user$project$Main$viewport),
 						_elm_lang$svg$Svg_Attributes$width('800'),
 						_elm_lang$svg$Svg_Attributes$height('800'),
 						_elm_lang$svg$Svg_Attributes$viewBox('0 0 800 800')
