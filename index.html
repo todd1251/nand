@@ -8237,7 +8237,10 @@ var _user$project$Main$update = F2(
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
-							{width: _p2}),
+							{
+								width: _p2,
+								horizontalSpacing: A2(_elm_lang$core$Basics$max, _p2 * 1.5, model.horizontalSpacing)
+							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
