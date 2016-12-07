@@ -8239,7 +8239,8 @@ var _user$project$Main$update = F2(
 							model,
 							{
 								width: _p2,
-								horizontalSpacing: A2(_elm_lang$core$Basics$max, _p2 * 1.5, model.horizontalSpacing)
+								horizontalSpacing: A2(_elm_lang$core$Basics$max, _p2 * 1.5, model.horizontalSpacing),
+								verticalSpacing: A2(_elm_lang$core$Basics$max, _p2 * 1.5, model.verticalSpacing)
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
@@ -8254,7 +8255,10 @@ var _user$project$Main$update = F2(
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
-							{horizontalSpacing: _p4}),
+							{
+								width: A2(_elm_lang$core$Basics$min, model.width, model.horizontalSpacing / 1.5),
+								horizontalSpacing: _p4
+							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
@@ -8268,7 +8272,10 @@ var _user$project$Main$update = F2(
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
-							{verticalSpacing: _p6}),
+							{
+								width: A2(_elm_lang$core$Basics$min, model.width, model.verticalSpacing / 1.5),
+								verticalSpacing: _p6
+							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
