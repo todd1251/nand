@@ -4,6 +4,7 @@ html, body {
     overflow: hidden;
 }
 
+/* FIXME: should use a class */
 svg {
     position: fixed;
     left: 0;
