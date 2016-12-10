@@ -9079,10 +9079,12 @@ var _user$project$Main$update = F2(
 		}
 	});
 var _user$project$Main$init = function (flags) {
-	var defaultWidth = 50;
+	var defaultWidth = 100;
+	var defaultHorizontalSpacing = defaultWidth * 2;
+	var defaultVerticalSpacing = defaultWidth * 1.5;
 	return {
 		ctor: '_Tuple2',
-		_0: {windowWidth: flags.width, windowHeight: flags.height, width: defaultWidth, horizontalSpacing: 100, verticalSpacing: 100, strokeWidth: defaultWidth / 25},
+		_0: {windowWidth: flags.width, windowHeight: flags.height, width: defaultWidth, horizontalSpacing: defaultHorizontalSpacing, verticalSpacing: defaultVerticalSpacing, strokeWidth: defaultWidth / 25},
 		_1: _elm_lang$core$Platform_Cmd$none
 	};
 };
