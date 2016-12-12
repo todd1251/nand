@@ -9002,12 +9002,16 @@ var _user$project$Main$update = F2(
 	function (msg, model) {
 		var _p0 = msg;
 		switch (_p0.ctor) {
+			case 'DefaultWindowSize':
+				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'WindowResized':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{windowWidth: _p0._0, windowHeight: _p0._1}),
+						{
+							windowSize: A2(_elm_lang$core$Debug$log, 'windowSize', _p0._0)
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Width':
@@ -9078,23 +9082,9 @@ var _user$project$Main$update = F2(
 				}
 		}
 	});
-var _user$project$Main$init = function (flags) {
-	var defaultWidth = 100;
-	var defaultHorizontalSpacing = defaultWidth * 2;
-	var defaultVerticalSpacing = defaultWidth * 1.5;
-	return {
-		ctor: '_Tuple2',
-		_0: {windowWidth: flags.width, windowHeight: flags.height, width: defaultWidth, horizontalSpacing: defaultHorizontalSpacing, verticalSpacing: defaultVerticalSpacing, strokeWidth: defaultWidth / 25},
-		_1: _elm_lang$core$Platform_Cmd$none
-	};
-};
-var _user$project$Main$Flags = F2(
-	function (a, b) {
-		return {width: a, height: b};
-	});
-var _user$project$Main$Model = F6(
-	function (a, b, c, d, e, f) {
-		return {windowWidth: a, windowHeight: b, width: c, horizontalSpacing: d, verticalSpacing: e, strokeWidth: f};
+var _user$project$Main$Model = F5(
+	function (a, b, c, d, e) {
+		return {windowSize: a, width: b, horizontalSpacing: c, verticalSpacing: d, strokeWidth: e};
 	});
 var _user$project$Main$StrokeWidth = function (a) {
 	return {ctor: 'StrokeWidth', _0: a};
@@ -9109,40 +9099,31 @@ var _user$project$Main$Width = function (a) {
 	return {ctor: 'Width', _0: a};
 };
 var _user$project$Main$view = function (model) {
-	var strokeWidth = A2(_elm_lang$core$Debug$log, 'strokeWidth', model.strokeWidth);
-	var wireStrokeWidth = A2(_elm_lang$core$Debug$log, 'wireStrokeWidth', strokeWidth / 2);
-	var offset = A2(
-		_elm_lang$core$Debug$log,
-		'offset',
-		A2(_elm_lang$core$Basics$max, strokeWidth, 1.5) * 2.75);
-	var left = A2(_elm_lang$core$Debug$log, 'left', (strokeWidth / 2) - offset);
-	var hack = A2(_elm_lang$core$Debug$log, 'hack', strokeWidth / 10);
-	var verticalSpacing = A2(_elm_lang$core$Debug$log, 'verticalSpacing', model.verticalSpacing);
-	var horizontalSpacing = A2(_elm_lang$core$Debug$log, 'horizontalSpacing', model.horizontalSpacing);
-	var width = A2(_elm_lang$core$Debug$log, 'width', model.width);
-	var wireWidth = A2(_elm_lang$core$Debug$log, 'wireWidth', width / 5);
-	var gateWidth = A2(_elm_lang$core$Debug$log, 'gateWidth', width - (wireWidth / 2));
-	var height = A2(_elm_lang$core$Debug$log, 'height', (gateWidth * 4) / 5);
-	var halfHeight = A2(_elm_lang$core$Debug$log, 'halfHeight', height / 2);
-	var quarterHeight = A2(_elm_lang$core$Debug$log, 'quarterHeight', height / 4);
-	var threeQuarterHeight = A2(_elm_lang$core$Debug$log, 'threeQuarterHeight', height - quarterHeight);
-	var fullHeight = A2(_elm_lang$core$Debug$log, 'fullHeight', (3 * model.verticalSpacing) + height);
-	var offsetTop = A2(
-		_elm_lang$core$Debug$log,
-		'offsetTop',
-		(_elm_lang$core$Basics$toFloat(model.windowHeight) / 2) - (fullHeight / 2));
-	var narrowSegmentWidth = A2(_elm_lang$core$Debug$log, 'narrowSegmentWidth', (gateWidth * 2) / 5);
-	var indentWidth = A2(_elm_lang$core$Debug$log, 'indentWidth', gateWidth / 7);
-	var right = A2(_elm_lang$core$Debug$log, 'right', indentWidth - offset);
-	var inverterRadius = A2(_elm_lang$core$Debug$log, 'inverterRadius', gateWidth / 12);
-	var diameter = A2(_elm_lang$core$Debug$log, 'diameter', inverterRadius * 2);
-	var wideSegmentWidth = A2(_elm_lang$core$Debug$log, 'wideSegmentWidth', (width * 3) / 5);
-	var bufferOffset = A2(_elm_lang$core$Debug$log, 'bufferOffset', (gateWidth - wideSegmentWidth) / 2);
-	var fullWidth = A2(_elm_lang$core$Debug$log, 'fullWidth', (1 * model.horizontalSpacing) + width);
-	var offsetLeft = A2(
-		_elm_lang$core$Debug$log,
-		'offsetLeft',
-		(_elm_lang$core$Basics$toFloat(model.windowWidth) / 2) - (fullWidth / 2));
+	var strokeWidth = model.strokeWidth;
+	var wireStrokeWidth = strokeWidth / 2;
+	var offset = A2(_elm_lang$core$Basics$max, strokeWidth, 1.5) * 2.75;
+	var left = (strokeWidth / 2) - offset;
+	var hack = strokeWidth / 10;
+	var verticalSpacing = model.verticalSpacing;
+	var horizontalSpacing = model.horizontalSpacing;
+	var width = model.width;
+	var wireWidth = width / 5;
+	var gateWidth = width - (wireWidth / 2);
+	var height = (gateWidth * 4) / 5;
+	var halfHeight = height / 2;
+	var quarterHeight = height / 4;
+	var threeQuarterHeight = height - quarterHeight;
+	var fullHeight = (3 * model.verticalSpacing) + height;
+	var offsetTop = (_elm_lang$core$Basics$toFloat(model.windowSize.height) / 2) - (fullHeight / 2);
+	var narrowSegmentWidth = (gateWidth * 2) / 5;
+	var indentWidth = gateWidth / 7;
+	var right = indentWidth - offset;
+	var inverterRadius = gateWidth / 12;
+	var diameter = inverterRadius * 2;
+	var wideSegmentWidth = (width * 3) / 5;
+	var bufferOffset = (gateWidth - wideSegmentWidth) / 2;
+	var fullWidth = (1 * model.horizontalSpacing) + width;
+	var offsetLeft = (_elm_lang$core$Basics$toFloat(model.windowSize.width) / 2) - (fullWidth / 2);
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
@@ -11155,31 +11136,41 @@ var _user$project$Main$view = function (model) {
 					]))
 			]));
 };
-var _user$project$Main$WindowResized = F2(
-	function (a, b) {
-		return {ctor: 'WindowResized', _0: a, _1: b};
-	});
+var _user$project$Main$WindowResized = function (a) {
+	return {ctor: 'WindowResized', _0: a};
+};
 var _user$project$Main$subscriptions = function (model) {
 	return _elm_lang$window$Window$resizes(
 		function (size) {
-			return A2(_user$project$Main$WindowResized, size.width, size.height);
+			return _user$project$Main$WindowResized(size);
 		});
 };
+var _user$project$Main$DefaultWindowSize = {ctor: 'DefaultWindowSize'};
+var _user$project$Main$init = function () {
+	var defaultWidth = 100;
+	var defaultHorizontalSpacing = defaultWidth * 2;
+	var defaultVerticalSpacing = defaultWidth * 1.5;
+	return {
+		ctor: '_Tuple2',
+		_0: {
+			windowSize: {width: 800, height: 600},
+			width: defaultWidth,
+			horizontalSpacing: defaultHorizontalSpacing,
+			verticalSpacing: defaultVerticalSpacing,
+			strokeWidth: defaultWidth / 25
+		},
+		_1: A3(
+			_elm_lang$core$Task$perform,
+			function (x) {
+				return _user$project$Main$DefaultWindowSize;
+			},
+			_user$project$Main$WindowResized,
+			_elm_lang$window$Window$size)
+	};
+}();
 var _user$project$Main$main = {
-	main: _elm_lang$html$Html_App$programWithFlags(
-		{init: _user$project$Main$init, view: _user$project$Main$view, update: _user$project$Main$update, subscriptions: _user$project$Main$subscriptions}),
-	flags: A2(
-		_elm_lang$core$Json_Decode$andThen,
-		A2(_elm_lang$core$Json_Decode_ops[':='], 'height', _elm_lang$core$Json_Decode$int),
-		function (height) {
-			return A2(
-				_elm_lang$core$Json_Decode$andThen,
-				A2(_elm_lang$core$Json_Decode_ops[':='], 'width', _elm_lang$core$Json_Decode$int),
-				function (width) {
-					return _elm_lang$core$Json_Decode$succeed(
-						{height: height, width: width});
-				});
-		})
+	main: _elm_lang$html$Html_App$program(
+		{init: _user$project$Main$init, view: _user$project$Main$view, update: _user$project$Main$update, subscriptions: _user$project$Main$subscriptions})
 };
 
 var Elm = {};
