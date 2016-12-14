@@ -4,6 +4,19 @@ html, body {
     overflow: hidden;
 }
 
+.controls {
+    margin-left: 1.5em;
+    width: 1px;
+}
+
+.controls label, .controls input {
+    float: left;
+}
+
+.controls label {
+    margin-top: 1.5em;
+}
+
 /* FIXME: should use a class */
 svg {
     position: fixed;

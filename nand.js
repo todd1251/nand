@@ -9009,9 +9009,7 @@ var _user$project$Main$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{
-							windowSize: A2(_elm_lang$core$Debug$log, 'windowSize', _p0._0)
-						}),
+						{windowSize: _p0._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Width':
@@ -9066,7 +9064,7 @@ var _user$project$Main$update = F2(
 				} else {
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
-			default:
+			case 'StrokeWidth':
 				var _p7 = _elm_lang$core$String$toFloat(_p0._0);
 				if (_p7.ctor === 'Ok') {
 					var _p8 = _p7._0;
@@ -9080,12 +9078,29 @@ var _user$project$Main$update = F2(
 				} else {
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
+			default:
+				var _p9 = _elm_lang$core$String$toFloat(_p0._0);
+				if (_p9.ctor === 'Ok') {
+					var _p10 = _p9._0;
+					return _elm_lang$core$Basics$isNaN(_p10) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{zoom: _p10}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
 		}
 	});
-var _user$project$Main$Model = F5(
-	function (a, b, c, d, e) {
-		return {windowSize: a, width: b, horizontalSpacing: c, verticalSpacing: d, strokeWidth: e};
+var _user$project$Main$Model = F6(
+	function (a, b, c, d, e, f) {
+		return {windowSize: a, width: b, horizontalSpacing: c, verticalSpacing: d, strokeWidth: e, zoom: f};
 	});
+var _user$project$Main$Zoom = function (a) {
+	return {ctor: 'Zoom', _0: a};
+};
 var _user$project$Main$StrokeWidth = function (a) {
 	return {ctor: 'StrokeWidth', _0: a};
 };
@@ -9133,7 +9148,9 @@ var _user$project$Main$view = function (model) {
 				A2(
 				_elm_lang$html$Html$div,
 				_elm_lang$core$Native_List.fromArray(
-					[]),
+					[
+						_elm_lang$html$Html_Attributes$class('controls')
+					]),
 				_elm_lang$core$Native_List.fromArray(
 					[
 						A2(
@@ -9283,6 +9300,43 @@ var _user$project$Main$view = function (model) {
 								_elm_lang$html$Html_Events$onInput(_user$project$Main$StrokeWidth)
 							]),
 						_elm_lang$core$Native_List.fromArray(
+							[])),
+						A2(
+						_elm_lang$html$Html$label,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$for('zoom')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('Zoom')
+							])),
+						A2(
+						_elm_lang$html$Html$input,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$id('zoom'),
+								_elm_lang$html$Html_Attributes$type$('range'),
+								_elm_lang$html$Html_Attributes$min('0.1'),
+								_elm_lang$html$Html_Attributes$max('10'),
+								_elm_lang$html$Html_Attributes$step('0.1'),
+								_elm_lang$html$Html_Attributes$value(
+								_elm_lang$core$Basics$toString(model.zoom)),
+								_elm_lang$html$Html_Events$onInput(_user$project$Main$Zoom)
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[])),
+						A2(
+						_elm_lang$html$Html$input,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$type$('text'),
+								_elm_lang$html$Html_Attributes$placeholder('zoom'),
+								_elm_lang$html$Html_Attributes$value(
+								_elm_lang$core$Basics$toString(model.zoom)),
+								_elm_lang$html$Html_Events$onInput(_user$project$Main$Zoom)
+							]),
+						_elm_lang$core$Native_List.fromArray(
 							[]))
 					])),
 				A2(
@@ -9292,1847 +9346,1863 @@ var _user$project$Main$view = function (model) {
 				_elm_lang$core$Native_List.fromArray(
 					[
 						A2(
-						_elm_lang$svg$Svg$path,
+						_elm_lang$svg$Svg$g,
 						_elm_lang$core$Native_List.fromArray(
 							[
 								_elm_lang$svg$Svg_Attributes$transform(
 								A2(
 									_elm_lang$core$Basics_ops['++'],
-									'translate(',
+									'translate(0, 0) scale(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (0 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$d(
+										_elm_lang$core$Basics$toString(model.zoom),
+										')')))
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
 								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'M ',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(bufferOffset),
+								_elm_lang$svg$Svg$path,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
 										A2(
 											_elm_lang$core$Basics_ops['++'],
-											' 0',
+											'translate(',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												' L ',
+												_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
 												A2(
 													_elm_lang$core$Basics_ops['++'],
-													_elm_lang$core$Basics$toString(bufferOffset + wideSegmentWidth),
+													', ',
 													A2(
 														_elm_lang$core$Basics_ops['++'],
-														' ',
+														_elm_lang$core$Basics$toString(offsetTop + (0 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$d(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'M ',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(bufferOffset),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													' 0',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														' L ',
 														A2(
 															_elm_lang$core$Basics_ops['++'],
-															_elm_lang$core$Basics$toString(halfHeight),
+															_elm_lang$core$Basics$toString(bufferOffset + wideSegmentWidth),
 															A2(
 																_elm_lang$core$Basics_ops['++'],
-																' L ',
+																' ',
 																A2(
 																	_elm_lang$core$Basics_ops['++'],
-																	_elm_lang$core$Basics$toString(bufferOffset),
+																	_elm_lang$core$Basics$toString(halfHeight),
 																	A2(
 																		_elm_lang$core$Basics_ops['++'],
-																		' ',
+																		' L ',
 																		A2(
 																			_elm_lang$core$Basics_ops['++'],
-																			_elm_lang$core$Basics$toString(height),
-																			' Z')))))))))))),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(strokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$line,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
+																			_elm_lang$core$Basics$toString(bufferOffset),
+																			A2(
+																				_elm_lang$core$Basics_ops['++'],
+																				' ',
+																				A2(
+																					_elm_lang$core$Basics_ops['++'],
+																					_elm_lang$core$Basics$toString(height),
+																					' Z')))))))))))),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(strokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
 								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
+								_elm_lang$svg$Svg$line,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
 										A2(
 											_elm_lang$core$Basics_ops['++'],
-											', ',
+											'translate(',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (0 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$x1(
-								_elm_lang$core$Basics$toString(0 - wireWidth)),
-								_elm_lang$svg$Svg_Attributes$y1(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$x2(
-								_elm_lang$core$Basics$toString(bufferOffset)),
-								_elm_lang$svg$Svg_Attributes$y2(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(wireStrokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$line,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (0 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$x1(
-								_elm_lang$core$Basics$toString(gateWidth + wireWidth)),
-								_elm_lang$svg$Svg_Attributes$y1(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$x2(
-								_elm_lang$core$Basics$toString((bufferOffset + narrowSegmentWidth) + wireWidth)),
-								_elm_lang$svg$Svg_Attributes$y2(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(wireStrokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$path,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (0 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$d(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'M ',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(bufferOffset),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											' 0',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												' L ',
+												_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
 												A2(
 													_elm_lang$core$Basics_ops['++'],
-													_elm_lang$core$Basics$toString(bufferOffset + wideSegmentWidth),
+													', ',
 													A2(
 														_elm_lang$core$Basics_ops['++'],
-														' ',
+														_elm_lang$core$Basics$toString(offsetTop + (0 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$x1(
+										_elm_lang$core$Basics$toString(0 - wireWidth)),
+										_elm_lang$svg$Svg_Attributes$y1(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$x2(
+										_elm_lang$core$Basics$toString(bufferOffset)),
+										_elm_lang$svg$Svg_Attributes$y2(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(wireStrokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$line,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (0 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$x1(
+										_elm_lang$core$Basics$toString(gateWidth + wireWidth)),
+										_elm_lang$svg$Svg_Attributes$y1(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$x2(
+										_elm_lang$core$Basics$toString((bufferOffset + narrowSegmentWidth) + wireWidth)),
+										_elm_lang$svg$Svg_Attributes$y2(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(wireStrokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$path,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (0 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$d(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'M ',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(bufferOffset),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													' 0',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														' L ',
 														A2(
 															_elm_lang$core$Basics_ops['++'],
-															_elm_lang$core$Basics$toString(halfHeight),
+															_elm_lang$core$Basics$toString(bufferOffset + wideSegmentWidth),
 															A2(
 																_elm_lang$core$Basics_ops['++'],
-																' L ',
+																' ',
 																A2(
 																	_elm_lang$core$Basics_ops['++'],
-																	_elm_lang$core$Basics$toString(bufferOffset),
+																	_elm_lang$core$Basics$toString(halfHeight),
 																	A2(
 																		_elm_lang$core$Basics_ops['++'],
-																		' ',
+																		' L ',
 																		A2(
 																			_elm_lang$core$Basics_ops['++'],
-																			_elm_lang$core$Basics$toString(height),
-																			' Z')))))))))))),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(strokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$line,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
+																			_elm_lang$core$Basics$toString(bufferOffset),
+																			A2(
+																				_elm_lang$core$Basics_ops['++'],
+																				' ',
+																				A2(
+																					_elm_lang$core$Basics_ops['++'],
+																					_elm_lang$core$Basics$toString(height),
+																					' Z')))))))))))),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(strokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
 								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
+								_elm_lang$svg$Svg$line,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
 										A2(
 											_elm_lang$core$Basics_ops['++'],
-											', ',
+											'translate(',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (0 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$x1(
-								_elm_lang$core$Basics$toString(0 - wireWidth)),
-								_elm_lang$svg$Svg_Attributes$y1(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$x2(
-								_elm_lang$core$Basics$toString(bufferOffset)),
-								_elm_lang$svg$Svg_Attributes$y2(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(wireStrokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$line,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (0 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$x1(
-								_elm_lang$core$Basics$toString((gateWidth + wireWidth) + inverterRadius)),
-								_elm_lang$svg$Svg_Attributes$y1(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$x2(
-								_elm_lang$core$Basics$toString(bufferOffset + wideSegmentWidth)),
-								_elm_lang$svg$Svg_Attributes$y2(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(wireStrokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$circle,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (0 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$cx(
-								_elm_lang$core$Basics$toString((bufferOffset + wideSegmentWidth) + inverterRadius)),
-								_elm_lang$svg$Svg_Attributes$cy(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$r(
-								_elm_lang$core$Basics$toString(inverterRadius)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(strokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('white')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$path,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (1 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$d(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'M 0 0',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										' H ',
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											_elm_lang$core$Basics$toString(wideSegmentWidth),
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												' A ',
+												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
 												A2(
 													_elm_lang$core$Basics_ops['++'],
-													_elm_lang$core$Basics$toString(narrowSegmentWidth),
+													', ',
 													A2(
 														_elm_lang$core$Basics_ops['++'],
-														' ',
+														_elm_lang$core$Basics$toString(offsetTop + (0 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$x1(
+										_elm_lang$core$Basics$toString(0 - wireWidth)),
+										_elm_lang$svg$Svg_Attributes$y1(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$x2(
+										_elm_lang$core$Basics$toString(bufferOffset)),
+										_elm_lang$svg$Svg_Attributes$y2(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(wireStrokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$line,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (0 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$x1(
+										_elm_lang$core$Basics$toString((gateWidth + wireWidth) + inverterRadius)),
+										_elm_lang$svg$Svg_Attributes$y1(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$x2(
+										_elm_lang$core$Basics$toString(bufferOffset + wideSegmentWidth)),
+										_elm_lang$svg$Svg_Attributes$y2(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(wireStrokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$circle,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (0 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$cx(
+										_elm_lang$core$Basics$toString((bufferOffset + wideSegmentWidth) + inverterRadius)),
+										_elm_lang$svg$Svg_Attributes$cy(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$r(
+										_elm_lang$core$Basics$toString(inverterRadius)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(strokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('white')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$path,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (1 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$d(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'M 0 0',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												' H ',
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													_elm_lang$core$Basics$toString(wideSegmentWidth),
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														' A ',
 														A2(
 															_elm_lang$core$Basics_ops['++'],
 															_elm_lang$core$Basics$toString(narrowSegmentWidth),
 															A2(
 																_elm_lang$core$Basics_ops['++'],
-																' 0 0 1 ',
+																' ',
 																A2(
 																	_elm_lang$core$Basics_ops['++'],
-																	_elm_lang$core$Basics$toString(gateWidth),
+																	_elm_lang$core$Basics$toString(narrowSegmentWidth),
 																	A2(
 																		_elm_lang$core$Basics_ops['++'],
-																		' ',
+																		' 0 0 1 ',
 																		A2(
 																			_elm_lang$core$Basics_ops['++'],
-																			_elm_lang$core$Basics$toString(halfHeight),
+																			_elm_lang$core$Basics$toString(gateWidth),
 																			A2(
 																				_elm_lang$core$Basics_ops['++'],
-																				' A ',
+																				' ',
 																				A2(
 																					_elm_lang$core$Basics_ops['++'],
-																					_elm_lang$core$Basics$toString(narrowSegmentWidth),
+																					_elm_lang$core$Basics$toString(halfHeight),
 																					A2(
 																						_elm_lang$core$Basics_ops['++'],
-																						' ',
+																						' A ',
 																						A2(
 																							_elm_lang$core$Basics_ops['++'],
 																							_elm_lang$core$Basics$toString(narrowSegmentWidth),
 																							A2(
 																								_elm_lang$core$Basics_ops['++'],
-																								' 0 0 1 ',
+																								' ',
 																								A2(
 																									_elm_lang$core$Basics_ops['++'],
-																									_elm_lang$core$Basics$toString(wideSegmentWidth),
+																									_elm_lang$core$Basics$toString(narrowSegmentWidth),
 																									A2(
 																										_elm_lang$core$Basics_ops['++'],
-																										' ',
+																										' 0 0 1 ',
 																										A2(
 																											_elm_lang$core$Basics_ops['++'],
-																											_elm_lang$core$Basics$toString(height),
-																											A2(_elm_lang$core$Basics_ops['++'], ' H 0 ', ' Z'))))))))))))))))))))),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(strokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$line,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
+																											_elm_lang$core$Basics$toString(wideSegmentWidth),
+																											A2(
+																												_elm_lang$core$Basics_ops['++'],
+																												' ',
+																												A2(
+																													_elm_lang$core$Basics_ops['++'],
+																													_elm_lang$core$Basics$toString(height),
+																													A2(_elm_lang$core$Basics_ops['++'], ' H 0 ', ' Z'))))))))))))))))))))),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(strokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
 								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
+								_elm_lang$svg$Svg$line,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
 										A2(
 											_elm_lang$core$Basics_ops['++'],
-											', ',
+											'translate(',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (1 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$x1(
-								_elm_lang$core$Basics$toString(0 - wireWidth)),
-								_elm_lang$svg$Svg_Attributes$y1(
-								_elm_lang$core$Basics$toString(quarterHeight)),
-								_elm_lang$svg$Svg_Attributes$x2('0'),
-								_elm_lang$svg$Svg_Attributes$y2(
-								_elm_lang$core$Basics$toString(quarterHeight)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(wireStrokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$line,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (1 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$x1(
-								_elm_lang$core$Basics$toString(0 - wireWidth)),
-								_elm_lang$svg$Svg_Attributes$y1(
-								_elm_lang$core$Basics$toString(threeQuarterHeight)),
-								_elm_lang$svg$Svg_Attributes$x2('0'),
-								_elm_lang$svg$Svg_Attributes$y2(
-								_elm_lang$core$Basics$toString(threeQuarterHeight)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(wireStrokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$line,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (1 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$x1(
-								_elm_lang$core$Basics$toString(gateWidth)),
-								_elm_lang$svg$Svg_Attributes$y1(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$x2(
-								_elm_lang$core$Basics$toString(gateWidth + wireWidth)),
-								_elm_lang$svg$Svg_Attributes$y2(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(wireStrokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$path,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (1 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$d(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'M 0 0',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										' H ',
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											_elm_lang$core$Basics$toString(wideSegmentWidth),
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												' A ',
+												_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
 												A2(
 													_elm_lang$core$Basics_ops['++'],
-													_elm_lang$core$Basics$toString(narrowSegmentWidth),
+													', ',
 													A2(
 														_elm_lang$core$Basics_ops['++'],
-														' ',
+														_elm_lang$core$Basics$toString(offsetTop + (1 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$x1(
+										_elm_lang$core$Basics$toString(0 - wireWidth)),
+										_elm_lang$svg$Svg_Attributes$y1(
+										_elm_lang$core$Basics$toString(quarterHeight)),
+										_elm_lang$svg$Svg_Attributes$x2('0'),
+										_elm_lang$svg$Svg_Attributes$y2(
+										_elm_lang$core$Basics$toString(quarterHeight)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(wireStrokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$line,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (1 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$x1(
+										_elm_lang$core$Basics$toString(0 - wireWidth)),
+										_elm_lang$svg$Svg_Attributes$y1(
+										_elm_lang$core$Basics$toString(threeQuarterHeight)),
+										_elm_lang$svg$Svg_Attributes$x2('0'),
+										_elm_lang$svg$Svg_Attributes$y2(
+										_elm_lang$core$Basics$toString(threeQuarterHeight)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(wireStrokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$line,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (1 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$x1(
+										_elm_lang$core$Basics$toString(gateWidth)),
+										_elm_lang$svg$Svg_Attributes$y1(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$x2(
+										_elm_lang$core$Basics$toString(gateWidth + wireWidth)),
+										_elm_lang$svg$Svg_Attributes$y2(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(wireStrokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$path,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (1 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$d(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'M 0 0',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												' H ',
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													_elm_lang$core$Basics$toString(wideSegmentWidth),
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														' A ',
 														A2(
 															_elm_lang$core$Basics_ops['++'],
 															_elm_lang$core$Basics$toString(narrowSegmentWidth),
 															A2(
 																_elm_lang$core$Basics_ops['++'],
-																' 0 0 1 ',
+																' ',
 																A2(
 																	_elm_lang$core$Basics_ops['++'],
-																	_elm_lang$core$Basics$toString(gateWidth),
+																	_elm_lang$core$Basics$toString(narrowSegmentWidth),
 																	A2(
 																		_elm_lang$core$Basics_ops['++'],
-																		' ',
+																		' 0 0 1 ',
 																		A2(
 																			_elm_lang$core$Basics_ops['++'],
-																			_elm_lang$core$Basics$toString(halfHeight),
+																			_elm_lang$core$Basics$toString(gateWidth),
 																			A2(
 																				_elm_lang$core$Basics_ops['++'],
-																				' A ',
+																				' ',
 																				A2(
 																					_elm_lang$core$Basics_ops['++'],
-																					_elm_lang$core$Basics$toString(narrowSegmentWidth),
+																					_elm_lang$core$Basics$toString(halfHeight),
 																					A2(
 																						_elm_lang$core$Basics_ops['++'],
-																						' ',
+																						' A ',
 																						A2(
 																							_elm_lang$core$Basics_ops['++'],
 																							_elm_lang$core$Basics$toString(narrowSegmentWidth),
 																							A2(
 																								_elm_lang$core$Basics_ops['++'],
-																								' 0 0 1 ',
+																								' ',
+																								A2(
+																									_elm_lang$core$Basics_ops['++'],
+																									_elm_lang$core$Basics$toString(narrowSegmentWidth),
+																									A2(
+																										_elm_lang$core$Basics_ops['++'],
+																										' 0 0 1 ',
+																										A2(
+																											_elm_lang$core$Basics_ops['++'],
+																											_elm_lang$core$Basics$toString(wideSegmentWidth),
+																											A2(
+																												_elm_lang$core$Basics_ops['++'],
+																												' ',
+																												A2(
+																													_elm_lang$core$Basics_ops['++'],
+																													_elm_lang$core$Basics$toString(height),
+																													A2(_elm_lang$core$Basics_ops['++'], ' H 0 ', ' Z'))))))))))))))))))))),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(strokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$circle,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (1 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$cx(
+										_elm_lang$core$Basics$toString(gateWidth + inverterRadius)),
+										_elm_lang$svg$Svg_Attributes$cy(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$r(
+										_elm_lang$core$Basics$toString(inverterRadius)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(strokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$line,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (1 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$x1(
+										_elm_lang$core$Basics$toString(0 - wireWidth)),
+										_elm_lang$svg$Svg_Attributes$y1(
+										_elm_lang$core$Basics$toString(quarterHeight)),
+										_elm_lang$svg$Svg_Attributes$x2('0'),
+										_elm_lang$svg$Svg_Attributes$y2(
+										_elm_lang$core$Basics$toString(quarterHeight)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(wireStrokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$line,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (1 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$x1(
+										_elm_lang$core$Basics$toString(0 - wireWidth)),
+										_elm_lang$svg$Svg_Attributes$y1(
+										_elm_lang$core$Basics$toString(threeQuarterHeight)),
+										_elm_lang$svg$Svg_Attributes$x2('0'),
+										_elm_lang$svg$Svg_Attributes$y2(
+										_elm_lang$core$Basics$toString(threeQuarterHeight)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(wireStrokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$line,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (1 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$x1(
+										_elm_lang$core$Basics$toString(gateWidth + (2 * inverterRadius))),
+										_elm_lang$svg$Svg_Attributes$y1(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$x2(
+										_elm_lang$core$Basics$toString((gateWidth + (2 * inverterRadius)) + wireWidth)),
+										_elm_lang$svg$Svg_Attributes$y2(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(wireStrokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$line,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (2 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$x1(
+										_elm_lang$core$Basics$toString(0 - wireWidth)),
+										_elm_lang$svg$Svg_Attributes$y1(
+										_elm_lang$core$Basics$toString(quarterHeight)),
+										_elm_lang$svg$Svg_Attributes$x2(
+										_elm_lang$core$Basics$toString(indentWidth)),
+										_elm_lang$svg$Svg_Attributes$y2(
+										_elm_lang$core$Basics$toString(quarterHeight)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(wireStrokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$line,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (2 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$x1(
+										_elm_lang$core$Basics$toString(0 - wireWidth)),
+										_elm_lang$svg$Svg_Attributes$y1(
+										_elm_lang$core$Basics$toString(threeQuarterHeight)),
+										_elm_lang$svg$Svg_Attributes$x2(
+										_elm_lang$core$Basics$toString(indentWidth)),
+										_elm_lang$svg$Svg_Attributes$y2(
+										_elm_lang$core$Basics$toString(threeQuarterHeight)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(wireStrokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$line,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (2 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$x1(
+										_elm_lang$core$Basics$toString(gateWidth)),
+										_elm_lang$svg$Svg_Attributes$y1(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$x2(
+										_elm_lang$core$Basics$toString(gateWidth + wireWidth)),
+										_elm_lang$svg$Svg_Attributes$y2(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(wireStrokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$path,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (2 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$d(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'M 0 0',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												' H ',
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													_elm_lang$core$Basics$toString(narrowSegmentWidth),
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														' A ',
+														A2(
+															_elm_lang$core$Basics_ops['++'],
+															_elm_lang$core$Basics$toString(wideSegmentWidth),
+															A2(
+																_elm_lang$core$Basics_ops['++'],
+																' ',
+																A2(
+																	_elm_lang$core$Basics_ops['++'],
+																	_elm_lang$core$Basics$toString(wideSegmentWidth),
+																	A2(
+																		_elm_lang$core$Basics_ops['++'],
+																		' 0 0 1 ',
+																		A2(
+																			_elm_lang$core$Basics_ops['++'],
+																			_elm_lang$core$Basics$toString(gateWidth),
+																			A2(
+																				_elm_lang$core$Basics_ops['++'],
+																				' ',
+																				A2(
+																					_elm_lang$core$Basics_ops['++'],
+																					_elm_lang$core$Basics$toString(halfHeight),
+																					A2(
+																						_elm_lang$core$Basics_ops['++'],
+																						' A ',
+																						A2(
+																							_elm_lang$core$Basics_ops['++'],
+																							_elm_lang$core$Basics$toString(wideSegmentWidth),
+																							A2(
+																								_elm_lang$core$Basics_ops['++'],
+																								' ',
 																								A2(
 																									_elm_lang$core$Basics_ops['++'],
 																									_elm_lang$core$Basics$toString(wideSegmentWidth),
 																									A2(
 																										_elm_lang$core$Basics_ops['++'],
-																										' ',
+																										' 0 0 1 ',
 																										A2(
 																											_elm_lang$core$Basics_ops['++'],
-																											_elm_lang$core$Basics$toString(height),
-																											A2(_elm_lang$core$Basics_ops['++'], ' H 0 ', ' Z'))))))))))))))))))))),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(strokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$circle,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (1 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$cx(
-								_elm_lang$core$Basics$toString(gateWidth + inverterRadius)),
-								_elm_lang$svg$Svg_Attributes$cy(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$r(
-								_elm_lang$core$Basics$toString(inverterRadius)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(strokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$line,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (1 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$x1(
-								_elm_lang$core$Basics$toString(0 - wireWidth)),
-								_elm_lang$svg$Svg_Attributes$y1(
-								_elm_lang$core$Basics$toString(quarterHeight)),
-								_elm_lang$svg$Svg_Attributes$x2('0'),
-								_elm_lang$svg$Svg_Attributes$y2(
-								_elm_lang$core$Basics$toString(quarterHeight)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(wireStrokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$line,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (1 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$x1(
-								_elm_lang$core$Basics$toString(0 - wireWidth)),
-								_elm_lang$svg$Svg_Attributes$y1(
-								_elm_lang$core$Basics$toString(threeQuarterHeight)),
-								_elm_lang$svg$Svg_Attributes$x2('0'),
-								_elm_lang$svg$Svg_Attributes$y2(
-								_elm_lang$core$Basics$toString(threeQuarterHeight)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(wireStrokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$line,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (1 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$x1(
-								_elm_lang$core$Basics$toString(gateWidth + (2 * inverterRadius))),
-								_elm_lang$svg$Svg_Attributes$y1(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$x2(
-								_elm_lang$core$Basics$toString((gateWidth + (2 * inverterRadius)) + wireWidth)),
-								_elm_lang$svg$Svg_Attributes$y2(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(wireStrokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$line,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (2 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$x1(
-								_elm_lang$core$Basics$toString(0 - wireWidth)),
-								_elm_lang$svg$Svg_Attributes$y1(
-								_elm_lang$core$Basics$toString(quarterHeight)),
-								_elm_lang$svg$Svg_Attributes$x2(
-								_elm_lang$core$Basics$toString(indentWidth)),
-								_elm_lang$svg$Svg_Attributes$y2(
-								_elm_lang$core$Basics$toString(quarterHeight)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(wireStrokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$line,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (2 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$x1(
-								_elm_lang$core$Basics$toString(0 - wireWidth)),
-								_elm_lang$svg$Svg_Attributes$y1(
-								_elm_lang$core$Basics$toString(threeQuarterHeight)),
-								_elm_lang$svg$Svg_Attributes$x2(
-								_elm_lang$core$Basics$toString(indentWidth)),
-								_elm_lang$svg$Svg_Attributes$y2(
-								_elm_lang$core$Basics$toString(threeQuarterHeight)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(wireStrokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$line,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (2 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$x1(
-								_elm_lang$core$Basics$toString(gateWidth)),
-								_elm_lang$svg$Svg_Attributes$y1(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$x2(
-								_elm_lang$core$Basics$toString(gateWidth + wireWidth)),
-								_elm_lang$svg$Svg_Attributes$y2(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(wireStrokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$path,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (2 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$d(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'M 0 0',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										' H ',
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											_elm_lang$core$Basics$toString(narrowSegmentWidth),
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												' A ',
-												A2(
-													_elm_lang$core$Basics_ops['++'],
-													_elm_lang$core$Basics$toString(wideSegmentWidth),
-													A2(
-														_elm_lang$core$Basics_ops['++'],
-														' ',
-														A2(
-															_elm_lang$core$Basics_ops['++'],
-															_elm_lang$core$Basics$toString(wideSegmentWidth),
-															A2(
-																_elm_lang$core$Basics_ops['++'],
-																' 0 0 1 ',
-																A2(
-																	_elm_lang$core$Basics_ops['++'],
-																	_elm_lang$core$Basics$toString(gateWidth),
-																	A2(
-																		_elm_lang$core$Basics_ops['++'],
-																		' ',
-																		A2(
-																			_elm_lang$core$Basics_ops['++'],
-																			_elm_lang$core$Basics$toString(halfHeight),
-																			A2(
-																				_elm_lang$core$Basics_ops['++'],
-																				' A ',
-																				A2(
-																					_elm_lang$core$Basics_ops['++'],
-																					_elm_lang$core$Basics$toString(wideSegmentWidth),
-																					A2(
-																						_elm_lang$core$Basics_ops['++'],
-																						' ',
-																						A2(
-																							_elm_lang$core$Basics_ops['++'],
-																							_elm_lang$core$Basics$toString(wideSegmentWidth),
-																							A2(
-																								_elm_lang$core$Basics_ops['++'],
-																								' 0 0 1 ',
-																								A2(
-																									_elm_lang$core$Basics_ops['++'],
-																									_elm_lang$core$Basics$toString(narrowSegmentWidth),
-																									A2(
-																										_elm_lang$core$Basics_ops['++'],
-																										' ',
-																										A2(
-																											_elm_lang$core$Basics_ops['++'],
-																											_elm_lang$core$Basics$toString(height),
+																											_elm_lang$core$Basics$toString(narrowSegmentWidth),
 																											A2(
 																												_elm_lang$core$Basics_ops['++'],
-																												' H 0 ',
+																												' ',
 																												A2(
 																													_elm_lang$core$Basics_ops['++'],
-																													' A ',
+																													_elm_lang$core$Basics$toString(height),
 																													A2(
 																														_elm_lang$core$Basics_ops['++'],
-																														_elm_lang$core$Basics$toString(indentWidth * 6),
+																														' H 0 ',
 																														A2(
 																															_elm_lang$core$Basics_ops['++'],
-																															' ',
+																															' A ',
 																															A2(
 																																_elm_lang$core$Basics_ops['++'],
-																																_elm_lang$core$Basics$toString(height),
+																																_elm_lang$core$Basics$toString(indentWidth * 6),
 																																A2(
 																																	_elm_lang$core$Basics_ops['++'],
-																																	' 0 0 0 ',
+																																	' ',
 																																	A2(
 																																		_elm_lang$core$Basics_ops['++'],
-																																		_elm_lang$core$Basics$toString(0),
+																																		_elm_lang$core$Basics$toString(height),
 																																		A2(
 																																			_elm_lang$core$Basics_ops['++'],
-																																			' ',
-																																			A2(
-																																				_elm_lang$core$Basics_ops['++'],
-																																				_elm_lang$core$Basics$toString(0),
-																																				' Z'))))))))))))))))))))))))))))),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(strokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('white')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$line,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (2 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$x1(
-								_elm_lang$core$Basics$toString(0 - wireWidth)),
-								_elm_lang$svg$Svg_Attributes$y1(
-								_elm_lang$core$Basics$toString(quarterHeight)),
-								_elm_lang$svg$Svg_Attributes$x2(
-								_elm_lang$core$Basics$toString(indentWidth)),
-								_elm_lang$svg$Svg_Attributes$y2(
-								_elm_lang$core$Basics$toString(quarterHeight)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(wireStrokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$line,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (2 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$x1(
-								_elm_lang$core$Basics$toString(0 - wireWidth)),
-								_elm_lang$svg$Svg_Attributes$y1(
-								_elm_lang$core$Basics$toString(threeQuarterHeight)),
-								_elm_lang$svg$Svg_Attributes$x2(
-								_elm_lang$core$Basics$toString(indentWidth)),
-								_elm_lang$svg$Svg_Attributes$y2(
-								_elm_lang$core$Basics$toString(threeQuarterHeight)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(wireStrokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$line,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (2 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$x1(
-								_elm_lang$core$Basics$toString(gateWidth + (2 * inverterRadius))),
-								_elm_lang$svg$Svg_Attributes$y1(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$x2(
-								_elm_lang$core$Basics$toString((gateWidth + (2 * inverterRadius)) + wireWidth)),
-								_elm_lang$svg$Svg_Attributes$y2(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(wireStrokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$path,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (2 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$d(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'M 0 0',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										' H ',
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											_elm_lang$core$Basics$toString(narrowSegmentWidth),
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												' A ',
-												A2(
-													_elm_lang$core$Basics_ops['++'],
-													_elm_lang$core$Basics$toString(wideSegmentWidth),
-													A2(
-														_elm_lang$core$Basics_ops['++'],
-														' ',
-														A2(
-															_elm_lang$core$Basics_ops['++'],
-															_elm_lang$core$Basics$toString(wideSegmentWidth),
-															A2(
-																_elm_lang$core$Basics_ops['++'],
-																' 0 0 1 ',
-																A2(
-																	_elm_lang$core$Basics_ops['++'],
-																	_elm_lang$core$Basics$toString(gateWidth),
-																	A2(
-																		_elm_lang$core$Basics_ops['++'],
-																		' ',
-																		A2(
-																			_elm_lang$core$Basics_ops['++'],
-																			_elm_lang$core$Basics$toString(halfHeight),
-																			A2(
-																				_elm_lang$core$Basics_ops['++'],
-																				' A ',
-																				A2(
-																					_elm_lang$core$Basics_ops['++'],
-																					_elm_lang$core$Basics$toString(wideSegmentWidth),
-																					A2(
-																						_elm_lang$core$Basics_ops['++'],
-																						' ',
-																						A2(
-																							_elm_lang$core$Basics_ops['++'],
-																							_elm_lang$core$Basics$toString(wideSegmentWidth),
-																							A2(
-																								_elm_lang$core$Basics_ops['++'],
-																								' 0 0 1 ',
-																								A2(
-																									_elm_lang$core$Basics_ops['++'],
-																									_elm_lang$core$Basics$toString(narrowSegmentWidth),
-																									A2(
-																										_elm_lang$core$Basics_ops['++'],
-																										' ',
-																										A2(
-																											_elm_lang$core$Basics_ops['++'],
-																											_elm_lang$core$Basics$toString(height),
-																											A2(
-																												_elm_lang$core$Basics_ops['++'],
-																												' H 0 ',
-																												A2(
-																													_elm_lang$core$Basics_ops['++'],
-																													' A ',
-																													A2(
-																														_elm_lang$core$Basics_ops['++'],
-																														_elm_lang$core$Basics$toString(indentWidth * 6),
-																														A2(
-																															_elm_lang$core$Basics_ops['++'],
-																															' ',
-																															A2(
-																																_elm_lang$core$Basics_ops['++'],
-																																_elm_lang$core$Basics$toString(height),
-																																A2(
-																																	_elm_lang$core$Basics_ops['++'],
-																																	' 0 0 0 ',
-																																	A2(
-																																		_elm_lang$core$Basics_ops['++'],
-																																		_elm_lang$core$Basics$toString(0),
-																																		A2(
-																																			_elm_lang$core$Basics_ops['++'],
-																																			' ',
-																																			A2(
-																																				_elm_lang$core$Basics_ops['++'],
-																																				_elm_lang$core$Basics$toString(0),
-																																				' Z'))))))))))))))))))))))))))))),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(strokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('white')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$circle,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (2 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$cx(
-								_elm_lang$core$Basics$toString(gateWidth + inverterRadius)),
-								_elm_lang$svg$Svg_Attributes$cy(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$r(
-								_elm_lang$core$Basics$toString(inverterRadius)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(strokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('white')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$line,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$x1(
-								_elm_lang$core$Basics$toString(0 - wireWidth)),
-								_elm_lang$svg$Svg_Attributes$y1(
-								_elm_lang$core$Basics$toString(quarterHeight)),
-								_elm_lang$svg$Svg_Attributes$x2(
-								_elm_lang$core$Basics$toString(indentWidth)),
-								_elm_lang$svg$Svg_Attributes$y2(
-								_elm_lang$core$Basics$toString(quarterHeight)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(wireStrokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$line,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$x1(
-								_elm_lang$core$Basics$toString(0 - wireWidth)),
-								_elm_lang$svg$Svg_Attributes$y1(
-								_elm_lang$core$Basics$toString(threeQuarterHeight)),
-								_elm_lang$svg$Svg_Attributes$x2(
-								_elm_lang$core$Basics$toString(indentWidth)),
-								_elm_lang$svg$Svg_Attributes$y2(
-								_elm_lang$core$Basics$toString(threeQuarterHeight)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(wireStrokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$line,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$x1(
-								_elm_lang$core$Basics$toString(gateWidth)),
-								_elm_lang$svg$Svg_Attributes$y1(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$x2(
-								_elm_lang$core$Basics$toString(gateWidth + wireWidth)),
-								_elm_lang$svg$Svg_Attributes$y2(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(wireStrokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$path,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$d(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'M 0 0',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										' H ',
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											_elm_lang$core$Basics$toString(narrowSegmentWidth),
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												' A ',
-												A2(
-													_elm_lang$core$Basics_ops['++'],
-													_elm_lang$core$Basics$toString(wideSegmentWidth),
-													A2(
-														_elm_lang$core$Basics_ops['++'],
-														' ',
-														A2(
-															_elm_lang$core$Basics_ops['++'],
-															_elm_lang$core$Basics$toString(wideSegmentWidth),
-															A2(
-																_elm_lang$core$Basics_ops['++'],
-																' 0 0 1 ',
-																A2(
-																	_elm_lang$core$Basics_ops['++'],
-																	_elm_lang$core$Basics$toString(gateWidth),
-																	A2(
-																		_elm_lang$core$Basics_ops['++'],
-																		' ',
-																		A2(
-																			_elm_lang$core$Basics_ops['++'],
-																			_elm_lang$core$Basics$toString(halfHeight),
-																			A2(
-																				_elm_lang$core$Basics_ops['++'],
-																				' A ',
-																				A2(
-																					_elm_lang$core$Basics_ops['++'],
-																					_elm_lang$core$Basics$toString(wideSegmentWidth),
-																					A2(
-																						_elm_lang$core$Basics_ops['++'],
-																						' ',
-																						A2(
-																							_elm_lang$core$Basics_ops['++'],
-																							_elm_lang$core$Basics$toString(wideSegmentWidth),
-																							A2(
-																								_elm_lang$core$Basics_ops['++'],
-																								' 0 0 1 ',
-																								A2(
-																									_elm_lang$core$Basics_ops['++'],
-																									_elm_lang$core$Basics$toString(narrowSegmentWidth),
-																									A2(
-																										_elm_lang$core$Basics_ops['++'],
-																										' ',
-																										A2(
-																											_elm_lang$core$Basics_ops['++'],
-																											_elm_lang$core$Basics$toString(height),
-																											A2(
-																												_elm_lang$core$Basics_ops['++'],
-																												' H 0 ',
-																												A2(
-																													_elm_lang$core$Basics_ops['++'],
-																													' A ',
-																													A2(
-																														_elm_lang$core$Basics_ops['++'],
-																														_elm_lang$core$Basics$toString(indentWidth * 6),
-																														A2(
-																															_elm_lang$core$Basics_ops['++'],
-																															' ',
-																															A2(
-																																_elm_lang$core$Basics_ops['++'],
-																																_elm_lang$core$Basics$toString(height),
-																																A2(
-																																	_elm_lang$core$Basics_ops['++'],
-																																	' 0 0 0 ',
-																																	A2(
-																																		_elm_lang$core$Basics_ops['++'],
-																																		_elm_lang$core$Basics$toString(0),
-																																		A2(
-																																			_elm_lang$core$Basics_ops['++'],
-																																			' ',
-																																			A2(
-																																				_elm_lang$core$Basics_ops['++'],
-																																				_elm_lang$core$Basics$toString(0),
-																																				' Z'))))))))))))))))))))))))))))),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(strokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('white')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$path,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$d(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									' M ',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(left),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											' ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(0),
-												A2(
-													_elm_lang$core$Basics_ops['++'],
-													' A ',
-													A2(
-														_elm_lang$core$Basics_ops['++'],
-														_elm_lang$core$Basics$toString(indentWidth * 6.5),
-														A2(
-															_elm_lang$core$Basics_ops['++'],
-															' ',
-															A2(
-																_elm_lang$core$Basics_ops['++'],
-																_elm_lang$core$Basics$toString(height),
-																A2(
-																	_elm_lang$core$Basics_ops['++'],
-																	' 0 0 1 ',
-																	A2(
-																		_elm_lang$core$Basics_ops['++'],
-																		_elm_lang$core$Basics$toString(left),
-																		A2(
-																			_elm_lang$core$Basics_ops['++'],
-																			' ',
-																			A2(
-																				_elm_lang$core$Basics_ops['++'],
-																				_elm_lang$core$Basics$toString(height),
-																				A2(
-																					_elm_lang$core$Basics_ops['++'],
-																					' L ',
-																					A2(
-																						_elm_lang$core$Basics_ops['++'],
-																						_elm_lang$core$Basics$toString(left + hack),
-																						A2(
-																							_elm_lang$core$Basics_ops['++'],
-																							' ',
-																							A2(
-																								_elm_lang$core$Basics_ops['++'],
-																								_elm_lang$core$Basics$toString(height),
-																								A2(
-																									_elm_lang$core$Basics_ops['++'],
-																									' A ',
-																									A2(
-																										_elm_lang$core$Basics_ops['++'],
-																										_elm_lang$core$Basics$toString(indentWidth * 6.5),
-																										A2(
-																											_elm_lang$core$Basics_ops['++'],
-																											' ',
-																											A2(
-																												_elm_lang$core$Basics_ops['++'],
-																												_elm_lang$core$Basics$toString(height),
-																												A2(
-																													_elm_lang$core$Basics_ops['++'],
-																													' 0 0 0 ',
-																													A2(
-																														_elm_lang$core$Basics_ops['++'],
-																														_elm_lang$core$Basics$toString(left),
-																														A2(
-																															_elm_lang$core$Basics_ops['++'],
-																															' ',
-																															A2(
-																																_elm_lang$core$Basics_ops['++'],
-																																_elm_lang$core$Basics$toString(0),
-																																A2(
-																																	_elm_lang$core$Basics_ops['++'],
-																																	' L ',
-																																	A2(
-																																		_elm_lang$core$Basics_ops['++'],
-																																		_elm_lang$core$Basics$toString(left + hack),
-																																		A2(
-																																			_elm_lang$core$Basics_ops['++'],
-																																			' ',
+																																			' 0 0 0 ',
 																																			A2(
 																																				_elm_lang$core$Basics_ops['++'],
 																																				_elm_lang$core$Basics$toString(0),
 																																				A2(
 																																					_elm_lang$core$Basics_ops['++'],
-																																					' A ',
+																																					' ',
 																																					A2(
 																																						_elm_lang$core$Basics_ops['++'],
-																																						_elm_lang$core$Basics$toString(indentWidth * 6.5),
-																																						A2(
-																																							_elm_lang$core$Basics_ops['++'],
-																																							' ',
-																																							A2(
-																																								_elm_lang$core$Basics_ops['++'],
-																																								_elm_lang$core$Basics$toString(height),
-																																								A2(
-																																									_elm_lang$core$Basics_ops['++'],
-																																									' 0 0 1 ',
-																																									A2(
-																																										_elm_lang$core$Basics_ops['++'],
-																																										_elm_lang$core$Basics$toString(left),
-																																										A2(
-																																											_elm_lang$core$Basics_ops['++'],
-																																											' ',
-																																											_elm_lang$core$Basics$toString(height))))))))))))))))))))))))))))))))))))),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(strokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$circle,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
+																																						_elm_lang$core$Basics$toString(0),
+																																						' Z'))))))))))))))))))))))))))))),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(strokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('white')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
 								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
+								_elm_lang$svg$Svg$line,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
 										A2(
 											_elm_lang$core$Basics_ops['++'],
-											', ',
+											'translate(',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$cx(
-								_elm_lang$core$Basics$toString(gateWidth + inverterRadius)),
-								_elm_lang$svg$Svg_Attributes$cy(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$r(
-								_elm_lang$core$Basics$toString(inverterRadius)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(strokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$line,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$x1(
-								_elm_lang$core$Basics$toString(0 - wireWidth)),
-								_elm_lang$svg$Svg_Attributes$y1(
-								_elm_lang$core$Basics$toString(quarterHeight)),
-								_elm_lang$svg$Svg_Attributes$x2(
-								_elm_lang$core$Basics$toString(indentWidth)),
-								_elm_lang$svg$Svg_Attributes$y2(
-								_elm_lang$core$Basics$toString(quarterHeight)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(wireStrokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$line,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$x1(
-								_elm_lang$core$Basics$toString(0 - wireWidth)),
-								_elm_lang$svg$Svg_Attributes$y1(
-								_elm_lang$core$Basics$toString(threeQuarterHeight)),
-								_elm_lang$svg$Svg_Attributes$x2(
-								_elm_lang$core$Basics$toString(indentWidth)),
-								_elm_lang$svg$Svg_Attributes$y2(
-								_elm_lang$core$Basics$toString(threeQuarterHeight)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(wireStrokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$line,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$x1(
-								_elm_lang$core$Basics$toString(gateWidth + (2 * inverterRadius))),
-								_elm_lang$svg$Svg_Attributes$y1(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$x2(
-								_elm_lang$core$Basics$toString((gateWidth + (2 * inverterRadius)) + wireWidth)),
-								_elm_lang$svg$Svg_Attributes$y2(
-								_elm_lang$core$Basics$toString(halfHeight)),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(wireStrokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$path,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$d(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'M 0 0',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										' H ',
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											_elm_lang$core$Basics$toString(narrowSegmentWidth),
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												' A ',
+												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
 												A2(
 													_elm_lang$core$Basics_ops['++'],
-													_elm_lang$core$Basics$toString(wideSegmentWidth),
+													', ',
 													A2(
 														_elm_lang$core$Basics_ops['++'],
-														' ',
+														_elm_lang$core$Basics$toString(offsetTop + (2 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$x1(
+										_elm_lang$core$Basics$toString(0 - wireWidth)),
+										_elm_lang$svg$Svg_Attributes$y1(
+										_elm_lang$core$Basics$toString(quarterHeight)),
+										_elm_lang$svg$Svg_Attributes$x2(
+										_elm_lang$core$Basics$toString(indentWidth)),
+										_elm_lang$svg$Svg_Attributes$y2(
+										_elm_lang$core$Basics$toString(quarterHeight)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(wireStrokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$line,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (2 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$x1(
+										_elm_lang$core$Basics$toString(0 - wireWidth)),
+										_elm_lang$svg$Svg_Attributes$y1(
+										_elm_lang$core$Basics$toString(threeQuarterHeight)),
+										_elm_lang$svg$Svg_Attributes$x2(
+										_elm_lang$core$Basics$toString(indentWidth)),
+										_elm_lang$svg$Svg_Attributes$y2(
+										_elm_lang$core$Basics$toString(threeQuarterHeight)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(wireStrokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$line,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (2 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$x1(
+										_elm_lang$core$Basics$toString(gateWidth + (2 * inverterRadius))),
+										_elm_lang$svg$Svg_Attributes$y1(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$x2(
+										_elm_lang$core$Basics$toString((gateWidth + (2 * inverterRadius)) + wireWidth)),
+										_elm_lang$svg$Svg_Attributes$y2(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(wireStrokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$path,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (2 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$d(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'M 0 0',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												' H ',
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													_elm_lang$core$Basics$toString(narrowSegmentWidth),
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														' A ',
 														A2(
 															_elm_lang$core$Basics_ops['++'],
 															_elm_lang$core$Basics$toString(wideSegmentWidth),
 															A2(
 																_elm_lang$core$Basics_ops['++'],
-																' 0 0 1 ',
+																' ',
 																A2(
 																	_elm_lang$core$Basics_ops['++'],
-																	_elm_lang$core$Basics$toString(gateWidth),
+																	_elm_lang$core$Basics$toString(wideSegmentWidth),
 																	A2(
 																		_elm_lang$core$Basics_ops['++'],
-																		' ',
+																		' 0 0 1 ',
 																		A2(
 																			_elm_lang$core$Basics_ops['++'],
-																			_elm_lang$core$Basics$toString(halfHeight),
+																			_elm_lang$core$Basics$toString(gateWidth),
 																			A2(
 																				_elm_lang$core$Basics_ops['++'],
-																				' A ',
+																				' ',
 																				A2(
 																					_elm_lang$core$Basics_ops['++'],
-																					_elm_lang$core$Basics$toString(wideSegmentWidth),
+																					_elm_lang$core$Basics$toString(halfHeight),
 																					A2(
 																						_elm_lang$core$Basics_ops['++'],
-																						' ',
+																						' A ',
 																						A2(
 																							_elm_lang$core$Basics_ops['++'],
 																							_elm_lang$core$Basics$toString(wideSegmentWidth),
 																							A2(
 																								_elm_lang$core$Basics_ops['++'],
-																								' 0 0 1 ',
+																								' ',
 																								A2(
 																									_elm_lang$core$Basics_ops['++'],
-																									_elm_lang$core$Basics$toString(narrowSegmentWidth),
+																									_elm_lang$core$Basics$toString(wideSegmentWidth),
 																									A2(
 																										_elm_lang$core$Basics_ops['++'],
-																										' ',
+																										' 0 0 1 ',
 																										A2(
 																											_elm_lang$core$Basics_ops['++'],
-																											_elm_lang$core$Basics$toString(height),
+																											_elm_lang$core$Basics$toString(narrowSegmentWidth),
 																											A2(
 																												_elm_lang$core$Basics_ops['++'],
-																												' H 0 ',
+																												' ',
 																												A2(
 																													_elm_lang$core$Basics_ops['++'],
-																													' A ',
+																													_elm_lang$core$Basics$toString(height),
 																													A2(
 																														_elm_lang$core$Basics_ops['++'],
-																														_elm_lang$core$Basics$toString(indentWidth * 6),
+																														' H 0 ',
 																														A2(
 																															_elm_lang$core$Basics_ops['++'],
-																															' ',
+																															' A ',
 																															A2(
 																																_elm_lang$core$Basics_ops['++'],
-																																_elm_lang$core$Basics$toString(height),
+																																_elm_lang$core$Basics$toString(indentWidth * 6),
 																																A2(
 																																	_elm_lang$core$Basics_ops['++'],
-																																	' 0 0 0 ',
+																																	' ',
 																																	A2(
 																																		_elm_lang$core$Basics_ops['++'],
-																																		_elm_lang$core$Basics$toString(0),
+																																		_elm_lang$core$Basics$toString(height),
 																																		A2(
 																																			_elm_lang$core$Basics_ops['++'],
-																																			' ',
-																																			A2(
-																																				_elm_lang$core$Basics_ops['++'],
-																																				_elm_lang$core$Basics$toString(0),
-																																				' Z'))))))))))))))))))))))))))))),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(strokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('white')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$svg$Svg$path,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'translate(',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											', ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
-												')'))))),
-								_elm_lang$svg$Svg_Attributes$d(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									' M ',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(left),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											' ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(0),
-												A2(
-													_elm_lang$core$Basics_ops['++'],
-													' A ',
-													A2(
-														_elm_lang$core$Basics_ops['++'],
-														_elm_lang$core$Basics$toString(indentWidth * 6.5),
-														A2(
-															_elm_lang$core$Basics_ops['++'],
-															' ',
-															A2(
-																_elm_lang$core$Basics_ops['++'],
-																_elm_lang$core$Basics$toString(height),
-																A2(
-																	_elm_lang$core$Basics_ops['++'],
-																	' 0 0 1 ',
-																	A2(
-																		_elm_lang$core$Basics_ops['++'],
-																		_elm_lang$core$Basics$toString(left),
-																		A2(
-																			_elm_lang$core$Basics_ops['++'],
-																			' ',
-																			A2(
-																				_elm_lang$core$Basics_ops['++'],
-																				_elm_lang$core$Basics$toString(height),
-																				A2(
-																					_elm_lang$core$Basics_ops['++'],
-																					' L ',
-																					A2(
-																						_elm_lang$core$Basics_ops['++'],
-																						_elm_lang$core$Basics$toString(left + hack),
-																						A2(
-																							_elm_lang$core$Basics_ops['++'],
-																							' ',
-																							A2(
-																								_elm_lang$core$Basics_ops['++'],
-																								_elm_lang$core$Basics$toString(height),
-																								A2(
-																									_elm_lang$core$Basics_ops['++'],
-																									' A ',
-																									A2(
-																										_elm_lang$core$Basics_ops['++'],
-																										_elm_lang$core$Basics$toString(indentWidth * 6.5),
-																										A2(
-																											_elm_lang$core$Basics_ops['++'],
-																											' ',
-																											A2(
-																												_elm_lang$core$Basics_ops['++'],
-																												_elm_lang$core$Basics$toString(height),
-																												A2(
-																													_elm_lang$core$Basics_ops['++'],
-																													' 0 0 0 ',
-																													A2(
-																														_elm_lang$core$Basics_ops['++'],
-																														_elm_lang$core$Basics$toString(left),
-																														A2(
-																															_elm_lang$core$Basics_ops['++'],
-																															' ',
-																															A2(
-																																_elm_lang$core$Basics_ops['++'],
-																																_elm_lang$core$Basics$toString(0),
-																																A2(
-																																	_elm_lang$core$Basics_ops['++'],
-																																	' L ',
-																																	A2(
-																																		_elm_lang$core$Basics_ops['++'],
-																																		_elm_lang$core$Basics$toString(left + hack),
-																																		A2(
-																																			_elm_lang$core$Basics_ops['++'],
-																																			' ',
+																																			' 0 0 0 ',
 																																			A2(
 																																				_elm_lang$core$Basics_ops['++'],
 																																				_elm_lang$core$Basics$toString(0),
 																																				A2(
 																																					_elm_lang$core$Basics_ops['++'],
-																																					' A ',
+																																					' ',
 																																					A2(
 																																						_elm_lang$core$Basics_ops['++'],
-																																						_elm_lang$core$Basics$toString(indentWidth * 6.5),
+																																						_elm_lang$core$Basics$toString(0),
+																																						' Z'))))))))))))))))))))))))))))),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(strokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('white')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$circle,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (2 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$cx(
+										_elm_lang$core$Basics$toString(gateWidth + inverterRadius)),
+										_elm_lang$svg$Svg_Attributes$cy(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$r(
+										_elm_lang$core$Basics$toString(inverterRadius)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(strokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('white')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$line,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$x1(
+										_elm_lang$core$Basics$toString(0 - wireWidth)),
+										_elm_lang$svg$Svg_Attributes$y1(
+										_elm_lang$core$Basics$toString(quarterHeight)),
+										_elm_lang$svg$Svg_Attributes$x2(
+										_elm_lang$core$Basics$toString(indentWidth)),
+										_elm_lang$svg$Svg_Attributes$y2(
+										_elm_lang$core$Basics$toString(quarterHeight)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(wireStrokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$line,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$x1(
+										_elm_lang$core$Basics$toString(0 - wireWidth)),
+										_elm_lang$svg$Svg_Attributes$y1(
+										_elm_lang$core$Basics$toString(threeQuarterHeight)),
+										_elm_lang$svg$Svg_Attributes$x2(
+										_elm_lang$core$Basics$toString(indentWidth)),
+										_elm_lang$svg$Svg_Attributes$y2(
+										_elm_lang$core$Basics$toString(threeQuarterHeight)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(wireStrokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$line,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$x1(
+										_elm_lang$core$Basics$toString(gateWidth)),
+										_elm_lang$svg$Svg_Attributes$y1(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$x2(
+										_elm_lang$core$Basics$toString(gateWidth + wireWidth)),
+										_elm_lang$svg$Svg_Attributes$y2(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(wireStrokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$path,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$d(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'M 0 0',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												' H ',
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													_elm_lang$core$Basics$toString(narrowSegmentWidth),
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														' A ',
+														A2(
+															_elm_lang$core$Basics_ops['++'],
+															_elm_lang$core$Basics$toString(wideSegmentWidth),
+															A2(
+																_elm_lang$core$Basics_ops['++'],
+																' ',
+																A2(
+																	_elm_lang$core$Basics_ops['++'],
+																	_elm_lang$core$Basics$toString(wideSegmentWidth),
+																	A2(
+																		_elm_lang$core$Basics_ops['++'],
+																		' 0 0 1 ',
+																		A2(
+																			_elm_lang$core$Basics_ops['++'],
+																			_elm_lang$core$Basics$toString(gateWidth),
+																			A2(
+																				_elm_lang$core$Basics_ops['++'],
+																				' ',
+																				A2(
+																					_elm_lang$core$Basics_ops['++'],
+																					_elm_lang$core$Basics$toString(halfHeight),
+																					A2(
+																						_elm_lang$core$Basics_ops['++'],
+																						' A ',
+																						A2(
+																							_elm_lang$core$Basics_ops['++'],
+																							_elm_lang$core$Basics$toString(wideSegmentWidth),
+																							A2(
+																								_elm_lang$core$Basics_ops['++'],
+																								' ',
+																								A2(
+																									_elm_lang$core$Basics_ops['++'],
+																									_elm_lang$core$Basics$toString(wideSegmentWidth),
+																									A2(
+																										_elm_lang$core$Basics_ops['++'],
+																										' 0 0 1 ',
+																										A2(
+																											_elm_lang$core$Basics_ops['++'],
+																											_elm_lang$core$Basics$toString(narrowSegmentWidth),
+																											A2(
+																												_elm_lang$core$Basics_ops['++'],
+																												' ',
+																												A2(
+																													_elm_lang$core$Basics_ops['++'],
+																													_elm_lang$core$Basics$toString(height),
+																													A2(
+																														_elm_lang$core$Basics_ops['++'],
+																														' H 0 ',
+																														A2(
+																															_elm_lang$core$Basics_ops['++'],
+																															' A ',
+																															A2(
+																																_elm_lang$core$Basics_ops['++'],
+																																_elm_lang$core$Basics$toString(indentWidth * 6),
+																																A2(
+																																	_elm_lang$core$Basics_ops['++'],
+																																	' ',
+																																	A2(
+																																		_elm_lang$core$Basics_ops['++'],
+																																		_elm_lang$core$Basics$toString(height),
+																																		A2(
+																																			_elm_lang$core$Basics_ops['++'],
+																																			' 0 0 0 ',
+																																			A2(
+																																				_elm_lang$core$Basics_ops['++'],
+																																				_elm_lang$core$Basics$toString(0),
+																																				A2(
+																																					_elm_lang$core$Basics_ops['++'],
+																																					' ',
+																																					A2(
+																																						_elm_lang$core$Basics_ops['++'],
+																																						_elm_lang$core$Basics$toString(0),
+																																						' Z'))))))))))))))))))))))))))))),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(strokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('white')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$path,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$d(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											' M ',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(left),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													' ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(0),
+														A2(
+															_elm_lang$core$Basics_ops['++'],
+															' A ',
+															A2(
+																_elm_lang$core$Basics_ops['++'],
+																_elm_lang$core$Basics$toString(indentWidth * 6.5),
+																A2(
+																	_elm_lang$core$Basics_ops['++'],
+																	' ',
+																	A2(
+																		_elm_lang$core$Basics_ops['++'],
+																		_elm_lang$core$Basics$toString(height),
+																		A2(
+																			_elm_lang$core$Basics_ops['++'],
+																			' 0 0 1 ',
+																			A2(
+																				_elm_lang$core$Basics_ops['++'],
+																				_elm_lang$core$Basics$toString(left),
+																				A2(
+																					_elm_lang$core$Basics_ops['++'],
+																					' ',
+																					A2(
+																						_elm_lang$core$Basics_ops['++'],
+																						_elm_lang$core$Basics$toString(height),
+																						A2(
+																							_elm_lang$core$Basics_ops['++'],
+																							' L ',
+																							A2(
+																								_elm_lang$core$Basics_ops['++'],
+																								_elm_lang$core$Basics$toString(left + hack),
+																								A2(
+																									_elm_lang$core$Basics_ops['++'],
+																									' ',
+																									A2(
+																										_elm_lang$core$Basics_ops['++'],
+																										_elm_lang$core$Basics$toString(height),
+																										A2(
+																											_elm_lang$core$Basics_ops['++'],
+																											' A ',
+																											A2(
+																												_elm_lang$core$Basics_ops['++'],
+																												_elm_lang$core$Basics$toString(indentWidth * 6.5),
+																												A2(
+																													_elm_lang$core$Basics_ops['++'],
+																													' ',
+																													A2(
+																														_elm_lang$core$Basics_ops['++'],
+																														_elm_lang$core$Basics$toString(height),
+																														A2(
+																															_elm_lang$core$Basics_ops['++'],
+																															' 0 0 0 ',
+																															A2(
+																																_elm_lang$core$Basics_ops['++'],
+																																_elm_lang$core$Basics$toString(left),
+																																A2(
+																																	_elm_lang$core$Basics_ops['++'],
+																																	' ',
+																																	A2(
+																																		_elm_lang$core$Basics_ops['++'],
+																																		_elm_lang$core$Basics$toString(0),
+																																		A2(
+																																			_elm_lang$core$Basics_ops['++'],
+																																			' L ',
+																																			A2(
+																																				_elm_lang$core$Basics_ops['++'],
+																																				_elm_lang$core$Basics$toString(left + hack),
+																																				A2(
+																																					_elm_lang$core$Basics_ops['++'],
+																																					' ',
+																																					A2(
+																																						_elm_lang$core$Basics_ops['++'],
+																																						_elm_lang$core$Basics$toString(0),
 																																						A2(
 																																							_elm_lang$core$Basics_ops['++'],
-																																							' ',
+																																							' A ',
 																																							A2(
 																																								_elm_lang$core$Basics_ops['++'],
-																																								_elm_lang$core$Basics$toString(height),
+																																								_elm_lang$core$Basics$toString(indentWidth * 6.5),
 																																								A2(
 																																									_elm_lang$core$Basics_ops['++'],
-																																									' 0 0 1 ',
+																																									' ',
 																																									A2(
 																																										_elm_lang$core$Basics_ops['++'],
-																																										_elm_lang$core$Basics$toString(left),
+																																										_elm_lang$core$Basics$toString(height),
 																																										A2(
 																																											_elm_lang$core$Basics_ops['++'],
-																																											' ',
-																																											_elm_lang$core$Basics$toString(height))))))))))))))))))))))))))))))))))))),
-								_elm_lang$svg$Svg_Attributes$stroke('black'),
-								_elm_lang$svg$Svg_Attributes$strokeWidth(
-								_elm_lang$core$Basics$toString(strokeWidth)),
-								_elm_lang$svg$Svg_Attributes$fill('none')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[]))
+																																											' 0 0 1 ',
+																																											A2(
+																																												_elm_lang$core$Basics_ops['++'],
+																																												_elm_lang$core$Basics$toString(left),
+																																												A2(
+																																													_elm_lang$core$Basics_ops['++'],
+																																													' ',
+																																													_elm_lang$core$Basics$toString(height))))))))))))))))))))))))))))))))))))),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(strokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$circle,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$cx(
+										_elm_lang$core$Basics$toString(gateWidth + inverterRadius)),
+										_elm_lang$svg$Svg_Attributes$cy(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$r(
+										_elm_lang$core$Basics$toString(inverterRadius)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(strokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$line,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$x1(
+										_elm_lang$core$Basics$toString(0 - wireWidth)),
+										_elm_lang$svg$Svg_Attributes$y1(
+										_elm_lang$core$Basics$toString(quarterHeight)),
+										_elm_lang$svg$Svg_Attributes$x2(
+										_elm_lang$core$Basics$toString(indentWidth)),
+										_elm_lang$svg$Svg_Attributes$y2(
+										_elm_lang$core$Basics$toString(quarterHeight)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(wireStrokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$line,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$x1(
+										_elm_lang$core$Basics$toString(0 - wireWidth)),
+										_elm_lang$svg$Svg_Attributes$y1(
+										_elm_lang$core$Basics$toString(threeQuarterHeight)),
+										_elm_lang$svg$Svg_Attributes$x2(
+										_elm_lang$core$Basics$toString(indentWidth)),
+										_elm_lang$svg$Svg_Attributes$y2(
+										_elm_lang$core$Basics$toString(threeQuarterHeight)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(wireStrokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$line,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$x1(
+										_elm_lang$core$Basics$toString(gateWidth + (2 * inverterRadius))),
+										_elm_lang$svg$Svg_Attributes$y1(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$x2(
+										_elm_lang$core$Basics$toString((gateWidth + (2 * inverterRadius)) + wireWidth)),
+										_elm_lang$svg$Svg_Attributes$y2(
+										_elm_lang$core$Basics$toString(halfHeight)),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(wireStrokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$path,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$d(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'M 0 0',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												' H ',
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													_elm_lang$core$Basics$toString(narrowSegmentWidth),
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														' A ',
+														A2(
+															_elm_lang$core$Basics_ops['++'],
+															_elm_lang$core$Basics$toString(wideSegmentWidth),
+															A2(
+																_elm_lang$core$Basics_ops['++'],
+																' ',
+																A2(
+																	_elm_lang$core$Basics_ops['++'],
+																	_elm_lang$core$Basics$toString(wideSegmentWidth),
+																	A2(
+																		_elm_lang$core$Basics_ops['++'],
+																		' 0 0 1 ',
+																		A2(
+																			_elm_lang$core$Basics_ops['++'],
+																			_elm_lang$core$Basics$toString(gateWidth),
+																			A2(
+																				_elm_lang$core$Basics_ops['++'],
+																				' ',
+																				A2(
+																					_elm_lang$core$Basics_ops['++'],
+																					_elm_lang$core$Basics$toString(halfHeight),
+																					A2(
+																						_elm_lang$core$Basics_ops['++'],
+																						' A ',
+																						A2(
+																							_elm_lang$core$Basics_ops['++'],
+																							_elm_lang$core$Basics$toString(wideSegmentWidth),
+																							A2(
+																								_elm_lang$core$Basics_ops['++'],
+																								' ',
+																								A2(
+																									_elm_lang$core$Basics_ops['++'],
+																									_elm_lang$core$Basics$toString(wideSegmentWidth),
+																									A2(
+																										_elm_lang$core$Basics_ops['++'],
+																										' 0 0 1 ',
+																										A2(
+																											_elm_lang$core$Basics_ops['++'],
+																											_elm_lang$core$Basics$toString(narrowSegmentWidth),
+																											A2(
+																												_elm_lang$core$Basics_ops['++'],
+																												' ',
+																												A2(
+																													_elm_lang$core$Basics_ops['++'],
+																													_elm_lang$core$Basics$toString(height),
+																													A2(
+																														_elm_lang$core$Basics_ops['++'],
+																														' H 0 ',
+																														A2(
+																															_elm_lang$core$Basics_ops['++'],
+																															' A ',
+																															A2(
+																																_elm_lang$core$Basics_ops['++'],
+																																_elm_lang$core$Basics$toString(indentWidth * 6),
+																																A2(
+																																	_elm_lang$core$Basics_ops['++'],
+																																	' ',
+																																	A2(
+																																		_elm_lang$core$Basics_ops['++'],
+																																		_elm_lang$core$Basics$toString(height),
+																																		A2(
+																																			_elm_lang$core$Basics_ops['++'],
+																																			' 0 0 0 ',
+																																			A2(
+																																				_elm_lang$core$Basics_ops['++'],
+																																				_elm_lang$core$Basics$toString(0),
+																																				A2(
+																																					_elm_lang$core$Basics_ops['++'],
+																																					' ',
+																																					A2(
+																																						_elm_lang$core$Basics_ops['++'],
+																																						_elm_lang$core$Basics$toString(0),
+																																						' Z'))))))))))))))))))))))))))))),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(strokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('white')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$svg$Svg$path,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$svg$Svg_Attributes$transform(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'translate(',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													', ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
+														')'))))),
+										_elm_lang$svg$Svg_Attributes$d(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											' M ',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(left),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													' ',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(0),
+														A2(
+															_elm_lang$core$Basics_ops['++'],
+															' A ',
+															A2(
+																_elm_lang$core$Basics_ops['++'],
+																_elm_lang$core$Basics$toString(indentWidth * 6.5),
+																A2(
+																	_elm_lang$core$Basics_ops['++'],
+																	' ',
+																	A2(
+																		_elm_lang$core$Basics_ops['++'],
+																		_elm_lang$core$Basics$toString(height),
+																		A2(
+																			_elm_lang$core$Basics_ops['++'],
+																			' 0 0 1 ',
+																			A2(
+																				_elm_lang$core$Basics_ops['++'],
+																				_elm_lang$core$Basics$toString(left),
+																				A2(
+																					_elm_lang$core$Basics_ops['++'],
+																					' ',
+																					A2(
+																						_elm_lang$core$Basics_ops['++'],
+																						_elm_lang$core$Basics$toString(height),
+																						A2(
+																							_elm_lang$core$Basics_ops['++'],
+																							' L ',
+																							A2(
+																								_elm_lang$core$Basics_ops['++'],
+																								_elm_lang$core$Basics$toString(left + hack),
+																								A2(
+																									_elm_lang$core$Basics_ops['++'],
+																									' ',
+																									A2(
+																										_elm_lang$core$Basics_ops['++'],
+																										_elm_lang$core$Basics$toString(height),
+																										A2(
+																											_elm_lang$core$Basics_ops['++'],
+																											' A ',
+																											A2(
+																												_elm_lang$core$Basics_ops['++'],
+																												_elm_lang$core$Basics$toString(indentWidth * 6.5),
+																												A2(
+																													_elm_lang$core$Basics_ops['++'],
+																													' ',
+																													A2(
+																														_elm_lang$core$Basics_ops['++'],
+																														_elm_lang$core$Basics$toString(height),
+																														A2(
+																															_elm_lang$core$Basics_ops['++'],
+																															' 0 0 0 ',
+																															A2(
+																																_elm_lang$core$Basics_ops['++'],
+																																_elm_lang$core$Basics$toString(left),
+																																A2(
+																																	_elm_lang$core$Basics_ops['++'],
+																																	' ',
+																																	A2(
+																																		_elm_lang$core$Basics_ops['++'],
+																																		_elm_lang$core$Basics$toString(0),
+																																		A2(
+																																			_elm_lang$core$Basics_ops['++'],
+																																			' L ',
+																																			A2(
+																																				_elm_lang$core$Basics_ops['++'],
+																																				_elm_lang$core$Basics$toString(left + hack),
+																																				A2(
+																																					_elm_lang$core$Basics_ops['++'],
+																																					' ',
+																																					A2(
+																																						_elm_lang$core$Basics_ops['++'],
+																																						_elm_lang$core$Basics$toString(0),
+																																						A2(
+																																							_elm_lang$core$Basics_ops['++'],
+																																							' A ',
+																																							A2(
+																																								_elm_lang$core$Basics_ops['++'],
+																																								_elm_lang$core$Basics$toString(indentWidth * 6.5),
+																																								A2(
+																																									_elm_lang$core$Basics_ops['++'],
+																																									' ',
+																																									A2(
+																																										_elm_lang$core$Basics_ops['++'],
+																																										_elm_lang$core$Basics$toString(height),
+																																										A2(
+																																											_elm_lang$core$Basics_ops['++'],
+																																											' 0 0 1 ',
+																																											A2(
+																																												_elm_lang$core$Basics_ops['++'],
+																																												_elm_lang$core$Basics$toString(left),
+																																												A2(
+																																													_elm_lang$core$Basics_ops['++'],
+																																													' ',
+																																													_elm_lang$core$Basics$toString(height))))))))))))))))))))))))))))))))))))),
+										_elm_lang$svg$Svg_Attributes$stroke('black'),
+										_elm_lang$svg$Svg_Attributes$strokeWidth(
+										_elm_lang$core$Basics$toString(strokeWidth)),
+										_elm_lang$svg$Svg_Attributes$fill('none')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[]))
+							]))
 					]))
 			]));
 };
@@ -11157,7 +11227,8 @@ var _user$project$Main$init = function () {
 			width: defaultWidth,
 			horizontalSpacing: defaultHorizontalSpacing,
 			verticalSpacing: defaultVerticalSpacing,
-			strokeWidth: defaultWidth / 25
+			strokeWidth: defaultWidth / 25,
+			zoom: 1.0
 		},
 		_1: A3(
 			_elm_lang$core$Task$perform,
