@@ -8998,10 +8998,19 @@ var _elm_lang$window$Window$subMap = F2(
 	});
 _elm_lang$core$Native_Platform.effectManagers['Window'] = {pkg: 'elm-lang/window', init: _elm_lang$window$Window$init, onEffects: _elm_lang$window$Window$onEffects, onSelfMsg: _elm_lang$window$Window$onSelfMsg, tag: 'sub', subMap: _elm_lang$window$Window$subMap};
 
+var _user$project$Main$toNumber = function (value) {
+	var _p0 = _elm_lang$core$String$toFloat(value);
+	if (_p0.ctor === 'Ok') {
+		var _p1 = _p0._0;
+		return _elm_lang$core$Basics$isNaN(_p1) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(_p1);
+	} else {
+		return _elm_lang$core$Maybe$Nothing;
+	}
+};
 var _user$project$Main$update = F2(
 	function (msg, model) {
-		var _p0 = msg;
-		switch (_p0.ctor) {
+		var _p2 = msg;
+		switch (_p2.ctor) {
 			case 'DefaultWindowSize':
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'WindowResized':
@@ -9009,29 +9018,11 @@ var _user$project$Main$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{windowSize: _p0._0}),
+						{windowSize: _p2._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Width':
-				var _p1 = _elm_lang$core$String$toFloat(_p0._0);
-				if (_p1.ctor === 'Ok') {
-					var _p2 = _p1._0;
-					return _elm_lang$core$Basics$isNaN(_p2) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
-							model,
-							{
-								width: _p2,
-								horizontalSpacing: A2(_elm_lang$core$Basics$max, _p2 * 1.5, model.horizontalSpacing),
-								verticalSpacing: A2(_elm_lang$core$Basics$max, _p2 * 1.5, model.verticalSpacing)
-							}),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
-				} else {
-					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-				}
-			case 'HorizontalSpacing':
-				var _p3 = _elm_lang$core$String$toFloat(_p0._0);
+				var _p3 = _elm_lang$core$String$toFloat(_p2._0);
 				if (_p3.ctor === 'Ok') {
 					var _p4 = _p3._0;
 					return _elm_lang$core$Basics$isNaN(_p4) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
@@ -9039,16 +9030,17 @@ var _user$project$Main$update = F2(
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
 							{
-								width: A2(_elm_lang$core$Basics$min, model.width, model.horizontalSpacing / 1.5),
-								horizontalSpacing: _p4
+								width: _p4,
+								horizontalSpacing: A2(_elm_lang$core$Basics$max, _p4 * 1.5, model.horizontalSpacing),
+								verticalSpacing: A2(_elm_lang$core$Basics$max, _p4 * 1.5, model.verticalSpacing)
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
-			case 'VerticalSpacing':
-				var _p5 = _elm_lang$core$String$toFloat(_p0._0);
+			case 'HorizontalSpacing':
+				var _p5 = _elm_lang$core$String$toFloat(_p2._0);
 				if (_p5.ctor === 'Ok') {
 					var _p6 = _p5._0;
 					return _elm_lang$core$Basics$isNaN(_p6) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
@@ -9056,8 +9048,25 @@ var _user$project$Main$update = F2(
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
 							{
+								width: A2(_elm_lang$core$Basics$min, model.width, model.horizontalSpacing / 1.5),
+								horizontalSpacing: _p6
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			case 'VerticalSpacing':
+				var _p7 = _elm_lang$core$String$toFloat(_p2._0);
+				if (_p7.ctor === 'Ok') {
+					var _p8 = _p7._0;
+					return _elm_lang$core$Basics$isNaN(_p8) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
 								width: A2(_elm_lang$core$Basics$min, model.width, model.verticalSpacing / 1.5),
-								verticalSpacing: _p6
+								verticalSpacing: _p8
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
@@ -9065,28 +9074,54 @@ var _user$project$Main$update = F2(
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			case 'StrokeWidth':
-				var _p7 = _elm_lang$core$String$toFloat(_p0._0);
-				if (_p7.ctor === 'Ok') {
-					var _p8 = _p7._0;
-					return _elm_lang$core$Basics$isNaN(_p8) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
-							model,
-							{strokeWidth: _p8}),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
-				} else {
-					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-				}
-			default:
-				var _p9 = _elm_lang$core$String$toFloat(_p0._0);
+				var _p9 = _elm_lang$core$String$toFloat(_p2._0);
 				if (_p9.ctor === 'Ok') {
 					var _p10 = _p9._0;
 					return _elm_lang$core$Basics$isNaN(_p10) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
-							{zoom: _p10}),
+							{strokeWidth: _p10}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			case 'Zoom':
+				var _p11 = _elm_lang$core$String$toFloat(_p2._0);
+				if (_p11.ctor === 'Ok') {
+					var _p12 = _p11._0;
+					return _elm_lang$core$Basics$isNaN(_p12) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{zoom: _p12}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			case 'HorizontalPan':
+				var _p13 = _user$project$Main$toNumber(_p2._0);
+				if (_p13.ctor === 'Just') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{horizontalPan: _p13._0}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			default:
+				var _p14 = _user$project$Main$toNumber(_p2._0);
+				if (_p14.ctor === 'Just') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{verticalPan: _p14._0}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
@@ -9094,10 +9129,16 @@ var _user$project$Main$update = F2(
 				}
 		}
 	});
-var _user$project$Main$Model = F6(
-	function (a, b, c, d, e, f) {
-		return {windowSize: a, width: b, horizontalSpacing: c, verticalSpacing: d, strokeWidth: e, zoom: f};
+var _user$project$Main$Model = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {windowSize: a, width: b, horizontalSpacing: c, verticalSpacing: d, strokeWidth: e, zoom: f, horizontalPan: g, verticalPan: h};
 	});
+var _user$project$Main$VerticalPan = function (a) {
+	return {ctor: 'VerticalPan', _0: a};
+};
+var _user$project$Main$HorizontalPan = function (a) {
+	return {ctor: 'HorizontalPan', _0: a};
+};
 var _user$project$Main$Zoom = function (a) {
 	return {ctor: 'Zoom', _0: a};
 };
@@ -9337,6 +9378,80 @@ var _user$project$Main$view = function (model) {
 								_elm_lang$html$Html_Events$onInput(_user$project$Main$Zoom)
 							]),
 						_elm_lang$core$Native_List.fromArray(
+							[])),
+						A2(
+						_elm_lang$html$Html$label,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$for('horizontalPan')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('Horizontal pan')
+							])),
+						A2(
+						_elm_lang$html$Html$input,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$id('horizontalPan'),
+								_elm_lang$html$Html_Attributes$type$('range'),
+								_elm_lang$html$Html_Attributes$min('-1000'),
+								_elm_lang$html$Html_Attributes$max('1000'),
+								_elm_lang$html$Html_Attributes$step('10'),
+								_elm_lang$html$Html_Attributes$value(
+								_elm_lang$core$Basics$toString(model.horizontalPan)),
+								_elm_lang$html$Html_Events$onInput(_user$project$Main$HorizontalPan)
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[])),
+						A2(
+						_elm_lang$html$Html$input,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$type$('text'),
+								_elm_lang$html$Html_Attributes$placeholder('horizontalPan'),
+								_elm_lang$html$Html_Attributes$value(
+								_elm_lang$core$Basics$toString(model.horizontalPan)),
+								_elm_lang$html$Html_Events$onInput(_user$project$Main$HorizontalPan)
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[])),
+						A2(
+						_elm_lang$html$Html$label,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$for('verticalPan')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('Vertical pan')
+							])),
+						A2(
+						_elm_lang$html$Html$input,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$id('verticalPan'),
+								_elm_lang$html$Html_Attributes$type$('range'),
+								_elm_lang$html$Html_Attributes$min('-1000'),
+								_elm_lang$html$Html_Attributes$max('1000'),
+								_elm_lang$html$Html_Attributes$step('10'),
+								_elm_lang$html$Html_Attributes$value(
+								_elm_lang$core$Basics$toString(model.verticalPan)),
+								_elm_lang$html$Html_Events$onInput(_user$project$Main$VerticalPan)
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[])),
+						A2(
+						_elm_lang$html$Html$input,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$type$('text'),
+								_elm_lang$html$Html_Attributes$placeholder('verticalPan'),
+								_elm_lang$html$Html_Attributes$value(
+								_elm_lang$core$Basics$toString(model.verticalPan)),
+								_elm_lang$html$Html_Events$onInput(_user$project$Main$VerticalPan)
+							]),
+						_elm_lang$core$Native_List.fromArray(
 							[]))
 					])),
 				A2(
@@ -9352,11 +9467,23 @@ var _user$project$Main$view = function (model) {
 								_elm_lang$svg$Svg_Attributes$transform(
 								A2(
 									_elm_lang$core$Basics_ops['++'],
-									'translate(0, 0) scale(',
+									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(model.zoom),
-										')')))
+										_elm_lang$core$Basics$toString(model.horizontalPan),
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											',',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(model.verticalPan),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													') scale(',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(model.zoom),
+														')')))))))
 							]),
 						_elm_lang$core$Native_List.fromArray(
 							[
@@ -11228,7 +11355,9 @@ var _user$project$Main$init = function () {
 			horizontalSpacing: defaultHorizontalSpacing,
 			verticalSpacing: defaultVerticalSpacing,
 			strokeWidth: defaultWidth / 25,
-			zoom: 1.0
+			zoom: 1.0,
+			horizontalPan: 0,
+			verticalPan: 0
 		},
 		_1: A3(
 			_elm_lang$core$Task$perform,
