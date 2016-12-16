@@ -8528,6 +8528,188 @@ var _elm_lang$html$Html_Events$Options = F2(
 		return {stopPropagation: a, preventDefault: b};
 	});
 
+var _elm_lang$mouse$Mouse$onSelfMsg = F3(
+	function (router, _p0, state) {
+		var _p1 = _p0;
+		var _p2 = A2(_elm_lang$core$Dict$get, _p1.category, state);
+		if (_p2.ctor === 'Nothing') {
+			return _elm_lang$core$Task$succeed(state);
+		} else {
+			var send = function (tagger) {
+				return A2(
+					_elm_lang$core$Platform$sendToApp,
+					router,
+					tagger(_p1.position));
+			};
+			return A2(
+				_elm_lang$core$Task$andThen,
+				_elm_lang$core$Task$sequence(
+					A2(_elm_lang$core$List$map, send, _p2._0.taggers)),
+				function (_p3) {
+					return _elm_lang$core$Task$succeed(state);
+				});
+		}
+	});
+var _elm_lang$mouse$Mouse_ops = _elm_lang$mouse$Mouse_ops || {};
+_elm_lang$mouse$Mouse_ops['&>'] = F2(
+	function (t1, t2) {
+		return A2(
+			_elm_lang$core$Task$andThen,
+			t1,
+			function (_p4) {
+				return t2;
+			});
+	});
+var _elm_lang$mouse$Mouse$init = _elm_lang$core$Task$succeed(_elm_lang$core$Dict$empty);
+var _elm_lang$mouse$Mouse$categorizeHelpHelp = F2(
+	function (value, maybeValues) {
+		var _p5 = maybeValues;
+		if (_p5.ctor === 'Nothing') {
+			return _elm_lang$core$Maybe$Just(
+				_elm_lang$core$Native_List.fromArray(
+					[value]));
+		} else {
+			return _elm_lang$core$Maybe$Just(
+				A2(_elm_lang$core$List_ops['::'], value, _p5._0));
+		}
+	});
+var _elm_lang$mouse$Mouse$categorizeHelp = F2(
+	function (subs, subDict) {
+		categorizeHelp:
+		while (true) {
+			var _p6 = subs;
+			if (_p6.ctor === '[]') {
+				return subDict;
+			} else {
+				var _v4 = _p6._1,
+					_v5 = A3(
+					_elm_lang$core$Dict$update,
+					_p6._0._0,
+					_elm_lang$mouse$Mouse$categorizeHelpHelp(_p6._0._1),
+					subDict);
+				subs = _v4;
+				subDict = _v5;
+				continue categorizeHelp;
+			}
+		}
+	});
+var _elm_lang$mouse$Mouse$categorize = function (subs) {
+	return A2(_elm_lang$mouse$Mouse$categorizeHelp, subs, _elm_lang$core$Dict$empty);
+};
+var _elm_lang$mouse$Mouse$subscription = _elm_lang$core$Native_Platform.leaf('Mouse');
+var _elm_lang$mouse$Mouse$Position = F2(
+	function (a, b) {
+		return {x: a, y: b};
+	});
+var _elm_lang$mouse$Mouse$position = A3(
+	_elm_lang$core$Json_Decode$object2,
+	_elm_lang$mouse$Mouse$Position,
+	A2(_elm_lang$core$Json_Decode_ops[':='], 'pageX', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode_ops[':='], 'pageY', _elm_lang$core$Json_Decode$int));
+var _elm_lang$mouse$Mouse$Watcher = F2(
+	function (a, b) {
+		return {taggers: a, pid: b};
+	});
+var _elm_lang$mouse$Mouse$Msg = F2(
+	function (a, b) {
+		return {category: a, position: b};
+	});
+var _elm_lang$mouse$Mouse$onEffects = F3(
+	function (router, newSubs, oldState) {
+		var rightStep = F3(
+			function (category, taggers, task) {
+				return A2(
+					_elm_lang$core$Task$andThen,
+					task,
+					function (state) {
+						return A2(
+							_elm_lang$core$Task$andThen,
+							_elm_lang$core$Process$spawn(
+								A3(
+									_elm_lang$dom$Dom_LowLevel$onDocument,
+									category,
+									_elm_lang$mouse$Mouse$position,
+									function (_p7) {
+										return A2(
+											_elm_lang$core$Platform$sendToSelf,
+											router,
+											A2(_elm_lang$mouse$Mouse$Msg, category, _p7));
+									})),
+							function (pid) {
+								return _elm_lang$core$Task$succeed(
+									A3(
+										_elm_lang$core$Dict$insert,
+										category,
+										A2(_elm_lang$mouse$Mouse$Watcher, taggers, pid),
+										state));
+							});
+					});
+			});
+		var bothStep = F4(
+			function (category, _p8, taggers, task) {
+				var _p9 = _p8;
+				return A2(
+					_elm_lang$core$Task$andThen,
+					task,
+					function (state) {
+						return _elm_lang$core$Task$succeed(
+							A3(
+								_elm_lang$core$Dict$insert,
+								category,
+								A2(_elm_lang$mouse$Mouse$Watcher, taggers, _p9.pid),
+								state));
+					});
+			});
+		var leftStep = F3(
+			function (category, _p10, task) {
+				var _p11 = _p10;
+				return A2(
+					_elm_lang$mouse$Mouse_ops['&>'],
+					_elm_lang$core$Process$kill(_p11.pid),
+					task);
+			});
+		return A6(
+			_elm_lang$core$Dict$merge,
+			leftStep,
+			bothStep,
+			rightStep,
+			oldState,
+			_elm_lang$mouse$Mouse$categorize(newSubs),
+			_elm_lang$core$Task$succeed(_elm_lang$core$Dict$empty));
+	});
+var _elm_lang$mouse$Mouse$MySub = F2(
+	function (a, b) {
+		return {ctor: 'MySub', _0: a, _1: b};
+	});
+var _elm_lang$mouse$Mouse$clicks = function (tagger) {
+	return _elm_lang$mouse$Mouse$subscription(
+		A2(_elm_lang$mouse$Mouse$MySub, 'click', tagger));
+};
+var _elm_lang$mouse$Mouse$moves = function (tagger) {
+	return _elm_lang$mouse$Mouse$subscription(
+		A2(_elm_lang$mouse$Mouse$MySub, 'mousemove', tagger));
+};
+var _elm_lang$mouse$Mouse$downs = function (tagger) {
+	return _elm_lang$mouse$Mouse$subscription(
+		A2(_elm_lang$mouse$Mouse$MySub, 'mousedown', tagger));
+};
+var _elm_lang$mouse$Mouse$ups = function (tagger) {
+	return _elm_lang$mouse$Mouse$subscription(
+		A2(_elm_lang$mouse$Mouse$MySub, 'mouseup', tagger));
+};
+var _elm_lang$mouse$Mouse$subMap = F2(
+	function (func, _p12) {
+		var _p13 = _p12;
+		return A2(
+			_elm_lang$mouse$Mouse$MySub,
+			_p13._0,
+			function (_p14) {
+				return func(
+					_p13._1(_p14));
+			});
+	});
+_elm_lang$core$Native_Platform.effectManagers['Mouse'] = {pkg: 'elm-lang/mouse', init: _elm_lang$mouse$Mouse$init, onEffects: _elm_lang$mouse$Mouse$onEffects, onSelfMsg: _elm_lang$mouse$Mouse$onSelfMsg, tag: 'sub', subMap: _elm_lang$mouse$Mouse$subMap};
+
 var _elm_lang$svg$Svg$text = _elm_lang$virtual_dom$VirtualDom$text;
 var _elm_lang$svg$Svg$svgNamespace = A2(
 	_elm_lang$virtual_dom$VirtualDom$property,
@@ -8998,19 +9180,37 @@ var _elm_lang$window$Window$subMap = F2(
 	});
 _elm_lang$core$Native_Platform.effectManagers['Window'] = {pkg: 'elm-lang/window', init: _elm_lang$window$Window$init, onEffects: _elm_lang$window$Window$onEffects, onSelfMsg: _elm_lang$window$Window$onSelfMsg, tag: 'sub', subMap: _elm_lang$window$Window$subMap};
 
+var _user$project$Main$getPosition = function (model) {
+	var _p0 = model.drag;
+	if (_p0.ctor === 'Nothing') {
+		return model.pan;
+	} else {
+		var _p2 = _p0._0.start;
+		var _p1 = _p0._0.current;
+		return A2(_elm_lang$mouse$Mouse$Position, (model.pan.x + _p1.x) - _p2.x, (model.pan.y + _p1.y) - _p2.y);
+	}
+};
 var _user$project$Main$toNumber = function (value) {
-	var _p0 = _elm_lang$core$String$toFloat(value);
-	if (_p0.ctor === 'Ok') {
-		var _p1 = _p0._0;
-		return _elm_lang$core$Basics$isNaN(_p1) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(_p1);
+	var _p3 = _elm_lang$core$String$toFloat(value);
+	if (_p3.ctor === 'Ok') {
+		var _p4 = _p3._0;
+		return _elm_lang$core$Basics$isNaN(_p4) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(_p4);
 	} else {
 		return _elm_lang$core$Maybe$Nothing;
 	}
 };
+var _user$project$Main$Model = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {windowSize: a, width: b, horizontalSpacing: c, verticalSpacing: d, strokeWidth: e, zoom: f, pan: g, drag: h};
+	});
+var _user$project$Main$Drag = F2(
+	function (a, b) {
+		return {start: a, current: b};
+	});
 var _user$project$Main$update = F2(
 	function (msg, model) {
-		var _p2 = msg;
-		switch (_p2.ctor) {
+		var _p5 = msg;
+		switch (_p5.ctor) {
 			case 'DefaultWindowSize':
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'WindowResized':
@@ -9018,21 +9218,21 @@ var _user$project$Main$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{windowSize: _p2._0}),
+						{windowSize: _p5._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Width':
-				var _p3 = _elm_lang$core$String$toFloat(_p2._0);
-				if (_p3.ctor === 'Ok') {
-					var _p4 = _p3._0;
-					return _elm_lang$core$Basics$isNaN(_p4) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
+				var _p6 = _elm_lang$core$String$toFloat(_p5._0);
+				if (_p6.ctor === 'Ok') {
+					var _p7 = _p6._0;
+					return _elm_lang$core$Basics$isNaN(_p7) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
 							{
-								width: _p4,
-								horizontalSpacing: A2(_elm_lang$core$Basics$max, _p4 * 1.5, model.horizontalSpacing),
-								verticalSpacing: A2(_elm_lang$core$Basics$max, _p4 * 1.5, model.verticalSpacing)
+								width: _p7,
+								horizontalSpacing: A2(_elm_lang$core$Basics$max, _p7 * 1.5, model.horizontalSpacing),
+								verticalSpacing: A2(_elm_lang$core$Basics$max, _p7 * 1.5, model.verticalSpacing)
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
@@ -9040,16 +9240,16 @@ var _user$project$Main$update = F2(
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			case 'HorizontalSpacing':
-				var _p5 = _elm_lang$core$String$toFloat(_p2._0);
-				if (_p5.ctor === 'Ok') {
-					var _p6 = _p5._0;
-					return _elm_lang$core$Basics$isNaN(_p6) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
+				var _p8 = _elm_lang$core$String$toFloat(_p5._0);
+				if (_p8.ctor === 'Ok') {
+					var _p9 = _p8._0;
+					return _elm_lang$core$Basics$isNaN(_p9) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
 							{
 								width: A2(_elm_lang$core$Basics$min, model.width, model.horizontalSpacing / 1.5),
-								horizontalSpacing: _p6
+								horizontalSpacing: _p9
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
@@ -9057,16 +9257,16 @@ var _user$project$Main$update = F2(
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			case 'VerticalSpacing':
-				var _p7 = _elm_lang$core$String$toFloat(_p2._0);
-				if (_p7.ctor === 'Ok') {
-					var _p8 = _p7._0;
-					return _elm_lang$core$Basics$isNaN(_p8) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
+				var _p10 = _elm_lang$core$String$toFloat(_p5._0);
+				if (_p10.ctor === 'Ok') {
+					var _p11 = _p10._0;
+					return _elm_lang$core$Basics$isNaN(_p11) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
 							{
 								width: A2(_elm_lang$core$Basics$min, model.width, model.verticalSpacing / 1.5),
-								verticalSpacing: _p8
+								verticalSpacing: _p11
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
@@ -9074,71 +9274,97 @@ var _user$project$Main$update = F2(
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			case 'StrokeWidth':
-				var _p9 = _elm_lang$core$String$toFloat(_p2._0);
-				if (_p9.ctor === 'Ok') {
-					var _p10 = _p9._0;
-					return _elm_lang$core$Basics$isNaN(_p10) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
+				var _p12 = _elm_lang$core$String$toFloat(_p5._0);
+				if (_p12.ctor === 'Ok') {
+					var _p13 = _p12._0;
+					return _elm_lang$core$Basics$isNaN(_p13) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
-							{strokeWidth: _p10}),
+							{strokeWidth: _p13}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			case 'Zoom':
-				var _p11 = _elm_lang$core$String$toFloat(_p2._0);
-				if (_p11.ctor === 'Ok') {
-					var _p12 = _p11._0;
-					return _elm_lang$core$Basics$isNaN(_p12) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
+				var _p14 = _elm_lang$core$String$toFloat(_p5._0);
+				if (_p14.ctor === 'Ok') {
+					var _p15 = _p14._0;
+					return _elm_lang$core$Basics$isNaN(_p15) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
-							{zoom: _p12}),
+							{zoom: _p15}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
-			case 'HorizontalPan':
-				var _p13 = _user$project$Main$toNumber(_p2._0);
-				if (_p13.ctor === 'Just') {
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
+			case 'DragStart':
+				var _p16 = _p5._0;
+				return {
+					ctor: '_Tuple2',
+					_0: A2(
+						_elm_lang$core$Debug$log,
+						'model',
+						_elm_lang$core$Native_Utils.update(
 							model,
-							{horizontalPan: _p13._0}),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
-				} else {
-					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-				}
+							{
+								pan: _p16,
+								drag: _elm_lang$core$Maybe$Just(
+									A2(_user$project$Main$Drag, _p16, _p16))
+							})),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'DragAt':
+				return {
+					ctor: '_Tuple2',
+					_0: A2(
+						_elm_lang$core$Debug$log,
+						'model',
+						_elm_lang$core$Native_Utils.update(
+							model,
+							{
+								drag: A2(
+									_elm_lang$core$Maybe$map,
+									function (_p17) {
+										var _p18 = _p17;
+										return A2(_user$project$Main$Drag, _p18.start, _p5._0);
+									},
+									model.drag)
+							})),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 			default:
-				var _p14 = _user$project$Main$toNumber(_p2._0);
-				if (_p14.ctor === 'Just') {
-					return {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
+				return {
+					ctor: '_Tuple2',
+					_0: A2(
+						_elm_lang$core$Debug$log,
+						'model',
+						_elm_lang$core$Native_Utils.update(
 							model,
-							{verticalPan: _p14._0}),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
-				} else {
-					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-				}
+							{
+								pan: _user$project$Main$getPosition(model),
+								drag: _elm_lang$core$Maybe$Nothing
+							})),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 		}
 	});
-var _user$project$Main$Model = F8(
-	function (a, b, c, d, e, f, g, h) {
-		return {windowSize: a, width: b, horizontalSpacing: c, verticalSpacing: d, strokeWidth: e, zoom: f, horizontalPan: g, verticalPan: h};
-	});
-var _user$project$Main$VerticalPan = function (a) {
-	return {ctor: 'VerticalPan', _0: a};
+var _user$project$Main$DragEnd = function (a) {
+	return {ctor: 'DragEnd', _0: a};
 };
-var _user$project$Main$HorizontalPan = function (a) {
-	return {ctor: 'HorizontalPan', _0: a};
+var _user$project$Main$DragAt = function (a) {
+	return {ctor: 'DragAt', _0: a};
 };
+var _user$project$Main$DragStart = function (a) {
+	return {ctor: 'DragStart', _0: a};
+};
+var _user$project$Main$onMouseDown = A2(
+	_elm_lang$html$Html_Events$on,
+	'mousedown',
+	A2(_elm_lang$core$Json_Decode$map, _user$project$Main$DragStart, _elm_lang$mouse$Mouse$position));
 var _user$project$Main$Zoom = function (a) {
 	return {ctor: 'Zoom', _0: a};
 };
@@ -9183,7 +9409,7 @@ var _user$project$Main$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
-			[]),
+			[_user$project$Main$onMouseDown]),
 		_elm_lang$core$Native_List.fromArray(
 			[
 				A2(
@@ -9378,80 +9604,6 @@ var _user$project$Main$view = function (model) {
 								_elm_lang$html$Html_Events$onInput(_user$project$Main$Zoom)
 							]),
 						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$html$Html$label,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$for('horizontalPan')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html$text('Horizontal pan')
-							])),
-						A2(
-						_elm_lang$html$Html$input,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$id('horizontalPan'),
-								_elm_lang$html$Html_Attributes$type$('range'),
-								_elm_lang$html$Html_Attributes$min('-1000'),
-								_elm_lang$html$Html_Attributes$max('1000'),
-								_elm_lang$html$Html_Attributes$step('10'),
-								_elm_lang$html$Html_Attributes$value(
-								_elm_lang$core$Basics$toString(model.horizontalPan)),
-								_elm_lang$html$Html_Events$onInput(_user$project$Main$HorizontalPan)
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$html$Html$input,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$type$('text'),
-								_elm_lang$html$Html_Attributes$placeholder('horizontalPan'),
-								_elm_lang$html$Html_Attributes$value(
-								_elm_lang$core$Basics$toString(model.horizontalPan)),
-								_elm_lang$html$Html_Events$onInput(_user$project$Main$HorizontalPan)
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$html$Html$label,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$for('verticalPan')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html$text('Vertical pan')
-							])),
-						A2(
-						_elm_lang$html$Html$input,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$id('verticalPan'),
-								_elm_lang$html$Html_Attributes$type$('range'),
-								_elm_lang$html$Html_Attributes$min('-1000'),
-								_elm_lang$html$Html_Attributes$max('1000'),
-								_elm_lang$html$Html_Attributes$step('10'),
-								_elm_lang$html$Html_Attributes$value(
-								_elm_lang$core$Basics$toString(model.verticalPan)),
-								_elm_lang$html$Html_Events$onInput(_user$project$Main$VerticalPan)
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$html$Html$input,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$type$('text'),
-								_elm_lang$html$Html_Attributes$placeholder('verticalPan'),
-								_elm_lang$html$Html_Attributes$value(
-								_elm_lang$core$Basics$toString(model.verticalPan)),
-								_elm_lang$html$Html_Events$onInput(_user$project$Main$VerticalPan)
-							]),
-						_elm_lang$core$Native_List.fromArray(
 							[]))
 					])),
 				A2(
@@ -9470,13 +9622,13 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(model.horizontalPan),
+										_elm_lang$core$Basics$toString(model.pan.x),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											',',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(model.verticalPan),
+												_elm_lang$core$Basics$toString(model.pan.y),
 												A2(
 													_elm_lang$core$Basics_ops['++'],
 													') scale(',
@@ -11337,10 +11489,27 @@ var _user$project$Main$WindowResized = function (a) {
 	return {ctor: 'WindowResized', _0: a};
 };
 var _user$project$Main$subscriptions = function (model) {
-	return _elm_lang$window$Window$resizes(
-		function (size) {
-			return _user$project$Main$WindowResized(size);
-		});
+	return _elm_lang$core$Platform_Sub$batch(
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$window$Window$resizes(
+				function (size) {
+					return _user$project$Main$WindowResized(size);
+				}),
+				function () {
+				var _p19 = model.drag;
+				if (_p19.ctor === 'Nothing') {
+					return _elm_lang$core$Platform_Sub$none;
+				} else {
+					return _elm_lang$core$Platform_Sub$batch(
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$mouse$Mouse$moves(_user$project$Main$DragAt),
+								_elm_lang$mouse$Mouse$ups(_user$project$Main$DragEnd)
+							]));
+				}
+			}()
+			]));
 };
 var _user$project$Main$DefaultWindowSize = {ctor: 'DefaultWindowSize'};
 var _user$project$Main$init = function () {
@@ -11356,8 +11525,8 @@ var _user$project$Main$init = function () {
 			verticalSpacing: defaultVerticalSpacing,
 			strokeWidth: defaultWidth / 25,
 			zoom: 1.0,
-			horizontalPan: 0,
-			verticalPan: 0
+			pan: A2(_elm_lang$mouse$Mouse$Position, 0, 0),
+			drag: _elm_lang$core$Maybe$Nothing
 		},
 		_1: A3(
 			_elm_lang$core$Task$perform,
