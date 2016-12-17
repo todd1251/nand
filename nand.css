@@ -1,28 +1,45 @@
 html, body {
+    height: 100%;
     margin: 0;
-    padding: 0;
     overflow: hidden;
+    padding: 0;
+    width: 100%;
+}
+
+* {
+    user-select: none;
+}
+
+.container {
+    height: 100%;
+    width: 100%;
 }
 
 .controls {
-    margin-left: 1.5em;
-    width: 1px;
+    background: #eee;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 1.5em 0 0 1.5em;
+    padding: 0 0.5em 1em 0.5em;
+    user-select: none;
+    width: 150px;
 }
 
 .controls label, .controls input {
-    float: left;
+    display: block;
+    margin: 0.25em auto;
 }
 
 .controls label {
-    margin-top: 1.5em;
+    margin: 1.5em 0 0 0.5em;
 }
 
-/* FIXME: should use a class */
-svg {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
+.canvas {
     height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    user-select: none;
+    width: 100%;
     z-index: -1;
 }

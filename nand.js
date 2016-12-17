@@ -9180,7 +9180,7 @@ var _elm_lang$window$Window$subMap = F2(
 	});
 _elm_lang$core$Native_Platform.effectManagers['Window'] = {pkg: 'elm-lang/window', init: _elm_lang$window$Window$init, onEffects: _elm_lang$window$Window$onEffects, onSelfMsg: _elm_lang$window$Window$onSelfMsg, tag: 'sub', subMap: _elm_lang$window$Window$subMap};
 
-var _user$project$Main$getPosition = function (model) {
+var _user$project$Main$getPan = function (model) {
 	var _p0 = model.drag;
 	if (_p0.ctor === 'Nothing') {
 		return model.pan;
@@ -9305,49 +9305,39 @@ var _user$project$Main$update = F2(
 				var _p16 = _p5._0;
 				return {
 					ctor: '_Tuple2',
-					_0: A2(
-						_elm_lang$core$Debug$log,
-						'model',
-						_elm_lang$core$Native_Utils.update(
-							model,
-							{
-								pan: _p16,
-								drag: _elm_lang$core$Maybe$Just(
-									A2(_user$project$Main$Drag, _p16, _p16))
-							})),
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							drag: _elm_lang$core$Maybe$Just(
+								A2(_user$project$Main$Drag, _p16, _p16))
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'DragAt':
 				return {
 					ctor: '_Tuple2',
-					_0: A2(
-						_elm_lang$core$Debug$log,
-						'model',
-						_elm_lang$core$Native_Utils.update(
-							model,
-							{
-								drag: A2(
-									_elm_lang$core$Maybe$map,
-									function (_p17) {
-										var _p18 = _p17;
-										return A2(_user$project$Main$Drag, _p18.start, _p5._0);
-									},
-									model.drag)
-							})),
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							drag: A2(
+								_elm_lang$core$Maybe$map,
+								function (_p17) {
+									var _p18 = _p17;
+									return A2(_user$project$Main$Drag, _p18.start, _p5._0);
+								},
+								model.drag)
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
 				return {
 					ctor: '_Tuple2',
-					_0: A2(
-						_elm_lang$core$Debug$log,
-						'model',
-						_elm_lang$core$Native_Utils.update(
-							model,
-							{
-								pan: _user$project$Main$getPosition(model),
-								drag: _elm_lang$core$Maybe$Nothing
-							})),
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							pan: _user$project$Main$getPan(model),
+							drag: _elm_lang$core$Maybe$Nothing
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 		}
@@ -9381,6 +9371,7 @@ var _user$project$Main$Width = function (a) {
 	return {ctor: 'Width', _0: a};
 };
 var _user$project$Main$view = function (model) {
+	var fillColour = 'white';
 	var strokeWidth = model.strokeWidth;
 	var wireStrokeWidth = strokeWidth / 2;
 	var offset = A2(_elm_lang$core$Basics$max, strokeWidth, 1.5) * 2.75;
@@ -9409,7 +9400,10 @@ var _user$project$Main$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
-			[_user$project$Main$onMouseDown]),
+			[
+				_elm_lang$html$Html_Attributes$class('container'),
+				_user$project$Main$onMouseDown
+			]),
 		_elm_lang$core$Native_List.fromArray(
 			[
 				A2(
@@ -9609,7 +9603,9 @@ var _user$project$Main$view = function (model) {
 				A2(
 				_elm_lang$svg$Svg$svg,
 				_elm_lang$core$Native_List.fromArray(
-					[]),
+					[
+						_elm_lang$svg$Svg_Attributes$class('canvas')
+					]),
 				_elm_lang$core$Native_List.fromArray(
 					[
 						A2(
@@ -9622,13 +9618,15 @@ var _user$project$Main$view = function (model) {
 									'translate(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(model.pan.x),
+										_elm_lang$core$Basics$toString(
+											_user$project$Main$getPan(model).x),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											',',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(model.pan.y),
+												_elm_lang$core$Basics$toString(
+													_user$project$Main$getPan(model).y),
 												A2(
 													_elm_lang$core$Basics_ops['++'],
 													') scale(',
@@ -9695,7 +9693,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(strokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -9728,7 +9726,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -9761,7 +9759,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -9821,7 +9819,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(strokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -9854,7 +9852,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -9887,7 +9885,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -9918,7 +9916,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(strokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('white')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -10002,7 +10000,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(strokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -10034,7 +10032,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -10066,7 +10064,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -10099,7 +10097,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -10183,7 +10181,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(strokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -10214,7 +10212,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(strokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -10246,7 +10244,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -10278,7 +10276,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -10311,7 +10309,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -10344,7 +10342,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -10377,7 +10375,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -10410,7 +10408,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -10521,7 +10519,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(strokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('white')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -10554,7 +10552,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -10587,7 +10585,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -10620,7 +10618,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -10731,7 +10729,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(strokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('white')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -10762,7 +10760,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(strokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('white')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -10795,7 +10793,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -10828,7 +10826,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -10861,7 +10859,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -10972,7 +10970,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(strokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('white')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -11135,7 +11133,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(strokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -11168,7 +11166,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -11201,7 +11199,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -11234,7 +11232,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('none')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
@@ -11345,7 +11343,7 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$svg$Svg_Attributes$stroke('black'),
 										_elm_lang$svg$Svg_Attributes$strokeWidth(
 										_elm_lang$core$Basics$toString(strokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill('white')
+										_elm_lang$svg$Svg_Attributes$fill(fillColour)
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
