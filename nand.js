@@ -9180,6 +9180,108 @@ var _elm_lang$window$Window$subMap = F2(
 	});
 _elm_lang$core$Native_Platform.effectManagers['Window'] = {pkg: 'elm-lang/window', init: _elm_lang$window$Window$init, onEffects: _elm_lang$window$Window$onEffects, onSelfMsg: _elm_lang$window$Window$onSelfMsg, tag: 'sub', subMap: _elm_lang$window$Window$subMap};
 
+var _user$project$Wheel_ops = _user$project$Wheel_ops || {};
+_user$project$Wheel_ops['&>'] = F2(
+	function (t1, t2) {
+		return A2(
+			_elm_lang$core$Task$andThen,
+			t1,
+			function (_p0) {
+				return t2;
+			});
+	});
+var _user$project$Wheel$onSelfMsg = F3(
+	function (router, delta, state) {
+		var _p1 = state;
+		if (_p1.ctor === 'Nothing') {
+			return _elm_lang$core$Task$succeed(state);
+		} else {
+			var send = function (_p2) {
+				var _p3 = _p2;
+				return A2(
+					_elm_lang$core$Platform$sendToApp,
+					router,
+					_p3._0(delta));
+			};
+			return A2(
+				_user$project$Wheel_ops['&>'],
+				_elm_lang$core$Task$sequence(
+					A2(_elm_lang$core$List$map, send, _p1._0.subs)),
+				_elm_lang$core$Task$succeed(state));
+		}
+	});
+var _user$project$Wheel$init = _elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing);
+var _user$project$Wheel$subscription = _elm_lang$core$Native_Platform.leaf('Wheel');
+var _user$project$Wheel$Delta = F2(
+	function (a, b) {
+		return {x: a, y: b};
+	});
+var _user$project$Wheel$delta = A3(
+	_elm_lang$core$Json_Decode$object2,
+	_user$project$Wheel$Delta,
+	A2(_elm_lang$core$Json_Decode_ops[':='], 'deltaX', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode_ops[':='], 'deltaY', _elm_lang$core$Json_Decode$int));
+var _user$project$Wheel$onEffects = F3(
+	function (router, newSubs, oldState) {
+		var _p4 = {ctor: '_Tuple2', _0: oldState, _1: newSubs};
+		if (_p4._0.ctor === 'Nothing') {
+			if (_p4._1.ctor === '[]') {
+				return _elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing);
+			} else {
+				return A2(
+					_elm_lang$core$Task$andThen,
+					_elm_lang$core$Process$spawn(
+						A3(
+							_elm_lang$dom$Dom_LowLevel$onWindow,
+							'wheel',
+							_user$project$Wheel$delta,
+							_elm_lang$core$Platform$sendToSelf(router))),
+					function (pid) {
+						return _elm_lang$core$Task$succeed(
+							_elm_lang$core$Maybe$Just(
+								{subs: newSubs, pid: pid}));
+					});
+			}
+		} else {
+			if (_p4._1.ctor === '[]') {
+				return A2(
+					_user$project$Wheel_ops['&>'],
+					_elm_lang$core$Process$kill(_p4._0._0.pid),
+					_elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing));
+			} else {
+				return _elm_lang$core$Task$succeed(
+					_elm_lang$core$Maybe$Just(
+						{subs: newSubs, pid: _p4._0._0.pid}));
+			}
+		}
+	});
+var _user$project$Wheel$MySub = function (a) {
+	return {ctor: 'MySub', _0: a};
+};
+var _user$project$Wheel$deltas = function (tagger) {
+	return _user$project$Wheel$subscription(
+		_user$project$Wheel$MySub(tagger));
+};
+var _user$project$Wheel$xDeltas = function (tagger) {
+	return A2(
+		_elm_lang$core$Platform_Sub$map,
+		tagger,
+		_user$project$Wheel$deltas(
+			function (_) {
+				return _.x;
+			}));
+};
+var _user$project$Wheel$subMap = F2(
+	function (func, _p5) {
+		var _p6 = _p5;
+		return _user$project$Wheel$MySub(
+			function (_p7) {
+				return func(
+					_p6._0(_p7));
+			});
+	});
+_elm_lang$core$Native_Platform.effectManagers['Wheel'] = {pkg: 'user/project', init: _user$project$Wheel$init, onEffects: _user$project$Wheel$onEffects, onSelfMsg: _user$project$Wheel$onSelfMsg, tag: 'sub', subMap: _user$project$Wheel$subMap};
+
 var _user$project$Main$getPan = function (model) {
 	var _p0 = model.drag;
 	if (_p0.ctor === 'Nothing') {
@@ -9199,9 +9301,9 @@ var _user$project$Main$toNumber = function (value) {
 		return _elm_lang$core$Maybe$Nothing;
 	}
 };
-var _user$project$Main$Model = F8(
-	function (a, b, c, d, e, f, g, h) {
-		return {windowSize: a, width: b, horizontalSpacing: c, verticalSpacing: d, strokeWidth: e, zoom: f, pan: g, drag: h};
+var _user$project$Main$Model = F9(
+	function (a, b, c, d, e, f, g, h, i) {
+		return {windowSize: a, width: b, horizontalSpacing: c, verticalSpacing: d, strokeWidth: e, zoom: f, pan: g, drag: h, distanceScrolled: i};
 	});
 var _user$project$Main$Drag = F2(
 	function (a, b) {
@@ -9329,7 +9431,7 @@ var _user$project$Main$update = F2(
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			default:
+			case 'DragEnd':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -9340,8 +9442,36 @@ var _user$project$Main$update = F2(
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
+			default:
+				var distanceScrolled = A2(
+					_elm_lang$core$Debug$log,
+					'new distanceScrolled',
+					A3(
+						_elm_lang$core$Basics$clamp,
+						-2500,
+						5000,
+						A2(_elm_lang$core$Debug$log, 'old distanceScrolled', model.distanceScrolled) + A2(_elm_lang$core$Debug$log, 'delta.y', 0 - _p5._0.y)));
+				var zoomPerUnitDistance = A2(_elm_lang$core$Debug$log, 'zoomPerUnitDistance', 1 + (0.1 / 100));
+				var zoomFactor = A2(
+					_elm_lang$core$Debug$log,
+					'new zoomFactor',
+					Math.pow(
+						zoomPerUnitDistance,
+						_elm_lang$core$Basics$toFloat(distanceScrolled)));
+				return (!_elm_lang$core$Native_Utils.eq(
+					zoomFactor,
+					A2(_elm_lang$core$Debug$log, 'old zoom', model.zoom))) ? {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{zoom: zoomFactor, distanceScrolled: distanceScrolled}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				} : {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 		}
 	});
+var _user$project$Main$WheelScrolled = function (a) {
+	return {ctor: 'WheelScrolled', _0: a};
+};
 var _user$project$Main$DragEnd = function (a) {
 	return {ctor: 'DragEnd', _0: a};
 };
@@ -11490,10 +11620,7 @@ var _user$project$Main$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$batch(
 		_elm_lang$core$Native_List.fromArray(
 			[
-				_elm_lang$window$Window$resizes(
-				function (size) {
-					return _user$project$Main$WindowResized(size);
-				}),
+				_elm_lang$window$Window$resizes(_user$project$Main$WindowResized),
 				function () {
 				var _p19 = model.drag;
 				if (_p19.ctor === 'Nothing') {
@@ -11506,7 +11633,8 @@ var _user$project$Main$subscriptions = function (model) {
 								_elm_lang$mouse$Mouse$ups(_user$project$Main$DragEnd)
 							]));
 				}
-			}()
+			}(),
+				_user$project$Wheel$deltas(_user$project$Main$WheelScrolled)
 			]));
 };
 var _user$project$Main$DefaultWindowSize = {ctor: 'DefaultWindowSize'};
@@ -11524,7 +11652,8 @@ var _user$project$Main$init = function () {
 			strokeWidth: defaultWidth / 25,
 			zoom: 1.0,
 			pan: A2(_elm_lang$mouse$Mouse$Position, 0, 0),
-			drag: _elm_lang$core$Maybe$Nothing
+			drag: _elm_lang$core$Maybe$Nothing,
+			distanceScrolled: 0
 		},
 		_1: A3(
 			_elm_lang$core$Task$perform,
