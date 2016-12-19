@@ -9212,15 +9212,18 @@ var _user$project$Wheel$onSelfMsg = F3(
 	});
 var _user$project$Wheel$init = _elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing);
 var _user$project$Wheel$subscription = _elm_lang$core$Native_Platform.leaf('Wheel');
-var _user$project$Wheel$Delta = F2(
-	function (a, b) {
-		return {x: a, y: b};
+var _user$project$Wheel$Delta = F5(
+	function (a, b, c, d, e) {
+		return {wheelDelta: a, deltaX: b, deltaY: c, offsetX: d, offsetY: e};
 	});
-var _user$project$Wheel$delta = A3(
-	_elm_lang$core$Json_Decode$object2,
+var _user$project$Wheel$delta = A6(
+	_elm_lang$core$Json_Decode$object5,
 	_user$project$Wheel$Delta,
+	A2(_elm_lang$core$Json_Decode_ops[':='], 'wheelDelta', _elm_lang$core$Json_Decode$int),
 	A2(_elm_lang$core$Json_Decode_ops[':='], 'deltaX', _elm_lang$core$Json_Decode$int),
-	A2(_elm_lang$core$Json_Decode_ops[':='], 'deltaY', _elm_lang$core$Json_Decode$int));
+	A2(_elm_lang$core$Json_Decode_ops[':='], 'deltaY', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode_ops[':='], 'offsetX', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode_ops[':='], 'offsetY', _elm_lang$core$Json_Decode$int));
 var _user$project$Wheel$onEffects = F3(
 	function (router, newSubs, oldState) {
 		var _p4 = {ctor: '_Tuple2', _0: oldState, _1: newSubs};
@@ -9261,15 +9264,6 @@ var _user$project$Wheel$MySub = function (a) {
 var _user$project$Wheel$deltas = function (tagger) {
 	return _user$project$Wheel$subscription(
 		_user$project$Wheel$MySub(tagger));
-};
-var _user$project$Wheel$xDeltas = function (tagger) {
-	return A2(
-		_elm_lang$core$Platform_Sub$map,
-		tagger,
-		_user$project$Wheel$deltas(
-			function (_) {
-				return _.x;
-			}));
 };
 var _user$project$Wheel$subMap = F2(
 	function (func, _p5) {
@@ -9443,30 +9437,70 @@ var _user$project$Main$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
-				var distanceScrolled = A2(
+				var _p19 = _p5._0;
+				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -2500, 5000, model.distanceScrolled + _p19.wheelDelta);
+				var zoomPerUnitDistance = 1 + (0.1 / 100);
+				var zoom = Math.pow(
+					zoomPerUnitDistance,
+					_elm_lang$core$Basics$toFloat(distanceScrolled));
+				var absoluteCentre = A2(
 					_elm_lang$core$Debug$log,
-					'new distanceScrolled',
-					A3(
-						_elm_lang$core$Basics$clamp,
-						-2500,
-						5000,
-						A2(_elm_lang$core$Debug$log, 'old distanceScrolled', model.distanceScrolled) + A2(_elm_lang$core$Debug$log, 'delta.y', 0 - _p5._0.y)));
-				var zoomPerUnitDistance = A2(_elm_lang$core$Debug$log, 'zoomPerUnitDistance', 1 + (0.1 / 100));
-				var zoomFactor = A2(
+					'absoluteCentre',
+					A2(
+						_elm_lang$mouse$Mouse$Position,
+						_elm_lang$core$Basics$round(
+							_elm_lang$core$Basics$toFloat(model.windowSize.width) / 2),
+						_elm_lang$core$Basics$round(
+							_elm_lang$core$Basics$toFloat(model.windowSize.height) / 2)));
+				var centre = A2(
 					_elm_lang$core$Debug$log,
-					'new zoomFactor',
-					Math.pow(
-						zoomPerUnitDistance,
-						_elm_lang$core$Basics$toFloat(distanceScrolled)));
-				return (!_elm_lang$core$Native_Utils.eq(
-					zoomFactor,
-					A2(_elm_lang$core$Debug$log, 'old zoom', model.zoom))) ? {
+					'centre',
+					A2(_elm_lang$mouse$Mouse$Position, absoluteCentre.x + model.pan.x, absoluteCentre.y + model.pan.y));
+				var zoomPosition1 = A2(
+					_elm_lang$core$Debug$log,
+					'zoomPosition1',
+					A2(_elm_lang$mouse$Mouse$Position, _p19.offsetX, _p19.offsetY));
+				var zoomPosition = A2(
+					_elm_lang$core$Debug$log,
+					'zoomPosition',
+					A2(_elm_lang$mouse$Mouse$Position, absoluteCentre.x - zoomPosition1.x, absoluteCentre.y - zoomPosition1.y));
+				var distanceFromCentreToZoom = A2(
+					_elm_lang$core$Debug$log,
+					'distanceFromCentreToZoom',
+					A2(_elm_lang$mouse$Mouse$Position, zoomPosition.x - centre.x, zoomPosition.y - centre.y));
+				var zoomRatio = A2(_elm_lang$core$Debug$log, 'zoomRatio', model.zoom / zoom);
+				var a = A2(
+					_elm_lang$core$Debug$log,
+					'a',
+					A2(
+						_elm_lang$mouse$Mouse$Position,
+						_elm_lang$core$Basics$round(
+							_elm_lang$core$Basics$toFloat(distanceFromCentreToZoom.x) * zoomRatio),
+						_elm_lang$core$Basics$round(
+							_elm_lang$core$Basics$toFloat(distanceFromCentreToZoom.y) * zoomRatio)));
+				var b = A2(
+					_elm_lang$core$Debug$log,
+					'b',
+					A2(_elm_lang$mouse$Mouse$Position, zoomPosition.x - a.x, zoomPosition.y - a.y));
+				var panOffset = A2(
+					_elm_lang$core$Debug$log,
+					'panOffset',
+					A2(_elm_lang$mouse$Mouse$Position, b.x - centre.x, b.y - centre.y));
+				var newCentre = A2(
+					_elm_lang$core$Debug$log,
+					'newCentre',
+					A2(_elm_lang$mouse$Mouse$Position, centre.x + panOffset.x, centre.y + panOffset.y));
+				var pan = A2(
+					_elm_lang$core$Debug$log,
+					'pan',
+					A2(_elm_lang$mouse$Mouse$Position, newCentre.x - absoluteCentre.x, newCentre.y - absoluteCentre.y));
+				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{zoom: zoomFactor, distanceScrolled: distanceScrolled}),
+						{pan: pan, zoom: zoom, distanceScrolled: distanceScrolled}),
 					_1: _elm_lang$core$Platform_Cmd$none
-				} : {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				};
 		}
 	});
 var _user$project$Main$WheelScrolled = function (a) {
@@ -9745,24 +9779,24 @@ var _user$project$Main$view = function (model) {
 								_elm_lang$svg$Svg_Attributes$transform(
 								A2(
 									_elm_lang$core$Basics_ops['++'],
-									'translate(',
+									'scale(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(
-											_user$project$Main$getPan(model).x),
+										_elm_lang$core$Basics$toString(model.zoom),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
-											',',
+											') translate(',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
 												_elm_lang$core$Basics$toString(
-													_user$project$Main$getPan(model).y),
+													_user$project$Main$getPan(model).x),
 												A2(
 													_elm_lang$core$Basics_ops['++'],
-													') scale(',
+													',',
 													A2(
 														_elm_lang$core$Basics_ops['++'],
-														_elm_lang$core$Basics$toString(model.zoom),
+														_elm_lang$core$Basics$toString(
+															_user$project$Main$getPan(model).y),
 														')')))))))
 							]),
 						_elm_lang$core$Native_List.fromArray(
@@ -11622,8 +11656,8 @@ var _user$project$Main$subscriptions = function (model) {
 			[
 				_elm_lang$window$Window$resizes(_user$project$Main$WindowResized),
 				function () {
-				var _p19 = model.drag;
-				if (_p19.ctor === 'Nothing') {
+				var _p20 = model.drag;
+				if (_p20.ctor === 'Nothing') {
 					return _elm_lang$core$Platform_Sub$none;
 				} else {
 					return _elm_lang$core$Platform_Sub$batch(
