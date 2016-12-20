@@ -9725,43 +9725,6 @@ var _user$project$Main$view = function (model) {
 								_elm_lang$html$Html_Events$onInput(_user$project$Main$StrokeWidth)
 							]),
 						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$html$Html$label,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$for('zoom')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html$text('Zoom')
-							])),
-						A2(
-						_elm_lang$html$Html$input,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$id('zoom'),
-								_elm_lang$html$Html_Attributes$type$('range'),
-								_elm_lang$html$Html_Attributes$min('0.1'),
-								_elm_lang$html$Html_Attributes$max('10'),
-								_elm_lang$html$Html_Attributes$step('0.1'),
-								_elm_lang$html$Html_Attributes$value(
-								_elm_lang$core$Basics$toString(model.zoom)),
-								_elm_lang$html$Html_Events$onInput(_user$project$Main$Zoom)
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$html$Html$input,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$type$('text'),
-								_elm_lang$html$Html_Attributes$placeholder('zoom'),
-								_elm_lang$html$Html_Attributes$value(
-								_elm_lang$core$Basics$toString(model.zoom)),
-								_elm_lang$html$Html_Events$onInput(_user$project$Main$Zoom)
-							]),
-						_elm_lang$core$Native_List.fromArray(
 							[]))
 					])),
 				A2(
