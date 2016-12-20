@@ -9276,14 +9276,41 @@ var _user$project$Wheel$subMap = F2(
 	});
 _elm_lang$core$Native_Platform.effectManagers['Wheel'] = {pkg: 'user/project', init: _user$project$Wheel$init, onEffects: _user$project$Wheel$onEffects, onSelfMsg: _user$project$Wheel$onSelfMsg, tag: 'sub', subMap: _user$project$Wheel$subMap};
 
-var _user$project$Main$getPan = function (model) {
+var _user$project$Main$getTransform = function (model) {
 	var _p0 = model.drag;
 	if (_p0.ctor === 'Nothing') {
-		return model.pan;
+		return model.transform;
 	} else {
 		var _p2 = _p0._0.start;
 		var _p1 = _p0._0.current;
-		return A2(_elm_lang$mouse$Mouse$Position, (model.pan.x + _p1.x) - _p2.x, (model.pan.y + _p1.y) - _p2.y);
+		return _elm_lang$core$Array$fromList(
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$core$Maybe$withDefault,
+					-1,
+					A2(_elm_lang$core$Array$get, 0, model.transform)),
+					A2(
+					_elm_lang$core$Maybe$withDefault,
+					-1,
+					A2(_elm_lang$core$Array$get, 1, model.transform)),
+					A2(
+					_elm_lang$core$Maybe$withDefault,
+					-1,
+					A2(_elm_lang$core$Array$get, 2, model.transform)),
+					A2(
+					_elm_lang$core$Maybe$withDefault,
+					-1,
+					A2(_elm_lang$core$Array$get, 3, model.transform)),
+					A2(
+					_elm_lang$core$Maybe$withDefault,
+					-1,
+					A2(_elm_lang$core$Array$get, 4, model.transform)) + _elm_lang$core$Basics$toFloat(_p1.x - _p2.x),
+					A2(
+					_elm_lang$core$Maybe$withDefault,
+					-1,
+					A2(_elm_lang$core$Array$get, 5, model.transform)) + _elm_lang$core$Basics$toFloat(_p1.y - _p2.y)
+				]));
 	}
 };
 var _user$project$Main$toNumber = function (value) {
@@ -9295,9 +9322,9 @@ var _user$project$Main$toNumber = function (value) {
 		return _elm_lang$core$Maybe$Nothing;
 	}
 };
-var _user$project$Main$Model = F9(
-	function (a, b, c, d, e, f, g, h, i) {
-		return {windowSize: a, width: b, horizontalSpacing: c, verticalSpacing: d, strokeWidth: e, zoom: f, pan: g, drag: h, distanceScrolled: i};
+var _user$project$Main$Model = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {windowSize: a, width: b, horizontalSpacing: c, verticalSpacing: d, strokeWidth: e, drag: f, distanceScrolled: g, transform: h};
 	});
 var _user$project$Main$Drag = F2(
 	function (a, b) {
@@ -9383,29 +9410,15 @@ var _user$project$Main$update = F2(
 				} else {
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
-			case 'Zoom':
-				var _p14 = _elm_lang$core$String$toFloat(_p5._0);
-				if (_p14.ctor === 'Ok') {
-					var _p15 = _p14._0;
-					return _elm_lang$core$Basics$isNaN(_p15) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Native_Utils.update(
-							model,
-							{zoom: _p15}),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
-				} else {
-					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-				}
 			case 'DragStart':
-				var _p16 = _p5._0;
+				var _p14 = _p5._0;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
 							drag: _elm_lang$core$Maybe$Just(
-								A2(_user$project$Main$Drag, _p16, _p16))
+								A2(_user$project$Main$Drag, _p14, _p14))
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -9417,9 +9430,9 @@ var _user$project$Main$update = F2(
 						{
 							drag: A2(
 								_elm_lang$core$Maybe$map,
-								function (_p17) {
-									var _p18 = _p17;
-									return A2(_user$project$Main$Drag, _p18.start, _p5._0);
+								function (_p15) {
+									var _p16 = _p15;
+									return A2(_user$project$Main$Drag, _p16.start, _p5._0);
 								},
 								model.drag)
 						}),
@@ -9431,74 +9444,56 @@ var _user$project$Main$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
-							pan: _user$project$Main$getPan(model),
+							transform: _user$project$Main$getTransform(model),
 							drag: _elm_lang$core$Maybe$Nothing
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
-				var _p19 = _p5._0;
-				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -2500, 5000, model.distanceScrolled + _p19.wheelDelta);
+				var _p17 = _p5._0;
+				var pan = A2(_elm_lang$mouse$Mouse$Position, _p17.offsetX, _p17.offsetY);
+				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, model.distanceScrolled + _p17.wheelDelta);
 				var zoomPerUnitDistance = 1 + (0.1 / 100);
 				var zoom = Math.pow(
 					zoomPerUnitDistance,
+					_elm_lang$core$Basics$toFloat(model.distanceScrolled)) / Math.pow(
+					zoomPerUnitDistance,
 					_elm_lang$core$Basics$toFloat(distanceScrolled));
-				var absoluteCentre = A2(
-					_elm_lang$core$Debug$log,
-					'absoluteCentre',
-					A2(
-						_elm_lang$mouse$Mouse$Position,
-						_elm_lang$core$Basics$round(
-							_elm_lang$core$Basics$toFloat(model.windowSize.width) / 2),
-						_elm_lang$core$Basics$round(
-							_elm_lang$core$Basics$toFloat(model.windowSize.height) / 2)));
-				var centre = A2(
-					_elm_lang$core$Debug$log,
-					'centre',
-					A2(_elm_lang$mouse$Mouse$Position, absoluteCentre.x + model.pan.x, absoluteCentre.y + model.pan.y));
-				var zoomPosition1 = A2(
-					_elm_lang$core$Debug$log,
-					'zoomPosition1',
-					A2(_elm_lang$mouse$Mouse$Position, _p19.offsetX, _p19.offsetY));
-				var zoomPosition = A2(
-					_elm_lang$core$Debug$log,
-					'zoomPosition',
-					A2(_elm_lang$mouse$Mouse$Position, absoluteCentre.x - zoomPosition1.x, absoluteCentre.y - zoomPosition1.y));
-				var distanceFromCentreToZoom = A2(
-					_elm_lang$core$Debug$log,
-					'distanceFromCentreToZoom',
-					A2(_elm_lang$mouse$Mouse$Position, zoomPosition.x - centre.x, zoomPosition.y - centre.y));
-				var zoomRatio = A2(_elm_lang$core$Debug$log, 'zoomRatio', model.zoom / zoom);
-				var a = A2(
-					_elm_lang$core$Debug$log,
-					'a',
-					A2(
-						_elm_lang$mouse$Mouse$Position,
-						_elm_lang$core$Basics$round(
-							_elm_lang$core$Basics$toFloat(distanceFromCentreToZoom.x) * zoomRatio),
-						_elm_lang$core$Basics$round(
-							_elm_lang$core$Basics$toFloat(distanceFromCentreToZoom.y) * zoomRatio)));
-				var b = A2(
-					_elm_lang$core$Debug$log,
-					'b',
-					A2(_elm_lang$mouse$Mouse$Position, zoomPosition.x - a.x, zoomPosition.y - a.y));
-				var panOffset = A2(
-					_elm_lang$core$Debug$log,
-					'panOffset',
-					A2(_elm_lang$mouse$Mouse$Position, b.x - centre.x, b.y - centre.y));
-				var newCentre = A2(
-					_elm_lang$core$Debug$log,
-					'newCentre',
-					A2(_elm_lang$mouse$Mouse$Position, centre.x + panOffset.x, centre.y + panOffset.y));
-				var pan = A2(
-					_elm_lang$core$Debug$log,
-					'pan',
-					A2(_elm_lang$mouse$Mouse$Position, newCentre.x - absoluteCentre.x, newCentre.y - absoluteCentre.y));
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{pan: pan, zoom: zoom, distanceScrolled: distanceScrolled}),
+						{
+							distanceScrolled: distanceScrolled,
+							transform: _elm_lang$core$Array$fromList(
+								_elm_lang$core$Native_List.fromArray(
+									[
+										A2(
+										_elm_lang$core$Maybe$withDefault,
+										-1,
+										A2(_elm_lang$core$Array$get, 0, model.transform)) * zoom,
+										A2(
+										_elm_lang$core$Maybe$withDefault,
+										-1,
+										A2(_elm_lang$core$Array$get, 1, model.transform)) * zoom,
+										A2(
+										_elm_lang$core$Maybe$withDefault,
+										-1,
+										A2(_elm_lang$core$Array$get, 2, model.transform)) * zoom,
+										A2(
+										_elm_lang$core$Maybe$withDefault,
+										-1,
+										A2(_elm_lang$core$Array$get, 3, model.transform)) * zoom,
+										(A2(
+										_elm_lang$core$Maybe$withDefault,
+										-1,
+										A2(_elm_lang$core$Array$get, 4, model.transform)) * zoom) + ((1 - zoom) * _elm_lang$core$Basics$toFloat(pan.x)),
+										(A2(
+										_elm_lang$core$Maybe$withDefault,
+										-1,
+										A2(_elm_lang$core$Array$get, 5, model.transform)) * zoom) + ((1 - zoom) * _elm_lang$core$Basics$toFloat(pan.y))
+									]))
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 		}
@@ -9519,9 +9514,6 @@ var _user$project$Main$onMouseDown = A2(
 	_elm_lang$html$Html_Events$on,
 	'mousedown',
 	A2(_elm_lang$core$Json_Decode$map, _user$project$Main$DragStart, _elm_lang$mouse$Mouse$position));
-var _user$project$Main$Zoom = function (a) {
-	return {ctor: 'Zoom', _0: a};
-};
 var _user$project$Main$StrokeWidth = function (a) {
 	return {ctor: 'StrokeWidth', _0: a};
 };
@@ -9742,25 +9734,18 @@ var _user$project$Main$view = function (model) {
 								_elm_lang$svg$Svg_Attributes$transform(
 								A2(
 									_elm_lang$core$Basics_ops['++'],
-									'scale(',
+									'matrix(',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(model.zoom),
 										A2(
-											_elm_lang$core$Basics_ops['++'],
-											') translate(',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(
-													_user$project$Main$getPan(model).x),
+											_elm_lang$core$String$join,
+											', ',
+											_elm_lang$core$Array$toList(
 												A2(
-													_elm_lang$core$Basics_ops['++'],
-													',',
-													A2(
-														_elm_lang$core$Basics_ops['++'],
-														_elm_lang$core$Basics$toString(
-															_user$project$Main$getPan(model).y),
-														')')))))))
+													_elm_lang$core$Array$map,
+													_elm_lang$core$Basics$toString,
+													_user$project$Main$getTransform(model)))),
+										')')))
 							]),
 						_elm_lang$core$Native_List.fromArray(
 							[
@@ -11619,8 +11604,8 @@ var _user$project$Main$subscriptions = function (model) {
 			[
 				_elm_lang$window$Window$resizes(_user$project$Main$WindowResized),
 				function () {
-				var _p20 = model.drag;
-				if (_p20.ctor === 'Nothing') {
+				var _p18 = model.drag;
+				if (_p18.ctor === 'Nothing') {
 					return _elm_lang$core$Platform_Sub$none;
 				} else {
 					return _elm_lang$core$Platform_Sub$batch(
@@ -11647,10 +11632,11 @@ var _user$project$Main$init = function () {
 			horizontalSpacing: defaultHorizontalSpacing,
 			verticalSpacing: defaultVerticalSpacing,
 			strokeWidth: defaultWidth / 25,
-			zoom: 1.0,
-			pan: A2(_elm_lang$mouse$Mouse$Position, 0, 0),
 			drag: _elm_lang$core$Maybe$Nothing,
-			distanceScrolled: 0
+			distanceScrolled: 0,
+			transform: _elm_lang$core$Array$fromList(
+				_elm_lang$core$Native_List.fromArray(
+					[1, 0, 0, 1, 0, 0]))
 		},
 		_1: A3(
 			_elm_lang$core$Task$perform,
