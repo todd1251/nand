@@ -35,6 +35,7 @@ html, body {
 }
 
 .canvas {
+    background: #fafafa;
     height: 100%;
     left: 0;
     position: fixed;
