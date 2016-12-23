@@ -9345,10 +9345,10 @@ var _user$project$Main$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Width':
-				var _p6 = _elm_lang$core$String$toFloat(_p5._0);
-				if (_p6.ctor === 'Ok') {
+				var _p6 = _user$project$Main$toNumber(_p5._0);
+				if (_p6.ctor === 'Just') {
 					var _p7 = _p6._0;
-					return _elm_lang$core$Basics$isNaN(_p7) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
+					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
