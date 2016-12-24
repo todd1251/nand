@@ -9363,16 +9363,15 @@ var _user$project$Main$update = F2(
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			case 'HorizontalSpacing':
-				var _p8 = _elm_lang$core$String$toFloat(_p5._0);
-				if (_p8.ctor === 'Ok') {
-					var _p9 = _p8._0;
-					return _elm_lang$core$Basics$isNaN(_p9) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
+				var _p8 = _user$project$Main$toNumber(_p5._0);
+				if (_p8.ctor === 'Just') {
+					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
 							{
 								width: A2(_elm_lang$core$Basics$min, model.width, model.horizontalSpacing / 1.5),
-								horizontalSpacing: _p9
+								horizontalSpacing: _p8._0
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
@@ -9380,16 +9379,16 @@ var _user$project$Main$update = F2(
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			case 'VerticalSpacing':
-				var _p10 = _elm_lang$core$String$toFloat(_p5._0);
-				if (_p10.ctor === 'Ok') {
-					var _p11 = _p10._0;
-					return _elm_lang$core$Basics$isNaN(_p11) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
+				var _p9 = _elm_lang$core$String$toFloat(_p5._0);
+				if (_p9.ctor === 'Ok') {
+					var _p10 = _p9._0;
+					return _elm_lang$core$Basics$isNaN(_p10) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
 							{
 								width: A2(_elm_lang$core$Basics$min, model.width, model.verticalSpacing / 1.5),
-								verticalSpacing: _p11
+								verticalSpacing: _p10
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
@@ -9397,28 +9396,28 @@ var _user$project$Main$update = F2(
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			case 'StrokeWidth':
-				var _p12 = _elm_lang$core$String$toFloat(_p5._0);
-				if (_p12.ctor === 'Ok') {
-					var _p13 = _p12._0;
-					return _elm_lang$core$Basics$isNaN(_p13) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
+				var _p11 = _elm_lang$core$String$toFloat(_p5._0);
+				if (_p11.ctor === 'Ok') {
+					var _p12 = _p11._0;
+					return _elm_lang$core$Basics$isNaN(_p12) ? {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none} : {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
-							{strokeWidth: _p13}),
+							{strokeWidth: _p12}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
 				} else {
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			case 'DragStart':
-				var _p14 = _p5._0;
+				var _p13 = _p5._0;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
 							drag: _elm_lang$core$Maybe$Just(
-								A2(_user$project$Main$Drag, _p14, _p14))
+								A2(_user$project$Main$Drag, _p13, _p13))
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -9430,9 +9429,9 @@ var _user$project$Main$update = F2(
 						{
 							drag: A2(
 								_elm_lang$core$Maybe$map,
-								function (_p15) {
-									var _p16 = _p15;
-									return A2(_user$project$Main$Drag, _p16.start, _p5._0);
+								function (_p14) {
+									var _p15 = _p14;
+									return A2(_user$project$Main$Drag, _p15.start, _p5._0);
 								},
 								model.drag)
 						}),
@@ -9450,9 +9449,9 @@ var _user$project$Main$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
-				var _p17 = _p5._0;
-				var pan = A2(_elm_lang$mouse$Mouse$Position, _p17.offsetX, _p17.offsetY);
-				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, model.distanceScrolled + _p17.wheelDelta);
+				var _p16 = _p5._0;
+				var pan = A2(_elm_lang$mouse$Mouse$Position, _p16.offsetX, _p16.offsetY);
+				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, model.distanceScrolled + _p16.wheelDelta);
 				var zoomPerUnitDistance = 1 + (0.1 / 100);
 				var zoom = Math.pow(
 					zoomPerUnitDistance,
@@ -11604,8 +11603,8 @@ var _user$project$Main$subscriptions = function (model) {
 			[
 				_elm_lang$window$Window$resizes(_user$project$Main$WindowResized),
 				function () {
-				var _p18 = model.drag;
-				if (_p18.ctor === 'Nothing') {
+				var _p17 = model.drag;
+				if (_p17.ctor === 'Nothing') {
 					return _elm_lang$core$Platform_Sub$none;
 				} else {
 					return _elm_lang$core$Platform_Sub$batch(
