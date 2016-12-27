@@ -9331,6 +9331,20 @@ var _user$project$Main$toNumber = function (value) {
 		return _elm_lang$core$Maybe$Nothing;
 	}
 };
+var _user$project$Main$updateOrNone = F3(
+	function (model, value, update) {
+		return A3(
+			_user$project$Main$updateOrNothing,
+			model,
+			_user$project$Main$toNumber(value),
+			function (number) {
+				return {
+					ctor: '_Tuple2',
+					_0: update(number),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			});
+	});
 var _user$project$Main$Model = F8(
 	function (a, b, c, d, e, f, g, h) {
 		return {windowSize: a, width: b, horizontalSpacing: c, verticalSpacing: d, strokeWidth: e, drag: f, distanceScrolled: g, transform: h};
@@ -9355,69 +9369,53 @@ var _user$project$Main$update = F2(
 				};
 			case 'Width':
 				return A3(
-					_user$project$Main$updateOrNothing,
+					_user$project$Main$updateOrNone,
 					model,
-					_user$project$Main$toNumber(_p6._0),
+					_p6._0,
 					function (width) {
-						return {
-							ctor: '_Tuple2',
-							_0: _elm_lang$core$Native_Utils.update(
-								model,
-								{
-									width: width,
-									horizontalSpacing: A2(_elm_lang$core$Basics$max, width * 1.5, model.horizontalSpacing),
-									verticalSpacing: A2(_elm_lang$core$Basics$max, width * 1.5, model.verticalSpacing)
-								}),
-							_1: _elm_lang$core$Platform_Cmd$none
-						};
+						return _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								width: width,
+								horizontalSpacing: A2(_elm_lang$core$Basics$max, width * 1.5, model.horizontalSpacing),
+								verticalSpacing: A2(_elm_lang$core$Basics$max, width * 1.5, model.verticalSpacing)
+							});
 					});
 			case 'HorizontalSpacing':
 				return A3(
-					_user$project$Main$updateOrNothing,
+					_user$project$Main$updateOrNone,
 					model,
-					_user$project$Main$toNumber(_p6._0),
+					_p6._0,
 					function (spacing) {
-						return {
-							ctor: '_Tuple2',
-							_0: _elm_lang$core$Native_Utils.update(
-								model,
-								{
-									width: A2(_elm_lang$core$Basics$min, model.width, model.horizontalSpacing / 1.5),
-									horizontalSpacing: spacing
-								}),
-							_1: _elm_lang$core$Platform_Cmd$none
-						};
+						return _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								width: A2(_elm_lang$core$Basics$min, model.width, model.horizontalSpacing / 1.5),
+								horizontalSpacing: spacing
+							});
 					});
 			case 'VerticalSpacing':
 				return A3(
-					_user$project$Main$updateOrNothing,
+					_user$project$Main$updateOrNone,
 					model,
-					_user$project$Main$toNumber(_p6._0),
+					_p6._0,
 					function (spacing) {
-						return {
-							ctor: '_Tuple2',
-							_0: _elm_lang$core$Native_Utils.update(
-								model,
-								{
-									width: A2(_elm_lang$core$Basics$min, model.width, model.verticalSpacing / 1.5),
-									verticalSpacing: spacing
-								}),
-							_1: _elm_lang$core$Platform_Cmd$none
-						};
+						return _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								width: A2(_elm_lang$core$Basics$min, model.width, model.verticalSpacing / 1.5),
+								verticalSpacing: spacing
+							});
 					});
 			case 'StrokeWidth':
 				return A3(
-					_user$project$Main$updateOrNothing,
+					_user$project$Main$updateOrNone,
 					model,
-					_user$project$Main$toNumber(_p6._0),
+					_p6._0,
 					function (width) {
-						return {
-							ctor: '_Tuple2',
-							_0: _elm_lang$core$Native_Utils.update(
-								model,
-								{strokeWidth: width}),
-							_1: _elm_lang$core$Platform_Cmd$none
-						};
+						return _elm_lang$core$Native_Utils.update(
+							model,
+							{strokeWidth: width});
 					});
 			case 'DragStart':
 				var _p7 = _p6._0;
