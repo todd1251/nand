@@ -9313,6 +9313,59 @@ var _user$project$Main$getTransform = function (model) {
 				]));
 	}
 };
+var _user$project$Main$fromAttributes = function (attributes) {
+	return A2(
+		_elm_lang$core$List$map,
+		function (attribute) {
+			var _p3 = attribute;
+			switch (_p3.ctor) {
+				case 'StrokeWidth':
+					return _elm_lang$svg$Svg_Attributes$strokeWidth(
+						_elm_lang$core$Basics$toString(_p3._0));
+				case 'Stroke':
+					return _elm_lang$svg$Svg_Attributes$stroke(_p3._0);
+				case 'Fill':
+					return _elm_lang$svg$Svg_Attributes$fill(_p3._0);
+				default:
+					return _elm_lang$svg$Svg_Attributes$transform(
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'translate(',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								_elm_lang$core$Basics$toString(_p3._0),
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									', ',
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										_elm_lang$core$Basics$toString(_p3._1),
+										')')))));
+			}
+		},
+		attributes);
+};
+var _user$project$Main$fromShape = function (shape) {
+	var _p4 = shape;
+	return A2(
+		_elm_lang$svg$Svg$line,
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$svg$Svg_Attributes$x1(
+					_elm_lang$core$Basics$toString(_p4._0)),
+					_elm_lang$svg$Svg_Attributes$y1(
+					_elm_lang$core$Basics$toString(_p4._1)),
+					_elm_lang$svg$Svg_Attributes$x2(
+					_elm_lang$core$Basics$toString(_p4._2)),
+					_elm_lang$svg$Svg_Attributes$y2(
+					_elm_lang$core$Basics$toString(_p4._3))
+				]),
+			_user$project$Main$fromAttributes(_p4._4)),
+		_elm_lang$core$Native_List.fromArray(
+			[]));
+};
 var _user$project$Main$range = F7(
 	function (id, label, current, min, max, step, msg) {
 		return _elm_lang$core$Native_List.fromArray(
@@ -9361,18 +9414,18 @@ var _user$project$Main$range = F7(
 	});
 var _user$project$Main$updateOrNothing = F3(
 	function (model, number, update) {
-		var _p3 = number;
-		if (_p3.ctor === 'Just') {
-			return update(_p3._0);
+		var _p5 = number;
+		if (_p5.ctor === 'Just') {
+			return update(_p5._0);
 		} else {
 			return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 		}
 	});
 var _user$project$Main$toNumber = function (value) {
-	var _p4 = _elm_lang$core$String$toFloat(value);
-	if (_p4.ctor === 'Ok') {
-		var _p5 = _p4._0;
-		return _elm_lang$core$Basics$isNaN(_p5) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(_p5);
+	var _p6 = _elm_lang$core$String$toFloat(value);
+	if (_p6.ctor === 'Ok') {
+		var _p7 = _p6._0;
+		return _elm_lang$core$Basics$isNaN(_p7) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(_p7);
 	} else {
 		return _elm_lang$core$Maybe$Nothing;
 	}
@@ -9401,8 +9454,8 @@ var _user$project$Main$Drag = F2(
 	});
 var _user$project$Main$update = F2(
 	function (msg, model) {
-		var _p6 = msg;
-		switch (_p6.ctor) {
+		var _p8 = msg;
+		switch (_p8.ctor) {
 			case 'DefaultWindowSize':
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'WindowResized':
@@ -9410,14 +9463,14 @@ var _user$project$Main$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{windowSize: _p6._0}),
+						{windowSize: _p8._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Width':
 				return A3(
 					_user$project$Main$updateOrNone,
 					model,
-					_p6._0,
+					_p8._0,
 					function (width) {
 						return _elm_lang$core$Native_Utils.update(
 							model,
@@ -9431,7 +9484,7 @@ var _user$project$Main$update = F2(
 				return A3(
 					_user$project$Main$updateOrNone,
 					model,
-					_p6._0,
+					_p8._0,
 					function (spacing) {
 						return _elm_lang$core$Native_Utils.update(
 							model,
@@ -9444,7 +9497,7 @@ var _user$project$Main$update = F2(
 				return A3(
 					_user$project$Main$updateOrNone,
 					model,
-					_p6._0,
+					_p8._0,
 					function (spacing) {
 						return _elm_lang$core$Native_Utils.update(
 							model,
@@ -9453,25 +9506,25 @@ var _user$project$Main$update = F2(
 								verticalSpacing: spacing
 							});
 					});
-			case 'StrokeWidth':
+			case 'ChangeStrokeWidth':
 				return A3(
 					_user$project$Main$updateOrNone,
 					model,
-					_p6._0,
+					_p8._0,
 					function (width) {
 						return _elm_lang$core$Native_Utils.update(
 							model,
 							{strokeWidth: width});
 					});
 			case 'DragStart':
-				var _p7 = _p6._0;
+				var _p9 = _p8._0;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
 							drag: _elm_lang$core$Maybe$Just(
-								A2(_user$project$Main$Drag, _p7, _p7))
+								A2(_user$project$Main$Drag, _p9, _p9))
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -9483,9 +9536,9 @@ var _user$project$Main$update = F2(
 						{
 							drag: A2(
 								_elm_lang$core$Maybe$map,
-								function (_p8) {
-									var _p9 = _p8;
-									return A2(_user$project$Main$Drag, _p9.start, _p6._0);
+								function (_p10) {
+									var _p11 = _p10;
+									return A2(_user$project$Main$Drag, _p11.start, _p8._0);
 								},
 								model.drag)
 						}),
@@ -9503,9 +9556,9 @@ var _user$project$Main$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
-				var _p10 = _p6._0;
-				var pan = A2(_elm_lang$mouse$Mouse$Position, _p10.offsetX, _p10.offsetY);
-				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, model.distanceScrolled + _p10.wheelDelta);
+				var _p12 = _p8._0;
+				var pan = A2(_elm_lang$mouse$Mouse$Position, _p12.offsetX, _p12.offsetY);
+				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, model.distanceScrolled + _p12.wheelDelta);
 				var zoomPerUnitDistance = 1 + (0.1 / 100);
 				var zoom = Math.pow(
 					zoomPerUnitDistance,
@@ -9567,8 +9620,8 @@ var _user$project$Main$onMouseDown = A2(
 	_elm_lang$html$Html_Events$on,
 	'mousedown',
 	A2(_elm_lang$core$Json_Decode$map, _user$project$Main$DragStart, _elm_lang$mouse$Mouse$position));
-var _user$project$Main$StrokeWidth = function (a) {
-	return {ctor: 'StrokeWidth', _0: a};
+var _user$project$Main$ChangeStrokeWidth = function (a) {
+	return {ctor: 'ChangeStrokeWidth', _0: a};
 };
 var _user$project$Main$VerticalSpacing = function (a) {
 	return {ctor: 'VerticalSpacing', _0: a};
@@ -9579,8 +9632,78 @@ var _user$project$Main$HorizontalSpacing = function (a) {
 var _user$project$Main$Width = function (a) {
 	return {ctor: 'Width', _0: a};
 };
+var _user$project$Main$WindowResized = function (a) {
+	return {ctor: 'WindowResized', _0: a};
+};
+var _user$project$Main$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$batch(
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$window$Window$resizes(_user$project$Main$WindowResized),
+				function () {
+				var _p13 = model.drag;
+				if (_p13.ctor === 'Nothing') {
+					return _elm_lang$core$Platform_Sub$none;
+				} else {
+					return _elm_lang$core$Platform_Sub$batch(
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$mouse$Mouse$moves(_user$project$Main$DragAt),
+								_elm_lang$mouse$Mouse$ups(_user$project$Main$DragEnd)
+							]));
+				}
+			}(),
+				_user$project$Wheel$deltas(_user$project$Main$WheelScrolled)
+			]));
+};
+var _user$project$Main$DefaultWindowSize = {ctor: 'DefaultWindowSize'};
+var _user$project$Main$init = function () {
+	var defaultWidth = 100;
+	var defaultHorizontalSpacing = defaultWidth * 2;
+	var defaultVerticalSpacing = defaultWidth * 1.5;
+	return {
+		ctor: '_Tuple2',
+		_0: {
+			windowSize: {width: 800, height: 600},
+			width: defaultWidth,
+			horizontalSpacing: defaultHorizontalSpacing,
+			verticalSpacing: defaultVerticalSpacing,
+			strokeWidth: defaultWidth / 25,
+			drag: _elm_lang$core$Maybe$Nothing,
+			distanceScrolled: 0,
+			transform: _elm_lang$core$Array$fromList(
+				_elm_lang$core$Native_List.fromArray(
+					[1, 0, 0, 1, 0, 0]))
+		},
+		_1: A3(
+			_elm_lang$core$Task$perform,
+			function (x) {
+				return _user$project$Main$DefaultWindowSize;
+			},
+			_user$project$Main$WindowResized,
+			_elm_lang$window$Window$size)
+	};
+}();
+var _user$project$Main$Translate = F2(
+	function (a, b) {
+		return {ctor: 'Translate', _0: a, _1: b};
+	});
+var _user$project$Main$Fill = function (a) {
+	return {ctor: 'Fill', _0: a};
+};
+var _user$project$Main$Stroke = function (a) {
+	return {ctor: 'Stroke', _0: a};
+};
+var _user$project$Main$StrokeWidth = function (a) {
+	return {ctor: 'StrokeWidth', _0: a};
+};
+var _user$project$Main$Line = F5(
+	function (a, b, c, d, e) {
+		return {ctor: 'Line', _0: a, _1: b, _2: c, _3: d, _4: e};
+	});
 var _user$project$Main$view = function (model) {
 	var fillColour = 'white';
+	var strokeColour = 'black';
 	var strokeWidth = model.strokeWidth;
 	var wireStrokeWidth = strokeWidth / 2;
 	var offset = A2(_elm_lang$core$Basics$max, strokeWidth, 1.5) * 2.75;
@@ -9630,7 +9753,7 @@ var _user$project$Main$view = function (model) {
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							A7(_user$project$Main$range, 'verticalSpacing', 'Vertical spacing', model.verticalSpacing, 20, 200, 10, _user$project$Main$VerticalSpacing),
-							A7(_user$project$Main$range, 'strokeWidth', 'Stroke width', model.verticalSpacing, 1, 10, 0.5, _user$project$Main$StrokeWidth))))),
+							A7(_user$project$Main$range, 'strokeWidth', 'Stroke width', model.verticalSpacing, 1, 10, 0.5, _user$project$Main$ChangeStrokeWidth))))),
 				A2(
 				_elm_lang$svg$Svg$svg,
 				_elm_lang$core$Native_List.fromArray(
@@ -9721,72 +9844,34 @@ var _user$project$Main$view = function (model) {
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
-								A2(
-								_elm_lang$svg$Svg$line,
-								_elm_lang$core$Native_List.fromArray(
-									[
-										_elm_lang$svg$Svg_Attributes$transform(
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											'translate(',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
-												A2(
-													_elm_lang$core$Basics_ops['++'],
-													', ',
-													A2(
-														_elm_lang$core$Basics_ops['++'],
-														_elm_lang$core$Basics$toString(offsetTop + (0 * verticalSpacing)),
-														')'))))),
-										_elm_lang$svg$Svg_Attributes$x1(
-										_elm_lang$core$Basics$toString(0 - wireWidth)),
-										_elm_lang$svg$Svg_Attributes$y1(
-										_elm_lang$core$Basics$toString(halfHeight)),
-										_elm_lang$svg$Svg_Attributes$x2(
-										_elm_lang$core$Basics$toString(bufferOffset)),
-										_elm_lang$svg$Svg_Attributes$y2(
-										_elm_lang$core$Basics$toString(halfHeight)),
-										_elm_lang$svg$Svg_Attributes$stroke('black'),
-										_elm_lang$svg$Svg_Attributes$strokeWidth(
-										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill(fillColour)
-									]),
-								_elm_lang$core$Native_List.fromArray(
-									[])),
-								A2(
-								_elm_lang$svg$Svg$line,
-								_elm_lang$core$Native_List.fromArray(
-									[
-										_elm_lang$svg$Svg_Attributes$transform(
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											'translate(',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetLeft + (0 * horizontalSpacing)),
-												A2(
-													_elm_lang$core$Basics_ops['++'],
-													', ',
-													A2(
-														_elm_lang$core$Basics_ops['++'],
-														_elm_lang$core$Basics$toString(offsetTop + (0 * verticalSpacing)),
-														')'))))),
-										_elm_lang$svg$Svg_Attributes$x1(
-										_elm_lang$core$Basics$toString(gateWidth + wireWidth)),
-										_elm_lang$svg$Svg_Attributes$y1(
-										_elm_lang$core$Basics$toString(halfHeight)),
-										_elm_lang$svg$Svg_Attributes$x2(
-										_elm_lang$core$Basics$toString((bufferOffset + narrowSegmentWidth) + wireWidth)),
-										_elm_lang$svg$Svg_Attributes$y2(
-										_elm_lang$core$Basics$toString(halfHeight)),
-										_elm_lang$svg$Svg_Attributes$stroke('black'),
-										_elm_lang$svg$Svg_Attributes$strokeWidth(
-										_elm_lang$core$Basics$toString(wireStrokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill(fillColour)
-									]),
-								_elm_lang$core$Native_List.fromArray(
-									[])),
+								_user$project$Main$fromShape(
+								A5(
+									_user$project$Main$Line,
+									0 - wireWidth,
+									halfHeight,
+									bufferOffset,
+									halfHeight,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											A2(_user$project$Main$Translate, offsetLeft + (0 * horizontalSpacing), offsetTop + (0 * verticalSpacing)),
+											_user$project$Main$StrokeWidth(wireStrokeWidth),
+											_user$project$Main$Stroke(strokeColour),
+											_user$project$Main$Fill(fillColour)
+										]))),
+								_user$project$Main$fromShape(
+								A5(
+									_user$project$Main$Line,
+									gateWidth + wireWidth,
+									halfHeight,
+									(bufferOffset + narrowSegmentWidth) + wireWidth,
+									halfHeight,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											A2(_user$project$Main$Translate, offsetLeft + (0 * horizontalSpacing), offsetTop + (0 * verticalSpacing)),
+											_user$project$Main$StrokeWidth(wireStrokeWidth),
+											_user$project$Main$Stroke(strokeColour),
+											_user$project$Main$Fill(fillColour)
+										]))),
 								A2(
 								_elm_lang$svg$Svg$path,
 								_elm_lang$core$Native_List.fromArray(
@@ -11507,58 +11592,6 @@ var _user$project$Main$view = function (model) {
 					]))
 			]));
 };
-var _user$project$Main$WindowResized = function (a) {
-	return {ctor: 'WindowResized', _0: a};
-};
-var _user$project$Main$subscriptions = function (model) {
-	return _elm_lang$core$Platform_Sub$batch(
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$window$Window$resizes(_user$project$Main$WindowResized),
-				function () {
-				var _p11 = model.drag;
-				if (_p11.ctor === 'Nothing') {
-					return _elm_lang$core$Platform_Sub$none;
-				} else {
-					return _elm_lang$core$Platform_Sub$batch(
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$mouse$Mouse$moves(_user$project$Main$DragAt),
-								_elm_lang$mouse$Mouse$ups(_user$project$Main$DragEnd)
-							]));
-				}
-			}(),
-				_user$project$Wheel$deltas(_user$project$Main$WheelScrolled)
-			]));
-};
-var _user$project$Main$DefaultWindowSize = {ctor: 'DefaultWindowSize'};
-var _user$project$Main$init = function () {
-	var defaultWidth = 100;
-	var defaultHorizontalSpacing = defaultWidth * 2;
-	var defaultVerticalSpacing = defaultWidth * 1.5;
-	return {
-		ctor: '_Tuple2',
-		_0: {
-			windowSize: {width: 800, height: 600},
-			width: defaultWidth,
-			horizontalSpacing: defaultHorizontalSpacing,
-			verticalSpacing: defaultVerticalSpacing,
-			strokeWidth: defaultWidth / 25,
-			drag: _elm_lang$core$Maybe$Nothing,
-			distanceScrolled: 0,
-			transform: _elm_lang$core$Array$fromList(
-				_elm_lang$core$Native_List.fromArray(
-					[1, 0, 0, 1, 0, 0]))
-		},
-		_1: A3(
-			_elm_lang$core$Task$perform,
-			function (x) {
-				return _user$project$Main$DefaultWindowSize;
-			},
-			_user$project$Main$WindowResized,
-			_elm_lang$window$Window$size)
-	};
-}();
 var _user$project$Main$main = {
 	main: _elm_lang$html$Html_App$program(
 		{init: _user$project$Main$init, view: _user$project$Main$view, update: _user$project$Main$update, subscriptions: _user$project$Main$subscriptions})
