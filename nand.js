@@ -9313,6 +9313,52 @@ var _user$project$Main$getTransform = function (model) {
 				]));
 	}
 };
+var _user$project$Main$range = F7(
+	function (id, label, current, min, max, step, msg) {
+		return _elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$label,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$for(id)
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text(label)
+					])),
+				A2(
+				_elm_lang$html$Html$input,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$id(id),
+						_elm_lang$html$Html_Attributes$type$('range'),
+						_elm_lang$html$Html_Attributes$min(
+						_elm_lang$core$Basics$toString(min)),
+						_elm_lang$html$Html_Attributes$max(
+						_elm_lang$core$Basics$toString(max)),
+						_elm_lang$html$Html_Attributes$step(
+						_elm_lang$core$Basics$toString(step)),
+						_elm_lang$html$Html_Attributes$value(
+						_elm_lang$core$Basics$toString(current)),
+						_elm_lang$html$Html_Events$onInput(msg)
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[])),
+				A2(
+				_elm_lang$html$Html$input,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$type$('text'),
+						_elm_lang$html$Html_Attributes$placeholder(label),
+						_elm_lang$html$Html_Attributes$value(
+						_elm_lang$core$Basics$toString(current)),
+						_elm_lang$html$Html_Events$onInput(msg)
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[]))
+			]);
+	});
 var _user$project$Main$updateOrNothing = F3(
 	function (model, number, update) {
 		var _p3 = number;
@@ -9575,157 +9621,16 @@ var _user$project$Main$view = function (model) {
 					[
 						_elm_lang$html$Html_Attributes$class('controls')
 					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					A7(_user$project$Main$range, 'width', 'Width', model.width, 10, 200, 10, _user$project$Main$Width),
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						A7(_user$project$Main$range, 'horizontalSpacing', 'Horizontal spacing', model.horizontalSpacing, 20, 400, 10, _user$project$Main$HorizontalSpacing),
 						A2(
-						_elm_lang$html$Html$label,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$for('width')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html$text('Width')
-							])),
-						A2(
-						_elm_lang$html$Html$input,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$id('width'),
-								_elm_lang$html$Html_Attributes$type$('range'),
-								_elm_lang$html$Html_Attributes$min('10'),
-								_elm_lang$html$Html_Attributes$max('200'),
-								_elm_lang$html$Html_Attributes$step('10'),
-								_elm_lang$html$Html_Attributes$value(
-								_elm_lang$core$Basics$toString(model.width)),
-								_elm_lang$html$Html_Events$onInput(_user$project$Main$Width)
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$html$Html$input,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$type$('text'),
-								_elm_lang$html$Html_Attributes$placeholder('width'),
-								_elm_lang$html$Html_Attributes$value(
-								_elm_lang$core$Basics$toString(model.width)),
-								_elm_lang$html$Html_Events$onInput(_user$project$Main$Width)
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$html$Html$label,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$for('horizontalSpacing')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html$text('Horizontal spacing')
-							])),
-						A2(
-						_elm_lang$html$Html$input,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$id('horizontalSpacing'),
-								_elm_lang$html$Html_Attributes$type$('range'),
-								_elm_lang$html$Html_Attributes$min('20'),
-								_elm_lang$html$Html_Attributes$max('400'),
-								_elm_lang$html$Html_Attributes$step('10'),
-								_elm_lang$html$Html_Attributes$value(
-								_elm_lang$core$Basics$toString(model.horizontalSpacing)),
-								_elm_lang$html$Html_Events$onInput(_user$project$Main$HorizontalSpacing)
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$html$Html$input,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$type$('text'),
-								_elm_lang$html$Html_Attributes$placeholder('horizontalSpacing'),
-								_elm_lang$html$Html_Attributes$value(
-								_elm_lang$core$Basics$toString(model.horizontalSpacing)),
-								_elm_lang$html$Html_Events$onInput(_user$project$Main$HorizontalSpacing)
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$html$Html$label,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$for('verticalSpacing')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html$text('Vertical spacing')
-							])),
-						A2(
-						_elm_lang$html$Html$input,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$id('verticalSpacing'),
-								_elm_lang$html$Html_Attributes$type$('range'),
-								_elm_lang$html$Html_Attributes$min('20'),
-								_elm_lang$html$Html_Attributes$max('200'),
-								_elm_lang$html$Html_Attributes$step('10'),
-								_elm_lang$html$Html_Attributes$value(
-								_elm_lang$core$Basics$toString(model.verticalSpacing)),
-								_elm_lang$html$Html_Events$onInput(_user$project$Main$VerticalSpacing)
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$html$Html$input,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$type$('text'),
-								_elm_lang$html$Html_Attributes$placeholder('verticalSpacing'),
-								_elm_lang$html$Html_Attributes$value(
-								_elm_lang$core$Basics$toString(model.verticalSpacing)),
-								_elm_lang$html$Html_Events$onInput(_user$project$Main$VerticalSpacing)
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$html$Html$label,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$for('strokeWidth')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html$text('Stroke width')
-							])),
-						A2(
-						_elm_lang$html$Html$input,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$id('strokeWidth'),
-								_elm_lang$html$Html_Attributes$type$('range'),
-								_elm_lang$html$Html_Attributes$min('1'),
-								_elm_lang$html$Html_Attributes$max('10'),
-								_elm_lang$html$Html_Attributes$step('0.5'),
-								_elm_lang$html$Html_Attributes$value(
-								_elm_lang$core$Basics$toString(model.strokeWidth)),
-								_elm_lang$html$Html_Events$onInput(_user$project$Main$StrokeWidth)
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$html$Html$input,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$type$('text'),
-								_elm_lang$html$Html_Attributes$placeholder('strokeWidth'),
-								_elm_lang$html$Html_Attributes$value(
-								_elm_lang$core$Basics$toString(model.strokeWidth)),
-								_elm_lang$html$Html_Events$onInput(_user$project$Main$StrokeWidth)
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[]))
-					])),
+							_elm_lang$core$Basics_ops['++'],
+							A7(_user$project$Main$range, 'verticalSpacing', 'Vertical spacing', model.verticalSpacing, 20, 200, 10, _user$project$Main$VerticalSpacing),
+							A7(_user$project$Main$range, 'strokeWidth', 'Stroke width', model.verticalSpacing, 1, 10, 0.5, _user$project$Main$StrokeWidth))))),
 				A2(
 				_elm_lang$svg$Svg$svg,
 				_elm_lang$core$Native_List.fromArray(
