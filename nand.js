@@ -9347,24 +9347,43 @@ var _user$project$Main$fromAttributes = function (attributes) {
 };
 var _user$project$Main$fromShape = function (shape) {
 	var _p4 = shape;
-	return A2(
-		_elm_lang$svg$Svg$line,
-		A2(
-			_elm_lang$core$Basics_ops['++'],
+	if (_p4.ctor === 'Line') {
+		return A2(
+			_elm_lang$svg$Svg$line,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$svg$Svg_Attributes$x1(
+						_elm_lang$core$Basics$toString(_p4._0)),
+						_elm_lang$svg$Svg_Attributes$y1(
+						_elm_lang$core$Basics$toString(_p4._1)),
+						_elm_lang$svg$Svg_Attributes$x2(
+						_elm_lang$core$Basics$toString(_p4._2)),
+						_elm_lang$svg$Svg_Attributes$y2(
+						_elm_lang$core$Basics$toString(_p4._3))
+					]),
+				_user$project$Main$fromAttributes(_p4._4)),
 			_elm_lang$core$Native_List.fromArray(
-				[
-					_elm_lang$svg$Svg_Attributes$x1(
-					_elm_lang$core$Basics$toString(_p4._0)),
-					_elm_lang$svg$Svg_Attributes$y1(
-					_elm_lang$core$Basics$toString(_p4._1)),
-					_elm_lang$svg$Svg_Attributes$x2(
-					_elm_lang$core$Basics$toString(_p4._2)),
-					_elm_lang$svg$Svg_Attributes$y2(
-					_elm_lang$core$Basics$toString(_p4._3))
-				]),
-			_user$project$Main$fromAttributes(_p4._4)),
-		_elm_lang$core$Native_List.fromArray(
-			[]));
+				[]));
+	} else {
+		return A2(
+			_elm_lang$svg$Svg$circle,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$svg$Svg_Attributes$cx(
+						_elm_lang$core$Basics$toString(_p4._0)),
+						_elm_lang$svg$Svg_Attributes$cy(
+						_elm_lang$core$Basics$toString(_p4._1)),
+						_elm_lang$svg$Svg_Attributes$r(
+						_elm_lang$core$Basics$toString(_p4._2))
+					]),
+				_user$project$Main$fromAttributes(_p4._3)),
+			_elm_lang$core$Native_List.fromArray(
+				[]));
+	}
 };
 var _user$project$Main$range = F7(
 	function (id, label, current, min, max, step, msg) {
@@ -9697,6 +9716,10 @@ var _user$project$Main$Stroke = function (a) {
 var _user$project$Main$StrokeWidth = function (a) {
 	return {ctor: 'StrokeWidth', _0: a};
 };
+var _user$project$Main$Circle = F4(
+	function (a, b, c, d) {
+		return {ctor: 'Circle', _0: a, _1: b, _2: c, _3: d};
+	});
 var _user$project$Main$Line = F5(
 	function (a, b, c, d, e) {
 		return {ctor: 'Line', _0: a, _1: b, _2: c, _3: d, _4: e};
@@ -9729,6 +9752,16 @@ var _user$project$Main$view = function (model) {
 	var bufferOffset = (gateWidth - wideSegmentWidth) / 2;
 	var fullWidth = (1 * model.horizontalSpacing) + width;
 	var offsetLeft = (_elm_lang$core$Basics$toFloat(model.windowSize.width) / 2) - (fullWidth / 2);
+	var attributes = F2(
+		function (column, row) {
+			return _elm_lang$core$Native_List.fromArray(
+				[
+					A2(_user$project$Main$Translate, offsetLeft + ((column - 1) * horizontalSpacing), offsetTop + ((row - 1) * verticalSpacing)),
+					_user$project$Main$StrokeWidth(strokeWidth),
+					_user$project$Main$Stroke(strokeColour),
+					_user$project$Main$Fill(fillColour)
+				]);
+		});
 	var wireAttributes = F2(
 		function (column, row) {
 			return _elm_lang$core$Native_List.fromArray(
@@ -9763,7 +9796,7 @@ var _user$project$Main$view = function (model) {
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							A7(_user$project$Main$range, 'verticalSpacing', 'Vertical spacing', model.verticalSpacing, 20, 200, 10, _user$project$Main$VerticalSpacing),
-							A7(_user$project$Main$range, 'strokeWidth', 'Stroke width', model.verticalSpacing, 1, 10, 0.5, _user$project$Main$ChangeStrokeWidth))))),
+							A7(_user$project$Main$range, 'strokeWidth', 'Stroke width', model.strokeWidth, 1, 10, 0.5, _user$project$Main$ChangeStrokeWidth))))),
 				A2(
 				_elm_lang$svg$Svg$svg,
 				_elm_lang$core$Native_List.fromArray(
@@ -9946,37 +9979,13 @@ var _user$project$Main$view = function (model) {
 									bufferOffset + wideSegmentWidth,
 									halfHeight,
 									A2(wireAttributes, 2, 1))),
-								A2(
-								_elm_lang$svg$Svg$circle,
-								_elm_lang$core$Native_List.fromArray(
-									[
-										_elm_lang$svg$Svg_Attributes$transform(
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											'translate(',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
-												A2(
-													_elm_lang$core$Basics_ops['++'],
-													', ',
-													A2(
-														_elm_lang$core$Basics_ops['++'],
-														_elm_lang$core$Basics$toString(offsetTop + (0 * verticalSpacing)),
-														')'))))),
-										_elm_lang$svg$Svg_Attributes$cx(
-										_elm_lang$core$Basics$toString((bufferOffset + wideSegmentWidth) + inverterRadius)),
-										_elm_lang$svg$Svg_Attributes$cy(
-										_elm_lang$core$Basics$toString(halfHeight)),
-										_elm_lang$svg$Svg_Attributes$r(
-										_elm_lang$core$Basics$toString(inverterRadius)),
-										_elm_lang$svg$Svg_Attributes$stroke('black'),
-										_elm_lang$svg$Svg_Attributes$strokeWidth(
-										_elm_lang$core$Basics$toString(strokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill(fillColour)
-									]),
-								_elm_lang$core$Native_List.fromArray(
-									[])),
+								_user$project$Main$fromShape(
+								A4(
+									_user$project$Main$Circle,
+									(bufferOffset + wideSegmentWidth) + inverterRadius,
+									halfHeight,
+									inverterRadius,
+									A2(attributes, 2, 1))),
 								A2(
 								_elm_lang$svg$Svg$path,
 								_elm_lang$core$Native_List.fromArray(
@@ -10169,37 +10178,13 @@ var _user$project$Main$view = function (model) {
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
-								A2(
-								_elm_lang$svg$Svg$circle,
-								_elm_lang$core$Native_List.fromArray(
-									[
-										_elm_lang$svg$Svg_Attributes$transform(
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											'translate(',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
-												A2(
-													_elm_lang$core$Basics_ops['++'],
-													', ',
-													A2(
-														_elm_lang$core$Basics_ops['++'],
-														_elm_lang$core$Basics$toString(offsetTop + (1 * verticalSpacing)),
-														')'))))),
-										_elm_lang$svg$Svg_Attributes$cx(
-										_elm_lang$core$Basics$toString(gateWidth + inverterRadius)),
-										_elm_lang$svg$Svg_Attributes$cy(
-										_elm_lang$core$Basics$toString(halfHeight)),
-										_elm_lang$svg$Svg_Attributes$r(
-										_elm_lang$core$Basics$toString(inverterRadius)),
-										_elm_lang$svg$Svg_Attributes$stroke('black'),
-										_elm_lang$svg$Svg_Attributes$strokeWidth(
-										_elm_lang$core$Basics$toString(strokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill(fillColour)
-									]),
-								_elm_lang$core$Native_List.fromArray(
-									[])),
+								_user$project$Main$fromShape(
+								A4(
+									_user$project$Main$Circle,
+									gateWidth + inverterRadius,
+									halfHeight,
+									inverterRadius,
+									A2(attributes, 2, 2))),
 								_user$project$Main$fromShape(
 								A5(
 									_user$project$Main$Line,
@@ -10494,37 +10479,13 @@ var _user$project$Main$view = function (model) {
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
-								A2(
-								_elm_lang$svg$Svg$circle,
-								_elm_lang$core$Native_List.fromArray(
-									[
-										_elm_lang$svg$Svg_Attributes$transform(
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											'translate(',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
-												A2(
-													_elm_lang$core$Basics_ops['++'],
-													', ',
-													A2(
-														_elm_lang$core$Basics_ops['++'],
-														_elm_lang$core$Basics$toString(offsetTop + (2 * verticalSpacing)),
-														')'))))),
-										_elm_lang$svg$Svg_Attributes$cx(
-										_elm_lang$core$Basics$toString(gateWidth + inverterRadius)),
-										_elm_lang$svg$Svg_Attributes$cy(
-										_elm_lang$core$Basics$toString(halfHeight)),
-										_elm_lang$svg$Svg_Attributes$r(
-										_elm_lang$core$Basics$toString(inverterRadius)),
-										_elm_lang$svg$Svg_Attributes$stroke('black'),
-										_elm_lang$svg$Svg_Attributes$strokeWidth(
-										_elm_lang$core$Basics$toString(strokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill(fillColour)
-									]),
-								_elm_lang$core$Native_List.fromArray(
-									[])),
+								_user$project$Main$fromShape(
+								A4(
+									_user$project$Main$Circle,
+									gateWidth + inverterRadius,
+									halfHeight,
+									inverterRadius,
+									A2(attributes, 2, 3))),
 								_user$project$Main$fromShape(
 								A5(
 									_user$project$Main$Line,
@@ -10792,37 +10753,13 @@ var _user$project$Main$view = function (model) {
 									]),
 								_elm_lang$core$Native_List.fromArray(
 									[])),
-								A2(
-								_elm_lang$svg$Svg$circle,
-								_elm_lang$core$Native_List.fromArray(
-									[
-										_elm_lang$svg$Svg_Attributes$transform(
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											'translate(',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(offsetLeft + (1 * horizontalSpacing)),
-												A2(
-													_elm_lang$core$Basics_ops['++'],
-													', ',
-													A2(
-														_elm_lang$core$Basics_ops['++'],
-														_elm_lang$core$Basics$toString(offsetTop + (3 * verticalSpacing)),
-														')'))))),
-										_elm_lang$svg$Svg_Attributes$cx(
-										_elm_lang$core$Basics$toString(gateWidth + inverterRadius)),
-										_elm_lang$svg$Svg_Attributes$cy(
-										_elm_lang$core$Basics$toString(halfHeight)),
-										_elm_lang$svg$Svg_Attributes$r(
-										_elm_lang$core$Basics$toString(inverterRadius)),
-										_elm_lang$svg$Svg_Attributes$stroke('black'),
-										_elm_lang$svg$Svg_Attributes$strokeWidth(
-										_elm_lang$core$Basics$toString(strokeWidth)),
-										_elm_lang$svg$Svg_Attributes$fill(fillColour)
-									]),
-								_elm_lang$core$Native_List.fromArray(
-									[])),
+								_user$project$Main$fromShape(
+								A4(
+									_user$project$Main$Circle,
+									gateWidth + inverterRadius,
+									halfHeight,
+									inverterRadius,
+									A2(attributes, 2, 4))),
 								_user$project$Main$fromShape(
 								A5(
 									_user$project$Main$Line,
