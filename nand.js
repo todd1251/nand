@@ -9409,7 +9409,7 @@ var _user$project$Main$fromAttributes = function (attributes) {
 					return _elm_lang$svg$Svg_Attributes$stroke(_p4._0);
 				case 'Fill':
 					return _elm_lang$svg$Svg_Attributes$fill(_p4._0);
-				default:
+				case 'Translate':
 					return _elm_lang$svg$Svg_Attributes$transform(
 						A2(
 							_elm_lang$core$Basics_ops['++'],
@@ -9424,6 +9424,19 @@ var _user$project$Main$fromAttributes = function (attributes) {
 										_elm_lang$core$Basics_ops['++'],
 										_elm_lang$core$Basics$toString(_p4._1),
 										')')))));
+				default:
+					return _elm_lang$svg$Svg_Attributes$transform(
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'matrix(',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								A2(
+									_elm_lang$core$String$join,
+									', ',
+									_elm_lang$core$Array$toList(
+										A2(_elm_lang$core$Array$map, _elm_lang$core$Basics$toString, _p4._0))),
+								')')));
 			}
 		},
 		attributes);
@@ -9467,7 +9480,7 @@ var _user$project$Main$fromShape = function (shape) {
 					_user$project$Main$fromAttributes(_p5._3)),
 				_elm_lang$core$Native_List.fromArray(
 					[]));
-		default:
+		case 'Path':
 			return A2(
 				_elm_lang$svg$Svg$path,
 				A2(
@@ -9480,6 +9493,11 @@ var _user$project$Main$fromShape = function (shape) {
 					_user$project$Main$fromAttributes(_p5._1)),
 				_elm_lang$core$Native_List.fromArray(
 					[]));
+		default:
+			return A2(
+				_elm_lang$svg$Svg$g,
+				_user$project$Main$fromAttributes(_p5._0),
+				A2(_elm_lang$core$List$map, _user$project$Main$fromShape, _p5._1));
 	}
 };
 var _user$project$Main$range = F7(
@@ -9800,6 +9818,9 @@ var _user$project$Main$init = function () {
 			_elm_lang$window$Window$size)
 	};
 }();
+var _user$project$Main$Transform = function (a) {
+	return {ctor: 'Transform', _0: a};
+};
 var _user$project$Main$Translate = F2(
 	function (a, b) {
 		return {ctor: 'Translate', _0: a, _1: b};
@@ -9828,6 +9849,10 @@ var _user$project$Main$LineTo = F2(
 var _user$project$Main$MoveTo = F2(
 	function (a, b) {
 		return {ctor: 'MoveTo', _0: a, _1: b};
+	});
+var _user$project$Main$Group = F2(
+	function (a, b) {
+		return {ctor: 'Group', _0: a, _1: b};
 	});
 var _user$project$Main$Path = F2(
 	function (a, b) {
@@ -9932,30 +9957,17 @@ var _user$project$Main$view = function (model) {
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[
+						_user$project$Main$fromShape(
 						A2(
-						_elm_lang$svg$Svg$g,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$svg$Svg_Attributes$transform(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'matrix(',
+							_user$project$Main$Group,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_user$project$Main$Transform(
+									_user$project$Main$getTransform(model))
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[
 									A2(
-										_elm_lang$core$Basics_ops['++'],
-										A2(
-											_elm_lang$core$String$join,
-											', ',
-											_elm_lang$core$Array$toList(
-												A2(
-													_elm_lang$core$Array$map,
-													_elm_lang$core$Basics$toString,
-													_user$project$Main$getTransform(model)))),
-										')')))
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_user$project$Main$fromShape(
-								A2(
 									_user$project$Main$Path,
 									_elm_lang$core$Native_List.fromArray(
 										[
@@ -9964,25 +9976,22 @@ var _user$project$Main$view = function (model) {
 											A2(_user$project$Main$LineTo, bufferOffset, height),
 											_user$project$Main$Close
 										]),
-									A2(attributes, 1, 1))),
-								_user$project$Main$fromShape(
-								A5(
+									A2(attributes, 1, 1)),
+									A5(
 									_user$project$Main$Line,
 									0 - wireWidth,
 									halfHeight,
 									bufferOffset,
 									halfHeight,
-									A2(wireAttributes, 1, 1))),
-								_user$project$Main$fromShape(
-								A5(
+									A2(wireAttributes, 1, 1)),
+									A5(
 									_user$project$Main$Line,
 									gateWidth + wireWidth,
 									halfHeight,
 									(bufferOffset + narrowSegmentWidth) + wireWidth,
 									halfHeight,
-									A2(wireAttributes, 1, 1))),
-								_user$project$Main$fromShape(
-								A2(
+									A2(wireAttributes, 1, 1)),
+									A2(
 									_user$project$Main$Path,
 									_elm_lang$core$Native_List.fromArray(
 										[
@@ -9991,32 +10000,28 @@ var _user$project$Main$view = function (model) {
 											A2(_user$project$Main$LineTo, bufferOffset, height),
 											_user$project$Main$Close
 										]),
-									A2(attributes, 2, 1))),
-								_user$project$Main$fromShape(
-								A5(
+									A2(attributes, 2, 1)),
+									A5(
 									_user$project$Main$Line,
 									0 - wireWidth,
 									halfHeight,
 									bufferOffset,
 									halfHeight,
-									A2(wireAttributes, 2, 1))),
-								_user$project$Main$fromShape(
-								A5(
+									A2(wireAttributes, 2, 1)),
+									A5(
 									_user$project$Main$Line,
 									(gateWidth + wireWidth) + inverterRadius,
 									halfHeight,
 									bufferOffset + wideSegmentWidth,
 									halfHeight,
-									A2(wireAttributes, 2, 1))),
-								_user$project$Main$fromShape(
-								A4(
+									A2(wireAttributes, 2, 1)),
+									A4(
 									_user$project$Main$Circle,
 									(bufferOffset + wideSegmentWidth) + inverterRadius,
 									halfHeight,
 									inverterRadius,
-									A2(attributes, 2, 1))),
-								_user$project$Main$fromShape(
-								A2(
+									A2(attributes, 2, 1)),
+									A2(
 									_user$project$Main$Path,
 									_elm_lang$core$Native_List.fromArray(
 										[
@@ -10027,33 +10032,29 @@ var _user$project$Main$view = function (model) {
 											_user$project$Main$HorizontalLineTo(0),
 											_user$project$Main$Close
 										]),
-									A2(attributes, 1, 2))),
-								_user$project$Main$fromShape(
-								A5(
+									A2(attributes, 1, 2)),
+									A5(
 									_user$project$Main$Line,
 									0 - wireWidth,
 									quarterHeight,
 									0,
 									quarterHeight,
-									A2(wireAttributes, 1, 2))),
-								_user$project$Main$fromShape(
-								A5(
+									A2(wireAttributes, 1, 2)),
+									A5(
 									_user$project$Main$Line,
 									0 - wireWidth,
 									threeQuarterHeight,
 									0,
 									threeQuarterHeight,
-									A2(wireAttributes, 1, 2))),
-								_user$project$Main$fromShape(
-								A5(
+									A2(wireAttributes, 1, 2)),
+									A5(
 									_user$project$Main$Line,
 									gateWidth,
 									halfHeight,
 									gateWidth + wireWidth,
 									halfHeight,
-									A2(wireAttributes, 1, 2))),
-								_user$project$Main$fromShape(
-								A2(
+									A2(wireAttributes, 1, 2)),
+									A2(
 									_user$project$Main$Path,
 									_elm_lang$core$Native_List.fromArray(
 										[
@@ -10064,64 +10065,56 @@ var _user$project$Main$view = function (model) {
 											_user$project$Main$HorizontalLineTo(0),
 											_user$project$Main$Close
 										]),
-									A2(attributes, 2, 2))),
-								_user$project$Main$fromShape(
-								A4(
+									A2(attributes, 2, 2)),
+									A4(
 									_user$project$Main$Circle,
 									gateWidth + inverterRadius,
 									halfHeight,
 									inverterRadius,
-									A2(attributes, 2, 2))),
-								_user$project$Main$fromShape(
-								A5(
+									A2(attributes, 2, 2)),
+									A5(
 									_user$project$Main$Line,
 									0 - wireWidth,
 									quarterHeight,
 									0,
 									quarterHeight,
-									A2(wireAttributes, 2, 2))),
-								_user$project$Main$fromShape(
-								A5(
+									A2(wireAttributes, 2, 2)),
+									A5(
 									_user$project$Main$Line,
 									0 - wireWidth,
 									threeQuarterHeight,
 									0,
 									threeQuarterHeight,
-									A2(wireAttributes, 2, 2))),
-								_user$project$Main$fromShape(
-								A5(
+									A2(wireAttributes, 2, 2)),
+									A5(
 									_user$project$Main$Line,
 									gateWidth + (2 * inverterRadius),
 									halfHeight,
 									(gateWidth + (2 * inverterRadius)) + wireWidth,
 									halfHeight,
-									A2(wireAttributes, 2, 2))),
-								_user$project$Main$fromShape(
-								A5(
+									A2(wireAttributes, 2, 2)),
+									A5(
 									_user$project$Main$Line,
 									0 - wireWidth,
 									quarterHeight,
 									indentWidth,
 									quarterHeight,
-									A2(wireAttributes, 1, 3))),
-								_user$project$Main$fromShape(
-								A5(
+									A2(wireAttributes, 1, 3)),
+									A5(
 									_user$project$Main$Line,
 									0 - wireWidth,
 									threeQuarterHeight,
 									indentWidth,
 									threeQuarterHeight,
-									A2(wireAttributes, 1, 3))),
-								_user$project$Main$fromShape(
-								A5(
+									A2(wireAttributes, 1, 3)),
+									A5(
 									_user$project$Main$Line,
 									gateWidth,
 									halfHeight,
 									gateWidth + wireWidth,
 									halfHeight,
-									A2(wireAttributes, 1, 3))),
-								_user$project$Main$fromShape(
-								A2(
+									A2(wireAttributes, 1, 3)),
+									A2(
 									_user$project$Main$Path,
 									_elm_lang$core$Native_List.fromArray(
 										[
@@ -10133,33 +10126,29 @@ var _user$project$Main$view = function (model) {
 											A7(_user$project$Main$Arc, indentWidth * 6, height, 0, false, false, 0, 0),
 											_user$project$Main$Close
 										]),
-									A2(attributes, 1, 3))),
-								_user$project$Main$fromShape(
-								A5(
+									A2(attributes, 1, 3)),
+									A5(
 									_user$project$Main$Line,
 									0 - wireWidth,
 									quarterHeight,
 									indentWidth,
 									quarterHeight,
-									A2(wireAttributes, 2, 3))),
-								_user$project$Main$fromShape(
-								A5(
+									A2(wireAttributes, 2, 3)),
+									A5(
 									_user$project$Main$Line,
 									0 - wireWidth,
 									threeQuarterHeight,
 									indentWidth,
 									threeQuarterHeight,
-									A2(wireAttributes, 2, 3))),
-								_user$project$Main$fromShape(
-								A5(
+									A2(wireAttributes, 2, 3)),
+									A5(
 									_user$project$Main$Line,
 									gateWidth + (2 * inverterRadius),
 									halfHeight,
 									(gateWidth + (2 * inverterRadius)) + wireWidth,
 									halfHeight,
-									A2(wireAttributes, 2, 3))),
-								_user$project$Main$fromShape(
-								A2(
+									A2(wireAttributes, 2, 3)),
+									A2(
 									_user$project$Main$Path,
 									_elm_lang$core$Native_List.fromArray(
 										[
@@ -10171,40 +10160,35 @@ var _user$project$Main$view = function (model) {
 											A7(_user$project$Main$Arc, indentWidth * 6, height, 0, false, false, 0, 0),
 											_user$project$Main$Close
 										]),
-									A2(attributes, 2, 3))),
-								_user$project$Main$fromShape(
-								A4(
+									A2(attributes, 2, 3)),
+									A4(
 									_user$project$Main$Circle,
 									gateWidth + inverterRadius,
 									halfHeight,
 									inverterRadius,
-									A2(attributes, 2, 3))),
-								_user$project$Main$fromShape(
-								A5(
+									A2(attributes, 2, 3)),
+									A5(
 									_user$project$Main$Line,
 									0 - wireWidth,
 									quarterHeight,
 									indentWidth,
 									quarterHeight,
-									A2(wireAttributes, 1, 4))),
-								_user$project$Main$fromShape(
-								A5(
+									A2(wireAttributes, 1, 4)),
+									A5(
 									_user$project$Main$Line,
 									0 - wireWidth,
 									threeQuarterHeight,
 									indentWidth,
 									threeQuarterHeight,
-									A2(wireAttributes, 1, 4))),
-								_user$project$Main$fromShape(
-								A5(
+									A2(wireAttributes, 1, 4)),
+									A5(
 									_user$project$Main$Line,
 									gateWidth,
 									halfHeight,
 									gateWidth + wireWidth,
 									halfHeight,
-									A2(wireAttributes, 1, 4))),
-								_user$project$Main$fromShape(
-								A2(
+									A2(wireAttributes, 1, 4)),
+									A2(
 									_user$project$Main$Path,
 									_elm_lang$core$Native_List.fromArray(
 										[
@@ -10216,9 +10200,8 @@ var _user$project$Main$view = function (model) {
 											A7(_user$project$Main$Arc, indentWidth * 6, height, 0, false, false, 0, 0),
 											_user$project$Main$Close
 										]),
-									A2(attributes, 1, 4))),
-								_user$project$Main$fromShape(
-								A2(
+									A2(attributes, 1, 4)),
+									A2(
 									_user$project$Main$Path,
 									_elm_lang$core$Native_List.fromArray(
 										[
@@ -10229,40 +10212,35 @@ var _user$project$Main$view = function (model) {
 											A2(_user$project$Main$LineTo, left + hack, 0),
 											A7(_user$project$Main$Arc, indentWidth * 6.5, height, 0, false, true, left, height)
 										]),
-									A2(transparentAttributes, 1, 4))),
-								_user$project$Main$fromShape(
-								A4(
+									A2(transparentAttributes, 1, 4)),
+									A4(
 									_user$project$Main$Circle,
 									gateWidth + inverterRadius,
 									halfHeight,
 									inverterRadius,
-									A2(attributes, 2, 4))),
-								_user$project$Main$fromShape(
-								A5(
+									A2(attributes, 2, 4)),
+									A5(
 									_user$project$Main$Line,
 									0 - wireWidth,
 									quarterHeight,
 									indentWidth,
 									quarterHeight,
-									A2(wireAttributes, 2, 4))),
-								_user$project$Main$fromShape(
-								A5(
+									A2(wireAttributes, 2, 4)),
+									A5(
 									_user$project$Main$Line,
 									0 - wireWidth,
 									threeQuarterHeight,
 									indentWidth,
 									threeQuarterHeight,
-									A2(wireAttributes, 2, 4))),
-								_user$project$Main$fromShape(
-								A5(
+									A2(wireAttributes, 2, 4)),
+									A5(
 									_user$project$Main$Line,
 									gateWidth + (2 * inverterRadius),
 									halfHeight,
 									(gateWidth + (2 * inverterRadius)) + wireWidth,
 									halfHeight,
-									A2(wireAttributes, 2, 4))),
-								_user$project$Main$fromShape(
-								A2(
+									A2(wireAttributes, 2, 4)),
+									A2(
 									_user$project$Main$Path,
 									_elm_lang$core$Native_List.fromArray(
 										[
@@ -10274,9 +10252,8 @@ var _user$project$Main$view = function (model) {
 											A7(_user$project$Main$Arc, indentWidth * 6, height, 0, false, false, 0, 0),
 											_user$project$Main$Close
 										]),
-									A2(attributes, 2, 4))),
-								_user$project$Main$fromShape(
-								A2(
+									A2(attributes, 2, 4)),
+									A2(
 									_user$project$Main$Path,
 									_elm_lang$core$Native_List.fromArray(
 										[
@@ -10287,8 +10264,8 @@ var _user$project$Main$view = function (model) {
 											A2(_user$project$Main$LineTo, left + hack, 0),
 											A7(_user$project$Main$Arc, indentWidth * 6.5, height, 0, false, true, left, height)
 										]),
-									A2(transparentAttributes, 2, 4)))
-							]))
+									A2(transparentAttributes, 2, 4))
+								])))
 					]))
 			]));
 };
