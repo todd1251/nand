@@ -9276,43 +9276,6 @@ var _user$project$Wheel$subMap = F2(
 	});
 _elm_lang$core$Native_Platform.effectManagers['Wheel'] = {pkg: 'user/project', init: _user$project$Wheel$init, onEffects: _user$project$Wheel$onEffects, onSelfMsg: _user$project$Wheel$onSelfMsg, tag: 'sub', subMap: _user$project$Wheel$subMap};
 
-var _user$project$Main$getTransform = function (model) {
-	var _p0 = model.drag;
-	if (_p0.ctor === 'Nothing') {
-		return model.transform;
-	} else {
-		var _p2 = _p0._0.start;
-		var _p1 = _p0._0.current;
-		return _elm_lang$core$Array$fromList(
-			_elm_lang$core$Native_List.fromArray(
-				[
-					A2(
-					_elm_lang$core$Maybe$withDefault,
-					-1,
-					A2(_elm_lang$core$Array$get, 0, model.transform)),
-					A2(
-					_elm_lang$core$Maybe$withDefault,
-					-1,
-					A2(_elm_lang$core$Array$get, 1, model.transform)),
-					A2(
-					_elm_lang$core$Maybe$withDefault,
-					-1,
-					A2(_elm_lang$core$Array$get, 2, model.transform)),
-					A2(
-					_elm_lang$core$Maybe$withDefault,
-					-1,
-					A2(_elm_lang$core$Array$get, 3, model.transform)),
-					A2(
-					_elm_lang$core$Maybe$withDefault,
-					-1,
-					A2(_elm_lang$core$Array$get, 4, model.transform)) + _elm_lang$core$Basics$toFloat(_p1.x - _p2.x),
-					A2(
-					_elm_lang$core$Maybe$withDefault,
-					-1,
-					A2(_elm_lang$core$Array$get, 5, model.transform)) + _elm_lang$core$Basics$toFloat(_p1.y - _p2.y)
-				]));
-	}
-};
 var _user$project$Main$fromDescription = function (description) {
 	return A2(
 		_elm_lang$core$String$join,
@@ -9320,76 +9283,76 @@ var _user$project$Main$fromDescription = function (description) {
 		A2(
 			_elm_lang$core$List$map,
 			function (description) {
-				var _p3 = description;
-				switch (_p3.ctor) {
+				var _p0 = description;
+				switch (_p0.ctor) {
 					case 'MoveTo':
 						return A2(
 							_elm_lang$core$Basics_ops['++'],
 							'M ',
 							A2(
 								_elm_lang$core$Basics_ops['++'],
-								_elm_lang$core$Basics$toString(_p3._0),
+								_elm_lang$core$Basics$toString(_p0._0),
 								A2(
 									_elm_lang$core$Basics_ops['++'],
 									', ',
-									_elm_lang$core$Basics$toString(_p3._1))));
+									_elm_lang$core$Basics$toString(_p0._1))));
 					case 'LineTo':
 						return A2(
 							_elm_lang$core$Basics_ops['++'],
 							'L ',
 							A2(
 								_elm_lang$core$Basics_ops['++'],
-								_elm_lang$core$Basics$toString(_p3._0),
+								_elm_lang$core$Basics$toString(_p0._0),
 								A2(
 									_elm_lang$core$Basics_ops['++'],
 									', ',
-									_elm_lang$core$Basics$toString(_p3._1))));
+									_elm_lang$core$Basics$toString(_p0._1))));
 					case 'HorizontalLineTo':
 						return A2(
 							_elm_lang$core$Basics_ops['++'],
 							'H ',
-							_elm_lang$core$Basics$toString(_p3._0));
+							_elm_lang$core$Basics$toString(_p0._0));
 					case 'Arc':
 						return A2(
 							_elm_lang$core$Basics_ops['++'],
 							'A ',
 							A2(
 								_elm_lang$core$Basics_ops['++'],
-								_elm_lang$core$Basics$toString(_p3._0),
+								_elm_lang$core$Basics$toString(_p0._0),
 								A2(
 									_elm_lang$core$Basics_ops['++'],
 									', ',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(_p3._1),
+										_elm_lang$core$Basics$toString(_p0._1),
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											' ',
 											A2(
 												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(_p3._2),
+												_elm_lang$core$Basics$toString(_p0._2),
 												A2(
 													_elm_lang$core$Basics_ops['++'],
 													' ',
 													A2(
 														_elm_lang$core$Basics_ops['++'],
-														_p3._3 ? '1' : '0',
+														_p0._3 ? '1' : '0',
 														A2(
 															_elm_lang$core$Basics_ops['++'],
 															' ',
 															A2(
 																_elm_lang$core$Basics_ops['++'],
-																_p3._4 ? '1' : '0',
+																_p0._4 ? '1' : '0',
 																A2(
 																	_elm_lang$core$Basics_ops['++'],
 																	' ',
 																	A2(
 																		_elm_lang$core$Basics_ops['++'],
-																		_elm_lang$core$Basics$toString(_p3._5),
+																		_elm_lang$core$Basics$toString(_p0._5),
 																		A2(
 																			_elm_lang$core$Basics_ops['++'],
 																			', ',
-																			_elm_lang$core$Basics$toString(_p3._6))))))))))))));
+																			_elm_lang$core$Basics$toString(_p0._6))))))))))))));
 					default:
 						return 'Z';
 				}
@@ -9400,30 +9363,15 @@ var _user$project$Main$fromAttributes = function (attributes) {
 	return A2(
 		_elm_lang$core$List$map,
 		function (attribute) {
-			var _p4 = attribute;
-			switch (_p4.ctor) {
+			var _p1 = attribute;
+			switch (_p1.ctor) {
 				case 'StrokeWidth':
 					return _elm_lang$svg$Svg_Attributes$strokeWidth(
-						_elm_lang$core$Basics$toString(_p4._0));
+						_elm_lang$core$Basics$toString(_p1._0));
 				case 'Stroke':
-					return _elm_lang$svg$Svg_Attributes$stroke(_p4._0);
+					return _elm_lang$svg$Svg_Attributes$stroke(_p1._0);
 				case 'Fill':
-					return _elm_lang$svg$Svg_Attributes$fill(_p4._0);
-				case 'Translate':
-					return _elm_lang$svg$Svg_Attributes$transform(
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							'translate(',
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								_elm_lang$core$Basics$toString(_p4._0),
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									', ',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(_p4._1),
-										')')))));
+					return _elm_lang$svg$Svg_Attributes$fill(_p1._0);
 				default:
 					return _elm_lang$svg$Svg_Attributes$transform(
 						A2(
@@ -9435,15 +9383,15 @@ var _user$project$Main$fromAttributes = function (attributes) {
 									_elm_lang$core$String$join,
 									', ',
 									_elm_lang$core$Array$toList(
-										A2(_elm_lang$core$Array$map, _elm_lang$core$Basics$toString, _p4._0))),
+										A2(_elm_lang$core$Array$map, _elm_lang$core$Basics$toString, _p1._0))),
 								')')));
 			}
 		},
 		attributes);
 };
 var _user$project$Main$fromShape = function (shape) {
-	var _p5 = shape;
-	switch (_p5.ctor) {
+	var _p2 = shape;
+	switch (_p2.ctor) {
 		case 'Line':
 			return A2(
 				_elm_lang$svg$Svg$line,
@@ -9452,15 +9400,15 @@ var _user$project$Main$fromShape = function (shape) {
 					_elm_lang$core$Native_List.fromArray(
 						[
 							_elm_lang$svg$Svg_Attributes$x1(
-							_elm_lang$core$Basics$toString(_p5._0)),
+							_elm_lang$core$Basics$toString(_p2._0)),
 							_elm_lang$svg$Svg_Attributes$y1(
-							_elm_lang$core$Basics$toString(_p5._1)),
+							_elm_lang$core$Basics$toString(_p2._1)),
 							_elm_lang$svg$Svg_Attributes$x2(
-							_elm_lang$core$Basics$toString(_p5._2)),
+							_elm_lang$core$Basics$toString(_p2._2)),
 							_elm_lang$svg$Svg_Attributes$y2(
-							_elm_lang$core$Basics$toString(_p5._3))
+							_elm_lang$core$Basics$toString(_p2._3))
 						]),
-					_user$project$Main$fromAttributes(_p5._4)),
+					_user$project$Main$fromAttributes(_p2._4)),
 				_elm_lang$core$Native_List.fromArray(
 					[]));
 		case 'Circle':
@@ -9471,13 +9419,13 @@ var _user$project$Main$fromShape = function (shape) {
 					_elm_lang$core$Native_List.fromArray(
 						[
 							_elm_lang$svg$Svg_Attributes$cx(
-							_elm_lang$core$Basics$toString(_p5._0)),
+							_elm_lang$core$Basics$toString(_p2._0)),
 							_elm_lang$svg$Svg_Attributes$cy(
-							_elm_lang$core$Basics$toString(_p5._1)),
+							_elm_lang$core$Basics$toString(_p2._1)),
 							_elm_lang$svg$Svg_Attributes$r(
-							_elm_lang$core$Basics$toString(_p5._2))
+							_elm_lang$core$Basics$toString(_p2._2))
 						]),
-					_user$project$Main$fromAttributes(_p5._3)),
+					_user$project$Main$fromAttributes(_p2._3)),
 				_elm_lang$core$Native_List.fromArray(
 					[]));
 		case 'Path':
@@ -9488,16 +9436,16 @@ var _user$project$Main$fromShape = function (shape) {
 					_elm_lang$core$Native_List.fromArray(
 						[
 							_elm_lang$svg$Svg_Attributes$d(
-							_user$project$Main$fromDescription(_p5._0))
+							_user$project$Main$fromDescription(_p2._0))
 						]),
-					_user$project$Main$fromAttributes(_p5._1)),
+					_user$project$Main$fromAttributes(_p2._1)),
 				_elm_lang$core$Native_List.fromArray(
 					[]));
 		default:
 			return A2(
 				_elm_lang$svg$Svg$g,
-				_user$project$Main$fromAttributes(_p5._0),
-				A2(_elm_lang$core$List$map, _user$project$Main$fromShape, _p5._1));
+				_user$project$Main$fromAttributes(_p2._0),
+				A2(_elm_lang$core$List$map, _user$project$Main$fromShape, _p2._1));
 	}
 };
 var _user$project$Main$range = F7(
@@ -9548,18 +9496,18 @@ var _user$project$Main$range = F7(
 	});
 var _user$project$Main$updateOrNothing = F3(
 	function (model, number, update) {
-		var _p6 = number;
-		if (_p6.ctor === 'Just') {
-			return update(_p6._0);
+		var _p3 = number;
+		if (_p3.ctor === 'Just') {
+			return update(_p3._0);
 		} else {
 			return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 		}
 	});
 var _user$project$Main$toNumber = function (value) {
-	var _p7 = _elm_lang$core$String$toFloat(value);
-	if (_p7.ctor === 'Ok') {
-		var _p8 = _p7._0;
-		return _elm_lang$core$Basics$isNaN(_p8) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(_p8);
+	var _p4 = _elm_lang$core$String$toFloat(value);
+	if (_p4.ctor === 'Ok') {
+		var _p5 = _p4._0;
+		return _elm_lang$core$Basics$isNaN(_p5) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(_p5);
 	} else {
 		return _elm_lang$core$Maybe$Nothing;
 	}
@@ -9578,6 +9526,85 @@ var _user$project$Main$updateOrNone = F3(
 				};
 			});
 	});
+var _user$project$Main$scale = F2(
+	function (transform, scale) {
+		return _elm_lang$core$Array$fromList(
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$core$Maybe$withDefault,
+					-1,
+					A2(_elm_lang$core$Array$get, 0, transform)) * scale,
+					A2(
+					_elm_lang$core$Maybe$withDefault,
+					-1,
+					A2(_elm_lang$core$Array$get, 1, transform)) * scale,
+					A2(
+					_elm_lang$core$Maybe$withDefault,
+					-1,
+					A2(_elm_lang$core$Array$get, 2, transform)) * scale,
+					A2(
+					_elm_lang$core$Maybe$withDefault,
+					-1,
+					A2(_elm_lang$core$Array$get, 3, transform)) * scale,
+					A2(
+					_elm_lang$core$Maybe$withDefault,
+					-1,
+					A2(_elm_lang$core$Array$get, 4, transform)) * scale,
+					A2(
+					_elm_lang$core$Maybe$withDefault,
+					-1,
+					A2(_elm_lang$core$Array$get, 5, transform)) * scale
+				]));
+	});
+var _user$project$Main$translate = F3(
+	function (transform, dx, dy) {
+		return _elm_lang$core$Array$fromList(
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$core$Maybe$withDefault,
+					-1,
+					A2(_elm_lang$core$Array$get, 0, transform)),
+					A2(
+					_elm_lang$core$Maybe$withDefault,
+					-1,
+					A2(_elm_lang$core$Array$get, 1, transform)),
+					A2(
+					_elm_lang$core$Maybe$withDefault,
+					-1,
+					A2(_elm_lang$core$Array$get, 2, transform)),
+					A2(
+					_elm_lang$core$Maybe$withDefault,
+					-1,
+					A2(_elm_lang$core$Array$get, 3, transform)),
+					A2(
+					_elm_lang$core$Maybe$withDefault,
+					-1,
+					A2(_elm_lang$core$Array$get, 4, transform)) + dx,
+					A2(
+					_elm_lang$core$Maybe$withDefault,
+					-1,
+					A2(_elm_lang$core$Array$get, 5, transform)) + dy
+				]));
+	});
+var _user$project$Main$getTransform = function (model) {
+	var _p6 = model.drag;
+	if (_p6.ctor === 'Nothing') {
+		return model.transform;
+	} else {
+		var _p8 = _p6._0.start;
+		var _p7 = _p6._0.current;
+		return A3(
+			_user$project$Main$translate,
+			model.transform,
+			_elm_lang$core$Basics$toFloat(_p7.x - _p8.x),
+			_elm_lang$core$Basics$toFloat(_p7.y - _p8.y));
+	}
+};
+var _user$project$Main$identity = _elm_lang$core$Array$fromList(
+	_elm_lang$core$Native_List.fromArray(
+		[1, 0, 0, 1, 0, 0]));
 var _user$project$Main$Model = F8(
 	function (a, b, c, d, e, f, g, h) {
 		return {windowSize: a, width: b, horizontalSpacing: c, verticalSpacing: d, strokeWidth: e, drag: f, distanceScrolled: g, transform: h};
@@ -9705,34 +9732,11 @@ var _user$project$Main$update = F2(
 						model,
 						{
 							distanceScrolled: distanceScrolled,
-							transform: _elm_lang$core$Array$fromList(
-								_elm_lang$core$Native_List.fromArray(
-									[
-										A2(
-										_elm_lang$core$Maybe$withDefault,
-										-1,
-										A2(_elm_lang$core$Array$get, 0, model.transform)) * zoom,
-										A2(
-										_elm_lang$core$Maybe$withDefault,
-										-1,
-										A2(_elm_lang$core$Array$get, 1, model.transform)) * zoom,
-										A2(
-										_elm_lang$core$Maybe$withDefault,
-										-1,
-										A2(_elm_lang$core$Array$get, 2, model.transform)) * zoom,
-										A2(
-										_elm_lang$core$Maybe$withDefault,
-										-1,
-										A2(_elm_lang$core$Array$get, 3, model.transform)) * zoom,
-										(A2(
-										_elm_lang$core$Maybe$withDefault,
-										-1,
-										A2(_elm_lang$core$Array$get, 4, model.transform)) * zoom) + ((1 - zoom) * _elm_lang$core$Basics$toFloat(pan.x)),
-										(A2(
-										_elm_lang$core$Maybe$withDefault,
-										-1,
-										A2(_elm_lang$core$Array$get, 5, model.transform)) * zoom) + ((1 - zoom) * _elm_lang$core$Basics$toFloat(pan.y))
-									]))
+							transform: A3(
+								_user$project$Main$translate,
+								A2(_user$project$Main$scale, model.transform, zoom),
+								(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.x),
+								(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.y))
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -9805,9 +9809,7 @@ var _user$project$Main$init = function () {
 			strokeWidth: defaultWidth / 25,
 			drag: _elm_lang$core$Maybe$Nothing,
 			distanceScrolled: 0,
-			transform: _elm_lang$core$Array$fromList(
-				_elm_lang$core$Native_List.fromArray(
-					[1, 0, 0, 1, 0, 0]))
+			transform: _user$project$Main$identity
 		},
 		_1: A3(
 			_elm_lang$core$Task$perform,
@@ -9821,10 +9823,6 @@ var _user$project$Main$init = function () {
 var _user$project$Main$Transform = function (a) {
 	return {ctor: 'Transform', _0: a};
 };
-var _user$project$Main$Translate = F2(
-	function (a, b) {
-		return {ctor: 'Translate', _0: a, _1: b};
-	});
 var _user$project$Main$Fill = function (a) {
 	return {ctor: 'Fill', _0: a};
 };
@@ -9898,7 +9896,8 @@ var _user$project$Main$view = function (model) {
 		function (column, row) {
 			return _elm_lang$core$Native_List.fromArray(
 				[
-					A2(_user$project$Main$Translate, offsetLeft + ((column - 1) * horizontalSpacing), offsetTop + ((row - 1) * verticalSpacing)),
+					_user$project$Main$Transform(
+					A3(_user$project$Main$translate, _user$project$Main$identity, offsetLeft + ((column - 1) * horizontalSpacing), offsetTop + ((row - 1) * verticalSpacing))),
 					_user$project$Main$StrokeWidth(strokeWidth),
 					_user$project$Main$Stroke(strokeColour),
 					_user$project$Main$Fill(fillColour)
@@ -9908,7 +9907,8 @@ var _user$project$Main$view = function (model) {
 		function (column, row) {
 			return _elm_lang$core$Native_List.fromArray(
 				[
-					A2(_user$project$Main$Translate, offsetLeft + ((column - 1) * horizontalSpacing), offsetTop + ((row - 1) * verticalSpacing)),
+					_user$project$Main$Transform(
+					A3(_user$project$Main$translate, _user$project$Main$identity, offsetLeft + ((column - 1) * horizontalSpacing), offsetTop + ((row - 1) * verticalSpacing))),
 					_user$project$Main$StrokeWidth(strokeWidth),
 					_user$project$Main$Stroke(strokeColour),
 					_user$project$Main$Fill('none')
@@ -9918,7 +9918,8 @@ var _user$project$Main$view = function (model) {
 		function (column, row) {
 			return _elm_lang$core$Native_List.fromArray(
 				[
-					A2(_user$project$Main$Translate, offsetLeft + ((column - 1) * horizontalSpacing), offsetTop + ((row - 1) * verticalSpacing)),
+					_user$project$Main$Transform(
+					A3(_user$project$Main$translate, _user$project$Main$identity, offsetLeft + ((column - 1) * horizontalSpacing), offsetTop + ((row - 1) * verticalSpacing))),
 					_user$project$Main$StrokeWidth(wireStrokeWidth),
 					_user$project$Main$Stroke(strokeColour),
 					_user$project$Main$Fill(fillColour)
