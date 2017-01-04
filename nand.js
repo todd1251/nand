@@ -9869,9 +9869,27 @@ var _user$project$Main$view = function (model) {
 	var strokeColour = 'black';
 	var strokeWidth = model.strokeWidth;
 	var wireStrokeWidth = strokeWidth / 2;
+	var wireAttributes = _elm_lang$core$Native_List.fromArray(
+		[
+			_user$project$Main$StrokeWidth(wireStrokeWidth),
+			_user$project$Main$Stroke(strokeColour),
+			_user$project$Main$Fill(fillColour)
+		]);
 	var offset = A2(_elm_lang$core$Basics$max, strokeWidth, 1.5) * 2.75;
 	var left = (strokeWidth / 2) - offset;
 	var hack = strokeWidth / 10;
+	var attributes = _elm_lang$core$Native_List.fromArray(
+		[
+			_user$project$Main$StrokeWidth(strokeWidth),
+			_user$project$Main$Stroke(strokeColour),
+			_user$project$Main$Fill(fillColour)
+		]);
+	var transparentAttributes = _elm_lang$core$Native_List.fromArray(
+		[
+			_user$project$Main$StrokeWidth(strokeWidth),
+			_user$project$Main$Stroke(strokeColour),
+			_user$project$Main$Fill('none')
+		]);
 	var verticalSpacing = model.verticalSpacing;
 	var horizontalSpacing = model.horizontalSpacing;
 	var width = model.width;
@@ -9886,44 +9904,156 @@ var _user$project$Main$view = function (model) {
 	var narrowSegmentWidth = (gateWidth * 2) / 5;
 	var indentWidth = gateWidth / 7;
 	var right = indentWidth - offset;
+	var doubleInput = A2(
+		_user$project$Main$Group,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A5(_user$project$Main$Line, 0 - wireWidth, quarterHeight, indentWidth, quarterHeight, wireAttributes),
+				A5(_user$project$Main$Line, 0 - wireWidth, threeQuarterHeight, indentWidth, threeQuarterHeight, wireAttributes)
+			]));
 	var inverterRadius = gateWidth / 12;
 	var diameter = inverterRadius * 2;
+	var inverterDecoration = function (x) {
+		return A4(_user$project$Main$Circle, x + inverterRadius, halfHeight, inverterRadius, attributes);
+	};
 	var wideSegmentWidth = (width * 3) / 5;
 	var bufferOffset = (gateWidth - wideSegmentWidth) / 2;
+	var singleInput = A5(_user$project$Main$Line, 0 - wireWidth, halfHeight, bufferOffset, halfHeight, wireAttributes);
+	var singleOutput = A5(_user$project$Main$Line, (bufferOffset + narrowSegmentWidth) + wireWidth, halfHeight, (gateWidth + inverterRadius) + wireWidth, halfHeight, wireAttributes);
+	var buffer = A2(
+		_user$project$Main$Group,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_user$project$Main$Path,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(_user$project$Main$MoveTo, bufferOffset, 0),
+						A2(_user$project$Main$LineTo, bufferOffset + wideSegmentWidth, halfHeight),
+						A2(_user$project$Main$LineTo, bufferOffset, height),
+						_user$project$Main$Close
+					]),
+				attributes),
+				singleInput,
+				singleOutput
+			]));
+	var inverter = A2(
+		_user$project$Main$Group,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				buffer,
+				inverterDecoration(bufferOffset + wideSegmentWidth)
+			]));
+	var and = A2(
+		_user$project$Main$Group,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				doubleInput,
+				singleOutput,
+				A2(
+				_user$project$Main$Path,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(_user$project$Main$MoveTo, 0, 0),
+						_user$project$Main$HorizontalLineTo(wideSegmentWidth),
+						A7(_user$project$Main$Arc, narrowSegmentWidth, narrowSegmentWidth, 0, false, true, gateWidth, halfHeight),
+						A7(_user$project$Main$Arc, narrowSegmentWidth, narrowSegmentWidth, 0, false, true, wideSegmentWidth, height),
+						_user$project$Main$HorizontalLineTo(0),
+						_user$project$Main$Close
+					]),
+				attributes)
+			]));
+	var nand = A2(
+		_user$project$Main$Group,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				and,
+				inverterDecoration(gateWidth)
+			]));
+	var or = A2(
+		_user$project$Main$Group,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A5(_user$project$Main$Line, 0 - wireWidth, quarterHeight, indentWidth, quarterHeight, wireAttributes),
+				A5(_user$project$Main$Line, 0 - wireWidth, threeQuarterHeight, indentWidth, threeQuarterHeight, wireAttributes),
+				A5(_user$project$Main$Line, gateWidth, halfHeight, (gateWidth + (2 * inverterRadius)) + wireWidth, halfHeight, wireAttributes),
+				A2(
+				_user$project$Main$Path,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(_user$project$Main$MoveTo, 0, 0),
+						_user$project$Main$HorizontalLineTo(narrowSegmentWidth),
+						A7(_user$project$Main$Arc, wideSegmentWidth, wideSegmentWidth, 0, false, true, gateWidth, halfHeight),
+						A7(_user$project$Main$Arc, wideSegmentWidth, wideSegmentWidth, 0, false, true, narrowSegmentWidth, height),
+						_user$project$Main$HorizontalLineTo(0),
+						A7(_user$project$Main$Arc, indentWidth * 6, height, 0, false, false, 0, 0),
+						_user$project$Main$Close
+					]),
+				attributes)
+			]));
+	var nor = A2(
+		_user$project$Main$Group,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				or,
+				inverterDecoration(gateWidth)
+			]));
+	var xor = A2(
+		_user$project$Main$Group,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				or,
+				A2(
+				_user$project$Main$Path,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(_user$project$Main$MoveTo, left, 0),
+						A7(_user$project$Main$Arc, indentWidth * 6.5, height, 0, false, true, left, height),
+						A2(_user$project$Main$LineTo, left + hack, height),
+						A7(_user$project$Main$Arc, indentWidth * 6.5, height, 0, false, false, left, 0),
+						A2(_user$project$Main$LineTo, left + hack, 0),
+						A7(_user$project$Main$Arc, indentWidth * 6.5, height, 0, false, true, left, height)
+					]),
+				transparentAttributes)
+			]));
+	var xnor = A2(
+		_user$project$Main$Group,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				xor,
+				inverterDecoration(gateWidth)
+			]));
 	var fullWidth = (1 * model.horizontalSpacing) + width;
 	var offsetLeft = (_elm_lang$core$Basics$toFloat(model.windowSize.width) / 2) - (fullWidth / 2);
-	var attributes = F2(
-		function (column, row) {
-			return _elm_lang$core$Native_List.fromArray(
-				[
-					_user$project$Main$Transform(
-					A3(_user$project$Main$translate, _user$project$Main$identity, offsetLeft + ((column - 1) * horizontalSpacing), offsetTop + ((row - 1) * verticalSpacing))),
-					_user$project$Main$StrokeWidth(strokeWidth),
-					_user$project$Main$Stroke(strokeColour),
-					_user$project$Main$Fill(fillColour)
-				]);
-		});
-	var transparentAttributes = F2(
-		function (column, row) {
-			return _elm_lang$core$Native_List.fromArray(
-				[
-					_user$project$Main$Transform(
-					A3(_user$project$Main$translate, _user$project$Main$identity, offsetLeft + ((column - 1) * horizontalSpacing), offsetTop + ((row - 1) * verticalSpacing))),
-					_user$project$Main$StrokeWidth(strokeWidth),
-					_user$project$Main$Stroke(strokeColour),
-					_user$project$Main$Fill('none')
-				]);
-		});
-	var wireAttributes = F2(
-		function (column, row) {
-			return _elm_lang$core$Native_List.fromArray(
-				[
-					_user$project$Main$Transform(
-					A3(_user$project$Main$translate, _user$project$Main$identity, offsetLeft + ((column - 1) * horizontalSpacing), offsetTop + ((row - 1) * verticalSpacing))),
-					_user$project$Main$StrokeWidth(wireStrokeWidth),
-					_user$project$Main$Stroke(strokeColour),
-					_user$project$Main$Fill(fillColour)
-				]);
+	var gate = F3(
+		function (column, row, shape) {
+			return A2(
+				_user$project$Main$Group,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_user$project$Main$Transform(
+						A3(_user$project$Main$translate, _user$project$Main$identity, offsetLeft + ((column - 1) * horizontalSpacing), offsetTop + ((row - 1) * verticalSpacing)))
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[shape]));
 		});
 	return A2(
 		_elm_lang$html$Html$div,
@@ -9968,304 +10098,14 @@ var _user$project$Main$view = function (model) {
 								]),
 							_elm_lang$core$Native_List.fromArray(
 								[
-									A2(
-									_user$project$Main$Path,
-									_elm_lang$core$Native_List.fromArray(
-										[
-											A2(_user$project$Main$MoveTo, bufferOffset, 0),
-											A2(_user$project$Main$LineTo, bufferOffset + wideSegmentWidth, halfHeight),
-											A2(_user$project$Main$LineTo, bufferOffset, height),
-											_user$project$Main$Close
-										]),
-									A2(attributes, 1, 1)),
-									A5(
-									_user$project$Main$Line,
-									0 - wireWidth,
-									halfHeight,
-									bufferOffset,
-									halfHeight,
-									A2(wireAttributes, 1, 1)),
-									A5(
-									_user$project$Main$Line,
-									gateWidth + wireWidth,
-									halfHeight,
-									(bufferOffset + narrowSegmentWidth) + wireWidth,
-									halfHeight,
-									A2(wireAttributes, 1, 1)),
-									A2(
-									_user$project$Main$Path,
-									_elm_lang$core$Native_List.fromArray(
-										[
-											A2(_user$project$Main$MoveTo, bufferOffset, 0),
-											A2(_user$project$Main$LineTo, bufferOffset + wideSegmentWidth, halfHeight),
-											A2(_user$project$Main$LineTo, bufferOffset, height),
-											_user$project$Main$Close
-										]),
-									A2(attributes, 2, 1)),
-									A5(
-									_user$project$Main$Line,
-									0 - wireWidth,
-									halfHeight,
-									bufferOffset,
-									halfHeight,
-									A2(wireAttributes, 2, 1)),
-									A5(
-									_user$project$Main$Line,
-									(gateWidth + wireWidth) + inverterRadius,
-									halfHeight,
-									bufferOffset + wideSegmentWidth,
-									halfHeight,
-									A2(wireAttributes, 2, 1)),
-									A4(
-									_user$project$Main$Circle,
-									(bufferOffset + wideSegmentWidth) + inverterRadius,
-									halfHeight,
-									inverterRadius,
-									A2(attributes, 2, 1)),
-									A2(
-									_user$project$Main$Path,
-									_elm_lang$core$Native_List.fromArray(
-										[
-											A2(_user$project$Main$MoveTo, 0, 0),
-											_user$project$Main$HorizontalLineTo(wideSegmentWidth),
-											A7(_user$project$Main$Arc, narrowSegmentWidth, narrowSegmentWidth, 0, false, true, gateWidth, halfHeight),
-											A7(_user$project$Main$Arc, narrowSegmentWidth, narrowSegmentWidth, 0, false, true, wideSegmentWidth, height),
-											_user$project$Main$HorizontalLineTo(0),
-											_user$project$Main$Close
-										]),
-									A2(attributes, 1, 2)),
-									A5(
-									_user$project$Main$Line,
-									0 - wireWidth,
-									quarterHeight,
-									0,
-									quarterHeight,
-									A2(wireAttributes, 1, 2)),
-									A5(
-									_user$project$Main$Line,
-									0 - wireWidth,
-									threeQuarterHeight,
-									0,
-									threeQuarterHeight,
-									A2(wireAttributes, 1, 2)),
-									A5(
-									_user$project$Main$Line,
-									gateWidth,
-									halfHeight,
-									gateWidth + wireWidth,
-									halfHeight,
-									A2(wireAttributes, 1, 2)),
-									A2(
-									_user$project$Main$Path,
-									_elm_lang$core$Native_List.fromArray(
-										[
-											A2(_user$project$Main$MoveTo, 0, 0),
-											_user$project$Main$HorizontalLineTo(wideSegmentWidth),
-											A7(_user$project$Main$Arc, narrowSegmentWidth, narrowSegmentWidth, 0, false, true, gateWidth, halfHeight),
-											A7(_user$project$Main$Arc, narrowSegmentWidth, narrowSegmentWidth, 0, false, true, wideSegmentWidth, height),
-											_user$project$Main$HorizontalLineTo(0),
-											_user$project$Main$Close
-										]),
-									A2(attributes, 2, 2)),
-									A4(
-									_user$project$Main$Circle,
-									gateWidth + inverterRadius,
-									halfHeight,
-									inverterRadius,
-									A2(attributes, 2, 2)),
-									A5(
-									_user$project$Main$Line,
-									0 - wireWidth,
-									quarterHeight,
-									0,
-									quarterHeight,
-									A2(wireAttributes, 2, 2)),
-									A5(
-									_user$project$Main$Line,
-									0 - wireWidth,
-									threeQuarterHeight,
-									0,
-									threeQuarterHeight,
-									A2(wireAttributes, 2, 2)),
-									A5(
-									_user$project$Main$Line,
-									gateWidth + (2 * inverterRadius),
-									halfHeight,
-									(gateWidth + (2 * inverterRadius)) + wireWidth,
-									halfHeight,
-									A2(wireAttributes, 2, 2)),
-									A5(
-									_user$project$Main$Line,
-									0 - wireWidth,
-									quarterHeight,
-									indentWidth,
-									quarterHeight,
-									A2(wireAttributes, 1, 3)),
-									A5(
-									_user$project$Main$Line,
-									0 - wireWidth,
-									threeQuarterHeight,
-									indentWidth,
-									threeQuarterHeight,
-									A2(wireAttributes, 1, 3)),
-									A5(
-									_user$project$Main$Line,
-									gateWidth,
-									halfHeight,
-									gateWidth + wireWidth,
-									halfHeight,
-									A2(wireAttributes, 1, 3)),
-									A2(
-									_user$project$Main$Path,
-									_elm_lang$core$Native_List.fromArray(
-										[
-											A2(_user$project$Main$MoveTo, 0, 0),
-											_user$project$Main$HorizontalLineTo(narrowSegmentWidth),
-											A7(_user$project$Main$Arc, wideSegmentWidth, wideSegmentWidth, 0, false, true, gateWidth, halfHeight),
-											A7(_user$project$Main$Arc, wideSegmentWidth, wideSegmentWidth, 0, false, true, narrowSegmentWidth, height),
-											_user$project$Main$HorizontalLineTo(0),
-											A7(_user$project$Main$Arc, indentWidth * 6, height, 0, false, false, 0, 0),
-											_user$project$Main$Close
-										]),
-									A2(attributes, 1, 3)),
-									A5(
-									_user$project$Main$Line,
-									0 - wireWidth,
-									quarterHeight,
-									indentWidth,
-									quarterHeight,
-									A2(wireAttributes, 2, 3)),
-									A5(
-									_user$project$Main$Line,
-									0 - wireWidth,
-									threeQuarterHeight,
-									indentWidth,
-									threeQuarterHeight,
-									A2(wireAttributes, 2, 3)),
-									A5(
-									_user$project$Main$Line,
-									gateWidth + (2 * inverterRadius),
-									halfHeight,
-									(gateWidth + (2 * inverterRadius)) + wireWidth,
-									halfHeight,
-									A2(wireAttributes, 2, 3)),
-									A2(
-									_user$project$Main$Path,
-									_elm_lang$core$Native_List.fromArray(
-										[
-											A2(_user$project$Main$MoveTo, 0, 0),
-											_user$project$Main$HorizontalLineTo(narrowSegmentWidth),
-											A7(_user$project$Main$Arc, wideSegmentWidth, wideSegmentWidth, 0, false, true, gateWidth, halfHeight),
-											A7(_user$project$Main$Arc, wideSegmentWidth, wideSegmentWidth, 0, false, true, narrowSegmentWidth, height),
-											_user$project$Main$HorizontalLineTo(0),
-											A7(_user$project$Main$Arc, indentWidth * 6, height, 0, false, false, 0, 0),
-											_user$project$Main$Close
-										]),
-									A2(attributes, 2, 3)),
-									A4(
-									_user$project$Main$Circle,
-									gateWidth + inverterRadius,
-									halfHeight,
-									inverterRadius,
-									A2(attributes, 2, 3)),
-									A5(
-									_user$project$Main$Line,
-									0 - wireWidth,
-									quarterHeight,
-									indentWidth,
-									quarterHeight,
-									A2(wireAttributes, 1, 4)),
-									A5(
-									_user$project$Main$Line,
-									0 - wireWidth,
-									threeQuarterHeight,
-									indentWidth,
-									threeQuarterHeight,
-									A2(wireAttributes, 1, 4)),
-									A5(
-									_user$project$Main$Line,
-									gateWidth,
-									halfHeight,
-									gateWidth + wireWidth,
-									halfHeight,
-									A2(wireAttributes, 1, 4)),
-									A2(
-									_user$project$Main$Path,
-									_elm_lang$core$Native_List.fromArray(
-										[
-											A2(_user$project$Main$MoveTo, 0, 0),
-											_user$project$Main$HorizontalLineTo(narrowSegmentWidth),
-											A7(_user$project$Main$Arc, wideSegmentWidth, wideSegmentWidth, 0, false, true, gateWidth, halfHeight),
-											A7(_user$project$Main$Arc, wideSegmentWidth, wideSegmentWidth, 0, false, true, narrowSegmentWidth, height),
-											_user$project$Main$HorizontalLineTo(0),
-											A7(_user$project$Main$Arc, indentWidth * 6, height, 0, false, false, 0, 0),
-											_user$project$Main$Close
-										]),
-									A2(attributes, 1, 4)),
-									A2(
-									_user$project$Main$Path,
-									_elm_lang$core$Native_List.fromArray(
-										[
-											A2(_user$project$Main$MoveTo, left, 0),
-											A7(_user$project$Main$Arc, indentWidth * 6.5, height, 0, false, true, left, height),
-											A2(_user$project$Main$LineTo, left + hack, height),
-											A7(_user$project$Main$Arc, indentWidth * 6.5, height, 0, false, false, left, 0),
-											A2(_user$project$Main$LineTo, left + hack, 0),
-											A7(_user$project$Main$Arc, indentWidth * 6.5, height, 0, false, true, left, height)
-										]),
-									A2(transparentAttributes, 1, 4)),
-									A4(
-									_user$project$Main$Circle,
-									gateWidth + inverterRadius,
-									halfHeight,
-									inverterRadius,
-									A2(attributes, 2, 4)),
-									A5(
-									_user$project$Main$Line,
-									0 - wireWidth,
-									quarterHeight,
-									indentWidth,
-									quarterHeight,
-									A2(wireAttributes, 2, 4)),
-									A5(
-									_user$project$Main$Line,
-									0 - wireWidth,
-									threeQuarterHeight,
-									indentWidth,
-									threeQuarterHeight,
-									A2(wireAttributes, 2, 4)),
-									A5(
-									_user$project$Main$Line,
-									gateWidth + (2 * inverterRadius),
-									halfHeight,
-									(gateWidth + (2 * inverterRadius)) + wireWidth,
-									halfHeight,
-									A2(wireAttributes, 2, 4)),
-									A2(
-									_user$project$Main$Path,
-									_elm_lang$core$Native_List.fromArray(
-										[
-											A2(_user$project$Main$MoveTo, 0, 0),
-											_user$project$Main$HorizontalLineTo(narrowSegmentWidth),
-											A7(_user$project$Main$Arc, wideSegmentWidth, wideSegmentWidth, 0, false, true, gateWidth, halfHeight),
-											A7(_user$project$Main$Arc, wideSegmentWidth, wideSegmentWidth, 0, false, true, narrowSegmentWidth, height),
-											_user$project$Main$HorizontalLineTo(0),
-											A7(_user$project$Main$Arc, indentWidth * 6, height, 0, false, false, 0, 0),
-											_user$project$Main$Close
-										]),
-									A2(attributes, 2, 4)),
-									A2(
-									_user$project$Main$Path,
-									_elm_lang$core$Native_List.fromArray(
-										[
-											A2(_user$project$Main$MoveTo, left, 0),
-											A7(_user$project$Main$Arc, indentWidth * 6.5, height, 0, false, true, left, height),
-											A2(_user$project$Main$LineTo, left + hack, height),
-											A7(_user$project$Main$Arc, indentWidth * 6.5, height, 0, false, false, left, 0),
-											A2(_user$project$Main$LineTo, left + hack, 0),
-											A7(_user$project$Main$Arc, indentWidth * 6.5, height, 0, false, true, left, height)
-										]),
-									A2(transparentAttributes, 2, 4))
+									A3(gate, 1, 1, buffer),
+									A3(gate, 2, 1, inverter),
+									A3(gate, 1, 2, and),
+									A3(gate, 2, 2, nand),
+									A3(gate, 1, 3, or),
+									A3(gate, 2, 3, nor),
+									A3(gate, 1, 4, xor),
+									A3(gate, 2, 4, xnor)
 								])))
 					]))
 			]));
