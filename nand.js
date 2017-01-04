@@ -9897,31 +9897,37 @@ var _user$project$Main$view = function (model) {
 	var gateWidth = width - (wireWidth / 2);
 	var height = (gateWidth * 4) / 5;
 	var halfHeight = height / 2;
+	var singleInput = function (x) {
+		return A5(_user$project$Main$Line, 0 - wireWidth, halfHeight, x, halfHeight, wireAttributes);
+	};
 	var quarterHeight = height / 4;
 	var threeQuarterHeight = height - quarterHeight;
+	var doubleInput = function (x) {
+		return A2(
+			_user$project$Main$Group,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A5(_user$project$Main$Line, 0 - wireWidth, quarterHeight, x, quarterHeight, wireAttributes),
+					A5(_user$project$Main$Line, 0 - wireWidth, threeQuarterHeight, x, threeQuarterHeight, wireAttributes)
+				]));
+	};
 	var fullHeight = (3 * model.verticalSpacing) + height;
 	var offsetTop = (_elm_lang$core$Basics$toFloat(model.windowSize.height) / 2) - (fullHeight / 2);
 	var narrowSegmentWidth = (gateWidth * 2) / 5;
 	var indentWidth = gateWidth / 7;
 	var right = indentWidth - offset;
-	var doubleInput = A2(
-		_user$project$Main$Group,
-		_elm_lang$core$Native_List.fromArray(
-			[]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				A5(_user$project$Main$Line, 0 - wireWidth, quarterHeight, indentWidth, quarterHeight, wireAttributes),
-				A5(_user$project$Main$Line, 0 - wireWidth, threeQuarterHeight, indentWidth, threeQuarterHeight, wireAttributes)
-			]));
 	var inverterRadius = gateWidth / 12;
 	var diameter = inverterRadius * 2;
 	var inverterDecoration = function (x) {
 		return A4(_user$project$Main$Circle, x + inverterRadius, halfHeight, inverterRadius, attributes);
 	};
+	var singleOutput = function (x) {
+		return A5(_user$project$Main$Line, x, halfHeight, (gateWidth + inverterRadius) + wireWidth, halfHeight, wireAttributes);
+	};
 	var wideSegmentWidth = (width * 3) / 5;
 	var bufferOffset = (gateWidth - wideSegmentWidth) / 2;
-	var singleInput = A5(_user$project$Main$Line, 0 - wireWidth, halfHeight, bufferOffset, halfHeight, wireAttributes);
-	var singleOutput = A5(_user$project$Main$Line, (bufferOffset + narrowSegmentWidth) + wireWidth, halfHeight, (gateWidth + inverterRadius) + wireWidth, halfHeight, wireAttributes);
 	var buffer = A2(
 		_user$project$Main$Group,
 		_elm_lang$core$Native_List.fromArray(
@@ -9938,8 +9944,8 @@ var _user$project$Main$view = function (model) {
 						_user$project$Main$Close
 					]),
 				attributes),
-				singleInput,
-				singleOutput
+				singleInput(bufferOffset),
+				singleOutput((bufferOffset + narrowSegmentWidth) + wireWidth)
 			]));
 	var inverter = A2(
 		_user$project$Main$Group,
@@ -9956,8 +9962,8 @@ var _user$project$Main$view = function (model) {
 			[]),
 		_elm_lang$core$Native_List.fromArray(
 			[
-				doubleInput,
-				singleOutput,
+				doubleInput(0),
+				singleOutput(gateWidth),
 				A2(
 				_user$project$Main$Path,
 				_elm_lang$core$Native_List.fromArray(
@@ -9986,9 +9992,8 @@ var _user$project$Main$view = function (model) {
 			[]),
 		_elm_lang$core$Native_List.fromArray(
 			[
-				A5(_user$project$Main$Line, 0 - wireWidth, quarterHeight, indentWidth, quarterHeight, wireAttributes),
-				A5(_user$project$Main$Line, 0 - wireWidth, threeQuarterHeight, indentWidth, threeQuarterHeight, wireAttributes),
-				A5(_user$project$Main$Line, gateWidth, halfHeight, (gateWidth + (2 * inverterRadius)) + wireWidth, halfHeight, wireAttributes),
+				doubleInput(indentWidth / 2),
+				singleOutput(gateWidth),
 				A2(
 				_user$project$Main$Path,
 				_elm_lang$core$Native_List.fromArray(
