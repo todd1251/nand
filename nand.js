@@ -9915,6 +9915,7 @@ var _user$project$Main$view = function (model) {
 	};
 	var fullHeight = (3 * model.verticalSpacing) + height;
 	var offsetTop = (_elm_lang$core$Basics$toFloat(model.windowSize.height) / 2) - (fullHeight / 2);
+	var wideSegmentWidth = (gateWidth * 3) / 5;
 	var narrowSegmentWidth = (gateWidth * 2) / 5;
 	var indentWidth = gateWidth / 7;
 	var right = indentWidth - offset;
@@ -9923,11 +9924,10 @@ var _user$project$Main$view = function (model) {
 	var inverterDecoration = function (x) {
 		return A4(_user$project$Main$Circle, x + inverterRadius, halfHeight, inverterRadius, attributes);
 	};
+	var bufferOffset = (gateWidth - wideSegmentWidth) / 2;
 	var singleOutput = function (x) {
 		return A5(_user$project$Main$Line, x, halfHeight, (gateWidth + inverterRadius) + wireWidth, halfHeight, wireAttributes);
 	};
-	var wideSegmentWidth = (width * 3) / 5;
-	var bufferOffset = (gateWidth - wideSegmentWidth) / 2;
 	var buffer = A2(
 		_user$project$Main$Group,
 		_elm_lang$core$Native_List.fromArray(
@@ -10008,15 +10008,6 @@ var _user$project$Main$view = function (model) {
 					]),
 				attributes)
 			]));
-	var nor = A2(
-		_user$project$Main$Group,
-		_elm_lang$core$Native_List.fromArray(
-			[]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				or,
-				inverterDecoration(gateWidth)
-			]));
 	var xor = A2(
 		_user$project$Main$Group,
 		_elm_lang$core$Native_List.fromArray(
@@ -10036,6 +10027,15 @@ var _user$project$Main$view = function (model) {
 						A7(_user$project$Main$Arc, indentWidth * 6.5, height, 0, false, true, left, height)
 					]),
 				transparentAttributes)
+			]));
+	var nor = A2(
+		_user$project$Main$Group,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				or,
+				inverterDecoration(gateWidth)
 			]));
 	var xnor = A2(
 		_user$project$Main$Group,
