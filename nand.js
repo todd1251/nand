@@ -9285,6 +9285,8 @@ var _user$project$Main$fromDescription = function (description) {
 			function (description) {
 				var _p0 = description;
 				switch (_p0.ctor) {
+					case 'MoveToOrigin':
+						return 'M 0, 0';
 					case 'MoveTo':
 						return A2(
 							_elm_lang$core$Basics_ops['++'],
@@ -9848,6 +9850,7 @@ var _user$project$Main$MoveTo = F2(
 	function (a, b) {
 		return {ctor: 'MoveTo', _0: a, _1: b};
 	});
+var _user$project$Main$MoveToOrigin = {ctor: 'MoveToOrigin'};
 var _user$project$Main$Group = F2(
 	function (a, b) {
 		return {ctor: 'Group', _0: a, _1: b};
@@ -9855,6 +9858,110 @@ var _user$project$Main$Group = F2(
 var _user$project$Main$Path = F2(
 	function (a, b) {
 		return {ctor: 'Path', _0: a, _1: b};
+	});
+var _user$project$Main$buffer2 = F5(
+	function (transform, width, strokeWidth, strokeColour, fillColour) {
+		var wireWidth = width / 5;
+		var gateWidth = width - (wireWidth / 2);
+		var height = (gateWidth * 4) / 5;
+		var halfHeight = height / 2;
+		var wideSegmentWidth = (gateWidth * 3) / 5;
+		return A2(
+			_user$project$Main$Group,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_user$project$Main$Transform(transform)
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_user$project$Main$Path,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_user$project$Main$MoveToOrigin,
+							A2(_user$project$Main$LineTo, wideSegmentWidth, halfHeight),
+							A2(_user$project$Main$LineTo, 0, height),
+							_user$project$Main$Close
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_user$project$Main$StrokeWidth(strokeWidth),
+							_user$project$Main$Stroke(strokeColour),
+							_user$project$Main$Fill(fillColour)
+						]))
+				]));
+	});
+var _user$project$Main$and2 = F5(
+	function (transform, width, strokeWidth, strokeColour, fillColour) {
+		var wireWidth = width / 5;
+		var gateWidth = width - (wireWidth / 2);
+		var height = (gateWidth * 4) / 5;
+		var halfHeight = height / 2;
+		var wideSegmentWidth = (gateWidth * 3) / 5;
+		var narrowSegmentWidth = (gateWidth * 2) / 5;
+		return A2(
+			_user$project$Main$Group,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_user$project$Main$Transform(transform)
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_user$project$Main$Path,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_user$project$Main$MoveToOrigin,
+							_user$project$Main$HorizontalLineTo(wideSegmentWidth),
+							A7(_user$project$Main$Arc, narrowSegmentWidth, narrowSegmentWidth, 0, false, true, gateWidth, halfHeight),
+							A7(_user$project$Main$Arc, narrowSegmentWidth, narrowSegmentWidth, 0, false, true, wideSegmentWidth, height),
+							_user$project$Main$HorizontalLineTo(0),
+							_user$project$Main$Close
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_user$project$Main$StrokeWidth(strokeWidth),
+							_user$project$Main$Stroke(strokeColour),
+							_user$project$Main$Fill(fillColour)
+						]))
+				]));
+	});
+var _user$project$Main$or2 = F5(
+	function (transform, width, strokeWidth, strokeColour, fillColour) {
+		var wireWidth = width / 5;
+		var gateWidth = width - (wireWidth / 2);
+		var height = (gateWidth * 4) / 5;
+		var halfHeight = height / 2;
+		var wideSegmentWidth = (gateWidth * 3) / 5;
+		var narrowSegmentWidth = (gateWidth * 2) / 5;
+		var indentWidth = gateWidth / 7;
+		return A2(
+			_user$project$Main$Group,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_user$project$Main$Transform(transform)
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_user$project$Main$Path,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_user$project$Main$MoveToOrigin,
+							_user$project$Main$HorizontalLineTo(narrowSegmentWidth),
+							A7(_user$project$Main$Arc, wideSegmentWidth, wideSegmentWidth, 0, false, true, gateWidth, halfHeight),
+							A7(_user$project$Main$Arc, wideSegmentWidth, wideSegmentWidth, 0, false, true, narrowSegmentWidth, height),
+							_user$project$Main$HorizontalLineTo(0),
+							A7(_user$project$Main$Arc, indentWidth * 6, height, 0, false, false, 0, 0),
+							_user$project$Main$Close
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_user$project$Main$StrokeWidth(strokeWidth),
+							_user$project$Main$Stroke(strokeColour),
+							_user$project$Main$Fill(fillColour)
+						]))
+				]));
 	});
 var _user$project$Main$Circle = F4(
 	function (a, b, c, d) {
@@ -10110,7 +10217,28 @@ var _user$project$Main$view = function (model) {
 									A3(gate, 1, 3, or),
 									A3(gate, 2, 3, nor),
 									A3(gate, 1, 4, xor),
-									A3(gate, 2, 4, xnor)
+									A3(gate, 2, 4, xnor),
+									A5(
+									_user$project$Main$buffer2,
+									A3(_user$project$Main$translate, _user$project$Main$identity, 390, 127),
+									model.width,
+									1,
+									'black',
+									'none'),
+									A5(
+									_user$project$Main$and2,
+									A3(_user$project$Main$translate, _user$project$Main$identity, 390, 277),
+									model.width,
+									1,
+									'black',
+									'none'),
+									A5(
+									_user$project$Main$or2,
+									A3(_user$project$Main$translate, _user$project$Main$identity, 390, 427),
+									model.width,
+									1,
+									'black',
+									'none')
 								])))
 					]))
 			]));
