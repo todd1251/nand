@@ -9289,15 +9289,20 @@ var _user$project$Main$fromDescription = function (description) {
 						return 'M 0, 0';
 					case 'MoveTo':
 						return A2(
-							_elm_lang$core$Basics_ops['++'],
-							'M ',
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								_elm_lang$core$Basics$toString(_p0._0),
-								A2(
-									_elm_lang$core$Basics_ops['++'],
+							_elm_lang$core$String$join,
+							' ',
+							_elm_lang$core$Native_List.fromArray(
+								[
+									'M',
+									A2(
+									_elm_lang$core$String$join,
 									', ',
-									_elm_lang$core$Basics$toString(_p0._1))));
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$core$Basics$toString(_p0._0),
+											_elm_lang$core$Basics$toString(_p0._1)
+										]))
+								]));
 					case 'LineTo':
 						return A2(
 							_elm_lang$core$Basics_ops['++'],
