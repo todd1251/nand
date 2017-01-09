@@ -10066,35 +10066,51 @@ var _user$project$Main$MoveTo2 = F2(
 		return {ctor: 'MoveTo2', _0: a, _1: b};
 	});
 var _user$project$Main$MoveToOrigin2 = {ctor: 'MoveToOrigin2'};
-var _user$project$Main$buffer3 = _user$project$Main$Path2(
-	_elm_lang$core$Native_List.fromArray(
-		[
-			_user$project$Main$MoveToOrigin2,
-			A2(_user$project$Main$LineTo2, _user$project$Main$WideSegmentWidth, _user$project$Main$HalfHeight),
-			A2(_user$project$Main$LineTo2, _user$project$Main$Origin, _user$project$Main$Height),
-			_user$project$Main$Close2
-		]));
-var _user$project$Main$and3 = _user$project$Main$Path2(
-	_elm_lang$core$Native_List.fromArray(
-		[
-			_user$project$Main$MoveToOrigin2,
-			_user$project$Main$HorizontalLineTo2(_user$project$Main$WideSegmentWidth),
-			A7(_user$project$Main$Arc2, _user$project$Main$NarrowSegmentWidth, _user$project$Main$NarrowSegmentWidth, 0, false, true, _user$project$Main$GateWidth, _user$project$Main$HalfHeight),
-			A7(_user$project$Main$Arc2, _user$project$Main$NarrowSegmentWidth, _user$project$Main$NarrowSegmentWidth, 0, false, true, _user$project$Main$WideSegmentWidth, _user$project$Main$Height),
-			_user$project$Main$HorizontalLineTo2(_user$project$Main$Origin),
-			_user$project$Main$Close2
-		]));
-var _user$project$Main$or3 = _user$project$Main$Path2(
-	_elm_lang$core$Native_List.fromArray(
-		[
-			_user$project$Main$MoveToOrigin2,
-			_user$project$Main$HorizontalLineTo2(_user$project$Main$NarrowSegmentWidth),
-			A7(_user$project$Main$Arc2, _user$project$Main$WideSegmentWidth, _user$project$Main$WideSegmentWidth, 0, false, true, _user$project$Main$GateWidth, _user$project$Main$HalfHeight),
-			A7(_user$project$Main$Arc2, _user$project$Main$WideSegmentWidth, _user$project$Main$WideSegmentWidth, 0, false, true, _user$project$Main$NarrowSegmentWidth, _user$project$Main$Height),
-			_user$project$Main$HorizontalLineTo2(_user$project$Main$Origin),
-			A7(_user$project$Main$Arc2, _user$project$Main$IndentWidth, _user$project$Main$Height, 0, false, false, _user$project$Main$Origin, _user$project$Main$Origin),
-			_user$project$Main$Close2
-		]));
+var _user$project$Main$gate2 = F5(
+	function (upperBody, upperCap, lowerCap, lowerBody, base) {
+		return _user$project$Main$Path2(
+			A2(
+				_elm_lang$core$List$filterMap,
+				function (x) {
+					return x;
+				},
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$core$Maybe$Just(_user$project$Main$MoveToOrigin2),
+						upperBody,
+						_elm_lang$core$Maybe$Just(upperCap),
+						_elm_lang$core$Maybe$Just(lowerCap),
+						lowerBody,
+						base,
+						_elm_lang$core$Maybe$Just(_user$project$Main$Close2)
+					])));
+	});
+var _user$project$Main$buffer4 = A5(
+	_user$project$Main$gate2,
+	_elm_lang$core$Maybe$Nothing,
+	A2(_user$project$Main$LineTo2, _user$project$Main$WideSegmentWidth, _user$project$Main$HalfHeight),
+	A2(_user$project$Main$LineTo2, _user$project$Main$Origin, _user$project$Main$Height),
+	_elm_lang$core$Maybe$Nothing,
+	_elm_lang$core$Maybe$Nothing);
+var _user$project$Main$and4 = A5(
+	_user$project$Main$gate2,
+	_elm_lang$core$Maybe$Just(
+		_user$project$Main$HorizontalLineTo2(_user$project$Main$WideSegmentWidth)),
+	A7(_user$project$Main$Arc2, _user$project$Main$NarrowSegmentWidth, _user$project$Main$NarrowSegmentWidth, 0, false, true, _user$project$Main$GateWidth, _user$project$Main$HalfHeight),
+	A7(_user$project$Main$Arc2, _user$project$Main$NarrowSegmentWidth, _user$project$Main$NarrowSegmentWidth, 0, false, true, _user$project$Main$WideSegmentWidth, _user$project$Main$Height),
+	_elm_lang$core$Maybe$Just(
+		_user$project$Main$HorizontalLineTo2(_user$project$Main$Origin)),
+	_elm_lang$core$Maybe$Nothing);
+var _user$project$Main$or4 = A5(
+	_user$project$Main$gate2,
+	_elm_lang$core$Maybe$Just(
+		_user$project$Main$HorizontalLineTo2(_user$project$Main$NarrowSegmentWidth)),
+	A7(_user$project$Main$Arc2, _user$project$Main$WideSegmentWidth, _user$project$Main$WideSegmentWidth, 0, false, true, _user$project$Main$GateWidth, _user$project$Main$HalfHeight),
+	A7(_user$project$Main$Arc2, _user$project$Main$WideSegmentWidth, _user$project$Main$WideSegmentWidth, 0, false, true, _user$project$Main$NarrowSegmentWidth, _user$project$Main$Height),
+	_elm_lang$core$Maybe$Just(
+		_user$project$Main$HorizontalLineTo2(_user$project$Main$Origin)),
+	_elm_lang$core$Maybe$Just(
+		A7(_user$project$Main$Arc2, _user$project$Main$IndentWidth, _user$project$Main$Height, 0, false, false, _user$project$Main$Origin, _user$project$Main$Origin)));
 var _user$project$Main$view = function (model) {
 	var fillColour = 'white';
 	var strokeColour = 'black';
@@ -10342,51 +10358,30 @@ var _user$project$Main$view = function (model) {
 									A3(gate, 2, 3, nor),
 									A3(gate, 1, 4, xor),
 									A3(gate, 2, 4, xnor),
-									A5(
-									_user$project$Main$buffer2,
+									A6(
+									_user$project$Main$makeShape,
 									A3(_user$project$Main$translate, _user$project$Main$identity, 390, 127),
 									model.width,
 									1,
 									'black',
-									'none'),
+									'none',
+									_user$project$Main$buffer4),
 									A6(
 									_user$project$Main$makeShape,
-									A3(_user$project$Main$translate, _user$project$Main$identity, 250, 127),
-									model.width,
-									1,
-									'black',
-									'none',
-									_user$project$Main$buffer3),
-									A5(
-									_user$project$Main$and2,
 									A3(_user$project$Main$translate, _user$project$Main$identity, 390, 277),
 									model.width,
 									1,
 									'black',
-									'none'),
+									'none',
+									_user$project$Main$and4),
 									A6(
 									_user$project$Main$makeShape,
-									A3(_user$project$Main$translate, _user$project$Main$identity, 250, 277),
-									model.width,
-									1,
-									'black',
-									'none',
-									_user$project$Main$and3),
-									A5(
-									_user$project$Main$or2,
 									A3(_user$project$Main$translate, _user$project$Main$identity, 390, 427),
 									model.width,
 									1,
 									'black',
-									'none'),
-									A6(
-									_user$project$Main$makeShape,
-									A3(_user$project$Main$translate, _user$project$Main$identity, 250, 427),
-									model.width,
-									1,
-									'black',
 									'none',
-									_user$project$Main$or3)
+									_user$project$Main$or4)
 								])))
 					]))
 			]));
@@ -10395,6 +10390,35 @@ var _user$project$Main$main = {
 	main: _elm_lang$html$Html_App$program(
 		{init: _user$project$Main$init, view: _user$project$Main$view, update: _user$project$Main$update, subscriptions: _user$project$Main$subscriptions})
 };
+var _user$project$Main$buffer3 = _user$project$Main$Path2(
+	_elm_lang$core$Native_List.fromArray(
+		[
+			_user$project$Main$MoveToOrigin2,
+			A2(_user$project$Main$LineTo2, _user$project$Main$WideSegmentWidth, _user$project$Main$HalfHeight),
+			A2(_user$project$Main$LineTo2, _user$project$Main$Origin, _user$project$Main$Height),
+			_user$project$Main$Close2
+		]));
+var _user$project$Main$and3 = _user$project$Main$Path2(
+	_elm_lang$core$Native_List.fromArray(
+		[
+			_user$project$Main$MoveToOrigin2,
+			_user$project$Main$HorizontalLineTo2(_user$project$Main$WideSegmentWidth),
+			A7(_user$project$Main$Arc2, _user$project$Main$NarrowSegmentWidth, _user$project$Main$NarrowSegmentWidth, 0, false, true, _user$project$Main$GateWidth, _user$project$Main$HalfHeight),
+			A7(_user$project$Main$Arc2, _user$project$Main$NarrowSegmentWidth, _user$project$Main$NarrowSegmentWidth, 0, false, true, _user$project$Main$WideSegmentWidth, _user$project$Main$Height),
+			_user$project$Main$HorizontalLineTo2(_user$project$Main$Origin),
+			_user$project$Main$Close2
+		]));
+var _user$project$Main$or3 = _user$project$Main$Path2(
+	_elm_lang$core$Native_List.fromArray(
+		[
+			_user$project$Main$MoveToOrigin2,
+			_user$project$Main$HorizontalLineTo2(_user$project$Main$NarrowSegmentWidth),
+			A7(_user$project$Main$Arc2, _user$project$Main$WideSegmentWidth, _user$project$Main$WideSegmentWidth, 0, false, true, _user$project$Main$GateWidth, _user$project$Main$HalfHeight),
+			A7(_user$project$Main$Arc2, _user$project$Main$WideSegmentWidth, _user$project$Main$WideSegmentWidth, 0, false, true, _user$project$Main$NarrowSegmentWidth, _user$project$Main$Height),
+			_user$project$Main$HorizontalLineTo2(_user$project$Main$Origin),
+			A7(_user$project$Main$Arc2, _user$project$Main$IndentWidth, _user$project$Main$Height, 0, false, false, _user$project$Main$Origin, _user$project$Main$Origin),
+			_user$project$Main$Close2
+		]));
 
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
