@@ -9276,43 +9276,6 @@ var _user$project$Wheel$subMap = F2(
 	});
 _elm_lang$core$Native_Platform.effectManagers['Wheel'] = {pkg: 'user/project', init: _user$project$Wheel$init, onEffects: _user$project$Wheel$onEffects, onSelfMsg: _user$project$Wheel$onSelfMsg, tag: 'sub', subMap: _user$project$Wheel$subMap};
 
-var _user$project$Main$fromCoordinate = F2(
-	function (width, c) {
-		var hack = 1 / 10;
-		var offset = 1.5 * 2.75;
-		var left = (1 / 2) - offset;
-		var wireWidth = width / 5;
-		var gateWidth = width - (wireWidth / 2);
-		var height = (gateWidth * 4) / 5;
-		var halfHeight = height / 2;
-		var wideSegmentWidth = (gateWidth * 3) / 5;
-		var narrowSegmentWidth = (gateWidth * 2) / 5;
-		var indentWidth = gateWidth / 7;
-		var bufferOffset = (gateWidth - wideSegmentWidth) / 2;
-		var _p0 = c;
-		switch (_p0.ctor) {
-			case 'Origin':
-				return 0;
-			case 'WideSegmentWidth':
-				return wideSegmentWidth;
-			case 'NarrowSegmentWidth':
-				return narrowSegmentWidth;
-			case 'GateWidth':
-				return gateWidth;
-			case 'IndentWidth':
-				return indentWidth * 6;
-			case 'IndentWidthExtra':
-				return indentWidth * 6.5;
-			case 'HalfHeight':
-				return halfHeight;
-			case 'Height':
-				return height;
-			case 'Left':
-				return left;
-			default:
-				return left + hack;
-		}
-	});
 var _user$project$Main$fromDescription = function (description) {
 	return A2(
 		_elm_lang$core$String$join,
@@ -9320,8 +9283,8 @@ var _user$project$Main$fromDescription = function (description) {
 		A2(
 			_elm_lang$core$List$map,
 			function (description) {
-				var _p1 = description;
-				switch (_p1.ctor) {
+				var _p0 = description;
+				switch (_p0.ctor) {
 					case 'MoveToOrigin':
 						return 'M 0 0';
 					case 'MoveTo':
@@ -9331,8 +9294,8 @@ var _user$project$Main$fromDescription = function (description) {
 							_elm_lang$core$Native_List.fromArray(
 								[
 									'M',
-									_elm_lang$core$Basics$toString(_p1._0),
-									_elm_lang$core$Basics$toString(_p1._1)
+									_elm_lang$core$Basics$toString(_p0._0),
+									_elm_lang$core$Basics$toString(_p0._1)
 								]));
 					case 'LineTo':
 						return A2(
@@ -9341,8 +9304,8 @@ var _user$project$Main$fromDescription = function (description) {
 							_elm_lang$core$Native_List.fromArray(
 								[
 									'L',
-									_elm_lang$core$Basics$toString(_p1._0),
-									_elm_lang$core$Basics$toString(_p1._1)
+									_elm_lang$core$Basics$toString(_p0._0),
+									_elm_lang$core$Basics$toString(_p0._1)
 								]));
 					case 'HorizontalLineTo':
 						return A2(
@@ -9351,7 +9314,7 @@ var _user$project$Main$fromDescription = function (description) {
 							_elm_lang$core$Native_List.fromArray(
 								[
 									'H',
-									_elm_lang$core$Basics$toString(_p1._0)
+									_elm_lang$core$Basics$toString(_p0._0)
 								]));
 					case 'Arc':
 						return A2(
@@ -9360,13 +9323,13 @@ var _user$project$Main$fromDescription = function (description) {
 							_elm_lang$core$Native_List.fromArray(
 								[
 									'A',
-									_elm_lang$core$Basics$toString(_p1._0),
-									_elm_lang$core$Basics$toString(_p1._1),
-									_elm_lang$core$Basics$toString(_p1._2),
-									_p1._3 ? '1' : '0',
-									_p1._4 ? '1' : '0',
-									_elm_lang$core$Basics$toString(_p1._5),
-									_elm_lang$core$Basics$toString(_p1._6)
+									_elm_lang$core$Basics$toString(_p0._0),
+									_elm_lang$core$Basics$toString(_p0._1),
+									_elm_lang$core$Basics$toString(_p0._2),
+									_p0._3 ? '1' : '0',
+									_p0._4 ? '1' : '0',
+									_elm_lang$core$Basics$toString(_p0._5),
+									_elm_lang$core$Basics$toString(_p0._6)
 								]));
 					default:
 						return 'Z';
@@ -9378,15 +9341,15 @@ var _user$project$Main$fromAttributes = function (attributes) {
 	return A2(
 		_elm_lang$core$List$map,
 		function (attribute) {
-			var _p2 = attribute;
-			switch (_p2.ctor) {
+			var _p1 = attribute;
+			switch (_p1.ctor) {
 				case 'StrokeWidth':
 					return _elm_lang$svg$Svg_Attributes$strokeWidth(
-						_elm_lang$core$Basics$toString(_p2._0));
+						_elm_lang$core$Basics$toString(_p1._0));
 				case 'Stroke':
-					return _elm_lang$svg$Svg_Attributes$stroke(_p2._0);
+					return _elm_lang$svg$Svg_Attributes$stroke(_p1._0);
 				case 'Fill':
-					return _elm_lang$svg$Svg_Attributes$fill(_p2._0);
+					return _elm_lang$svg$Svg_Attributes$fill(_p1._0);
 				default:
 					return _elm_lang$svg$Svg_Attributes$transform(
 						A2(
@@ -9398,15 +9361,15 @@ var _user$project$Main$fromAttributes = function (attributes) {
 									_elm_lang$core$String$join,
 									', ',
 									_elm_lang$core$Array$toList(
-										A2(_elm_lang$core$Array$map, _elm_lang$core$Basics$toString, _p2._0))),
+										A2(_elm_lang$core$Array$map, _elm_lang$core$Basics$toString, _p1._0))),
 								')')));
 			}
 		},
 		attributes);
 };
 var _user$project$Main$fromShape = function (shape) {
-	var _p3 = shape;
-	switch (_p3.ctor) {
+	var _p2 = shape;
+	switch (_p2.ctor) {
 		case 'Line':
 			return A2(
 				_elm_lang$svg$Svg$line,
@@ -9415,15 +9378,15 @@ var _user$project$Main$fromShape = function (shape) {
 					_elm_lang$core$Native_List.fromArray(
 						[
 							_elm_lang$svg$Svg_Attributes$x1(
-							_elm_lang$core$Basics$toString(_p3._0)),
+							_elm_lang$core$Basics$toString(_p2._0)),
 							_elm_lang$svg$Svg_Attributes$y1(
-							_elm_lang$core$Basics$toString(_p3._1)),
+							_elm_lang$core$Basics$toString(_p2._1)),
 							_elm_lang$svg$Svg_Attributes$x2(
-							_elm_lang$core$Basics$toString(_p3._2)),
+							_elm_lang$core$Basics$toString(_p2._2)),
 							_elm_lang$svg$Svg_Attributes$y2(
-							_elm_lang$core$Basics$toString(_p3._3))
+							_elm_lang$core$Basics$toString(_p2._3))
 						]),
-					_user$project$Main$fromAttributes(_p3._4)),
+					_user$project$Main$fromAttributes(_p2._4)),
 				_elm_lang$core$Native_List.fromArray(
 					[]));
 		case 'Circle':
@@ -9434,13 +9397,13 @@ var _user$project$Main$fromShape = function (shape) {
 					_elm_lang$core$Native_List.fromArray(
 						[
 							_elm_lang$svg$Svg_Attributes$cx(
-							_elm_lang$core$Basics$toString(_p3._0)),
+							_elm_lang$core$Basics$toString(_p2._0)),
 							_elm_lang$svg$Svg_Attributes$cy(
-							_elm_lang$core$Basics$toString(_p3._1)),
+							_elm_lang$core$Basics$toString(_p2._1)),
 							_elm_lang$svg$Svg_Attributes$r(
-							_elm_lang$core$Basics$toString(_p3._2))
+							_elm_lang$core$Basics$toString(_p2._2))
 						]),
-					_user$project$Main$fromAttributes(_p3._3)),
+					_user$project$Main$fromAttributes(_p2._3)),
 				_elm_lang$core$Native_List.fromArray(
 					[]));
 		case 'Path':
@@ -9451,16 +9414,16 @@ var _user$project$Main$fromShape = function (shape) {
 					_elm_lang$core$Native_List.fromArray(
 						[
 							_elm_lang$svg$Svg_Attributes$d(
-							_user$project$Main$fromDescription(_p3._0))
+							_user$project$Main$fromDescription(_p2._0))
 						]),
-					_user$project$Main$fromAttributes(_p3._1)),
+					_user$project$Main$fromAttributes(_p2._1)),
 				_elm_lang$core$Native_List.fromArray(
 					[]));
 		default:
 			return A2(
 				_elm_lang$svg$Svg$g,
-				_user$project$Main$fromAttributes(_p3._0),
-				A2(_elm_lang$core$List$map, _user$project$Main$fromShape, _p3._1));
+				_user$project$Main$fromAttributes(_p2._0),
+				A2(_elm_lang$core$List$map, _user$project$Main$fromShape, _p2._1));
 	}
 };
 var _user$project$Main$range = F7(
@@ -9511,18 +9474,18 @@ var _user$project$Main$range = F7(
 	});
 var _user$project$Main$updateOrNothing = F3(
 	function (model, number, update) {
-		var _p4 = number;
-		if (_p4.ctor === 'Just') {
-			return update(_p4._0);
+		var _p3 = number;
+		if (_p3.ctor === 'Just') {
+			return update(_p3._0);
 		} else {
 			return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 		}
 	});
 var _user$project$Main$toNumber = function (value) {
-	var _p5 = _elm_lang$core$String$toFloat(value);
-	if (_p5.ctor === 'Ok') {
-		var _p6 = _p5._0;
-		return _elm_lang$core$Basics$isNaN(_p6) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(_p6);
+	var _p4 = _elm_lang$core$String$toFloat(value);
+	if (_p4.ctor === 'Ok') {
+		var _p5 = _p4._0;
+		return _elm_lang$core$Basics$isNaN(_p5) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(_p5);
 	} else {
 		return _elm_lang$core$Maybe$Nothing;
 	}
@@ -9604,17 +9567,17 @@ var _user$project$Main$translate = F3(
 				]));
 	});
 var _user$project$Main$getTransform = function (model) {
-	var _p7 = model.drag;
-	if (_p7.ctor === 'Nothing') {
+	var _p6 = model.drag;
+	if (_p6.ctor === 'Nothing') {
 		return model.transform;
 	} else {
-		var _p9 = _p7._0.start;
-		var _p8 = _p7._0.current;
+		var _p8 = _p6._0.start;
+		var _p7 = _p6._0.current;
 		return A3(
 			_user$project$Main$translate,
 			model.transform,
-			_elm_lang$core$Basics$toFloat(_p8.x - _p9.x),
-			_elm_lang$core$Basics$toFloat(_p8.y - _p9.y));
+			_elm_lang$core$Basics$toFloat(_p7.x - _p8.x),
+			_elm_lang$core$Basics$toFloat(_p7.y - _p8.y));
 	}
 };
 var _user$project$Main$identity = _elm_lang$core$Array$fromList(
@@ -9630,8 +9593,8 @@ var _user$project$Main$Drag = F2(
 	});
 var _user$project$Main$update = F2(
 	function (msg, model) {
-		var _p10 = msg;
-		switch (_p10.ctor) {
+		var _p9 = msg;
+		switch (_p9.ctor) {
 			case 'DefaultWindowSize':
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'WindowResized':
@@ -9639,14 +9602,14 @@ var _user$project$Main$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{windowSize: _p10._0}),
+						{windowSize: _p9._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Width':
 				return A3(
 					_user$project$Main$updateOrNone,
 					model,
-					_p10._0,
+					_p9._0,
 					function (width) {
 						return _elm_lang$core$Native_Utils.update(
 							model,
@@ -9660,7 +9623,7 @@ var _user$project$Main$update = F2(
 				return A3(
 					_user$project$Main$updateOrNone,
 					model,
-					_p10._0,
+					_p9._0,
 					function (spacing) {
 						return _elm_lang$core$Native_Utils.update(
 							model,
@@ -9673,7 +9636,7 @@ var _user$project$Main$update = F2(
 				return A3(
 					_user$project$Main$updateOrNone,
 					model,
-					_p10._0,
+					_p9._0,
 					function (spacing) {
 						return _elm_lang$core$Native_Utils.update(
 							model,
@@ -9686,21 +9649,21 @@ var _user$project$Main$update = F2(
 				return A3(
 					_user$project$Main$updateOrNone,
 					model,
-					_p10._0,
+					_p9._0,
 					function (width) {
 						return _elm_lang$core$Native_Utils.update(
 							model,
 							{strokeWidth: width});
 					});
 			case 'DragStart':
-				var _p11 = _p10._0;
+				var _p10 = _p9._0;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
 							drag: _elm_lang$core$Maybe$Just(
-								A2(_user$project$Main$Drag, _p11, _p11))
+								A2(_user$project$Main$Drag, _p10, _p10))
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -9712,9 +9675,9 @@ var _user$project$Main$update = F2(
 						{
 							drag: A2(
 								_elm_lang$core$Maybe$map,
-								function (_p12) {
-									var _p13 = _p12;
-									return A2(_user$project$Main$Drag, _p13.start, _p10._0);
+								function (_p11) {
+									var _p12 = _p11;
+									return A2(_user$project$Main$Drag, _p12.start, _p9._0);
 								},
 								model.drag)
 						}),
@@ -9732,9 +9695,9 @@ var _user$project$Main$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
-				var _p14 = _p10._0;
-				var pan = A2(_elm_lang$mouse$Mouse$Position, _p14.offsetX, _p14.offsetY);
-				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, model.distanceScrolled + _p14.wheelDelta);
+				var _p13 = _p9._0;
+				var pan = A2(_elm_lang$mouse$Mouse$Position, _p13.offsetX, _p13.offsetY);
+				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, model.distanceScrolled + _p13.wheelDelta);
 				var zoomPerUnitDistance = 1 + (0.1 / 100);
 				var zoom = Math.pow(
 					zoomPerUnitDistance,
@@ -9756,6 +9719,10 @@ var _user$project$Main$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 		}
+	});
+var _user$project$Main$Gate = F3(
+	function (a, b, c) {
+		return {shape: a, width: b, height: c};
 	});
 var _user$project$Main$WheelScrolled = function (a) {
 	return {ctor: 'WheelScrolled', _0: a};
@@ -9794,8 +9761,8 @@ var _user$project$Main$subscriptions = function (model) {
 			[
 				_elm_lang$window$Window$resizes(_user$project$Main$WindowResized),
 				function () {
-				var _p15 = model.drag;
-				if (_p15.ctor === 'Nothing') {
+				var _p14 = model.drag;
+				if (_p14.ctor === 'Nothing') {
 					return _elm_lang$core$Platform_Sub$none;
 				} else {
 					return _elm_lang$core$Platform_Sub$batch(
@@ -9912,6 +9879,10 @@ var _user$project$Main$Line = F5(
 	function (a, b, c, d, e) {
 		return {ctor: 'Line', _0: a, _1: b, _2: c, _3: d, _4: e};
 	});
+var _user$project$Main$Sum = F2(
+	function (a, b) {
+		return {ctor: 'Sum', _0: a, _1: b};
+	});
 var _user$project$Main$LeftHack = {ctor: 'LeftHack'};
 var _user$project$Main$Left = {ctor: 'Left'};
 var _user$project$Main$Height = {ctor: 'Height'};
@@ -9922,6 +9893,45 @@ var _user$project$Main$GateWidth = {ctor: 'GateWidth'};
 var _user$project$Main$fromRadius = F2(
 	function (width, radius) {
 		return A2(_user$project$Main$fromCoordinate, width, _user$project$Main$GateWidth) / 12;
+	});
+var _user$project$Main$fromCoordinate = F2(
+	function (width, c) {
+		var hack = 1 / 10;
+		var offset = 1.5 * 2.75;
+		var left = (1 / 2) - offset;
+		var wireWidth = width / 5;
+		var gateWidth = width - (wireWidth / 2);
+		var height = (gateWidth * 4) / 5;
+		var halfHeight = height / 2;
+		var wideSegmentWidth = (gateWidth * 3) / 5;
+		var narrowSegmentWidth = (gateWidth * 2) / 5;
+		var indentWidth = gateWidth / 7;
+		var bufferOffset = (gateWidth - wideSegmentWidth) / 2;
+		var _p15 = c;
+		switch (_p15.ctor) {
+			case 'Origin':
+				return 0;
+			case 'WideSegmentWidth':
+				return wideSegmentWidth;
+			case 'NarrowSegmentWidth':
+				return narrowSegmentWidth;
+			case 'GateWidth':
+				return gateWidth;
+			case 'IndentWidth':
+				return indentWidth * 6;
+			case 'IndentWidthExtra':
+				return indentWidth * 6.5;
+			case 'HalfHeight':
+				return halfHeight;
+			case 'Height':
+				return height;
+			case 'Left':
+				return left;
+			case 'LeftHack':
+				return left + hack;
+			default:
+				return A2(_user$project$Main$fromCoordinate, width, _p15._0) + A2(_user$project$Main$fromRadius, width, _p15._1);
+		}
 	});
 var _user$project$Main$NarrowSegmentWidth = {ctor: 'NarrowSegmentWidth'};
 var _user$project$Main$WideSegmentWidth = {ctor: 'WideSegmentWidth'};
@@ -9944,7 +9954,18 @@ var _user$project$Main$inverted = function (gate) {
 	return A2(
 		_user$project$Main$group,
 		gate,
-		A3(_user$project$Main$Circle2, _user$project$Main$GateWidth, _user$project$Main$HalfHeight, _user$project$Main$InverterRadius));
+		A3(
+			_user$project$Main$Circle2,
+			A2(_user$project$Main$Sum, _user$project$Main$GateWidth, _user$project$Main$InverterRadius),
+			_user$project$Main$HalfHeight,
+			_user$project$Main$InverterRadius));
+};
+var _user$project$Main$inverted6 = function (gate) {
+	return {
+		shape: _user$project$Main$inverted(gate.shape),
+		width: A2(_user$project$Main$Sum, gate.width, _user$project$Main$InverterRadius),
+		height: gate.height
+	};
 };
 var _user$project$Main$Path2 = function (a) {
 	return {ctor: 'Path2', _0: a};
@@ -10191,6 +10212,7 @@ var _user$project$Main$Description3 = F3(
 	});
 var _user$project$Main$buffer5 = _user$project$Main$gate5(
 	A3(_user$project$Main$Description3, _user$project$Main$FlatBase, _user$project$Main$NoBody, _user$project$Main$ArrowTip));
+var _user$project$Main$buffer6 = {shape: _user$project$Main$buffer5, width: _user$project$Main$NarrowSegmentWidth, height: _user$project$Main$Height};
 var _user$project$Main$not5 = _user$project$Main$inverted(_user$project$Main$buffer5);
 var _user$project$Main$and5 = _user$project$Main$gate5(
 	A3(_user$project$Main$Description3, _user$project$Main$FlatBase, _user$project$Main$WideBody, _user$project$Main$RoundTip));
