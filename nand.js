@@ -9950,19 +9950,20 @@ var _user$project$Main$Circle2 = F3(
 	function (a, b, c) {
 		return {ctor: 'Circle2', _0: a, _1: b, _2: c};
 	});
-var _user$project$Main$inverted = function (gate) {
-	return A2(
-		_user$project$Main$group,
-		gate,
-		A3(
-			_user$project$Main$Circle2,
-			A2(_user$project$Main$Sum, _user$project$Main$GateWidth, _user$project$Main$InverterRadius),
-			_user$project$Main$HalfHeight,
-			_user$project$Main$InverterRadius));
-};
+var _user$project$Main$inverted = F2(
+	function (width, gate) {
+		return A2(
+			_user$project$Main$group,
+			gate,
+			A3(
+				_user$project$Main$Circle2,
+				A2(_user$project$Main$Sum, width, _user$project$Main$InverterRadius),
+				_user$project$Main$HalfHeight,
+				_user$project$Main$InverterRadius));
+	});
 var _user$project$Main$inverted6 = function (gate) {
 	return {
-		shape: _user$project$Main$inverted(gate.shape),
+		shape: A2(_user$project$Main$inverted, gate.width, gate.shape),
 		width: A2(_user$project$Main$Sum, gate.width, _user$project$Main$InverterRadius),
 		height: gate.height
 	};
@@ -10213,13 +10214,13 @@ var _user$project$Main$Description3 = F3(
 var _user$project$Main$buffer5 = _user$project$Main$gate5(
 	A3(_user$project$Main$Description3, _user$project$Main$FlatBase, _user$project$Main$NoBody, _user$project$Main$ArrowTip));
 var _user$project$Main$buffer6 = {shape: _user$project$Main$buffer5, width: _user$project$Main$NarrowSegmentWidth, height: _user$project$Main$Height};
-var _user$project$Main$not5 = _user$project$Main$inverted(_user$project$Main$buffer5);
+var _user$project$Main$not5 = A2(_user$project$Main$inverted, _user$project$Main$WideSegmentWidth, _user$project$Main$buffer5);
 var _user$project$Main$and5 = _user$project$Main$gate5(
 	A3(_user$project$Main$Description3, _user$project$Main$FlatBase, _user$project$Main$WideBody, _user$project$Main$RoundTip));
-var _user$project$Main$nand5 = _user$project$Main$inverted(_user$project$Main$and5);
+var _user$project$Main$nand5 = A2(_user$project$Main$inverted, _user$project$Main$GateWidth, _user$project$Main$and5);
 var _user$project$Main$or5 = _user$project$Main$gate5(
 	A3(_user$project$Main$Description3, _user$project$Main$CurvedBase, _user$project$Main$NarrowBody, _user$project$Main$SpearTip));
-var _user$project$Main$nor5 = _user$project$Main$inverted(_user$project$Main$or5);
+var _user$project$Main$nor5 = A2(_user$project$Main$inverted, _user$project$Main$GateWidth, _user$project$Main$or5);
 var _user$project$Main$xor5 = _user$project$Main$Group2(
 	_elm_lang$core$Native_List.fromArray(
 		[
@@ -10236,7 +10237,7 @@ var _user$project$Main$xor5 = _user$project$Main$Group2(
 			_user$project$Main$gate5(
 			A3(_user$project$Main$Description3, _user$project$Main$CurvedBase, _user$project$Main$NarrowBody, _user$project$Main$SpearTip))
 		]));
-var _user$project$Main$xnor5 = _user$project$Main$inverted(_user$project$Main$xor5);
+var _user$project$Main$xnor5 = A2(_user$project$Main$inverted, _user$project$Main$GateWidth, _user$project$Main$xor5);
 var _user$project$Main$view = function (model) {
 	var fillColour = 'white';
 	var strokeColour = 'black';
