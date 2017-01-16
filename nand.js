@@ -9276,9 +9276,34 @@ var _user$project$Wheel$subMap = F2(
 	});
 _elm_lang$core$Native_Platform.effectManagers['Wheel'] = {pkg: 'user/project', init: _user$project$Wheel$init, onEffects: _user$project$Wheel$onEffects, onSelfMsg: _user$project$Wheel$onSelfMsg, tag: 'sub', subMap: _user$project$Wheel$subMap};
 
-var _user$project$Main$fromDimensionsCoordinate7 = function (dimensions) {
-	return dimensions(100);
+var _user$project$Main$bodyOf = function (gate) {
+	bodyOf:
+	while (true) {
+		var _p0 = gate;
+		if (_p0.ctor === 'Gate6') {
+			return _p0._1;
+		} else {
+			var _v1 = _p0._2;
+			gate = _v1;
+			continue bodyOf;
+		}
+	}
 };
+var _user$project$Main$hack = function (width) {
+	var strokeWidth = 1;
+	return strokeWidth / 10;
+};
+var _user$project$Main$baseDecorationOffset = function (strokeWidth) {
+	return A2(_elm_lang$core$Basics$max, strokeWidth, 1.5) * 2.75;
+};
+var _user$project$Main$left = function (width) {
+	var strokeWidth = 1;
+	return (strokeWidth / 2) - _user$project$Main$baseDecorationOffset(strokeWidth);
+};
+var _user$project$Main$offset = F3(
+	function (coordinate, offset, width) {
+		return coordinate(width) + offset(width);
+	});
 var _user$project$Main$wireWidth = function (width) {
 	return width / 5;
 };
@@ -9297,6 +9322,22 @@ var _user$project$Main$height = function (width) {
 var _user$project$Main$halfHeight = function (width) {
 	return _user$project$Main$height(width) / 2;
 };
+var _user$project$Main$inverterRadius = function (width) {
+	return _user$project$Main$gateWidth(width) / 12;
+};
+var _user$project$Main$indentWidth = function (width) {
+	return _user$project$Main$gateWidth(width) / 7;
+};
+var _user$project$Main$indentWidth6 = function (width) {
+	return _user$project$Main$indentWidth(width) * 6;
+};
+var _user$project$Main$right = function (width) {
+	var strokeWidth = 1;
+	return _user$project$Main$indentWidth6(width) - _user$project$Main$baseDecorationOffset(strokeWidth);
+};
+var _user$project$Main$indentWidth65 = function (width) {
+	return _user$project$Main$indentWidth(width) * 6.5;
+};
 var _user$project$Main$origin = function (width) {
 	return 0;
 };
@@ -9307,8 +9348,8 @@ var _user$project$Main$fromDescription = function (description) {
 		A2(
 			_elm_lang$core$List$map,
 			function (description) {
-				var _p0 = description;
-				switch (_p0.ctor) {
+				var _p1 = description;
+				switch (_p1.ctor) {
 					case 'MoveToOrigin':
 						return 'M 0 0';
 					case 'MoveTo':
@@ -9318,8 +9359,8 @@ var _user$project$Main$fromDescription = function (description) {
 							_elm_lang$core$Native_List.fromArray(
 								[
 									'M',
-									_elm_lang$core$Basics$toString(_p0._0),
-									_elm_lang$core$Basics$toString(_p0._1)
+									_elm_lang$core$Basics$toString(_p1._0),
+									_elm_lang$core$Basics$toString(_p1._1)
 								]));
 					case 'LineTo':
 						return A2(
@@ -9328,8 +9369,8 @@ var _user$project$Main$fromDescription = function (description) {
 							_elm_lang$core$Native_List.fromArray(
 								[
 									'L',
-									_elm_lang$core$Basics$toString(_p0._0),
-									_elm_lang$core$Basics$toString(_p0._1)
+									_elm_lang$core$Basics$toString(_p1._0),
+									_elm_lang$core$Basics$toString(_p1._1)
 								]));
 					case 'HorizontalLineTo':
 						return A2(
@@ -9338,7 +9379,7 @@ var _user$project$Main$fromDescription = function (description) {
 							_elm_lang$core$Native_List.fromArray(
 								[
 									'H',
-									_elm_lang$core$Basics$toString(_p0._0)
+									_elm_lang$core$Basics$toString(_p1._0)
 								]));
 					case 'Arc':
 						return A2(
@@ -9347,13 +9388,13 @@ var _user$project$Main$fromDescription = function (description) {
 							_elm_lang$core$Native_List.fromArray(
 								[
 									'A',
-									_elm_lang$core$Basics$toString(_p0._0),
-									_elm_lang$core$Basics$toString(_p0._1),
-									_elm_lang$core$Basics$toString(_p0._2),
-									_p0._3 ? '1' : '0',
-									_p0._4 ? '1' : '0',
-									_elm_lang$core$Basics$toString(_p0._5),
-									_elm_lang$core$Basics$toString(_p0._6)
+									_elm_lang$core$Basics$toString(_p1._0),
+									_elm_lang$core$Basics$toString(_p1._1),
+									_elm_lang$core$Basics$toString(_p1._2),
+									_p1._3 ? '1' : '0',
+									_p1._4 ? '1' : '0',
+									_elm_lang$core$Basics$toString(_p1._5),
+									_elm_lang$core$Basics$toString(_p1._6)
 								]));
 					default:
 						return 'Z';
@@ -9365,15 +9406,15 @@ var _user$project$Main$fromAttributes = function (attributes) {
 	return A2(
 		_elm_lang$core$List$map,
 		function (attribute) {
-			var _p1 = attribute;
-			switch (_p1.ctor) {
+			var _p2 = attribute;
+			switch (_p2.ctor) {
 				case 'StrokeWidth':
 					return _elm_lang$svg$Svg_Attributes$strokeWidth(
-						_elm_lang$core$Basics$toString(_p1._0));
+						_elm_lang$core$Basics$toString(_p2._0));
 				case 'Stroke':
-					return _elm_lang$svg$Svg_Attributes$stroke(_p1._0);
+					return _elm_lang$svg$Svg_Attributes$stroke(_p2._0);
 				case 'Fill':
-					return _elm_lang$svg$Svg_Attributes$fill(_p1._0);
+					return _elm_lang$svg$Svg_Attributes$fill(_p2._0);
 				default:
 					return _elm_lang$svg$Svg_Attributes$transform(
 						A2(
@@ -9385,15 +9426,15 @@ var _user$project$Main$fromAttributes = function (attributes) {
 									_elm_lang$core$String$join,
 									', ',
 									_elm_lang$core$Array$toList(
-										A2(_elm_lang$core$Array$map, _elm_lang$core$Basics$toString, _p1._0))),
+										A2(_elm_lang$core$Array$map, _elm_lang$core$Basics$toString, _p2._0))),
 								')')));
 			}
 		},
 		attributes);
 };
 var _user$project$Main$fromShape = function (shape) {
-	var _p2 = shape;
-	switch (_p2.ctor) {
+	var _p3 = shape;
+	switch (_p3.ctor) {
 		case 'Line':
 			return A2(
 				_elm_lang$svg$Svg$line,
@@ -9402,15 +9443,15 @@ var _user$project$Main$fromShape = function (shape) {
 					_elm_lang$core$Native_List.fromArray(
 						[
 							_elm_lang$svg$Svg_Attributes$x1(
-							_elm_lang$core$Basics$toString(_p2._0)),
+							_elm_lang$core$Basics$toString(_p3._0)),
 							_elm_lang$svg$Svg_Attributes$y1(
-							_elm_lang$core$Basics$toString(_p2._1)),
+							_elm_lang$core$Basics$toString(_p3._1)),
 							_elm_lang$svg$Svg_Attributes$x2(
-							_elm_lang$core$Basics$toString(_p2._2)),
+							_elm_lang$core$Basics$toString(_p3._2)),
 							_elm_lang$svg$Svg_Attributes$y2(
-							_elm_lang$core$Basics$toString(_p2._3))
+							_elm_lang$core$Basics$toString(_p3._3))
 						]),
-					_user$project$Main$fromAttributes(_p2._4)),
+					_user$project$Main$fromAttributes(_p3._4)),
 				_elm_lang$core$Native_List.fromArray(
 					[]));
 		case 'Circle':
@@ -9421,13 +9462,13 @@ var _user$project$Main$fromShape = function (shape) {
 					_elm_lang$core$Native_List.fromArray(
 						[
 							_elm_lang$svg$Svg_Attributes$cx(
-							_elm_lang$core$Basics$toString(_p2._0)),
+							_elm_lang$core$Basics$toString(_p3._0)),
 							_elm_lang$svg$Svg_Attributes$cy(
-							_elm_lang$core$Basics$toString(_p2._1)),
+							_elm_lang$core$Basics$toString(_p3._1)),
 							_elm_lang$svg$Svg_Attributes$r(
-							_elm_lang$core$Basics$toString(_p2._2))
+							_elm_lang$core$Basics$toString(_p3._2))
 						]),
-					_user$project$Main$fromAttributes(_p2._3)),
+					_user$project$Main$fromAttributes(_p3._3)),
 				_elm_lang$core$Native_List.fromArray(
 					[]));
 		case 'Path':
@@ -9438,16 +9479,16 @@ var _user$project$Main$fromShape = function (shape) {
 					_elm_lang$core$Native_List.fromArray(
 						[
 							_elm_lang$svg$Svg_Attributes$d(
-							_user$project$Main$fromDescription(_p2._0))
+							_user$project$Main$fromDescription(_p3._0))
 						]),
-					_user$project$Main$fromAttributes(_p2._1)),
+					_user$project$Main$fromAttributes(_p3._1)),
 				_elm_lang$core$Native_List.fromArray(
 					[]));
 		default:
 			return A2(
 				_elm_lang$svg$Svg$g,
-				_user$project$Main$fromAttributes(_p2._0),
-				A2(_elm_lang$core$List$map, _user$project$Main$fromShape, _p2._1));
+				_user$project$Main$fromAttributes(_p3._0),
+				A2(_elm_lang$core$List$map, _user$project$Main$fromShape, _p3._1));
 	}
 };
 var _user$project$Main$range = F7(
@@ -9498,18 +9539,18 @@ var _user$project$Main$range = F7(
 	});
 var _user$project$Main$updateOrNothing = F3(
 	function (model, number, update) {
-		var _p3 = number;
-		if (_p3.ctor === 'Just') {
-			return update(_p3._0);
+		var _p4 = number;
+		if (_p4.ctor === 'Just') {
+			return update(_p4._0);
 		} else {
 			return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 		}
 	});
 var _user$project$Main$toNumber = function (value) {
-	var _p4 = _elm_lang$core$String$toFloat(value);
-	if (_p4.ctor === 'Ok') {
-		var _p5 = _p4._0;
-		return _elm_lang$core$Basics$isNaN(_p5) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(_p5);
+	var _p5 = _elm_lang$core$String$toFloat(value);
+	if (_p5.ctor === 'Ok') {
+		var _p6 = _p5._0;
+		return _elm_lang$core$Basics$isNaN(_p6) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(_p6);
 	} else {
 		return _elm_lang$core$Maybe$Nothing;
 	}
@@ -9591,17 +9632,17 @@ var _user$project$Main$translate = F3(
 				]));
 	});
 var _user$project$Main$getTransform = function (model) {
-	var _p6 = model.drag;
-	if (_p6.ctor === 'Nothing') {
+	var _p7 = model.drag;
+	if (_p7.ctor === 'Nothing') {
 		return model.transform;
 	} else {
-		var _p8 = _p6._0.start;
-		var _p7 = _p6._0.current;
+		var _p9 = _p7._0.start;
+		var _p8 = _p7._0.current;
 		return A3(
 			_user$project$Main$translate,
 			model.transform,
-			_elm_lang$core$Basics$toFloat(_p7.x - _p8.x),
-			_elm_lang$core$Basics$toFloat(_p7.y - _p8.y));
+			_elm_lang$core$Basics$toFloat(_p8.x - _p9.x),
+			_elm_lang$core$Basics$toFloat(_p8.y - _p9.y));
 	}
 };
 var _user$project$Main$identityTransform = _elm_lang$core$Array$fromList(
@@ -9617,8 +9658,8 @@ var _user$project$Main$Drag = F2(
 	});
 var _user$project$Main$update = F2(
 	function (msg, model) {
-		var _p9 = msg;
-		switch (_p9.ctor) {
+		var _p10 = msg;
+		switch (_p10.ctor) {
 			case 'DefaultWindowSize':
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'WindowResized':
@@ -9626,14 +9667,14 @@ var _user$project$Main$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{windowSize: _p9._0}),
+						{windowSize: _p10._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Width':
 				return A3(
 					_user$project$Main$updateOrNone,
 					model,
-					_p9._0,
+					_p10._0,
 					function (width) {
 						return _elm_lang$core$Native_Utils.update(
 							model,
@@ -9647,7 +9688,7 @@ var _user$project$Main$update = F2(
 				return A3(
 					_user$project$Main$updateOrNone,
 					model,
-					_p9._0,
+					_p10._0,
 					function (spacing) {
 						return _elm_lang$core$Native_Utils.update(
 							model,
@@ -9660,7 +9701,7 @@ var _user$project$Main$update = F2(
 				return A3(
 					_user$project$Main$updateOrNone,
 					model,
-					_p9._0,
+					_p10._0,
 					function (spacing) {
 						return _elm_lang$core$Native_Utils.update(
 							model,
@@ -9673,21 +9714,21 @@ var _user$project$Main$update = F2(
 				return A3(
 					_user$project$Main$updateOrNone,
 					model,
-					_p9._0,
+					_p10._0,
 					function (width) {
 						return _elm_lang$core$Native_Utils.update(
 							model,
 							{strokeWidth: width});
 					});
 			case 'DragStart':
-				var _p10 = _p9._0;
+				var _p11 = _p10._0;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
 							drag: _elm_lang$core$Maybe$Just(
-								A2(_user$project$Main$Drag, _p10, _p10))
+								A2(_user$project$Main$Drag, _p11, _p11))
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -9699,9 +9740,9 @@ var _user$project$Main$update = F2(
 						{
 							drag: A2(
 								_elm_lang$core$Maybe$map,
-								function (_p11) {
-									var _p12 = _p11;
-									return A2(_user$project$Main$Drag, _p12.start, _p9._0);
+								function (_p12) {
+									var _p13 = _p12;
+									return A2(_user$project$Main$Drag, _p13.start, _p10._0);
 								},
 								model.drag)
 						}),
@@ -9719,9 +9760,9 @@ var _user$project$Main$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
-				var _p13 = _p9._0;
-				var pan = A2(_elm_lang$mouse$Mouse$Position, _p13.offsetX, _p13.offsetY);
-				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, model.distanceScrolled + _p13.wheelDelta);
+				var _p14 = _p10._0;
+				var pan = A2(_elm_lang$mouse$Mouse$Position, _p14.offsetX, _p14.offsetY);
+				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, model.distanceScrolled + _p14.wheelDelta);
 				var zoomPerUnitDistance = 1 + (0.1 / 100);
 				var zoom = Math.pow(
 					zoomPerUnitDistance,
@@ -9743,10 +9784,6 @@ var _user$project$Main$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 		}
-	});
-var _user$project$Main$Gate = F3(
-	function (a, b, c) {
-		return {shape: a, width: b, height: c};
 	});
 var _user$project$Main$WheelScrolled = function (a) {
 	return {ctor: 'WheelScrolled', _0: a};
@@ -9785,8 +9822,8 @@ var _user$project$Main$subscriptions = function (model) {
 			[
 				_elm_lang$window$Window$resizes(_user$project$Main$WindowResized),
 				function () {
-				var _p14 = model.drag;
-				if (_p14.ctor === 'Nothing') {
+				var _p15 = model.drag;
+				if (_p15.ctor === 'Nothing') {
 					return _elm_lang$core$Platform_Sub$none;
 				} else {
 					return _elm_lang$core$Platform_Sub$batch(
@@ -9854,18 +9891,6 @@ var _user$project$Main$MoveTo = F2(
 	function (a, b) {
 		return {ctor: 'MoveTo', _0: a, _1: b};
 	});
-var _user$project$Main$fromDescription7 = F2(
-	function (width, description) {
-		var _p15 = description;
-		switch (_p15.ctor) {
-			case 'MoveTo7':
-				return A2(_user$project$Main$MoveTo, _p15._0, _p15._1);
-			case 'LineTo7':
-				return A2(_user$project$Main$LineTo, _p15._0, _p15._1);
-			default:
-				return _user$project$Main$Close;
-		}
-	});
 var _user$project$Main$MoveToOrigin = {ctor: 'MoveToOrigin'};
 var _user$project$Main$Group = F2(
 	function (a, b) {
@@ -9875,63 +9900,6 @@ var _user$project$Main$Path = F2(
 	function (a, b) {
 		return {ctor: 'Path', _0: a, _1: b};
 	});
-var _user$project$Main$buffer2 = F5(
-	function (transform, width, strokeWidth, strokeColour, fillColour) {
-		var wireWidth = width / 5;
-		var gateWidth = width - (wireWidth / 2);
-		var height = (gateWidth * 4) / 5;
-		var halfHeight = height / 2;
-		var wideSegmentWidth = (gateWidth * 3) / 5;
-		return A2(
-			_user$project$Main$Group,
-			_elm_lang$core$Native_List.fromArray(
-				[
-					_user$project$Main$Transform(transform)
-				]),
-			_elm_lang$core$Native_List.fromArray(
-				[
-					A2(
-					_user$project$Main$Path,
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_user$project$Main$MoveToOrigin,
-							A2(_user$project$Main$LineTo, wideSegmentWidth, halfHeight),
-							A2(_user$project$Main$LineTo, 0, height),
-							_user$project$Main$Close
-						]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_user$project$Main$StrokeWidth(strokeWidth),
-							_user$project$Main$Stroke(strokeColour),
-							_user$project$Main$Fill(fillColour)
-						]))
-				]));
-	});
-var _user$project$Main$fromShape7 = F6(
-	function (transform, width, strokeWidth, strokeColour, fillColour, shape) {
-		var _p16 = shape;
-		return A2(
-			_user$project$Main$Group,
-			_elm_lang$core$Native_List.fromArray(
-				[
-					_user$project$Main$Transform(transform)
-				]),
-			_elm_lang$core$Native_List.fromArray(
-				[
-					A2(
-					_user$project$Main$Path,
-					A2(
-						_elm_lang$core$List$map,
-						_user$project$Main$fromDescription7(width),
-						_p16._0),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_user$project$Main$Stroke(strokeColour),
-							_user$project$Main$StrokeWidth(strokeWidth),
-							_user$project$Main$Fill(fillColour)
-						]))
-				]));
-	});
 var _user$project$Main$Circle = F4(
 	function (a, b, c, d) {
 		return {ctor: 'Circle', _0: a, _1: b, _2: c, _3: d};
@@ -9940,357 +9908,8 @@ var _user$project$Main$Line = F5(
 	function (a, b, c, d, e) {
 		return {ctor: 'Line', _0: a, _1: b, _2: c, _3: d, _4: e};
 	});
-var _user$project$Main$Sum = F2(
-	function (a, b) {
-		return {ctor: 'Sum', _0: a, _1: b};
-	});
-var _user$project$Main$LeftHack = {ctor: 'LeftHack'};
-var _user$project$Main$Left = {ctor: 'Left'};
-var _user$project$Main$Height = {ctor: 'Height'};
-var _user$project$Main$HalfHeight = {ctor: 'HalfHeight'};
-var _user$project$Main$IndentWidthExtra = {ctor: 'IndentWidthExtra'};
-var _user$project$Main$IndentWidth = {ctor: 'IndentWidth'};
-var _user$project$Main$GateWidth = {ctor: 'GateWidth'};
-var _user$project$Main$fromRadius = F2(
-	function (width, radius) {
-		return A2(_user$project$Main$fromCoordinate, width, _user$project$Main$GateWidth) / 12;
-	});
-var _user$project$Main$fromCoordinate = F2(
-	function (width, c) {
-		var hack = 1 / 10;
-		var offset = 1.5 * 2.75;
-		var left = (1 / 2) - offset;
-		var wireWidth = width / 5;
-		var gateWidth = width - (wireWidth / 2);
-		var height = (gateWidth * 4) / 5;
-		var halfHeight = height / 2;
-		var wideSegmentWidth = (gateWidth * 3) / 5;
-		var narrowSegmentWidth = (gateWidth * 2) / 5;
-		var indentWidth = gateWidth / 7;
-		var bufferOffset = (gateWidth - wideSegmentWidth) / 2;
-		var _p17 = c;
-		switch (_p17.ctor) {
-			case 'Origin':
-				return 0;
-			case 'WideSegmentWidth':
-				return wideSegmentWidth;
-			case 'NarrowSegmentWidth':
-				return narrowSegmentWidth;
-			case 'GateWidth':
-				return gateWidth;
-			case 'IndentWidth':
-				return indentWidth * 6;
-			case 'IndentWidthExtra':
-				return indentWidth * 6.5;
-			case 'HalfHeight':
-				return halfHeight;
-			case 'Height':
-				return height;
-			case 'Left':
-				return left;
-			case 'LeftHack':
-				return left + hack;
-			default:
-				return A2(_user$project$Main$fromCoordinate, width, _p17._0) + A2(_user$project$Main$fromRadius, width, _p17._1);
-		}
-	});
-var _user$project$Main$NarrowSegmentWidth = {ctor: 'NarrowSegmentWidth'};
-var _user$project$Main$WideSegmentWidth = {ctor: 'WideSegmentWidth'};
-var _user$project$Main$Origin = {ctor: 'Origin'};
-var _user$project$Main$InverterRadius = {ctor: 'InverterRadius'};
-var _user$project$Main$Group2 = function (a) {
-	return {ctor: 'Group2', _0: a};
-};
-var _user$project$Main$group = F2(
-	function (first, second) {
-		return _user$project$Main$Group2(
-			_elm_lang$core$Native_List.fromArray(
-				[first, second]));
-	});
-var _user$project$Main$Circle2 = F3(
-	function (a, b, c) {
-		return {ctor: 'Circle2', _0: a, _1: b, _2: c};
-	});
-var _user$project$Main$inverted = F2(
-	function (width, gate) {
-		return A2(
-			_user$project$Main$group,
-			gate,
-			A3(
-				_user$project$Main$Circle2,
-				A2(_user$project$Main$Sum, width, _user$project$Main$InverterRadius),
-				_user$project$Main$HalfHeight,
-				_user$project$Main$InverterRadius));
-	});
-var _user$project$Main$Path2 = function (a) {
-	return {ctor: 'Path2', _0: a};
-};
 var _user$project$Main$CounterClockwise = {ctor: 'CounterClockwise'};
 var _user$project$Main$Clockwise = {ctor: 'Clockwise'};
-var _user$project$Main$Close2 = {ctor: 'Close2'};
-var _user$project$Main$Arc3 = F5(
-	function (a, b, c, d, e) {
-		return {ctor: 'Arc3', _0: a, _1: b, _2: c, _3: d, _4: e};
-	});
-var _user$project$Main$base1 = function (base) {
-	var _p18 = base;
-	if (_p18.ctor === 'FlatBase') {
-		return _elm_lang$core$Maybe$Nothing;
-	} else {
-		return _elm_lang$core$Maybe$Just(
-			A5(_user$project$Main$Arc3, _user$project$Main$CounterClockwise, _user$project$Main$IndentWidth, _user$project$Main$Height, _user$project$Main$Origin, _user$project$Main$Origin));
-	}
-};
-var _user$project$Main$Arc2 = F7(
-	function (a, b, c, d, e, f, g) {
-		return {ctor: 'Arc2', _0: a, _1: b, _2: c, _3: d, _4: e, _5: f, _6: g};
-	});
-var _user$project$Main$fromDescription2 = F2(
-	function (width, description) {
-		fromDescription2:
-		while (true) {
-			var _p19 = description;
-			switch (_p19.ctor) {
-				case 'MoveToOrigin2':
-					return _user$project$Main$MoveToOrigin;
-				case 'MoveTo2':
-					return A2(
-						_user$project$Main$MoveTo,
-						A2(_user$project$Main$fromCoordinate, width, _p19._0),
-						A2(_user$project$Main$fromCoordinate, width, _p19._1));
-				case 'LineTo2':
-					return A2(
-						_user$project$Main$LineTo,
-						A2(_user$project$Main$fromCoordinate, width, _p19._0),
-						A2(_user$project$Main$fromCoordinate, width, _p19._1));
-				case 'HorizontalLineTo2':
-					return _user$project$Main$HorizontalLineTo(
-						A2(_user$project$Main$fromCoordinate, width, _p19._0));
-				case 'Arc2':
-					return A7(
-						_user$project$Main$Arc,
-						A2(_user$project$Main$fromCoordinate, width, _p19._0),
-						A2(_user$project$Main$fromCoordinate, width, _p19._1),
-						_p19._2,
-						_p19._3,
-						_p19._4,
-						A2(_user$project$Main$fromCoordinate, width, _p19._5),
-						A2(_user$project$Main$fromCoordinate, width, _p19._6));
-				case 'Arc3':
-					var _v15 = width,
-						_v16 = A7(
-						_user$project$Main$Arc2,
-						_p19._1,
-						_p19._2,
-						0,
-						false,
-						function () {
-							var _p20 = _p19._0;
-							if (_p20.ctor === 'Clockwise') {
-								return true;
-							} else {
-								return false;
-							}
-						}(),
-						_p19._3,
-						_p19._4);
-					width = _v15;
-					description = _v16;
-					continue fromDescription2;
-				default:
-					return _user$project$Main$Close;
-			}
-		}
-	});
-var _user$project$Main$fromShape2 = F6(
-	function (transform, width, strokeWidth, strokeColour, fillColour, shape) {
-		var _p21 = shape;
-		switch (_p21.ctor) {
-			case 'Path2':
-				return A2(
-					_user$project$Main$Group,
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_user$project$Main$Transform(transform)
-						]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							A2(
-							_user$project$Main$Path,
-							A2(
-								_elm_lang$core$List$map,
-								_user$project$Main$fromDescription2(width),
-								_p21._0),
-							_elm_lang$core$Native_List.fromArray(
-								[
-									_user$project$Main$Stroke(strokeColour),
-									_user$project$Main$StrokeWidth(strokeWidth),
-									_user$project$Main$Fill(fillColour)
-								]))
-						]));
-			case 'Circle2':
-				return A2(
-					_user$project$Main$Group,
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_user$project$Main$Transform(transform)
-						]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							A4(
-							_user$project$Main$Circle,
-							A2(_user$project$Main$fromCoordinate, width, _p21._0),
-							A2(_user$project$Main$fromCoordinate, width, _p21._1),
-							A2(_user$project$Main$fromRadius, width, _p21._2),
-							_elm_lang$core$Native_List.fromArray(
-								[
-									_user$project$Main$Stroke(strokeColour),
-									_user$project$Main$StrokeWidth(strokeWidth),
-									_user$project$Main$Fill(fillColour)
-								]))
-						]));
-			default:
-				return A2(
-					_user$project$Main$Group,
-					_elm_lang$core$Native_List.fromArray(
-						[]),
-					A2(
-						_elm_lang$core$List$map,
-						function (shape) {
-							return A6(_user$project$Main$fromShape2, transform, width, strokeWidth, strokeColour, fillColour, shape);
-						},
-						_p21._0));
-		}
-	});
-var _user$project$Main$makeShape = F6(
-	function (transform, width, strokeWidth, strokeColour, fillColour, shape) {
-		return A6(_user$project$Main$fromShape2, transform, width, strokeWidth, strokeColour, fillColour, shape);
-	});
-var _user$project$Main$HorizontalLineTo2 = function (a) {
-	return {ctor: 'HorizontalLineTo2', _0: a};
-};
-var _user$project$Main$upperBody = function (body) {
-	var _p22 = body;
-	switch (_p22.ctor) {
-		case 'NoBody':
-			return _elm_lang$core$Maybe$Nothing;
-		case 'NarrowBody':
-			return _elm_lang$core$Maybe$Just(
-				_user$project$Main$HorizontalLineTo2(_user$project$Main$NarrowSegmentWidth));
-		default:
-			return _elm_lang$core$Maybe$Just(
-				_user$project$Main$HorizontalLineTo2(_user$project$Main$WideSegmentWidth));
-	}
-};
-var _user$project$Main$lowerBody = function (body) {
-	var _p23 = body;
-	switch (_p23.ctor) {
-		case 'NoBody':
-			return _elm_lang$core$Maybe$Nothing;
-		case 'NarrowBody':
-			return _elm_lang$core$Maybe$Just(
-				_user$project$Main$HorizontalLineTo2(_user$project$Main$Origin));
-		default:
-			return _elm_lang$core$Maybe$Just(
-				_user$project$Main$HorizontalLineTo2(_user$project$Main$Origin));
-	}
-};
-var _user$project$Main$LineTo2 = F2(
-	function (a, b) {
-		return {ctor: 'LineTo2', _0: a, _1: b};
-	});
-var _user$project$Main$upperTip = function (tip) {
-	var _p24 = tip;
-	switch (_p24.ctor) {
-		case 'ArrowTip':
-			return _elm_lang$core$Maybe$Just(
-				A2(_user$project$Main$LineTo2, _user$project$Main$WideSegmentWidth, _user$project$Main$HalfHeight));
-		case 'RoundTip':
-			return _elm_lang$core$Maybe$Just(
-				A5(_user$project$Main$Arc3, _user$project$Main$Clockwise, _user$project$Main$NarrowSegmentWidth, _user$project$Main$NarrowSegmentWidth, _user$project$Main$GateWidth, _user$project$Main$HalfHeight));
-		default:
-			return _elm_lang$core$Maybe$Just(
-				A5(_user$project$Main$Arc3, _user$project$Main$Clockwise, _user$project$Main$WideSegmentWidth, _user$project$Main$WideSegmentWidth, _user$project$Main$GateWidth, _user$project$Main$HalfHeight));
-	}
-};
-var _user$project$Main$lowerTip = function (tip) {
-	var _p25 = tip;
-	switch (_p25.ctor) {
-		case 'ArrowTip':
-			return _elm_lang$core$Maybe$Just(
-				A2(_user$project$Main$LineTo2, _user$project$Main$Origin, _user$project$Main$Height));
-		case 'RoundTip':
-			return _elm_lang$core$Maybe$Just(
-				A5(_user$project$Main$Arc3, _user$project$Main$Clockwise, _user$project$Main$NarrowSegmentWidth, _user$project$Main$NarrowSegmentWidth, _user$project$Main$WideSegmentWidth, _user$project$Main$Height));
-		default:
-			return _elm_lang$core$Maybe$Just(
-				A5(_user$project$Main$Arc3, _user$project$Main$Clockwise, _user$project$Main$WideSegmentWidth, _user$project$Main$WideSegmentWidth, _user$project$Main$NarrowSegmentWidth, _user$project$Main$Height));
-	}
-};
-var _user$project$Main$MoveTo2 = F2(
-	function (a, b) {
-		return {ctor: 'MoveTo2', _0: a, _1: b};
-	});
-var _user$project$Main$MoveToOrigin2 = {ctor: 'MoveToOrigin2'};
-var _user$project$Main$gate5 = function (description) {
-	var _p26 = description;
-	var _p28 = _p26._2;
-	var _p27 = _p26._1;
-	return _user$project$Main$Path2(
-		A2(
-			_elm_lang$core$List$filterMap,
-			function (x) {
-				return x;
-			},
-			_elm_lang$core$Native_List.fromArray(
-				[
-					_elm_lang$core$Maybe$Just(_user$project$Main$MoveToOrigin2),
-					_user$project$Main$upperBody(_p27),
-					_user$project$Main$upperTip(_p28),
-					_user$project$Main$lowerTip(_p28),
-					_user$project$Main$lowerBody(_p27),
-					_user$project$Main$base1(_p26._0),
-					_elm_lang$core$Maybe$Just(_user$project$Main$Close2)
-				])));
-};
-var _user$project$Main$CurvedBase = {ctor: 'CurvedBase'};
-var _user$project$Main$FlatBase = {ctor: 'FlatBase'};
-var _user$project$Main$WideBody = {ctor: 'WideBody'};
-var _user$project$Main$NarrowBody = {ctor: 'NarrowBody'};
-var _user$project$Main$NoBody = {ctor: 'NoBody'};
-var _user$project$Main$SpearTip = {ctor: 'SpearTip'};
-var _user$project$Main$RoundTip = {ctor: 'RoundTip'};
-var _user$project$Main$ArrowTip = {ctor: 'ArrowTip'};
-var _user$project$Main$Description3 = F3(
-	function (a, b, c) {
-		return {ctor: 'Description3', _0: a, _1: b, _2: c};
-	});
-var _user$project$Main$buffer5 = _user$project$Main$gate5(
-	A3(_user$project$Main$Description3, _user$project$Main$FlatBase, _user$project$Main$NoBody, _user$project$Main$ArrowTip));
-var _user$project$Main$not5 = A2(_user$project$Main$inverted, _user$project$Main$WideSegmentWidth, _user$project$Main$buffer5);
-var _user$project$Main$and5 = _user$project$Main$gate5(
-	A3(_user$project$Main$Description3, _user$project$Main$FlatBase, _user$project$Main$WideBody, _user$project$Main$RoundTip));
-var _user$project$Main$nand5 = A2(_user$project$Main$inverted, _user$project$Main$GateWidth, _user$project$Main$and5);
-var _user$project$Main$or5 = _user$project$Main$gate5(
-	A3(_user$project$Main$Description3, _user$project$Main$CurvedBase, _user$project$Main$NarrowBody, _user$project$Main$SpearTip));
-var _user$project$Main$nor5 = A2(_user$project$Main$inverted, _user$project$Main$GateWidth, _user$project$Main$or5);
-var _user$project$Main$xor5 = _user$project$Main$Group2(
-	_elm_lang$core$Native_List.fromArray(
-		[
-			_user$project$Main$Path2(
-			_elm_lang$core$Native_List.fromArray(
-				[
-					A2(_user$project$Main$MoveTo2, _user$project$Main$Left, _user$project$Main$Origin),
-					A5(_user$project$Main$Arc3, _user$project$Main$Clockwise, _user$project$Main$IndentWidthExtra, _user$project$Main$Height, _user$project$Main$Left, _user$project$Main$Height),
-					A2(_user$project$Main$LineTo2, _user$project$Main$LeftHack, _user$project$Main$Height),
-					A5(_user$project$Main$Arc3, _user$project$Main$CounterClockwise, _user$project$Main$IndentWidthExtra, _user$project$Main$Height, _user$project$Main$Left, _user$project$Main$Origin),
-					A2(_user$project$Main$LineTo2, _user$project$Main$LeftHack, _user$project$Main$Origin),
-					A5(_user$project$Main$Arc3, _user$project$Main$Clockwise, _user$project$Main$IndentWidthExtra, _user$project$Main$Height, _user$project$Main$Left, _user$project$Main$Height)
-				])),
-			_user$project$Main$gate5(
-			A3(_user$project$Main$Description3, _user$project$Main$CurvedBase, _user$project$Main$NarrowBody, _user$project$Main$SpearTip))
-		]));
-var _user$project$Main$xnor5 = A2(_user$project$Main$inverted, _user$project$Main$GateWidth, _user$project$Main$xor5);
 var _user$project$Main$CurvedBase6 = {ctor: 'CurvedBase6'};
 var _user$project$Main$FlatBase6 = {ctor: 'FlatBase6'};
 var _user$project$Main$WideBody6 = {ctor: 'WideBody6'};
@@ -10325,64 +9944,353 @@ var _user$project$Main$nor6 = _user$project$Main$inverted6(_user$project$Main$or
 var _user$project$Main$xor6 = A3(_user$project$Main$Decorate6, _user$project$Main$BeforeBase6, _user$project$Main$curvedBase6, _user$project$Main$or6);
 var _user$project$Main$xnor6 = _user$project$Main$inverted6(_user$project$Main$xor6);
 var _user$project$Main$Close7 = {ctor: 'Close7'};
+var _user$project$Main$Arc7a = F5(
+	function (a, b, c, d, e) {
+		return {ctor: 'Arc7a', _0: a, _1: b, _2: c, _3: d, _4: e};
+	});
+var _user$project$Main$base1 = function (base) {
+	var _p16 = base;
+	if (_p16.ctor === 'FlatBase6') {
+		return _elm_lang$core$Maybe$Nothing;
+	} else {
+		return _elm_lang$core$Maybe$Just(
+			A5(_user$project$Main$Arc7a, _user$project$Main$CounterClockwise, _user$project$Main$indentWidth6, _user$project$Main$height, _user$project$Main$origin, _user$project$Main$origin));
+	}
+};
+var _user$project$Main$Arc7 = F7(
+	function (a, b, c, d, e, f, g) {
+		return {ctor: 'Arc7', _0: a, _1: b, _2: c, _3: d, _4: e, _5: f, _6: g};
+	});
+var _user$project$Main$fromDescription7 = F2(
+	function (width, description) {
+		fromDescription7:
+		while (true) {
+			var _p17 = description;
+			switch (_p17.ctor) {
+				case 'MoveToOrigin7':
+					return _user$project$Main$MoveToOrigin;
+				case 'MoveTo7':
+					return A2(_user$project$Main$MoveTo, _p17._0, _p17._1);
+				case 'LineTo7':
+					return A2(_user$project$Main$LineTo, _p17._0, _p17._1);
+				case 'HorizontalLineTo7':
+					return _user$project$Main$HorizontalLineTo(_p17._0);
+				case 'Arc7':
+					return A7(_user$project$Main$Arc, _p17._0, _p17._1, _p17._2, _p17._3, _p17._4, _p17._5, _p17._6);
+				case 'Arc7a':
+					var _v14 = width,
+						_v15 = A7(
+						_user$project$Main$Arc7,
+						_p17._1,
+						_p17._2,
+						0,
+						false,
+						function () {
+							var _p18 = _p17._0;
+							if (_p18.ctor === 'Clockwise') {
+								return true;
+							} else {
+								return false;
+							}
+						}(),
+						_p17._3,
+						_p17._4);
+					width = _v14;
+					description = _v15;
+					continue fromDescription7;
+				default:
+					return _user$project$Main$Close;
+			}
+		}
+	});
+var _user$project$Main$fromShape7 = F6(
+	function (transform, width, strokeWidth, strokeColour, fillColour, shape) {
+		var _p19 = shape;
+		switch (_p19.ctor) {
+			case 'Path7':
+				return A2(
+					_user$project$Main$Group,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_user$project$Main$Transform(transform)
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							A2(
+							_user$project$Main$Path,
+							A2(
+								_elm_lang$core$List$map,
+								_user$project$Main$fromDescription7(width),
+								_p19._0),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_user$project$Main$Stroke(strokeColour),
+									_user$project$Main$StrokeWidth(strokeWidth),
+									_user$project$Main$Fill(fillColour)
+								]))
+						]));
+			case 'Circle7':
+				return A2(
+					_user$project$Main$Group,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_user$project$Main$Transform(transform)
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							A4(
+							_user$project$Main$Circle,
+							_p19._0,
+							_p19._1,
+							_p19._2,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_user$project$Main$Stroke(strokeColour),
+									_user$project$Main$StrokeWidth(strokeWidth),
+									_user$project$Main$Fill(fillColour)
+								]))
+						]));
+			default:
+				return A2(
+					_user$project$Main$Group,
+					_elm_lang$core$Native_List.fromArray(
+						[]),
+					A2(
+						_elm_lang$core$List$map,
+						function (shape) {
+							return A6(_user$project$Main$fromShape7, transform, width, strokeWidth, strokeColour, fillColour, shape);
+						},
+						_p19._0));
+		}
+	});
+var _user$project$Main$HorizontalLineTo7 = function (a) {
+	return {ctor: 'HorizontalLineTo7', _0: a};
+};
+var _user$project$Main$upperBody = function (body) {
+	var _p20 = body;
+	switch (_p20.ctor) {
+		case 'NoBody6':
+			return _elm_lang$core$Maybe$Nothing;
+		case 'NarrowBody6':
+			return _elm_lang$core$Maybe$Just(
+				_user$project$Main$HorizontalLineTo7(_user$project$Main$narrowSegmentWidth));
+		default:
+			return _elm_lang$core$Maybe$Just(
+				_user$project$Main$HorizontalLineTo7(_user$project$Main$wideSegmentWidth));
+	}
+};
+var _user$project$Main$lowerBody = function (body) {
+	var _p21 = body;
+	switch (_p21.ctor) {
+		case 'NoBody6':
+			return _elm_lang$core$Maybe$Nothing;
+		case 'NarrowBody6':
+			return _elm_lang$core$Maybe$Just(
+				_user$project$Main$HorizontalLineTo7(_user$project$Main$origin));
+		default:
+			return _elm_lang$core$Maybe$Just(
+				_user$project$Main$HorizontalLineTo7(_user$project$Main$origin));
+	}
+};
 var _user$project$Main$LineTo7 = F2(
 	function (a, b) {
 		return {ctor: 'LineTo7', _0: a, _1: b};
 	});
+var _user$project$Main$upperTip = function (tip) {
+	var _p22 = tip;
+	switch (_p22.ctor) {
+		case 'ArrowTip6':
+			return _elm_lang$core$Maybe$Just(
+				A2(_user$project$Main$LineTo7, _user$project$Main$wideSegmentWidth, _user$project$Main$halfHeight));
+		case 'RoundTip6':
+			return _elm_lang$core$Maybe$Just(
+				A5(_user$project$Main$Arc7a, _user$project$Main$Clockwise, _user$project$Main$narrowSegmentWidth, _user$project$Main$narrowSegmentWidth, _user$project$Main$gateWidth, _user$project$Main$halfHeight));
+		default:
+			return _elm_lang$core$Maybe$Just(
+				A5(_user$project$Main$Arc7a, _user$project$Main$Clockwise, _user$project$Main$wideSegmentWidth, _user$project$Main$wideSegmentWidth, _user$project$Main$gateWidth, _user$project$Main$halfHeight));
+	}
+};
+var _user$project$Main$lowerTip = function (tip) {
+	var _p23 = tip;
+	switch (_p23.ctor) {
+		case 'ArrowTip6':
+			return _elm_lang$core$Maybe$Just(
+				A2(_user$project$Main$LineTo7, _user$project$Main$origin, _user$project$Main$height));
+		case 'RoundTip6':
+			return _elm_lang$core$Maybe$Just(
+				A5(_user$project$Main$Arc7a, _user$project$Main$Clockwise, _user$project$Main$narrowSegmentWidth, _user$project$Main$narrowSegmentWidth, _user$project$Main$wideSegmentWidth, _user$project$Main$height));
+		default:
+			return _elm_lang$core$Maybe$Just(
+				A5(_user$project$Main$Arc7a, _user$project$Main$Clockwise, _user$project$Main$wideSegmentWidth, _user$project$Main$wideSegmentWidth, _user$project$Main$narrowSegmentWidth, _user$project$Main$height));
+	}
+};
 var _user$project$Main$MoveTo7 = F2(
 	function (a, b) {
 		return {ctor: 'MoveTo7', _0: a, _1: b};
 	});
-var _user$project$Main$fromDimensionsDescription7 = function (description) {
-	var _p29 = description;
-	switch (_p29.ctor) {
-		case 'MoveTo7':
-			return A2(
-				_user$project$Main$MoveTo7,
-				_user$project$Main$fromDimensionsCoordinate7(_p29._0),
-				_user$project$Main$fromDimensionsCoordinate7(_p29._1));
-		case 'LineTo7':
-			return A2(
-				_user$project$Main$LineTo7,
-				_user$project$Main$fromDimensionsCoordinate7(_p29._0),
-				_user$project$Main$fromDimensionsCoordinate7(_p29._1));
-		default:
-			return _user$project$Main$Close7;
-	}
+var _user$project$Main$MoveToOrigin7 = {ctor: 'MoveToOrigin7'};
+var _user$project$Main$fromDimensionsDescription7 = F2(
+	function (resolveDimension, description) {
+		var _p24 = description;
+		switch (_p24.ctor) {
+			case 'MoveToOrigin7':
+				return _user$project$Main$MoveToOrigin7;
+			case 'MoveTo7':
+				return A2(
+					_user$project$Main$MoveTo7,
+					resolveDimension(_p24._0),
+					resolveDimension(_p24._1));
+			case 'LineTo7':
+				return A2(
+					_user$project$Main$LineTo7,
+					resolveDimension(_p24._0),
+					resolveDimension(_p24._1));
+			case 'HorizontalLineTo7':
+				return _user$project$Main$HorizontalLineTo7(
+					resolveDimension(_p24._0));
+			case 'Arc7':
+				return A7(
+					_user$project$Main$Arc7,
+					resolveDimension(_p24._0),
+					resolveDimension(_p24._1),
+					_p24._2,
+					_p24._3,
+					_p24._4,
+					resolveDimension(_p24._5),
+					resolveDimension(_p24._6));
+			case 'Arc7a':
+				return A5(
+					_user$project$Main$Arc7a,
+					_p24._0,
+					resolveDimension(_p24._1),
+					resolveDimension(_p24._2),
+					resolveDimension(_p24._3),
+					resolveDimension(_p24._4));
+			default:
+				return _user$project$Main$Close7;
+		}
+	});
+var _user$project$Main$Group7 = function (a) {
+	return {ctor: 'Group7', _0: a};
 };
+var _user$project$Main$Circle7 = F3(
+	function (a, b, c) {
+		return {ctor: 'Circle7', _0: a, _1: b, _2: c};
+	});
 var _user$project$Main$Path7 = function (a) {
 	return {ctor: 'Path7', _0: a};
 };
+var _user$project$Main$decorateShape = F3(
+	function (gate, end, decoration) {
+		var tip = function () {
+			var _p25 = _user$project$Main$bodyOf(gate);
+			if (_p25.ctor === 'NoBody6') {
+				return _user$project$Main$wideSegmentWidth;
+			} else {
+				return _user$project$Main$gateWidth;
+			}
+		}();
+		var _p26 = {ctor: '_Tuple2', _0: end, _1: decoration};
+		_v23_2:
+		do {
+			if (_p26.ctor === '_Tuple2') {
+				if (_p26._0.ctor === 'AfterTip6') {
+					if (_p26._1.ctor === 'InverterDecoration6') {
+						return A3(
+							_user$project$Main$Circle7,
+							A2(_user$project$Main$offset, tip, _user$project$Main$inverterRadius),
+							_user$project$Main$halfHeight,
+							_user$project$Main$inverterRadius);
+					} else {
+						break _v23_2;
+					}
+				} else {
+					if (_p26._1.ctor === 'CurvedBaseDecoration6') {
+						return _user$project$Main$Path7(
+							_elm_lang$core$Native_List.fromArray(
+								[
+									A2(_user$project$Main$MoveTo7, _user$project$Main$left, _user$project$Main$origin),
+									A5(_user$project$Main$Arc7a, _user$project$Main$Clockwise, _user$project$Main$indentWidth65, _user$project$Main$height, _user$project$Main$left, _user$project$Main$height),
+									A2(
+									_user$project$Main$LineTo7,
+									A2(_user$project$Main$offset, _user$project$Main$left, _user$project$Main$hack),
+									_user$project$Main$height),
+									A5(_user$project$Main$Arc7a, _user$project$Main$CounterClockwise, _user$project$Main$indentWidth65, _user$project$Main$height, _user$project$Main$left, _user$project$Main$origin),
+									A2(
+									_user$project$Main$LineTo7,
+									A2(_user$project$Main$offset, _user$project$Main$left, _user$project$Main$hack),
+									_user$project$Main$origin),
+									A5(_user$project$Main$Arc7a, _user$project$Main$Clockwise, _user$project$Main$indentWidth65, _user$project$Main$height, _user$project$Main$left, _user$project$Main$height)
+								]));
+					} else {
+						break _v23_2;
+					}
+				}
+			} else {
+				break _v23_2;
+			}
+		} while(false);
+		return _elm_lang$core$Native_Utils.crashCase(
+			'Main',
+			{
+				start: {line: 802, column: 9},
+				end: {line: 820, column: 36}
+			},
+			_p26)('FIXME');
+	});
 var _user$project$Main$toShape = function (gate) {
-	var _p30 = gate;
-	if (_p30.ctor === 'Gate6') {
+	var _p28 = gate;
+	if (_p28.ctor === 'Gate6') {
+		var _p30 = _p28._2;
+		var _p29 = _p28._1;
 		return _user$project$Main$Path7(
 			A2(
 				_elm_lang$core$List$filterMap,
 				_elm_lang$core$Basics$identity,
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$core$Maybe$Just(
-						A2(_user$project$Main$MoveTo7, _user$project$Main$origin, _user$project$Main$origin)),
-						_elm_lang$core$Maybe$Just(
-						A2(_user$project$Main$LineTo7, _user$project$Main$wideSegmentWidth, _user$project$Main$halfHeight)),
-						_elm_lang$core$Maybe$Just(
-						A2(_user$project$Main$LineTo7, _user$project$Main$origin, _user$project$Main$height)),
+						_elm_lang$core$Maybe$Just(_user$project$Main$MoveToOrigin7),
+						_user$project$Main$upperBody(_p29),
+						_user$project$Main$upperTip(_p30),
+						_user$project$Main$lowerTip(_p30),
+						_user$project$Main$lowerBody(_p29),
+						_user$project$Main$base1(_p28._0),
 						_elm_lang$core$Maybe$Just(_user$project$Main$Close7)
 					])));
 	} else {
-		return _user$project$Main$Path7(
+		var _p31 = _p28._2;
+		return _user$project$Main$Group7(
 			_elm_lang$core$Native_List.fromArray(
 				[
-					A2(_user$project$Main$MoveTo7, _user$project$Main$origin, _user$project$Main$origin)
+					_user$project$Main$toShape(_p31),
+					A3(_user$project$Main$decorateShape, _p31, _p28._0, _p28._1)
 				]));
 	}
 };
-var _user$project$Main$fromDimensions7 = function (shape) {
-	var _p31 = shape;
-	return _user$project$Main$Path7(
-		A2(_elm_lang$core$List$map, _user$project$Main$fromDimensionsDescription7, _p31._0));
-};
+var _user$project$Main$fromDimensions7 = F2(
+	function (resolveDimension, shape) {
+		var _p32 = shape;
+		switch (_p32.ctor) {
+			case 'Path7':
+				return _user$project$Main$Path7(
+					A2(
+						_elm_lang$core$List$map,
+						_user$project$Main$fromDimensionsDescription7(resolveDimension),
+						_p32._0));
+			case 'Circle7':
+				return A3(
+					_user$project$Main$Circle7,
+					resolveDimension(_p32._0),
+					resolveDimension(_p32._1),
+					resolveDimension(_p32._2));
+			default:
+				return _user$project$Main$Group7(
+					A2(
+						_elm_lang$core$List$map,
+						_user$project$Main$fromDimensions7(resolveDimension),
+						_p32._0));
+		}
+	});
 var _user$project$Main$view = function (model) {
 	var fillColour = 'white';
 	var strokeColour = 'black';
@@ -10636,8 +10544,103 @@ var _user$project$Main$view = function (model) {
 									model.strokeWidth,
 									'black',
 									'none',
-									_user$project$Main$fromDimensions7(
-										_user$project$Main$toShape(_user$project$Main$buffer6)))
+									A2(
+										_user$project$Main$fromDimensions7,
+										function (dimensions) {
+											return dimensions(100);
+										},
+										_user$project$Main$toShape(_user$project$Main$buffer6))),
+									A6(
+									_user$project$Main$fromShape7,
+									A3(_user$project$Main$translate, _user$project$Main$identityTransform, 240, 127),
+									model.width,
+									model.strokeWidth,
+									'black',
+									'none',
+									A2(
+										_user$project$Main$fromDimensions7,
+										function (dimensions) {
+											return dimensions(100);
+										},
+										_user$project$Main$toShape(_user$project$Main$not6))),
+									A6(
+									_user$project$Main$fromShape7,
+									A3(_user$project$Main$translate, _user$project$Main$identityTransform, 390, 277),
+									model.width,
+									model.strokeWidth,
+									'black',
+									'none',
+									A2(
+										_user$project$Main$fromDimensions7,
+										function (dimensions) {
+											return dimensions(100);
+										},
+										_user$project$Main$toShape(_user$project$Main$and6))),
+									A6(
+									_user$project$Main$fromShape7,
+									A3(_user$project$Main$translate, _user$project$Main$identityTransform, 240, 277),
+									model.width,
+									model.strokeWidth,
+									'black',
+									'none',
+									A2(
+										_user$project$Main$fromDimensions7,
+										function (dimensions) {
+											return dimensions(100);
+										},
+										_user$project$Main$toShape(_user$project$Main$nand6))),
+									A6(
+									_user$project$Main$fromShape7,
+									A3(_user$project$Main$translate, _user$project$Main$identityTransform, 390, 427),
+									model.width,
+									model.strokeWidth,
+									'black',
+									'none',
+									A2(
+										_user$project$Main$fromDimensions7,
+										function (dimensions) {
+											return dimensions(100);
+										},
+										_user$project$Main$toShape(_user$project$Main$or6))),
+									A6(
+									_user$project$Main$fromShape7,
+									A3(_user$project$Main$translate, _user$project$Main$identityTransform, 240, 427),
+									model.width,
+									model.strokeWidth,
+									'black',
+									'none',
+									A2(
+										_user$project$Main$fromDimensions7,
+										function (dimensions) {
+											return dimensions(100);
+										},
+										_user$project$Main$toShape(_user$project$Main$nor6))),
+									A6(
+									_user$project$Main$fromShape7,
+									A3(_user$project$Main$translate, _user$project$Main$identityTransform, 390, 577),
+									model.width,
+									model.strokeWidth,
+									'black',
+									'none',
+									A2(
+										_user$project$Main$fromDimensions7,
+										function (dimensions) {
+											return dimensions(100);
+										},
+										_user$project$Main$toShape(_user$project$Main$xor6))),
+									A6(
+									_user$project$Main$fromShape7,
+									A3(_user$project$Main$translate, _user$project$Main$identityTransform, 240, 577),
+									model.width,
+									model.strokeWidth,
+									'black',
+									'none',
+									A2(
+										_user$project$Main$fromDimensions7,
+										function (dimensions) {
+											return dimensions(100);
+										},
+										_user$project$Main$toShape(_user$project$Main$xnor6)))
 								])))
 					]))
 			]));
