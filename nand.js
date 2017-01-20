@@ -9324,39 +9324,39 @@ var _user$project$Main$offset = function (appearance) {
 var _user$project$Main$left = function (appearance) {
 	return (appearance.strokeWidth / 2) - _user$project$Main$offset(appearance);
 };
-var _user$project$Main$width_ = function (dimensions) {
+var _user$project$Main$width = function (dimensions) {
 	return dimensions.width;
 };
-var _user$project$Main$wireWidth_ = function (dimensions) {
-	return _user$project$Main$width_(dimensions) / 5;
+var _user$project$Main$wireWidth = function (dimensions) {
+	return _user$project$Main$width(dimensions) / 5;
 };
-var _user$project$Main$gateWidth_ = function (dimensions) {
-	return _user$project$Main$width_(dimensions) - (_user$project$Main$wireWidth_(dimensions) / 2);
+var _user$project$Main$gateWidth = function (dimensions) {
+	return _user$project$Main$width(dimensions) - (_user$project$Main$wireWidth(dimensions) / 2);
 };
-var _user$project$Main$narrowSegmentWidth_ = function (dimensions) {
-	return (_user$project$Main$gateWidth_(dimensions) * 2) / 5;
+var _user$project$Main$narrowSegmentWidth = function (dimensions) {
+	return (_user$project$Main$gateWidth(dimensions) * 2) / 5;
 };
-var _user$project$Main$wideSegmentWidth_ = function (dimensions) {
-	return (_user$project$Main$gateWidth_(dimensions) * 3) / 5;
+var _user$project$Main$wideSegmentWidth = function (dimensions) {
+	return (_user$project$Main$gateWidth(dimensions) * 3) / 5;
 };
-var _user$project$Main$indentWidth_ = function (dimensions) {
-	return _user$project$Main$gateWidth_(dimensions) / 7;
+var _user$project$Main$curvedBaseIndent = function (dimensions) {
+	return _user$project$Main$gateWidth(dimensions) / 7;
 };
-var _user$project$Main$indentWidth6 = function (dimensions) {
-	return _user$project$Main$indentWidth_(dimensions) * 6;
+var _user$project$Main$curvedBaseRadius = function (dimensions) {
+	return _user$project$Main$curvedBaseIndent(dimensions) * 6;
 };
-var _user$project$Main$indentWidth65 = function (dimensions) {
-	return _user$project$Main$indentWidth_(dimensions) * 6.5;
+var _user$project$Main$twinCurvedBaseRadius = function (dimensions) {
+	return _user$project$Main$curvedBaseIndent(dimensions) * 6.5;
 };
 var _user$project$Main$right = F2(
 	function (dimensions, appearance) {
-		return _user$project$Main$indentWidth_(dimensions) - _user$project$Main$offset(appearance);
+		return _user$project$Main$curvedBaseIndent(dimensions) - _user$project$Main$offset(appearance);
 	});
-var _user$project$Main$inverterRadius_ = function (dimensions) {
-	return _user$project$Main$gateWidth_(dimensions) / 12;
+var _user$project$Main$inverterRadius = function (dimensions) {
+	return _user$project$Main$gateWidth(dimensions) / 12;
 };
 var _user$project$Main$height = function (dimensions) {
-	return (_user$project$Main$gateWidth_(dimensions) * 4) / 5;
+	return (_user$project$Main$gateWidth(dimensions) * 4) / 5;
 };
 var _user$project$Main$origin = 0;
 var _user$project$Main$fromDescription = function (description) {
@@ -9961,18 +9961,18 @@ var _user$project$Main$ArcBy = F7(
 	});
 var _user$project$Main$spearTip = function (dimensions) {
 	return {
-		width: _user$project$Main$wideSegmentWidth_(dimensions),
+		width: _user$project$Main$wideSegmentWidth(dimensions),
 		height: _user$project$Main$half(
 			_user$project$Main$height(dimensions)),
 		segment: _elm_lang$core$Maybe$Just(
 			A7(
 				_user$project$Main$ArcBy,
-				_user$project$Main$wideSegmentWidth_(dimensions),
-				_user$project$Main$wideSegmentWidth_(dimensions),
+				_user$project$Main$wideSegmentWidth(dimensions),
+				_user$project$Main$wideSegmentWidth(dimensions),
 				0,
 				false,
 				true,
-				_user$project$Main$wideSegmentWidth_(dimensions),
+				_user$project$Main$wideSegmentWidth(dimensions),
 				_user$project$Main$half(
 					_user$project$Main$height(dimensions))))
 	};
@@ -9988,7 +9988,7 @@ var _user$project$Main$curvedBase = function (dimensions) {
 		segment: _elm_lang$core$Maybe$Just(
 			A7(
 				_user$project$Main$ArcTo,
-				_user$project$Main$indentWidth6(dimensions),
+				_user$project$Main$curvedBaseRadius(dimensions),
 				_user$project$Main$height(dimensions),
 				0,
 				false,
@@ -9999,17 +9999,17 @@ var _user$project$Main$curvedBase = function (dimensions) {
 };
 var _user$project$Main$roundTip = function (dimensions) {
 	return {
-		width: _user$project$Main$narrowSegmentWidth_(dimensions),
+		width: _user$project$Main$narrowSegmentWidth(dimensions),
 		height: _user$project$Main$height(dimensions),
 		segment: _elm_lang$core$Maybe$Just(
 			A7(
 				_user$project$Main$ArcTo,
-				_user$project$Main$narrowSegmentWidth_(dimensions),
-				_user$project$Main$narrowSegmentWidth_(dimensions),
+				_user$project$Main$narrowSegmentWidth(dimensions),
+				_user$project$Main$narrowSegmentWidth(dimensions),
 				0,
 				false,
 				true,
-				_user$project$Main$wideSegmentWidth_(dimensions),
+				_user$project$Main$wideSegmentWidth(dimensions),
 				_user$project$Main$height(dimensions)))
 	};
 };
@@ -10018,20 +10018,20 @@ var _user$project$Main$HorizontalLineBy = function (a) {
 };
 var _user$project$Main$narrowBody = function (dimensions) {
 	return {
-		width: _user$project$Main$narrowSegmentWidth_(dimensions),
+		width: _user$project$Main$narrowSegmentWidth(dimensions),
 		height: 0,
 		segment: _elm_lang$core$Maybe$Just(
 			_user$project$Main$HorizontalLineBy(
-				_user$project$Main$narrowSegmentWidth_(dimensions)))
+				_user$project$Main$narrowSegmentWidth(dimensions)))
 	};
 };
 var _user$project$Main$wideBody = function (dimensions) {
 	return {
-		width: _user$project$Main$wideSegmentWidth_(dimensions),
+		width: _user$project$Main$wideSegmentWidth(dimensions),
 		height: 0,
 		segment: _elm_lang$core$Maybe$Just(
 			_user$project$Main$HorizontalLineBy(
-				_user$project$Main$wideSegmentWidth_(dimensions)))
+				_user$project$Main$wideSegmentWidth(dimensions)))
 	};
 };
 var _user$project$Main$HorizontalLineTo = function (a) {
@@ -10079,13 +10079,13 @@ var _user$project$Main$mirror = function (segment) {
 };
 var _user$project$Main$arrowTip = function (dimensions) {
 	return {
-		width: _user$project$Main$wideSegmentWidth_(dimensions),
+		width: _user$project$Main$wideSegmentWidth(dimensions),
 		height: _user$project$Main$half(
 			_user$project$Main$height(dimensions)),
 		segment: _elm_lang$core$Maybe$Just(
 			A2(
 				_user$project$Main$LineBy,
-				_user$project$Main$wideSegmentWidth_(dimensions),
+				_user$project$Main$wideSegmentWidth(dimensions),
 				_user$project$Main$half(
 					_user$project$Main$height(dimensions))))
 	};
@@ -10183,7 +10183,7 @@ var _user$project$Main$xor8 = F2(
 			width: gate.width,
 			height: gate.height,
 			shape: function () {
-				var indentWidth65_ = _user$project$Main$indentWidth65(dimensions);
+				var twinCurvedBaseRadius_ = _user$project$Main$twinCurvedBaseRadius(dimensions);
 				var height_ = _user$project$Main$height(dimensions);
 				var hack_ = _user$project$Main$hack(appearance);
 				var right_ = A2(_user$project$Main$right, dimensions, appearance);
@@ -10200,11 +10200,11 @@ var _user$project$Main$xor8 = F2(
 							_elm_lang$core$Native_List.fromArray(
 								[
 									A2(_user$project$Main$MoveTo, left_, _user$project$Main$origin),
-									A7(_user$project$Main$ArcTo, indentWidth65_, height_, 0, false, true, left_, height_),
+									A7(_user$project$Main$ArcTo, twinCurvedBaseRadius_, height_, 0, false, true, left_, height_),
 									A2(_user$project$Main$LineTo, left_ + hack_, height_),
-									A7(_user$project$Main$ArcTo, indentWidth65_, height_, 0, false, false, left_, _user$project$Main$origin),
+									A7(_user$project$Main$ArcTo, twinCurvedBaseRadius_, height_, 0, false, false, left_, _user$project$Main$origin),
 									A2(_user$project$Main$LineTo, left_ + hack_, _user$project$Main$origin),
-									A7(_user$project$Main$ArcTo, indentWidth65_, height_, 0, false, true, left_, height_)
+									A7(_user$project$Main$ArcTo, twinCurvedBaseRadius_, height_, 0, false, true, left_, height_)
 								]),
 							_user$project$Main$attributes(appearance))
 						]));
@@ -10218,7 +10218,7 @@ var _user$project$Main$Circle = F4(
 var _user$project$Main$inverted = F3(
 	function (dimensions, appearance, gate) {
 		return {
-			width: gate.width + (2 * _user$project$Main$inverterRadius_(dimensions)),
+			width: gate.width + (2 * _user$project$Main$inverterRadius(dimensions)),
 			height: gate.height,
 			shape: A2(
 				_user$project$Main$Group,
@@ -10229,9 +10229,9 @@ var _user$project$Main$inverted = F3(
 						gate.shape,
 						A4(
 						_user$project$Main$Circle,
-						gate.width + _user$project$Main$inverterRadius_(dimensions),
+						gate.width + _user$project$Main$inverterRadius(dimensions),
 						_user$project$Main$half(gate.height),
-						_user$project$Main$inverterRadius_(dimensions),
+						_user$project$Main$inverterRadius(dimensions),
 						_user$project$Main$attributes(appearance))
 					]))
 		};
