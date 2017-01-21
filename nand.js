@@ -9319,7 +9319,7 @@ var _user$project$Main$hack = function (appearance) {
 	return appearance.strokeWidth / 10;
 };
 var _user$project$Main$offset = function (appearance) {
-	return A2(_elm_lang$core$Basics$max, appearance.strokeWidth, 1.5) * 2.75;
+	return (appearance.strokeWidth * 1.915) + 3.167;
 };
 var _user$project$Main$left = function (appearance) {
 	return (appearance.strokeWidth / 2) - _user$project$Main$offset(appearance);
@@ -9710,9 +9710,9 @@ var _user$project$Main$getTransform = function (model) {
 var _user$project$Main$identityTransform = _elm_lang$core$Array$fromList(
 	_elm_lang$core$Native_List.fromArray(
 		[1, 0, 0, 1, 0, 0]));
-var _user$project$Main$Model = F8(
-	function (a, b, c, d, e, f, g, h) {
-		return {windowSize: a, width: b, horizontalSpacing: c, verticalSpacing: d, strokeWidth: e, drag: f, distanceScrolled: g, transform: h};
+var _user$project$Main$Model = F9(
+	function (a, b, c, d, e, f, g, h, i) {
+		return {windowSize: a, width: b, horizontalSpacing: c, verticalSpacing: d, strokeWidth: e, offset: f, drag: g, distanceScrolled: h, transform: i};
 	});
 var _user$project$Main$Drag = F2(
 	function (a, b) {
@@ -9920,6 +9920,7 @@ var _user$project$Main$init = function () {
 			horizontalSpacing: defaultHorizontalSpacing,
 			verticalSpacing: defaultVerticalSpacing,
 			strokeWidth: 1,
+			offset: 1,
 			drag: _elm_lang$core$Maybe$Nothing,
 			distanceScrolled: 0,
 			transform: _user$project$Main$identityTransform
@@ -10229,7 +10230,7 @@ var _user$project$Main$inverted = F3(
 						gate.shape,
 						A4(
 						_user$project$Main$Circle,
-						gate.width + _user$project$Main$inverterRadius(dimensions),
+						(gate.width + _user$project$Main$half(appearance.strokeWidth)) + _user$project$Main$inverterRadius(dimensions),
 						_user$project$Main$half(gate.height),
 						_user$project$Main$inverterRadius(dimensions),
 						_user$project$Main$attributes(appearance))
