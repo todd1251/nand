@@ -10120,6 +10120,17 @@ var _user$project$Main$transformation = F2(
 			_elm_lang$core$Native_List.fromArray(
 				[shape]));
 	});
+var _user$project$Main$centred = F3(
+	function (dimensions, appearance, gate) {
+		return {
+			width: gate.width,
+			height: gate.height,
+			shape: A2(
+				_user$project$Main$transformation,
+				gate.shape,
+				A3(_user$project$Main$translate, _user$project$Main$identityTransform, (dimensions.width / 2) - (gate.width / 2), 0))
+		};
+	});
 var _user$project$Main$Path = F2(
 	function (a, b) {
 		return {ctor: 'Path', _0: a, _1: b};
@@ -10167,7 +10178,11 @@ var _user$project$Main$gate = F5(
 	});
 var _user$project$Main$buffer8 = F2(
 	function (dimensions, appearance) {
-		return A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$flatBase, _user$project$Main$noBody, _user$project$Main$arrowTip);
+		return A3(
+			_user$project$Main$centred,
+			dimensions,
+			appearance,
+			A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$flatBase, _user$project$Main$noBody, _user$project$Main$arrowTip));
 	});
 var _user$project$Main$and8 = F2(
 	function (dimensions, appearance) {
@@ -10240,10 +10255,14 @@ var _user$project$Main$inverted = F3(
 var _user$project$Main$not8 = F2(
 	function (dimensions, appearance) {
 		return A3(
-			_user$project$Main$inverted,
+			_user$project$Main$centred,
 			dimensions,
 			appearance,
-			A2(_user$project$Main$buffer8, dimensions, appearance));
+			A3(
+				_user$project$Main$inverted,
+				dimensions,
+				appearance,
+				A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$flatBase, _user$project$Main$noBody, _user$project$Main$arrowTip)));
 	});
 var _user$project$Main$nand8 = F2(
 	function (dimensions, appearance) {
