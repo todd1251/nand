@@ -9989,7 +9989,7 @@ var _user$project$Main$curvedBase = function (dimensions) {
 		segment: _elm_lang$core$Maybe$Just(
 			A7(
 				_user$project$Main$ArcTo,
-				_user$project$Main$curvedBaseRadius(dimensions),
+				_user$project$Main$height(dimensions),
 				_user$project$Main$height(dimensions),
 				0,
 				false,
@@ -10199,11 +10199,31 @@ var _user$project$Main$xor8 = F2(
 			width: gate.width,
 			height: gate.height,
 			shape: function () {
-				var twinCurvedBaseRadius_ = _user$project$Main$twinCurvedBaseRadius(dimensions);
+				var hack_ = appearance.strokeWidth / 10;
+				var blue = _elm_lang$core$Native_List.fromArray(
+					[
+						_user$project$Main$Stroke('blue'),
+						_user$project$Main$StrokeWidth(appearance.strokeWidth),
+						_user$project$Main$Fill(appearance.fillColour)
+					]);
+				var green = _elm_lang$core$Native_List.fromArray(
+					[
+						_user$project$Main$Stroke('green'),
+						_user$project$Main$StrokeWidth(appearance.strokeWidth),
+						_user$project$Main$Fill(appearance.fillColour)
+					]);
+				var red = _elm_lang$core$Native_List.fromArray(
+					[
+						_user$project$Main$Stroke('red'),
+						_user$project$Main$StrokeWidth(appearance.strokeWidth),
+						_user$project$Main$Fill(appearance.fillColour)
+					]);
 				var height_ = _user$project$Main$height(dimensions);
-				var hack_ = _user$project$Main$hack(appearance);
-				var right_ = A2(_user$project$Main$right, dimensions, appearance);
-				var left_ = _user$project$Main$left(appearance);
+				var outerRadius = height_;
+				var innerRadius = outerRadius - (appearance.strokeWidth * 2);
+				var cy = _user$project$Main$half(height_);
+				var cx = 0 - _elm_lang$core$Basics$sqrt((outerRadius * outerRadius) - (cy * cy));
+				var innerOffsetX = cx + _elm_lang$core$Basics$sqrt((innerRadius * innerRadius) - (cy * cy));
 				return A2(
 					_user$project$Main$Group,
 					_elm_lang$core$Native_List.fromArray(
@@ -10215,12 +10235,12 @@ var _user$project$Main$xor8 = F2(
 							_user$project$Main$Path,
 							_elm_lang$core$Native_List.fromArray(
 								[
-									A2(_user$project$Main$MoveTo, left_, _user$project$Main$origin),
-									A7(_user$project$Main$ArcTo, twinCurvedBaseRadius_, height_, 0, false, true, left_, height_),
-									A2(_user$project$Main$LineTo, left_ + hack_, height_),
-									A7(_user$project$Main$ArcTo, twinCurvedBaseRadius_, height_, 0, false, false, left_, _user$project$Main$origin),
-									A2(_user$project$Main$LineTo, left_ + hack_, _user$project$Main$origin),
-									A7(_user$project$Main$ArcTo, twinCurvedBaseRadius_, height_, 0, false, true, left_, height_)
+									A2(_user$project$Main$MoveTo, innerOffsetX, _user$project$Main$origin),
+									A7(_user$project$Main$ArcTo, innerRadius, innerRadius, 0, false, true, innerOffsetX, height_),
+									A2(_user$project$Main$LineTo, innerOffsetX + hack_, height_),
+									A7(_user$project$Main$ArcTo, innerRadius, innerRadius, 0, false, false, innerOffsetX, 0),
+									A2(_user$project$Main$LineTo, innerOffsetX + hack_, _user$project$Main$origin),
+									A7(_user$project$Main$ArcTo, innerRadius, innerRadius, 0, false, true, innerOffsetX, height_)
 								]),
 							_user$project$Main$attributes(appearance))
 						]));
@@ -10506,14 +10526,14 @@ var _user$project$Main$view = function (model) {
 					]),
 				A2(
 					_elm_lang$core$Basics_ops['++'],
-					A7(_user$project$Main$range, 'width', 'Width', model.width, 10, 200, 10, _user$project$Main$Width),
+					A7(_user$project$Main$range, 'width', 'Width', model.width, 10, 200, 1, _user$project$Main$Width),
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						A7(_user$project$Main$range, 'horizontalSpacing', 'Horizontal spacing', model.horizontalSpacing, 20, 400, 10, _user$project$Main$HorizontalSpacing),
+						A7(_user$project$Main$range, 'horizontalSpacing', 'Horizontal spacing', model.horizontalSpacing, 20, 400, 1, _user$project$Main$HorizontalSpacing),
 						A2(
 							_elm_lang$core$Basics_ops['++'],
-							A7(_user$project$Main$range, 'verticalSpacing', 'Vertical spacing', model.verticalSpacing, 20, 200, 10, _user$project$Main$VerticalSpacing),
-							A7(_user$project$Main$range, 'strokeWidth', 'Stroke width', model.strokeWidth, 1, 10, 0.5, _user$project$Main$ChangeStrokeWidth))))),
+							A7(_user$project$Main$range, 'verticalSpacing', 'Vertical spacing', model.verticalSpacing, 20, 200, 1, _user$project$Main$VerticalSpacing),
+							A7(_user$project$Main$range, 'strokeWidth', 'Stroke width', model.strokeWidth, 1, 10, 0.1, _user$project$Main$ChangeStrokeWidth))))),
 				A2(
 				_elm_lang$svg$Svg$svg,
 				_elm_lang$core$Native_List.fromArray(
