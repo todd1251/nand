@@ -9969,7 +9969,7 @@ var _user$project$Main$spearTip = function (dimensions) {
 			A7(
 				_user$project$Main$ArcBy,
 				_user$project$Main$wideSegmentWidth(dimensions),
-				_user$project$Main$wideSegmentWidth(dimensions),
+				_user$project$Main$wideSegmentWidth(dimensions) * 0.8,
 				0,
 				false,
 				true,
@@ -10199,7 +10199,6 @@ var _user$project$Main$xor8 = F2(
 			width: gate.width,
 			height: gate.height,
 			shape: function () {
-				var hack_ = appearance.strokeWidth / 10;
 				var blue = _elm_lang$core$Native_List.fromArray(
 					[
 						_user$project$Main$Stroke('blue'),
@@ -10218,6 +10217,7 @@ var _user$project$Main$xor8 = F2(
 						_user$project$Main$StrokeWidth(appearance.strokeWidth),
 						_user$project$Main$Fill(appearance.fillColour)
 					]);
+				var hack_ = appearance.strokeWidth / 10;
 				var height_ = _user$project$Main$height(dimensions);
 				var outerRadius = height_;
 				var innerRadius = outerRadius - (appearance.strokeWidth * 2);
