@@ -10220,7 +10220,7 @@ var _user$project$Main$xor8 = F2(
 				var hack_ = appearance.strokeWidth / 10;
 				var height_ = _user$project$Main$height(dimensions);
 				var outerRadius = height_;
-				var innerRadius = outerRadius - _user$project$Main$offset(appearance);
+				var innerRadius = outerRadius * 0.9;
 				var cy = _user$project$Main$half(height_);
 				var cx = 0 - _elm_lang$core$Basics$sqrt((outerRadius * outerRadius) - (cy * cy));
 				var innerOffsetX = cx + _elm_lang$core$Basics$sqrt((innerRadius * innerRadius) - (cy * cy));
@@ -10232,17 +10232,31 @@ var _user$project$Main$xor8 = F2(
 						[
 							gate.shape,
 							A2(
-							_user$project$Main$Path,
+							_user$project$Main$Group,
 							_elm_lang$core$Native_List.fromArray(
 								[
-									A2(_user$project$Main$MoveTo, innerOffsetX, _user$project$Main$origin),
-									A7(_user$project$Main$ArcTo, innerRadius, innerRadius, 0, false, true, innerOffsetX, height_),
-									A2(_user$project$Main$LineTo, innerOffsetX + hack_, height_),
-									A7(_user$project$Main$ArcTo, innerRadius, innerRadius, 0, false, false, innerOffsetX, 0),
-									A2(_user$project$Main$LineTo, innerOffsetX + hack_, _user$project$Main$origin),
-									A7(_user$project$Main$ArcTo, innerRadius, innerRadius, 0, false, true, innerOffsetX, height_)
+									_user$project$Main$Transform(
+									A3(
+										_user$project$Main$translate,
+										_user$project$Main$identityTransform,
+										0 - _user$project$Main$offset(appearance),
+										0))
 								]),
-							_user$project$Main$attributes(appearance))
+							_elm_lang$core$Native_List.fromArray(
+								[
+									A2(
+									_user$project$Main$Path,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											A2(_user$project$Main$MoveTo, innerOffsetX, _user$project$Main$origin),
+											A7(_user$project$Main$ArcTo, innerRadius, innerRadius, 0, false, true, innerOffsetX, height_),
+											A2(_user$project$Main$LineTo, innerOffsetX + hack_, height_),
+											A7(_user$project$Main$ArcTo, innerRadius, innerRadius, 0, false, false, innerOffsetX, _user$project$Main$origin),
+											A2(_user$project$Main$LineTo, innerOffsetX + hack_, _user$project$Main$origin),
+											A7(_user$project$Main$ArcTo, innerRadius, innerRadius, 0, false, true, innerOffsetX, height_)
+										]),
+									_user$project$Main$attributes(appearance))
+								]))
 						]));
 			}()
 		};
