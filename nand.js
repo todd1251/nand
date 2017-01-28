@@ -9646,12 +9646,14 @@ var _user$project$Main$half = function (n) {
 var _user$project$Main$hack = function (appearance) {
 	return appearance.strokeWidth / 10;
 };
-var _user$project$Main$offset = function (appearance) {
-	return (appearance.strokeWidth * 1.915) + 3.167;
-};
-var _user$project$Main$left = function (appearance) {
-	return (appearance.strokeWidth / 2) - _user$project$Main$offset(appearance);
-};
+var _user$project$Main$offset = F2(
+	function (dimensions, appearance) {
+		return ((-4.374257426e-2 * dimensions.width) + (1.663181818 * appearance.strokeWidth)) - 0.6681683168;
+	});
+var _user$project$Main$left = F2(
+	function (dimensions, appearance) {
+		return (appearance.strokeWidth / 2) - A2(_user$project$Main$offset, dimensions, appearance);
+	});
 var _user$project$Main$width = function (dimensions) {
 	return dimensions.width;
 };
@@ -9678,7 +9680,7 @@ var _user$project$Main$twinCurvedBaseRadius = function (dimensions) {
 };
 var _user$project$Main$right = F2(
 	function (dimensions, appearance) {
-		return _user$project$Main$curvedBaseIndent(dimensions) - _user$project$Main$offset(appearance);
+		return _user$project$Main$curvedBaseIndent(dimensions) - A2(_user$project$Main$offset, dimensions, appearance);
 	});
 var _user$project$Main$inverterRadius = function (dimensions) {
 	return _user$project$Main$gateWidth(dimensions) / 12;
@@ -10296,6 +10298,16 @@ var _user$project$Main$update = F2(
 							model,
 							{strokeWidth: width});
 					});
+			case 'ChangeOffset':
+				return A3(
+					_user$project$Main$updateOrNone,
+					model,
+					_p10._0,
+					function (offset) {
+						return _elm_lang$core$Native_Utils.update(
+							model,
+							{offset: offset});
+					});
 			case 'DragStart':
 				var _p11 = _p10._0;
 				return {
@@ -10385,6 +10397,9 @@ var _user$project$Main$onMouseDown = A2(
 	_elm_lang$html$Html_Events$on,
 	'mousedown',
 	A2(_elm_lang$core$Json_Decode$map, _user$project$Main$DragStart, _elm_lang$mouse$Mouse$position));
+var _user$project$Main$ChangeOffset = function (a) {
+	return {ctor: 'ChangeOffset', _0: a};
+};
 var _user$project$Main$ChangeStrokeWidth = function (a) {
 	return {ctor: 'ChangeStrokeWidth', _0: a};
 };
@@ -10834,7 +10849,7 @@ var _user$project$Main$xor8 = F2(
 										A3(
 											_user$project$Main$translate,
 											_user$project$Main$identityTransform,
-											0 - _user$project$Main$offset(appearance),
+											0 - A2(_user$project$Main$offset, dimensions, appearance),
 											0)),
 									_1: {ctor: '[]'}
 								},
@@ -10945,7 +10960,7 @@ var _user$project$Main$Line = F5(
 		return {ctor: 'Line', _0: a, _1: b, _2: c, _3: d, _4: e};
 	});
 var _user$project$Main$view = function (model) {
-	var appearance = {strokeWidth: model.strokeWidth, strokeColour: 'black', fillColour: 'none'};
+	var appearance = {strokeWidth: model.strokeWidth, strokeColour: 'black', fillColour: 'none', offset: model.offset};
 	var dimensions = {width: model.width};
 	var fillColour = 'white';
 	var strokeColour = 'black';
@@ -11292,7 +11307,10 @@ var _user$project$Main$view = function (model) {
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							A7(_user$project$Main$range, 'verticalSpacing', 'Vertical spacing', model.verticalSpacing, 20, 200, 1, _user$project$Main$VerticalSpacing),
-							A7(_user$project$Main$range, 'strokeWidth', 'Stroke width', model.strokeWidth, 1, 10, 0.1, _user$project$Main$ChangeStrokeWidth))))),
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								A7(_user$project$Main$range, 'strokeWidth', 'Stroke width', model.strokeWidth, 1, 10, 0.1, _user$project$Main$ChangeStrokeWidth),
+								A7(_user$project$Main$range, 'offset', 'Offset', model.offset, -10, 10, 1, _user$project$Main$ChangeOffset)))))),
 			_1: {
 				ctor: '::',
 				_0: A2(
