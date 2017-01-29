@@ -9646,9 +9646,13 @@ var _user$project$Main$half = function (n) {
 var _user$project$Main$hack = function (appearance) {
 	return appearance.strokeWidth / 10;
 };
-var _user$project$Main$offset = F2(
+var _user$project$Main$offsetEdgeCase = F2(
 	function (dimensions, appearance) {
 		return ((-4.374257426e-2 * dimensions.width) + (1.663181818 * appearance.strokeWidth)) - 0.6681683168;
+	});
+var _user$project$Main$offset = F2(
+	function (dimensions, appearance) {
+		return (appearance.strokeWidth * 1.915) + 3.167;
 	});
 var _user$project$Main$left = F2(
 	function (dimensions, appearance) {
@@ -10829,9 +10833,20 @@ var _user$project$Main$xor8 = F2(
 				var hack_ = appearance.strokeWidth / 10;
 				var height_ = _user$project$Main$height(dimensions);
 				var outerRadius = height_;
-				var innerRadius = outerRadius * 0.9;
+				var maybeInnerRadius = outerRadius - A2(_user$project$Main$offset, dimensions, appearance);
 				var cy = _user$project$Main$half(height_);
 				var cx = 0 - _elm_lang$core$Basics$sqrt((outerRadius * outerRadius) - (cy * cy));
+				var maybeInnerOffsetX = cx + _elm_lang$core$Basics$sqrt((maybeInnerRadius * maybeInnerRadius) - (cy * cy));
+				var ratio = A2(
+					_elm_lang$core$Debug$log,
+					'ratio',
+					A2(_elm_lang$core$Debug$log, 'maybeInnerOffsetX', maybeInnerOffsetX) / A2(_elm_lang$core$Debug$log, 'cx', cx));
+				var edgeCase = A2(
+					_elm_lang$core$Debug$log,
+					'edgeCase',
+					_elm_lang$core$Native_Utils.cmp(ratio, 0.2) > 0);
+				var innerRadius = edgeCase ? (outerRadius * 0.9) : maybeInnerRadius;
+				var transformOffset = edgeCase ? (0 - A2(_user$project$Main$offsetEdgeCase, dimensions, appearance)) : 0;
 				var innerOffsetX = cx + _elm_lang$core$Basics$sqrt((innerRadius * innerRadius) - (cy * cy));
 				return A2(
 					_user$project$Main$Group,
@@ -10846,11 +10861,7 @@ var _user$project$Main$xor8 = F2(
 								{
 									ctor: '::',
 									_0: _user$project$Main$Transform(
-										A3(
-											_user$project$Main$translate,
-											_user$project$Main$identityTransform,
-											0 - A2(_user$project$Main$offset, dimensions, appearance),
-											0)),
+										A3(_user$project$Main$translate, _user$project$Main$identityTransform, transformOffset, 0)),
 									_1: {ctor: '[]'}
 								},
 								{
