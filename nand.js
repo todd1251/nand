@@ -10230,9 +10230,9 @@ var _user$project$Main$identityTransform = _elm_lang$core$Array$fromList(
 			}
 		}
 	});
-var _user$project$Main$Model = F9(
-	function (a, b, c, d, e, f, g, h, i) {
-		return {windowSize: a, width: b, horizontalSpacing: c, verticalSpacing: d, strokeWidth: e, offset: f, drag: g, distanceScrolled: h, transform: i};
+var _user$project$Main$Model = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {windowSize: a, width: b, horizontalSpacing: c, verticalSpacing: d, strokeWidth: e, drag: f, distanceScrolled: g, transform: h};
 	});
 var _user$project$Main$Drag = F2(
 	function (a, b) {
@@ -10301,16 +10301,6 @@ var _user$project$Main$update = F2(
 						return _elm_lang$core$Native_Utils.update(
 							model,
 							{strokeWidth: width});
-					});
-			case 'ChangeOffset':
-				return A3(
-					_user$project$Main$updateOrNone,
-					model,
-					_p10._0,
-					function (offset) {
-						return _elm_lang$core$Native_Utils.update(
-							model,
-							{offset: offset});
 					});
 			case 'DragStart':
 				var _p11 = _p10._0;
@@ -10401,9 +10391,6 @@ var _user$project$Main$onMouseDown = A2(
 	_elm_lang$html$Html_Events$on,
 	'mousedown',
 	A2(_elm_lang$core$Json_Decode$map, _user$project$Main$DragStart, _elm_lang$mouse$Mouse$position));
-var _user$project$Main$ChangeOffset = function (a) {
-	return {ctor: 'ChangeOffset', _0: a};
-};
 var _user$project$Main$ChangeStrokeWidth = function (a) {
 	return {ctor: 'ChangeStrokeWidth', _0: a};
 };
@@ -10430,8 +10417,7 @@ var _user$project$Main$init = function () {
 			width: defaultWidth,
 			horizontalSpacing: defaultHorizontalSpacing,
 			verticalSpacing: defaultVerticalSpacing,
-			strokeWidth: 1,
-			offset: 1,
+			strokeWidth: defaultWidth / 25,
 			drag: _elm_lang$core$Maybe$Nothing,
 			distanceScrolled: 0,
 			transform: _user$project$Main$identityTransform
@@ -10971,7 +10957,7 @@ var _user$project$Main$Line = F5(
 		return {ctor: 'Line', _0: a, _1: b, _2: c, _3: d, _4: e};
 	});
 var _user$project$Main$view = function (model) {
-	var appearance = {strokeWidth: model.strokeWidth, strokeColour: 'black', fillColour: 'none', offset: model.offset};
+	var appearance = {strokeWidth: model.strokeWidth, strokeColour: 'black', fillColour: 'none'};
 	var dimensions = {width: model.width};
 	var fillColour = 'white';
 	var strokeColour = 'black';
@@ -11318,10 +11304,7 @@ var _user$project$Main$view = function (model) {
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							A7(_user$project$Main$range, 'verticalSpacing', 'Vertical spacing', model.verticalSpacing, 20, 200, 1, _user$project$Main$VerticalSpacing),
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								A7(_user$project$Main$range, 'strokeWidth', 'Stroke width', model.strokeWidth, 1, 10, 0.1, _user$project$Main$ChangeStrokeWidth),
-								A7(_user$project$Main$range, 'offset', 'Offset', model.offset, -10, 10, 1, _user$project$Main$ChangeOffset)))))),
+							A7(_user$project$Main$range, 'strokeWidth', 'Stroke width', model.strokeWidth, 1, 10, 0.1, _user$project$Main$ChangeStrokeWidth))))),
 			_1: {
 				ctor: '::',
 				_0: A2(
