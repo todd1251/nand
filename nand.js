@@ -10984,11 +10984,15 @@ var _user$project$Main$outputWires = F4(
 	});
 var _user$project$Main$buffer8 = F2(
 	function (dimensions, appearance) {
+		var gate_ = A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$flatBase, _user$project$Main$noBody, _user$project$Main$arrowTip);
+		var offset = 2 * _user$project$Main$inverterRadius(dimensions);
 		var buffer = A3(
 			_user$project$Main$centred,
 			dimensions,
 			appearance,
-			A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$flatBase, _user$project$Main$noBody, _user$project$Main$arrowTip));
+			_elm_lang$core$Native_Utils.update(
+				gate_,
+				{width: gate_.width + offset}));
 		return _user$project$Main$group(
 			{
 				ctor: '::',
@@ -11009,7 +11013,7 @@ var _user$project$Main$buffer8 = F2(
 							_user$project$Main$outputWires,
 							1,
 							function (y) {
-								return buffer.left + buffer.width;
+								return (buffer.left + buffer.width) - offset;
 							},
 							dimensions,
 							appearance),
@@ -11081,128 +11085,132 @@ var _user$project$Main$or8 = F2(
 				}
 			});
 	});
+var _user$project$Main$twinCurvedBase = F3(
+	function (dimensions, appearance, xor) {
+		return {
+			left: 0,
+			top: 0,
+			width: xor.width,
+			height: xor.height,
+			shape: function () {
+				var blue = {
+					ctor: '::',
+					_0: _user$project$Main$Stroke('blue'),
+					_1: {
+						ctor: '::',
+						_0: _user$project$Main$StrokeWidth(appearance.strokeWidth),
+						_1: {
+							ctor: '::',
+							_0: _user$project$Main$Fill(appearance.fillColour),
+							_1: {ctor: '[]'}
+						}
+					}
+				};
+				var green = {
+					ctor: '::',
+					_0: _user$project$Main$Stroke('green'),
+					_1: {
+						ctor: '::',
+						_0: _user$project$Main$StrokeWidth(appearance.strokeWidth),
+						_1: {
+							ctor: '::',
+							_0: _user$project$Main$Fill(appearance.fillColour),
+							_1: {ctor: '[]'}
+						}
+					}
+				};
+				var red = {
+					ctor: '::',
+					_0: _user$project$Main$Stroke('red'),
+					_1: {
+						ctor: '::',
+						_0: _user$project$Main$StrokeWidth(appearance.strokeWidth),
+						_1: {
+							ctor: '::',
+							_0: _user$project$Main$Fill(appearance.fillColour),
+							_1: {ctor: '[]'}
+						}
+					}
+				};
+				var hack_ = appearance.strokeWidth / 10;
+				var height_ = _user$project$Main$height(dimensions);
+				var outerRadius = height_;
+				var maybeInnerRadius = outerRadius - A2(_user$project$Main$offset, dimensions, appearance);
+				var cy = _user$project$Main$half(height_);
+				var cx = 0 - _elm_lang$core$Basics$sqrt((outerRadius * outerRadius) - (cy * cy));
+				var maybeInnerOffsetX = cx + _elm_lang$core$Basics$sqrt((maybeInnerRadius * maybeInnerRadius) - (cy * cy));
+				var ratio = A2(
+					_elm_lang$core$Debug$log,
+					'ratio',
+					A2(_elm_lang$core$Debug$log, 'maybeInnerOffsetX', maybeInnerOffsetX) / A2(_elm_lang$core$Debug$log, 'cx', cx));
+				var edgeCase = A2(
+					_elm_lang$core$Debug$log,
+					'edgeCase',
+					_elm_lang$core$Native_Utils.cmp(ratio, 0.2) > 0);
+				var innerRadius = edgeCase ? (outerRadius * 0.9) : maybeInnerRadius;
+				var transformOffset = edgeCase ? (0 - A2(_user$project$Main$offsetEdgeCase, dimensions, appearance)) : 0;
+				var innerOffsetX = cx + _elm_lang$core$Basics$sqrt((innerRadius * innerRadius) - (cy * cy));
+				return A2(
+					_user$project$Main$Group,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: xor.shape,
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_user$project$Main$Group,
+								{
+									ctor: '::',
+									_0: _user$project$Main$Transform(
+										A3(_user$project$Main$translate, _user$project$Main$identityTransform, transformOffset, 0)),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_user$project$Main$Path,
+										{
+											ctor: '::',
+											_0: A2(_user$project$Main$MoveTo, innerOffsetX, _user$project$Main$origin),
+											_1: {
+												ctor: '::',
+												_0: A7(_user$project$Main$ArcTo, innerRadius, innerRadius, 0, false, true, innerOffsetX, height_),
+												_1: {
+													ctor: '::',
+													_0: A2(_user$project$Main$LineTo, innerOffsetX + hack_, height_),
+													_1: {
+														ctor: '::',
+														_0: A7(_user$project$Main$ArcTo, innerRadius, innerRadius, 0, false, false, innerOffsetX, _user$project$Main$origin),
+														_1: {
+															ctor: '::',
+															_0: A2(_user$project$Main$LineTo, innerOffsetX + hack_, _user$project$Main$origin),
+															_1: {
+																ctor: '::',
+																_0: A7(_user$project$Main$ArcTo, innerRadius, innerRadius, 0, false, true, innerOffsetX, height_),
+																_1: {ctor: '[]'}
+															}
+														}
+													}
+												}
+											}
+										},
+										_user$project$Main$attributes(appearance)),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
+					});
+			}()
+		};
+	});
 var _user$project$Main$xor8 = F2(
 	function (dimensions, appearance) {
 		var xor = A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$curvedBase, _user$project$Main$narrowBody, _user$project$Main$spearTip);
 		return _user$project$Main$group(
 			{
 				ctor: '::',
-				_0: {
-					left: 0,
-					top: 0,
-					width: xor.width,
-					height: xor.height,
-					shape: function () {
-						var blue = {
-							ctor: '::',
-							_0: _user$project$Main$Stroke('blue'),
-							_1: {
-								ctor: '::',
-								_0: _user$project$Main$StrokeWidth(appearance.strokeWidth),
-								_1: {
-									ctor: '::',
-									_0: _user$project$Main$Fill(appearance.fillColour),
-									_1: {ctor: '[]'}
-								}
-							}
-						};
-						var green = {
-							ctor: '::',
-							_0: _user$project$Main$Stroke('green'),
-							_1: {
-								ctor: '::',
-								_0: _user$project$Main$StrokeWidth(appearance.strokeWidth),
-								_1: {
-									ctor: '::',
-									_0: _user$project$Main$Fill(appearance.fillColour),
-									_1: {ctor: '[]'}
-								}
-							}
-						};
-						var red = {
-							ctor: '::',
-							_0: _user$project$Main$Stroke('red'),
-							_1: {
-								ctor: '::',
-								_0: _user$project$Main$StrokeWidth(appearance.strokeWidth),
-								_1: {
-									ctor: '::',
-									_0: _user$project$Main$Fill(appearance.fillColour),
-									_1: {ctor: '[]'}
-								}
-							}
-						};
-						var hack_ = appearance.strokeWidth / 10;
-						var height_ = _user$project$Main$height(dimensions);
-						var outerRadius = height_;
-						var maybeInnerRadius = outerRadius - A2(_user$project$Main$offset, dimensions, appearance);
-						var cy = _user$project$Main$half(height_);
-						var cx = 0 - _elm_lang$core$Basics$sqrt((outerRadius * outerRadius) - (cy * cy));
-						var maybeInnerOffsetX = cx + _elm_lang$core$Basics$sqrt((maybeInnerRadius * maybeInnerRadius) - (cy * cy));
-						var ratio = A2(
-							_elm_lang$core$Debug$log,
-							'ratio',
-							A2(_elm_lang$core$Debug$log, 'maybeInnerOffsetX', maybeInnerOffsetX) / A2(_elm_lang$core$Debug$log, 'cx', cx));
-						var edgeCase = A2(
-							_elm_lang$core$Debug$log,
-							'edgeCase',
-							_elm_lang$core$Native_Utils.cmp(ratio, 0.2) > 0);
-						var innerRadius = edgeCase ? (outerRadius * 0.9) : maybeInnerRadius;
-						var transformOffset = edgeCase ? (0 - A2(_user$project$Main$offsetEdgeCase, dimensions, appearance)) : 0;
-						var innerOffsetX = cx + _elm_lang$core$Basics$sqrt((innerRadius * innerRadius) - (cy * cy));
-						return A2(
-							_user$project$Main$Group,
-							{ctor: '[]'},
-							{
-								ctor: '::',
-								_0: xor.shape,
-								_1: {
-									ctor: '::',
-									_0: A2(
-										_user$project$Main$Group,
-										{
-											ctor: '::',
-											_0: _user$project$Main$Transform(
-												A3(_user$project$Main$translate, _user$project$Main$identityTransform, transformOffset, 0)),
-											_1: {ctor: '[]'}
-										},
-										{
-											ctor: '::',
-											_0: A2(
-												_user$project$Main$Path,
-												{
-													ctor: '::',
-													_0: A2(_user$project$Main$MoveTo, innerOffsetX, _user$project$Main$origin),
-													_1: {
-														ctor: '::',
-														_0: A7(_user$project$Main$ArcTo, innerRadius, innerRadius, 0, false, true, innerOffsetX, height_),
-														_1: {
-															ctor: '::',
-															_0: A2(_user$project$Main$LineTo, innerOffsetX + hack_, height_),
-															_1: {
-																ctor: '::',
-																_0: A7(_user$project$Main$ArcTo, innerRadius, innerRadius, 0, false, false, innerOffsetX, _user$project$Main$origin),
-																_1: {
-																	ctor: '::',
-																	_0: A2(_user$project$Main$LineTo, innerOffsetX + hack_, _user$project$Main$origin),
-																	_1: {
-																		ctor: '::',
-																		_0: A7(_user$project$Main$ArcTo, innerRadius, innerRadius, 0, false, true, innerOffsetX, height_),
-																		_1: {ctor: '[]'}
-																	}
-																}
-															}
-														}
-													}
-												},
-												_user$project$Main$attributes(appearance)),
-											_1: {ctor: '[]'}
-										}),
-									_1: {ctor: '[]'}
-								}
-							});
-					}()
-				},
+				_0: A3(_user$project$Main$twinCurvedBase, dimensions, appearance, xor),
 				_1: {
 					ctor: '::',
 					_0: A4(
@@ -11370,35 +11378,36 @@ var _user$project$Main$nor8 = F2(
 	});
 var _user$project$Main$xnor8 = F2(
 	function (dimensions, appearance) {
-		var xnor = A3(
-			_user$project$Main$inverted,
-			dimensions,
-			appearance,
-			A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$curvedBase, _user$project$Main$narrowBody, _user$project$Main$spearTip));
+		var xor = A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$curvedBase, _user$project$Main$narrowBody, _user$project$Main$spearTip);
+		var xnor = A3(_user$project$Main$inverted, dimensions, appearance, xor);
 		return _user$project$Main$group(
 			{
 				ctor: '::',
 				_0: xnor,
 				_1: {
 					ctor: '::',
-					_0: A4(
-						_user$project$Main$inputWires,
-						2,
-						_user$project$Main$intersectionWithBaseAt(
-							_user$project$Main$height(dimensions)),
-						dimensions,
-						appearance),
+					_0: A3(_user$project$Main$twinCurvedBase, dimensions, appearance, xor),
 					_1: {
 						ctor: '::',
 						_0: A4(
-							_user$project$Main$outputWires,
-							1,
-							function (y) {
-								return xnor.left + xnor.width;
-							},
+							_user$project$Main$inputWires,
+							2,
+							_user$project$Main$intersectionWithBaseAt(
+								_user$project$Main$height(dimensions)),
 							dimensions,
 							appearance),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: A4(
+								_user$project$Main$outputWires,
+								1,
+								function (y) {
+									return xnor.left + xnor.width;
+								},
+								dimensions,
+								appearance),
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			});
@@ -11788,18 +11797,18 @@ var _user$project$Main$view = function (model) {
 										ctor: '::',
 										_0: A3(
 											gate,
-											2,
 											1,
+											2,
 											_user$project$Main$shape(
 												A2(_user$project$Main$not8, dimensions, appearance))),
 										_1: {
 											ctor: '::',
 											_0: A3(
 												gate,
-												1,
 												2,
+												1,
 												_user$project$Main$shape(
-													A2(_user$project$Main$and8, dimensions, appearance))),
+													A2(_user$project$Main$or8, dimensions, appearance))),
 											_1: {
 												ctor: '::',
 												_0: A3(
@@ -11807,7 +11816,7 @@ var _user$project$Main$view = function (model) {
 													2,
 													2,
 													_user$project$Main$shape(
-														A2(_user$project$Main$nand8, dimensions, appearance))),
+														A2(_user$project$Main$nor8, dimensions, appearance))),
 												_1: {
 													ctor: '::',
 													_0: A3(
@@ -11815,21 +11824,21 @@ var _user$project$Main$view = function (model) {
 														1,
 														3,
 														_user$project$Main$shape(
-															A2(_user$project$Main$or8, dimensions, appearance))),
+															A2(_user$project$Main$and8, dimensions, appearance))),
 													_1: {
 														ctor: '::',
 														_0: A3(
 															gate,
-															2,
-															3,
+															1,
+															4,
 															_user$project$Main$shape(
-																A2(_user$project$Main$nor8, dimensions, appearance))),
+																A2(_user$project$Main$nand8, dimensions, appearance))),
 														_1: {
 															ctor: '::',
 															_0: A3(
 																gate,
-																1,
-																4,
+																2,
+																3,
 																_user$project$Main$shape(
 																	A2(_user$project$Main$xor8, dimensions, appearance))),
 															_1: {
