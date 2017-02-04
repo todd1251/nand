@@ -9508,6 +9508,428 @@ var _elm_lang$window$Window$subMap = F2(
 	});
 _elm_lang$core$Native_Platform.effectManagers['Window'] = {pkg: 'elm-lang/window', init: _elm_lang$window$Window$init, onEffects: _elm_lang$window$Window$onEffects, onSelfMsg: _elm_lang$window$Window$onSelfMsg, tag: 'sub', subMap: _elm_lang$window$Window$subMap};
 
+var _user$project$Transform$toSvgTransform = function (transform) {
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		'matrix(',
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			A2(
+				_elm_lang$core$String$join,
+				', ',
+				_elm_lang$core$Array$toList(
+					A2(_elm_lang$core$Array$map, _elm_lang$core$Basics$toString, transform))),
+			')'));
+};
+var _user$project$Transform$identity = _elm_lang$core$Array$fromList(
+	{
+		ctor: '::',
+		_0: 1,
+		_1: {
+			ctor: '::',
+			_0: 0,
+			_1: {
+				ctor: '::',
+				_0: 0,
+				_1: {
+					ctor: '::',
+					_0: 1,
+					_1: {
+						ctor: '::',
+						_0: 0,
+						_1: {
+							ctor: '::',
+							_0: 0,
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			}
+		}
+	});
+var _user$project$Transform$elementAtIndex = F2(
+	function (index, transform) {
+		var _p0 = A2(_elm_lang$core$Array$get, index, transform);
+		if (_p0.ctor === 'Just') {
+			return _p0._0;
+		} else {
+			return _elm_lang$core$Native_Utils.crashCase(
+				'Transform',
+				{
+					start: {line: 19, column: 5},
+					end: {line: 26, column: 115}
+				},
+				_p0)(
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'Index out of bounds: ',
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Basics$toString(index),
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							' in transform: ',
+							_elm_lang$core$Basics$toString(transform)))));
+		}
+	});
+var _user$project$Transform$translate = F3(
+	function (transform, dx, dy) {
+		return _elm_lang$core$Array$fromList(
+			{
+				ctor: '::',
+				_0: A2(_user$project$Transform$elementAtIndex, 0, transform),
+				_1: {
+					ctor: '::',
+					_0: A2(_user$project$Transform$elementAtIndex, 1, transform),
+					_1: {
+						ctor: '::',
+						_0: A2(_user$project$Transform$elementAtIndex, 2, transform),
+						_1: {
+							ctor: '::',
+							_0: A2(_user$project$Transform$elementAtIndex, 3, transform),
+							_1: {
+								ctor: '::',
+								_0: A2(_user$project$Transform$elementAtIndex, 4, transform) + dx,
+								_1: {
+									ctor: '::',
+									_0: A2(_user$project$Transform$elementAtIndex, 5, transform) + dy,
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}
+			});
+	});
+var _user$project$Transform$scale = F2(
+	function (transform, scale) {
+		return _elm_lang$core$Array$fromList(
+			{
+				ctor: '::',
+				_0: A2(_user$project$Transform$elementAtIndex, 0, transform) * scale,
+				_1: {
+					ctor: '::',
+					_0: A2(_user$project$Transform$elementAtIndex, 1, transform) * scale,
+					_1: {
+						ctor: '::',
+						_0: A2(_user$project$Transform$elementAtIndex, 2, transform) * scale,
+						_1: {
+							ctor: '::',
+							_0: A2(_user$project$Transform$elementAtIndex, 3, transform) * scale,
+							_1: {
+								ctor: '::',
+								_0: A2(_user$project$Transform$elementAtIndex, 4, transform) * scale,
+								_1: {
+									ctor: '::',
+									_0: A2(_user$project$Transform$elementAtIndex, 5, transform) * scale,
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}
+			});
+	});
+
+var _user$project$Wheel_ops = _user$project$Wheel_ops || {};
+_user$project$Wheel_ops['&>'] = F2(
+	function (t1, t2) {
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (_p0) {
+				return t2;
+			},
+			t1);
+	});
+var _user$project$Wheel$onSelfMsg = F3(
+	function (router, delta, state) {
+		var _p1 = state;
+		if (_p1.ctor === 'Nothing') {
+			return _elm_lang$core$Task$succeed(state);
+		} else {
+			var send = function (_p2) {
+				var _p3 = _p2;
+				return A2(
+					_elm_lang$core$Platform$sendToApp,
+					router,
+					_p3._0(delta));
+			};
+			return A2(
+				_user$project$Wheel_ops['&>'],
+				_elm_lang$core$Task$sequence(
+					A2(_elm_lang$core$List$map, send, _p1._0.subs)),
+				_elm_lang$core$Task$succeed(state));
+		}
+	});
+var _user$project$Wheel$init = _elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing);
+var _user$project$Wheel$subscription = _elm_lang$core$Native_Platform.leaf('Wheel');
+var _user$project$Wheel$Delta = F5(
+	function (a, b, c, d, e) {
+		return {wheelDelta: a, deltaX: b, deltaY: c, offsetX: d, offsetY: e};
+	});
+var _user$project$Wheel$delta = A6(
+	_elm_lang$core$Json_Decode$map5,
+	_user$project$Wheel$Delta,
+	A2(_elm_lang$core$Json_Decode$field, 'wheelDelta', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'deltaX', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'deltaY', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'offsetX', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'offsetY', _elm_lang$core$Json_Decode$int));
+var _user$project$Wheel$onEffects = F3(
+	function (router, newSubs, oldState) {
+		var _p4 = {ctor: '_Tuple2', _0: oldState, _1: newSubs};
+		if (_p4._0.ctor === 'Nothing') {
+			if (_p4._1.ctor === '[]') {
+				return _elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing);
+			} else {
+				return A2(
+					_elm_lang$core$Task$andThen,
+					function (pid) {
+						return _elm_lang$core$Task$succeed(
+							_elm_lang$core$Maybe$Just(
+								{subs: newSubs, pid: pid}));
+					},
+					_elm_lang$core$Process$spawn(
+						A3(
+							_elm_lang$dom$Dom_LowLevel$onWindow,
+							'wheel',
+							_user$project$Wheel$delta,
+							_elm_lang$core$Platform$sendToSelf(router))));
+			}
+		} else {
+			if (_p4._1.ctor === '[]') {
+				return A2(
+					_user$project$Wheel_ops['&>'],
+					_elm_lang$core$Process$kill(_p4._0._0.pid),
+					_elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing));
+			} else {
+				return _elm_lang$core$Task$succeed(
+					_elm_lang$core$Maybe$Just(
+						{subs: newSubs, pid: _p4._0._0.pid}));
+			}
+		}
+	});
+var _user$project$Wheel$MySub = function (a) {
+	return {ctor: 'MySub', _0: a};
+};
+var _user$project$Wheel$deltas = function (tagger) {
+	return _user$project$Wheel$subscription(
+		_user$project$Wheel$MySub(tagger));
+};
+var _user$project$Wheel$subMap = F2(
+	function (func, _p5) {
+		var _p6 = _p5;
+		return _user$project$Wheel$MySub(
+			function (_p7) {
+				return func(
+					_p6._0(_p7));
+			});
+	});
+_elm_lang$core$Native_Platform.effectManagers['Wheel'] = {pkg: 'user/project', init: _user$project$Wheel$init, onEffects: _user$project$Wheel$onEffects, onSelfMsg: _user$project$Wheel$onSelfMsg, tag: 'sub', subMap: _user$project$Wheel$subMap};
+
+var _user$project$Canvas$getTransform = function (model) {
+	var _p0 = model.drag;
+	if (_p0.ctor === 'Nothing') {
+		return model.transform;
+	} else {
+		var _p2 = _p0._0.start;
+		var _p1 = _p0._0.current;
+		return A3(
+			_user$project$Transform$translate,
+			model.transform,
+			_elm_lang$core$Basics$toFloat(_p1.x - _p2.x),
+			_elm_lang$core$Basics$toFloat(_p1.y - _p2.y));
+	}
+};
+var _user$project$Canvas$Drag = F2(
+	function (a, b) {
+		return {start: a, current: b};
+	});
+var _user$project$Canvas$update = F2(
+	function (msg, model) {
+		var _p3 = msg;
+		switch (_p3.ctor) {
+			case 'WindowResized':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{windowSize: _p3._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'DragStart':
+				var _p4 = _p3._0;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							drag: _elm_lang$core$Maybe$Just(
+								A2(_user$project$Canvas$Drag, _p4, _p4))
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'DragAt':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							drag: A2(
+								_elm_lang$core$Maybe$map,
+								function (_p5) {
+									var _p6 = _p5;
+									return A2(_user$project$Canvas$Drag, _p6.start, _p3._0);
+								},
+								model.drag)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'DragEnd':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							transform: _user$project$Canvas$getTransform(model),
+							drag: _elm_lang$core$Maybe$Nothing
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				var _p7 = _p3._0;
+				var pan = A2(_elm_lang$mouse$Mouse$Position, _p7.offsetX, _p7.offsetY);
+				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, model.distanceScrolled + _p7.wheelDelta);
+				var zoomPerUnitDistance = 1 + (0.1 / 100);
+				var zoom = Math.pow(
+					zoomPerUnitDistance,
+					_elm_lang$core$Basics$toFloat(model.distanceScrolled)) / Math.pow(
+					zoomPerUnitDistance,
+					_elm_lang$core$Basics$toFloat(distanceScrolled));
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							distanceScrolled: distanceScrolled,
+							transform: A3(
+								_user$project$Transform$translate,
+								A2(_user$project$Transform$scale, model.transform, zoom),
+								(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.x),
+								(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.y))
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+		}
+	});
+var _user$project$Canvas$Model = F4(
+	function (a, b, c, d) {
+		return {windowSize: a, drag: b, distanceScrolled: c, transform: d};
+	});
+var _user$project$Canvas$WheelScrolled = function (a) {
+	return {ctor: 'WheelScrolled', _0: a};
+};
+var _user$project$Canvas$DragEnd = function (a) {
+	return {ctor: 'DragEnd', _0: a};
+};
+var _user$project$Canvas$DragAt = function (a) {
+	return {ctor: 'DragAt', _0: a};
+};
+var _user$project$Canvas$DragStart = function (a) {
+	return {ctor: 'DragStart', _0: a};
+};
+var _user$project$Canvas$onMouseDown = A2(
+	_elm_lang$html$Html_Events$on,
+	'mousedown',
+	A2(_elm_lang$core$Json_Decode$map, _user$project$Canvas$DragStart, _elm_lang$mouse$Mouse$position));
+var _user$project$Canvas$view = F4(
+	function (model, message, elements, shapes) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('container'),
+				_1: {
+					ctor: '::',
+					_0: A2(_elm_lang$html$Html_Attributes$map, message, _user$project$Canvas$onMouseDown),
+					_1: {ctor: '[]'}
+				}
+			},
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				elements,
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$svg$Svg$svg,
+						{
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$class('canvas'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$svg$Svg$g,
+								{
+									ctor: '::',
+									_0: _elm_lang$svg$Svg_Attributes$transform(
+										_user$project$Transform$toSvgTransform(
+											_user$project$Canvas$getTransform(model))),
+									_1: {ctor: '[]'}
+								},
+								shapes),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				}));
+	});
+var _user$project$Canvas$WindowResized = function (a) {
+	return {ctor: 'WindowResized', _0: a};
+};
+var _user$project$Canvas$init = {
+	ctor: '_Tuple2',
+	_0: {
+		windowSize: {width: 800, height: 600},
+		drag: _elm_lang$core$Maybe$Nothing,
+		distanceScrolled: 0,
+		transform: _user$project$Transform$identity
+	},
+	_1: A2(_elm_lang$core$Task$perform, _user$project$Canvas$WindowResized, _elm_lang$window$Window$size)
+};
+var _user$project$Canvas$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$batch(
+		{
+			ctor: '::',
+			_0: _elm_lang$window$Window$resizes(_user$project$Canvas$WindowResized),
+			_1: {
+				ctor: '::',
+				_0: function () {
+					var _p8 = model.drag;
+					if (_p8.ctor === 'Nothing') {
+						return _elm_lang$core$Platform_Sub$none;
+					} else {
+						return _elm_lang$core$Platform_Sub$batch(
+							{
+								ctor: '::',
+								_0: _elm_lang$mouse$Mouse$moves(_user$project$Canvas$DragAt),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$mouse$Mouse$ups(_user$project$Canvas$DragEnd),
+									_1: {ctor: '[]'}
+								}
+							});
+					}
+				}(),
+				_1: {
+					ctor: '::',
+					_0: _user$project$Wheel$deltas(_user$project$Canvas$WheelScrolled),
+					_1: {ctor: '[]'}
+				}
+			}
+		});
+};
+
 var _user$project$Shape$fromDescription = function (description) {
 	return A2(
 		_elm_lang$core$String$join,
@@ -9708,17 +10130,7 @@ var _user$project$Shape$fromAttributes = function (attributes) {
 					return _elm_lang$svg$Svg_Attributes$fill(_p1._0);
 				default:
 					return _elm_lang$svg$Svg_Attributes$transform(
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							'matrix(',
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								A2(
-									_elm_lang$core$String$join,
-									', ',
-									_elm_lang$core$Array$toList(
-										A2(_elm_lang$core$Array$map, _elm_lang$core$Basics$toString, _p1._0))),
-								')')));
+						_user$project$Transform$toSvgTransform(_p1._0));
 			}
 		},
 		attributes);
@@ -9858,102 +10270,6 @@ var _user$project$Shape$Line = F5(
 		return {ctor: 'Line', _0: a, _1: b, _2: c, _3: d, _4: e};
 	});
 
-var _user$project$Wheel_ops = _user$project$Wheel_ops || {};
-_user$project$Wheel_ops['&>'] = F2(
-	function (t1, t2) {
-		return A2(
-			_elm_lang$core$Task$andThen,
-			function (_p0) {
-				return t2;
-			},
-			t1);
-	});
-var _user$project$Wheel$onSelfMsg = F3(
-	function (router, delta, state) {
-		var _p1 = state;
-		if (_p1.ctor === 'Nothing') {
-			return _elm_lang$core$Task$succeed(state);
-		} else {
-			var send = function (_p2) {
-				var _p3 = _p2;
-				return A2(
-					_elm_lang$core$Platform$sendToApp,
-					router,
-					_p3._0(delta));
-			};
-			return A2(
-				_user$project$Wheel_ops['&>'],
-				_elm_lang$core$Task$sequence(
-					A2(_elm_lang$core$List$map, send, _p1._0.subs)),
-				_elm_lang$core$Task$succeed(state));
-		}
-	});
-var _user$project$Wheel$init = _elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing);
-var _user$project$Wheel$subscription = _elm_lang$core$Native_Platform.leaf('Wheel');
-var _user$project$Wheel$Delta = F5(
-	function (a, b, c, d, e) {
-		return {wheelDelta: a, deltaX: b, deltaY: c, offsetX: d, offsetY: e};
-	});
-var _user$project$Wheel$delta = A6(
-	_elm_lang$core$Json_Decode$map5,
-	_user$project$Wheel$Delta,
-	A2(_elm_lang$core$Json_Decode$field, 'wheelDelta', _elm_lang$core$Json_Decode$int),
-	A2(_elm_lang$core$Json_Decode$field, 'deltaX', _elm_lang$core$Json_Decode$int),
-	A2(_elm_lang$core$Json_Decode$field, 'deltaY', _elm_lang$core$Json_Decode$int),
-	A2(_elm_lang$core$Json_Decode$field, 'offsetX', _elm_lang$core$Json_Decode$int),
-	A2(_elm_lang$core$Json_Decode$field, 'offsetY', _elm_lang$core$Json_Decode$int));
-var _user$project$Wheel$onEffects = F3(
-	function (router, newSubs, oldState) {
-		var _p4 = {ctor: '_Tuple2', _0: oldState, _1: newSubs};
-		if (_p4._0.ctor === 'Nothing') {
-			if (_p4._1.ctor === '[]') {
-				return _elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing);
-			} else {
-				return A2(
-					_elm_lang$core$Task$andThen,
-					function (pid) {
-						return _elm_lang$core$Task$succeed(
-							_elm_lang$core$Maybe$Just(
-								{subs: newSubs, pid: pid}));
-					},
-					_elm_lang$core$Process$spawn(
-						A3(
-							_elm_lang$dom$Dom_LowLevel$onWindow,
-							'wheel',
-							_user$project$Wheel$delta,
-							_elm_lang$core$Platform$sendToSelf(router))));
-			}
-		} else {
-			if (_p4._1.ctor === '[]') {
-				return A2(
-					_user$project$Wheel_ops['&>'],
-					_elm_lang$core$Process$kill(_p4._0._0.pid),
-					_elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing));
-			} else {
-				return _elm_lang$core$Task$succeed(
-					_elm_lang$core$Maybe$Just(
-						{subs: newSubs, pid: _p4._0._0.pid}));
-			}
-		}
-	});
-var _user$project$Wheel$MySub = function (a) {
-	return {ctor: 'MySub', _0: a};
-};
-var _user$project$Wheel$deltas = function (tagger) {
-	return _user$project$Wheel$subscription(
-		_user$project$Wheel$MySub(tagger));
-};
-var _user$project$Wheel$subMap = F2(
-	function (func, _p5) {
-		var _p6 = _p5;
-		return _user$project$Wheel$MySub(
-			function (_p7) {
-				return func(
-					_p6._0(_p7));
-			});
-	});
-_elm_lang$core$Native_Platform.effectManagers['Wheel'] = {pkg: 'user/project', init: _user$project$Wheel$init, onEffects: _user$project$Wheel$onEffects, onSelfMsg: _user$project$Wheel$onSelfMsg, tag: 'sub', subMap: _user$project$Wheel$subMap};
-
 var _user$project$Main$group = function (shapes) {
 	return {
 		left: 0,
@@ -9988,6 +10304,21 @@ var _user$project$Main$transformation = F2(
 				_0: shape,
 				_1: {ctor: '[]'}
 			});
+	});
+var _user$project$Main$centred = F3(
+	function (dimensions, appearance, gate) {
+		var top = 0;
+		var left = (dimensions.width / 2) - (gate.width / 2);
+		return {
+			left: left,
+			top: top,
+			width: gate.width,
+			height: gate.height,
+			shape: A2(
+				_user$project$Main$transformation,
+				gate.shape,
+				A3(_user$project$Transform$translate, _user$project$Transform$identity, left, top))
+		};
 	});
 var _user$project$Main$noBody = function (dimensions) {
 	return {width: 0, height: 0, segment: _elm_lang$core$Maybe$Nothing};
@@ -10443,6 +10774,125 @@ var _user$project$Main$curvedBase = function (dimensions) {
 				_user$project$Main$origin))
 	};
 };
+var _user$project$Main$twinCurvedBase = F3(
+	function (dimensions, appearance, xor) {
+		return {
+			left: 0,
+			top: 0,
+			width: xor.width,
+			height: xor.height,
+			shape: function () {
+				var blue = {
+					ctor: '::',
+					_0: _user$project$Shape$Stroke('blue'),
+					_1: {
+						ctor: '::',
+						_0: _user$project$Shape$StrokeWidth(appearance.strokeWidth),
+						_1: {
+							ctor: '::',
+							_0: _user$project$Shape$Fill(appearance.fillColour),
+							_1: {ctor: '[]'}
+						}
+					}
+				};
+				var green = {
+					ctor: '::',
+					_0: _user$project$Shape$Stroke('green'),
+					_1: {
+						ctor: '::',
+						_0: _user$project$Shape$StrokeWidth(appearance.strokeWidth),
+						_1: {
+							ctor: '::',
+							_0: _user$project$Shape$Fill(appearance.fillColour),
+							_1: {ctor: '[]'}
+						}
+					}
+				};
+				var red = {
+					ctor: '::',
+					_0: _user$project$Shape$Stroke('red'),
+					_1: {
+						ctor: '::',
+						_0: _user$project$Shape$StrokeWidth(appearance.strokeWidth),
+						_1: {
+							ctor: '::',
+							_0: _user$project$Shape$Fill(appearance.fillColour),
+							_1: {ctor: '[]'}
+						}
+					}
+				};
+				var hack_ = appearance.strokeWidth / 10;
+				var height_ = _user$project$Main$height(dimensions);
+				var outerRadius = height_;
+				var maybeInnerRadius = outerRadius - A2(_user$project$Main$offset, dimensions, appearance);
+				var cy = _user$project$Main$half(height_);
+				var cx = 0 - _elm_lang$core$Basics$sqrt((outerRadius * outerRadius) - (cy * cy));
+				var maybeInnerOffsetX = cx + _elm_lang$core$Basics$sqrt((maybeInnerRadius * maybeInnerRadius) - (cy * cy));
+				var ratio = A2(
+					_elm_lang$core$Debug$log,
+					'ratio',
+					A2(_elm_lang$core$Debug$log, 'maybeInnerOffsetX', maybeInnerOffsetX) / A2(_elm_lang$core$Debug$log, 'cx', cx));
+				var edgeCase = A2(
+					_elm_lang$core$Debug$log,
+					'edgeCase',
+					_elm_lang$core$Native_Utils.cmp(ratio, 0.2) > 0);
+				var innerRadius = edgeCase ? (outerRadius * 0.9) : maybeInnerRadius;
+				var transformOffset = edgeCase ? (0 - A2(_user$project$Main$offsetEdgeCase, dimensions, appearance)) : 0;
+				var innerOffsetX = cx + _elm_lang$core$Basics$sqrt((innerRadius * innerRadius) - (cy * cy));
+				return A2(
+					_user$project$Shape$Group,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: xor.shape,
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_user$project$Shape$Group,
+								{
+									ctor: '::',
+									_0: _user$project$Shape$Transform(
+										A3(_user$project$Transform$translate, _user$project$Transform$identity, transformOffset, 0)),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_user$project$Shape$Path,
+										{
+											ctor: '::',
+											_0: A2(_user$project$Shape$MoveTo, innerOffsetX, _user$project$Main$origin),
+											_1: {
+												ctor: '::',
+												_0: A7(_user$project$Shape$ArcTo, innerRadius, innerRadius, 0, false, true, innerOffsetX, height_),
+												_1: {
+													ctor: '::',
+													_0: A2(_user$project$Shape$LineTo, innerOffsetX + hack_, height_),
+													_1: {
+														ctor: '::',
+														_0: A7(_user$project$Shape$ArcTo, innerRadius, innerRadius, 0, false, false, innerOffsetX, _user$project$Main$origin),
+														_1: {
+															ctor: '::',
+															_0: A2(_user$project$Shape$LineTo, innerOffsetX + hack_, _user$project$Main$origin),
+															_1: {
+																ctor: '::',
+																_0: A7(_user$project$Shape$ArcTo, innerRadius, innerRadius, 0, false, true, innerOffsetX, height_),
+																_1: {ctor: '[]'}
+															}
+														}
+													}
+												}
+											}
+										},
+										_user$project$Main$attributes(appearance)),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
+					});
+			}()
+		};
+	});
 var _user$project$Main$moveToOrigin = _user$project$Shape$MoveToOrigin;
 var _user$project$Main$gate = F5(
 	function (dimensions, appearance, base, body, tip) {
@@ -10525,6 +10975,86 @@ var _user$project$Main$gate = F5(
 					}),
 				_user$project$Main$attributes(appearance))
 		};
+	});
+var _user$project$Main$buffer8 = F2(
+	function (dimensions, appearance) {
+		var gate_ = A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$flatBase, _user$project$Main$noBody, _user$project$Main$arrowTip);
+		var offset = 2 * _user$project$Main$inverterRadius(dimensions);
+		var buffer = A3(
+			_user$project$Main$centred,
+			dimensions,
+			appearance,
+			_elm_lang$core$Native_Utils.update(
+				gate_,
+				{width: gate_.width + offset}));
+		return _user$project$Main$group(
+			{
+				ctor: '::',
+				_0: buffer,
+				_1: {
+					ctor: '::',
+					_0: A4(
+						_user$project$Main$inputWires,
+						1,
+						function (y) {
+							return buffer.left;
+						},
+						dimensions,
+						appearance),
+					_1: {
+						ctor: '::',
+						_0: A4(
+							_user$project$Main$outputWires,
+							1,
+							function (y) {
+								return (buffer.left + buffer.width) - offset;
+							},
+							dimensions,
+							appearance),
+						_1: {ctor: '[]'}
+					}
+				}
+			});
+	});
+var _user$project$Main$not8 = F2(
+	function (dimensions, appearance) {
+		var not = A3(
+			_user$project$Main$centred,
+			dimensions,
+			appearance,
+			A3(
+				_user$project$Main$inverted,
+				dimensions,
+				appearance,
+				A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$flatBase, _user$project$Main$noBody, _user$project$Main$arrowTip)));
+		return _user$project$Main$group(
+			{
+				ctor: '::',
+				_0: not,
+				_1: {
+					ctor: '::',
+					_0: A4(
+						_user$project$Main$inputWires,
+						1,
+						function (y) {
+							return not.left;
+						},
+						dimensions,
+						appearance),
+					_1: {
+						ctor: '::',
+						_0: A4(
+							_user$project$Main$outputWires,
+							1,
+							function (y) {
+								return not.left + not.width;
+							},
+							dimensions,
+							appearance),
+						_1: {ctor: '[]'}
+					}
+				}
+			});
 	});
 var _user$project$Main$and8 = F2(
 	function (dimensions, appearance) {
@@ -10660,6 +11190,73 @@ var _user$project$Main$nor8 = F2(
 				}
 			});
 	});
+var _user$project$Main$xor8 = F2(
+	function (dimensions, appearance) {
+		var xor = A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$curvedBase, _user$project$Main$narrowBody, _user$project$Main$spearTip);
+		return _user$project$Main$group(
+			{
+				ctor: '::',
+				_0: A3(_user$project$Main$twinCurvedBase, dimensions, appearance, xor),
+				_1: {
+					ctor: '::',
+					_0: A4(
+						_user$project$Main$inputWires,
+						2,
+						_user$project$Main$intersectionWithBaseAt(
+							_user$project$Main$height(dimensions)),
+						dimensions,
+						appearance),
+					_1: {
+						ctor: '::',
+						_0: A4(
+							_user$project$Main$outputWires,
+							1,
+							function (y) {
+								return xor.left + xor.width;
+							},
+							dimensions,
+							appearance),
+						_1: {ctor: '[]'}
+					}
+				}
+			});
+	});
+var _user$project$Main$xnor8 = F2(
+	function (dimensions, appearance) {
+		var xor = A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$curvedBase, _user$project$Main$narrowBody, _user$project$Main$spearTip);
+		var xnor = A3(_user$project$Main$inverted, dimensions, appearance, xor);
+		return _user$project$Main$group(
+			{
+				ctor: '::',
+				_0: xnor,
+				_1: {
+					ctor: '::',
+					_0: A3(_user$project$Main$twinCurvedBase, dimensions, appearance, xor),
+					_1: {
+						ctor: '::',
+						_0: A4(
+							_user$project$Main$inputWires,
+							2,
+							_user$project$Main$intersectionWithBaseAt(
+								_user$project$Main$height(dimensions)),
+							dimensions,
+							appearance),
+						_1: {
+							ctor: '::',
+							_0: A4(
+								_user$project$Main$outputWires,
+								1,
+								function (y) {
+									return xnor.left + xnor.width;
+								},
+								dimensions,
+								appearance),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			});
+	});
 var _user$project$Main$range = F7(
 	function (id, label, current, min, max, step, msg) {
 		return {
@@ -10774,448 +11371,66 @@ var _user$project$Main$updateOrNone = F3(
 				};
 			});
 	});
-var _user$project$Main$scale = F2(
-	function (transform, scale) {
-		return _elm_lang$core$Array$fromList(
-			{
-				ctor: '::',
-				_0: A2(
-					_elm_lang$core$Maybe$withDefault,
-					-1,
-					A2(_elm_lang$core$Array$get, 0, transform)) * scale,
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$core$Maybe$withDefault,
-						-1,
-						A2(_elm_lang$core$Array$get, 1, transform)) * scale,
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_elm_lang$core$Maybe$withDefault,
-							-1,
-							A2(_elm_lang$core$Array$get, 2, transform)) * scale,
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_elm_lang$core$Maybe$withDefault,
-								-1,
-								A2(_elm_lang$core$Array$get, 3, transform)) * scale,
-							_1: {
-								ctor: '::',
-								_0: A2(
-									_elm_lang$core$Maybe$withDefault,
-									-1,
-									A2(_elm_lang$core$Array$get, 4, transform)) * scale,
-								_1: {
-									ctor: '::',
-									_0: A2(
-										_elm_lang$core$Maybe$withDefault,
-										-1,
-										A2(_elm_lang$core$Array$get, 5, transform)) * scale,
-									_1: {ctor: '[]'}
-								}
-							}
-						}
-					}
-				}
-			});
+var _user$project$Main$Model = F5(
+	function (a, b, c, d, e) {
+		return {canvas: a, width: b, horizontalSpacing: c, verticalSpacing: d, strokeWidth: e};
 	});
-var _user$project$Main$translate = F3(
-	function (transform, dx, dy) {
-		return _elm_lang$core$Array$fromList(
-			{
-				ctor: '::',
-				_0: A2(
-					_elm_lang$core$Maybe$withDefault,
-					-1,
-					A2(_elm_lang$core$Array$get, 0, transform)),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$core$Maybe$withDefault,
-						-1,
-						A2(_elm_lang$core$Array$get, 1, transform)),
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_elm_lang$core$Maybe$withDefault,
-							-1,
-							A2(_elm_lang$core$Array$get, 2, transform)),
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_elm_lang$core$Maybe$withDefault,
-								-1,
-								A2(_elm_lang$core$Array$get, 3, transform)),
-							_1: {
-								ctor: '::',
-								_0: A2(
-									_elm_lang$core$Maybe$withDefault,
-									-1,
-									A2(_elm_lang$core$Array$get, 4, transform)) + dx,
-								_1: {
-									ctor: '::',
-									_0: A2(
-										_elm_lang$core$Maybe$withDefault,
-										-1,
-										A2(_elm_lang$core$Array$get, 5, transform)) + dy,
-									_1: {ctor: '[]'}
-								}
-							}
-						}
-					}
-				}
-			});
+var _user$project$Main$Gate = F5(
+	function (a, b, c, d, e) {
+		return {left: a, top: b, width: c, height: d, shape: e};
 	});
-var _user$project$Main$getTransform = function (model) {
-	var _p6 = model.drag;
-	if (_p6.ctor === 'Nothing') {
-		return model.transform;
-	} else {
-		var _p8 = _p6._0.start;
-		var _p7 = _p6._0.current;
-		return A3(
-			_user$project$Main$translate,
-			model.transform,
-			_elm_lang$core$Basics$toFloat(_p7.x - _p8.x),
-			_elm_lang$core$Basics$toFloat(_p7.y - _p8.y));
-	}
+var _user$project$Main$Segment = F3(
+	function (a, b, c) {
+		return {width: a, height: b, segment: c};
+	});
+var _user$project$Main$ChangeStrokeWidth = function (a) {
+	return {ctor: 'ChangeStrokeWidth', _0: a};
 };
-var _user$project$Main$identityTransform = _elm_lang$core$Array$fromList(
-	{
-		ctor: '::',
-		_0: 1,
-		_1: {
-			ctor: '::',
-			_0: 0,
-			_1: {
-				ctor: '::',
-				_0: 0,
-				_1: {
-					ctor: '::',
-					_0: 1,
-					_1: {
-						ctor: '::',
-						_0: 0,
-						_1: {
-							ctor: '::',
-							_0: 0,
-							_1: {ctor: '[]'}
-						}
-					}
-				}
-			}
-		}
-	});
-var _user$project$Main$centred = F3(
-	function (dimensions, appearance, gate) {
-		var top = 0;
-		var left = (dimensions.width / 2) - (gate.width / 2);
-		return {
-			left: left,
-			top: top,
-			width: gate.width,
-			height: gate.height,
-			shape: A2(
-				_user$project$Main$transformation,
-				gate.shape,
-				A3(_user$project$Main$translate, _user$project$Main$identityTransform, left, top))
-		};
-	});
-var _user$project$Main$buffer8 = F2(
-	function (dimensions, appearance) {
-		var gate_ = A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$flatBase, _user$project$Main$noBody, _user$project$Main$arrowTip);
-		var offset = 2 * _user$project$Main$inverterRadius(dimensions);
-		var buffer = A3(
-			_user$project$Main$centred,
-			dimensions,
-			appearance,
-			_elm_lang$core$Native_Utils.update(
-				gate_,
-				{width: gate_.width + offset}));
-		return _user$project$Main$group(
-			{
-				ctor: '::',
-				_0: buffer,
-				_1: {
-					ctor: '::',
-					_0: A4(
-						_user$project$Main$inputWires,
-						1,
-						function (y) {
-							return buffer.left;
-						},
-						dimensions,
-						appearance),
-					_1: {
-						ctor: '::',
-						_0: A4(
-							_user$project$Main$outputWires,
-							1,
-							function (y) {
-								return (buffer.left + buffer.width) - offset;
-							},
-							dimensions,
-							appearance),
-						_1: {ctor: '[]'}
-					}
-				}
-			});
-	});
-var _user$project$Main$not8 = F2(
-	function (dimensions, appearance) {
-		var not = A3(
-			_user$project$Main$centred,
-			dimensions,
-			appearance,
-			A3(
-				_user$project$Main$inverted,
-				dimensions,
-				appearance,
-				A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$flatBase, _user$project$Main$noBody, _user$project$Main$arrowTip)));
-		return _user$project$Main$group(
-			{
-				ctor: '::',
-				_0: not,
-				_1: {
-					ctor: '::',
-					_0: A4(
-						_user$project$Main$inputWires,
-						1,
-						function (y) {
-							return not.left;
-						},
-						dimensions,
-						appearance),
-					_1: {
-						ctor: '::',
-						_0: A4(
-							_user$project$Main$outputWires,
-							1,
-							function (y) {
-								return not.left + not.width;
-							},
-							dimensions,
-							appearance),
-						_1: {ctor: '[]'}
-					}
-				}
-			});
-	});
-var _user$project$Main$twinCurvedBase = F3(
-	function (dimensions, appearance, xor) {
-		return {
-			left: 0,
-			top: 0,
-			width: xor.width,
-			height: xor.height,
-			shape: function () {
-				var blue = {
-					ctor: '::',
-					_0: _user$project$Shape$Stroke('blue'),
-					_1: {
-						ctor: '::',
-						_0: _user$project$Shape$StrokeWidth(appearance.strokeWidth),
-						_1: {
-							ctor: '::',
-							_0: _user$project$Shape$Fill(appearance.fillColour),
-							_1: {ctor: '[]'}
-						}
-					}
-				};
-				var green = {
-					ctor: '::',
-					_0: _user$project$Shape$Stroke('green'),
-					_1: {
-						ctor: '::',
-						_0: _user$project$Shape$StrokeWidth(appearance.strokeWidth),
-						_1: {
-							ctor: '::',
-							_0: _user$project$Shape$Fill(appearance.fillColour),
-							_1: {ctor: '[]'}
-						}
-					}
-				};
-				var red = {
-					ctor: '::',
-					_0: _user$project$Shape$Stroke('red'),
-					_1: {
-						ctor: '::',
-						_0: _user$project$Shape$StrokeWidth(appearance.strokeWidth),
-						_1: {
-							ctor: '::',
-							_0: _user$project$Shape$Fill(appearance.fillColour),
-							_1: {ctor: '[]'}
-						}
-					}
-				};
-				var hack_ = appearance.strokeWidth / 10;
-				var height_ = _user$project$Main$height(dimensions);
-				var outerRadius = height_;
-				var maybeInnerRadius = outerRadius - A2(_user$project$Main$offset, dimensions, appearance);
-				var cy = _user$project$Main$half(height_);
-				var cx = 0 - _elm_lang$core$Basics$sqrt((outerRadius * outerRadius) - (cy * cy));
-				var maybeInnerOffsetX = cx + _elm_lang$core$Basics$sqrt((maybeInnerRadius * maybeInnerRadius) - (cy * cy));
-				var ratio = A2(
-					_elm_lang$core$Debug$log,
-					'ratio',
-					A2(_elm_lang$core$Debug$log, 'maybeInnerOffsetX', maybeInnerOffsetX) / A2(_elm_lang$core$Debug$log, 'cx', cx));
-				var edgeCase = A2(
-					_elm_lang$core$Debug$log,
-					'edgeCase',
-					_elm_lang$core$Native_Utils.cmp(ratio, 0.2) > 0);
-				var innerRadius = edgeCase ? (outerRadius * 0.9) : maybeInnerRadius;
-				var transformOffset = edgeCase ? (0 - A2(_user$project$Main$offsetEdgeCase, dimensions, appearance)) : 0;
-				var innerOffsetX = cx + _elm_lang$core$Basics$sqrt((innerRadius * innerRadius) - (cy * cy));
-				return A2(
-					_user$project$Shape$Group,
-					{ctor: '[]'},
-					{
-						ctor: '::',
-						_0: xor.shape,
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_user$project$Shape$Group,
-								{
-									ctor: '::',
-									_0: _user$project$Shape$Transform(
-										A3(_user$project$Main$translate, _user$project$Main$identityTransform, transformOffset, 0)),
-									_1: {ctor: '[]'}
-								},
-								{
-									ctor: '::',
-									_0: A2(
-										_user$project$Shape$Path,
-										{
-											ctor: '::',
-											_0: A2(_user$project$Shape$MoveTo, innerOffsetX, _user$project$Main$origin),
-											_1: {
-												ctor: '::',
-												_0: A7(_user$project$Shape$ArcTo, innerRadius, innerRadius, 0, false, true, innerOffsetX, height_),
-												_1: {
-													ctor: '::',
-													_0: A2(_user$project$Shape$LineTo, innerOffsetX + hack_, height_),
-													_1: {
-														ctor: '::',
-														_0: A7(_user$project$Shape$ArcTo, innerRadius, innerRadius, 0, false, false, innerOffsetX, _user$project$Main$origin),
-														_1: {
-															ctor: '::',
-															_0: A2(_user$project$Shape$LineTo, innerOffsetX + hack_, _user$project$Main$origin),
-															_1: {
-																ctor: '::',
-																_0: A7(_user$project$Shape$ArcTo, innerRadius, innerRadius, 0, false, true, innerOffsetX, height_),
-																_1: {ctor: '[]'}
-															}
-														}
-													}
-												}
-											}
-										},
-										_user$project$Main$attributes(appearance)),
-									_1: {ctor: '[]'}
-								}),
-							_1: {ctor: '[]'}
-						}
-					});
-			}()
-		};
-	});
-var _user$project$Main$xor8 = F2(
-	function (dimensions, appearance) {
-		var xor = A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$curvedBase, _user$project$Main$narrowBody, _user$project$Main$spearTip);
-		return _user$project$Main$group(
-			{
-				ctor: '::',
-				_0: A3(_user$project$Main$twinCurvedBase, dimensions, appearance, xor),
-				_1: {
-					ctor: '::',
-					_0: A4(
-						_user$project$Main$inputWires,
-						2,
-						_user$project$Main$intersectionWithBaseAt(
-							_user$project$Main$height(dimensions)),
-						dimensions,
-						appearance),
-					_1: {
-						ctor: '::',
-						_0: A4(
-							_user$project$Main$outputWires,
-							1,
-							function (y) {
-								return xor.left + xor.width;
-							},
-							dimensions,
-							appearance),
-						_1: {ctor: '[]'}
-					}
-				}
-			});
-	});
-var _user$project$Main$xnor8 = F2(
-	function (dimensions, appearance) {
-		var xor = A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$curvedBase, _user$project$Main$narrowBody, _user$project$Main$spearTip);
-		var xnor = A3(_user$project$Main$inverted, dimensions, appearance, xor);
-		return _user$project$Main$group(
-			{
-				ctor: '::',
-				_0: xnor,
-				_1: {
-					ctor: '::',
-					_0: A3(_user$project$Main$twinCurvedBase, dimensions, appearance, xor),
-					_1: {
-						ctor: '::',
-						_0: A4(
-							_user$project$Main$inputWires,
-							2,
-							_user$project$Main$intersectionWithBaseAt(
-								_user$project$Main$height(dimensions)),
-							dimensions,
-							appearance),
-						_1: {
-							ctor: '::',
-							_0: A4(
-								_user$project$Main$outputWires,
-								1,
-								function (y) {
-									return xnor.left + xnor.width;
-								},
-								dimensions,
-								appearance),
-							_1: {ctor: '[]'}
-						}
-					}
-				}
-			});
-	});
-var _user$project$Main$Model = F8(
-	function (a, b, c, d, e, f, g, h) {
-		return {windowSize: a, width: b, horizontalSpacing: c, verticalSpacing: d, strokeWidth: e, drag: f, distanceScrolled: g, transform: h};
-	});
-var _user$project$Main$Drag = F2(
-	function (a, b) {
-		return {start: a, current: b};
-	});
+var _user$project$Main$VerticalSpacing = function (a) {
+	return {ctor: 'VerticalSpacing', _0: a};
+};
+var _user$project$Main$HorizontalSpacing = function (a) {
+	return {ctor: 'HorizontalSpacing', _0: a};
+};
+var _user$project$Main$Width = function (a) {
+	return {ctor: 'Width', _0: a};
+};
+var _user$project$Main$Canvas = function (a) {
+	return {ctor: 'Canvas', _0: a};
+};
+var _user$project$Main$init = function () {
+	var _p6 = _user$project$Canvas$init;
+	var canvas = _p6._0;
+	var cmd = _p6._1;
+	var defaultWidth = 100;
+	var defaultHorizontalSpacing = defaultWidth * 2;
+	var defaultVerticalSpacing = defaultWidth * 1.5;
+	return {
+		ctor: '_Tuple2',
+		_0: {canvas: canvas, width: defaultWidth, horizontalSpacing: defaultHorizontalSpacing, verticalSpacing: defaultVerticalSpacing, strokeWidth: defaultWidth / 25},
+		_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$Canvas, cmd)
+	};
+}();
 var _user$project$Main$update = F2(
 	function (msg, model) {
-		var _p9 = msg;
-		switch (_p9.ctor) {
-			case 'DefaultWindowSize':
-				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-			case 'WindowResized':
+		var _p7 = msg;
+		switch (_p7.ctor) {
+			case 'Canvas':
+				var _p8 = A2(_user$project$Canvas$update, _p7._0, model.canvas);
+				var canvas = _p8._0;
+				var cmd = _p8._1;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{windowSize: _p9._0}),
-					_1: _elm_lang$core$Platform_Cmd$none
+						{canvas: canvas}),
+					_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main$Canvas, cmd)
 				};
 			case 'Width':
 				return A3(
 					_user$project$Main$updateOrNone,
 					model,
-					_p9._0,
+					_p7._0,
 					function (width) {
 						return _elm_lang$core$Native_Utils.update(
 							model,
@@ -11229,7 +11444,7 @@ var _user$project$Main$update = F2(
 				return A3(
 					_user$project$Main$updateOrNone,
 					model,
-					_p9._0,
+					_p7._0,
 					function (spacing) {
 						return _elm_lang$core$Native_Utils.update(
 							model,
@@ -11242,7 +11457,7 @@ var _user$project$Main$update = F2(
 				return A3(
 					_user$project$Main$updateOrNone,
 					model,
-					_p9._0,
+					_p7._0,
 					function (spacing) {
 						return _elm_lang$core$Native_Utils.update(
 							model,
@@ -11251,124 +11466,31 @@ var _user$project$Main$update = F2(
 								verticalSpacing: spacing
 							});
 					});
-			case 'ChangeStrokeWidth':
+			default:
 				return A3(
 					_user$project$Main$updateOrNone,
 					model,
-					_p9._0,
+					_p7._0,
 					function (width) {
 						return _elm_lang$core$Native_Utils.update(
 							model,
 							{strokeWidth: width});
 					});
-			case 'DragStart':
-				var _p10 = _p9._0;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							drag: _elm_lang$core$Maybe$Just(
-								A2(_user$project$Main$Drag, _p10, _p10))
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'DragAt':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							drag: A2(
-								_elm_lang$core$Maybe$map,
-								function (_p11) {
-									var _p12 = _p11;
-									return A2(_user$project$Main$Drag, _p12.start, _p9._0);
-								},
-								model.drag)
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'DragEnd':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							transform: _user$project$Main$getTransform(model),
-							drag: _elm_lang$core$Maybe$Nothing
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			default:
-				var _p13 = _p9._0;
-				var pan = A2(_elm_lang$mouse$Mouse$Position, _p13.offsetX, _p13.offsetY);
-				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, model.distanceScrolled + _p13.wheelDelta);
-				var zoomPerUnitDistance = 1 + (0.1 / 100);
-				var zoom = Math.pow(
-					zoomPerUnitDistance,
-					_elm_lang$core$Basics$toFloat(model.distanceScrolled)) / Math.pow(
-					zoomPerUnitDistance,
-					_elm_lang$core$Basics$toFloat(distanceScrolled));
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							distanceScrolled: distanceScrolled,
-							transform: A3(
-								_user$project$Main$translate,
-								A2(_user$project$Main$scale, model.transform, zoom),
-								(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.x),
-								(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.y))
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
 		}
 	});
-var _user$project$Main$Gate = F5(
-	function (a, b, c, d, e) {
-		return {left: a, top: b, width: c, height: d, shape: e};
-	});
-var _user$project$Main$Segment = F3(
-	function (a, b, c) {
-		return {width: a, height: b, segment: c};
-	});
-var _user$project$Main$WheelScrolled = function (a) {
-	return {ctor: 'WheelScrolled', _0: a};
-};
-var _user$project$Main$DragEnd = function (a) {
-	return {ctor: 'DragEnd', _0: a};
-};
-var _user$project$Main$DragAt = function (a) {
-	return {ctor: 'DragAt', _0: a};
-};
-var _user$project$Main$DragStart = function (a) {
-	return {ctor: 'DragStart', _0: a};
-};
-var _user$project$Main$onMouseDown = A2(
-	_elm_lang$html$Html_Events$on,
-	'mousedown',
-	A2(_elm_lang$core$Json_Decode$map, _user$project$Main$DragStart, _elm_lang$mouse$Mouse$position));
-var _user$project$Main$ChangeStrokeWidth = function (a) {
-	return {ctor: 'ChangeStrokeWidth', _0: a};
-};
-var _user$project$Main$VerticalSpacing = function (a) {
-	return {ctor: 'VerticalSpacing', _0: a};
-};
-var _user$project$Main$HorizontalSpacing = function (a) {
-	return {ctor: 'HorizontalSpacing', _0: a};
-};
-var _user$project$Main$Width = function (a) {
-	return {ctor: 'Width', _0: a};
+var _user$project$Main$subscriptions = function (model) {
+	return A2(
+		_elm_lang$core$Platform_Sub$map,
+		_user$project$Main$Canvas,
+		_user$project$Canvas$subscriptions(model.canvas));
 };
 var _user$project$Main$view = function (model) {
 	var appearance = {strokeWidth: model.strokeWidth, strokeColour: 'black', fillColour: 'none'};
 	var dimensions = {width: model.width};
 	var fullWidth = (1 * model.horizontalSpacing) + _user$project$Main$width(dimensions);
-	var offsetLeft = (_elm_lang$core$Basics$toFloat(model.windowSize.width) / 2) - (fullWidth / 2);
+	var offsetLeft = (_elm_lang$core$Basics$toFloat(model.canvas.windowSize.width) / 2) - (fullWidth / 2);
 	var fullHeight = (3 * model.verticalSpacing) + _user$project$Main$height(dimensions);
-	var offsetTop = (_elm_lang$core$Basics$toFloat(model.windowSize.height) / 2) - (fullHeight / 2);
+	var offsetTop = (_elm_lang$core$Basics$toFloat(model.canvas.windowSize.height) / 2) - (fullHeight / 2);
 	var gate = F3(
 		function (column, row, shape) {
 			return A2(
@@ -11376,7 +11498,7 @@ var _user$project$Main$view = function (model) {
 				{
 					ctor: '::',
 					_0: _user$project$Shape$Transform(
-						A3(_user$project$Main$translate, _user$project$Main$identityTransform, offsetLeft + ((column - 1) * model.horizontalSpacing), offsetTop + ((row - 1) * model.verticalSpacing))),
+						A3(_user$project$Transform$translate, _user$project$Transform$identity, offsetLeft + ((column - 1) * model.horizontalSpacing), offsetTop + ((row - 1) * model.verticalSpacing))),
 					_1: {ctor: '[]'}
 				},
 				{
@@ -11385,17 +11507,10 @@ var _user$project$Main$view = function (model) {
 					_1: {ctor: '[]'}
 				});
 		});
-	return A2(
-		_elm_lang$html$Html$div,
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('container'),
-			_1: {
-				ctor: '::',
-				_0: _user$project$Main$onMouseDown,
-				_1: {ctor: '[]'}
-			}
-		},
+	return A4(
+		_user$project$Canvas$view,
+		model.canvas,
+		_user$project$Main$Canvas,
 		{
 			ctor: '::',
 			_0: A2(
@@ -11415,162 +11530,92 @@ var _user$project$Main$view = function (model) {
 							_elm_lang$core$Basics_ops['++'],
 							A7(_user$project$Main$range, 'verticalSpacing', 'Vertical spacing', model.verticalSpacing, 20, 200, 1, _user$project$Main$VerticalSpacing),
 							A7(_user$project$Main$range, 'strokeWidth', 'Stroke width', model.strokeWidth, 1, 10, 0.1, _user$project$Main$ChangeStrokeWidth))))),
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_elm_lang$svg$Svg$svg,
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: _user$project$Shape$toSvg(
+				A2(
+					_user$project$Shape$Group,
+					{ctor: '[]'},
 					{
 						ctor: '::',
-						_0: _elm_lang$svg$Svg_Attributes$class('canvas'),
-						_1: {ctor: '[]'}
-					},
-					{
-						ctor: '::',
-						_0: _user$project$Shape$toSvg(
-							A2(
-								_user$project$Shape$Group,
-								{
-									ctor: '::',
-									_0: _user$project$Shape$Transform(
-										_user$project$Main$getTransform(model)),
-									_1: {ctor: '[]'}
-								},
-								{
+						_0: A3(
+							gate,
+							1,
+							1,
+							_user$project$Main$shape(
+								A2(_user$project$Main$buffer8, dimensions, appearance))),
+						_1: {
+							ctor: '::',
+							_0: A3(
+								gate,
+								1,
+								2,
+								_user$project$Main$shape(
+									A2(_user$project$Main$not8, dimensions, appearance))),
+							_1: {
+								ctor: '::',
+								_0: A3(
+									gate,
+									2,
+									1,
+									_user$project$Main$shape(
+										A2(_user$project$Main$or8, dimensions, appearance))),
+								_1: {
 									ctor: '::',
 									_0: A3(
 										gate,
-										1,
-										1,
+										2,
+										2,
 										_user$project$Main$shape(
-											A2(_user$project$Main$buffer8, dimensions, appearance))),
+											A2(_user$project$Main$nor8, dimensions, appearance))),
 									_1: {
 										ctor: '::',
 										_0: A3(
 											gate,
 											1,
-											2,
+											3,
 											_user$project$Main$shape(
-												A2(_user$project$Main$not8, dimensions, appearance))),
+												A2(_user$project$Main$and8, dimensions, appearance))),
 										_1: {
 											ctor: '::',
 											_0: A3(
 												gate,
-												2,
 												1,
+												4,
 												_user$project$Main$shape(
-													A2(_user$project$Main$or8, dimensions, appearance))),
+													A2(_user$project$Main$nand8, dimensions, appearance))),
 											_1: {
 												ctor: '::',
 												_0: A3(
 													gate,
 													2,
-													2,
+													3,
 													_user$project$Main$shape(
-														A2(_user$project$Main$nor8, dimensions, appearance))),
+														A2(_user$project$Main$xor8, dimensions, appearance))),
 												_1: {
 													ctor: '::',
 													_0: A3(
 														gate,
-														1,
-														3,
+														2,
+														4,
 														_user$project$Main$shape(
-															A2(_user$project$Main$and8, dimensions, appearance))),
-													_1: {
-														ctor: '::',
-														_0: A3(
-															gate,
-															1,
-															4,
-															_user$project$Main$shape(
-																A2(_user$project$Main$nand8, dimensions, appearance))),
-														_1: {
-															ctor: '::',
-															_0: A3(
-																gate,
-																2,
-																3,
-																_user$project$Main$shape(
-																	A2(_user$project$Main$xor8, dimensions, appearance))),
-															_1: {
-																ctor: '::',
-																_0: A3(
-																	gate,
-																	2,
-																	4,
-																	_user$project$Main$shape(
-																		A2(_user$project$Main$xnor8, dimensions, appearance))),
-																_1: {ctor: '[]'}
-															}
-														}
-													}
+															A2(_user$project$Main$xnor8, dimensions, appearance))),
+													_1: {ctor: '[]'}
 												}
 											}
 										}
 									}
-								})),
-						_1: {ctor: '[]'}
-					}),
-				_1: {ctor: '[]'}
-			}
-		});
-};
-var _user$project$Main$WindowResized = function (a) {
-	return {ctor: 'WindowResized', _0: a};
-};
-var _user$project$Main$init = function () {
-	var defaultWidth = 100;
-	var defaultHorizontalSpacing = defaultWidth * 2;
-	var defaultVerticalSpacing = defaultWidth * 1.5;
-	return {
-		ctor: '_Tuple2',
-		_0: {
-			windowSize: {width: 800, height: 600},
-			width: defaultWidth,
-			horizontalSpacing: defaultHorizontalSpacing,
-			verticalSpacing: defaultVerticalSpacing,
-			strokeWidth: defaultWidth / 25,
-			drag: _elm_lang$core$Maybe$Nothing,
-			distanceScrolled: 0,
-			transform: _user$project$Main$identityTransform
-		},
-		_1: A2(_elm_lang$core$Task$perform, _user$project$Main$WindowResized, _elm_lang$window$Window$size)
-	};
-}();
-var _user$project$Main$subscriptions = function (model) {
-	return _elm_lang$core$Platform_Sub$batch(
-		{
-			ctor: '::',
-			_0: _elm_lang$window$Window$resizes(_user$project$Main$WindowResized),
-			_1: {
-				ctor: '::',
-				_0: function () {
-					var _p14 = model.drag;
-					if (_p14.ctor === 'Nothing') {
-						return _elm_lang$core$Platform_Sub$none;
-					} else {
-						return _elm_lang$core$Platform_Sub$batch(
-							{
-								ctor: '::',
-								_0: _elm_lang$mouse$Mouse$moves(_user$project$Main$DragAt),
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$mouse$Mouse$ups(_user$project$Main$DragEnd),
-									_1: {ctor: '[]'}
 								}
-							});
-					}
-				}(),
-				_1: {
-					ctor: '::',
-					_0: _user$project$Wheel$deltas(_user$project$Main$WheelScrolled),
-					_1: {ctor: '[]'}
-				}
-			}
+							}
+						}
+					})),
+			_1: {ctor: '[]'}
 		});
 };
 var _user$project$Main$main = _elm_lang$html$Html$program(
 	{init: _user$project$Main$init, view: _user$project$Main$view, update: _user$project$Main$update, subscriptions: _user$project$Main$subscriptions})();
-var _user$project$Main$DefaultWindowSize = {ctor: 'DefaultWindowSize'};
 
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
