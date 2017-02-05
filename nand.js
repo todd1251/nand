@@ -10270,7 +10270,7 @@ var _user$project$Shape$Line = F5(
 		return {ctor: 'Line', _0: a, _1: b, _2: c, _3: d, _4: e};
 	});
 
-var _user$project$Main$group = function (shapes) {
+var _user$project$Gate$group = function (shapes) {
 	return {
 		left: 0,
 		top: 0,
@@ -10287,10 +10287,7 @@ var _user$project$Main$group = function (shapes) {
 				shapes))
 	};
 };
-var _user$project$Main$shape = function (gate) {
-	return gate.shape;
-};
-var _user$project$Main$transformation = F2(
+var _user$project$Gate$transformation = F2(
 	function (shape, transform) {
 		return A2(
 			_user$project$Shape$Group,
@@ -10305,7 +10302,7 @@ var _user$project$Main$transformation = F2(
 				_1: {ctor: '[]'}
 			});
 	});
-var _user$project$Main$centred = F3(
+var _user$project$Gate$centred = F3(
 	function (dimensions, appearance, gate) {
 		var top = 0;
 		var left = (dimensions.width / 2) - (gate.width / 2);
@@ -10315,18 +10312,18 @@ var _user$project$Main$centred = F3(
 			width: gate.width,
 			height: gate.height,
 			shape: A2(
-				_user$project$Main$transformation,
+				_user$project$Gate$transformation,
 				gate.shape,
 				A3(_user$project$Transform$translate, _user$project$Transform$identity, left, top))
 		};
 	});
-var _user$project$Main$noBody = function (dimensions) {
+var _user$project$Gate$noBody = function (dimensions) {
 	return {width: 0, height: 0, segment: _elm_lang$core$Maybe$Nothing};
 };
-var _user$project$Main$flatBase = function (dimensions) {
+var _user$project$Gate$flatBase = function (dimensions) {
 	return {width: 0, height: 0, segment: _elm_lang$core$Maybe$Nothing};
 };
-var _user$project$Main$unwrap = function (segment) {
+var _user$project$Gate$unwrap = function (segment) {
 	var _p0 = segment;
 	if (_p0.ctor === 'Just') {
 		return _p0._0.segment;
@@ -10334,7 +10331,7 @@ var _user$project$Main$unwrap = function (segment) {
 		return _elm_lang$core$Maybe$Nothing;
 	}
 };
-var _user$project$Main$totalHeight = function (segments) {
+var _user$project$Gate$totalHeight = function (segments) {
 	return _elm_lang$core$List$sum(
 		A2(
 			_elm_lang$core$List$map,
@@ -10343,7 +10340,7 @@ var _user$project$Main$totalHeight = function (segments) {
 			},
 			segments));
 };
-var _user$project$Main$totalWidth = function (segments) {
+var _user$project$Gate$totalWidth = function (segments) {
 	return _elm_lang$core$List$sum(
 		A2(
 			_elm_lang$core$List$map,
@@ -10352,22 +10349,22 @@ var _user$project$Main$totalWidth = function (segments) {
 			},
 			segments));
 };
-var _user$project$Main$dropNothings = _elm_lang$core$List$filterMap(_elm_lang$core$Basics$identity);
-var _user$project$Main$path = F2(
+var _user$project$Gate$dropNothings = _elm_lang$core$List$filterMap(_elm_lang$core$Basics$identity);
+var _user$project$Gate$path = F2(
 	function (description, attributes) {
 		return A2(_user$project$Shape$Path, description, attributes);
 	});
-var _user$project$Main$wireStrokeWidth = function (appearance) {
+var _user$project$Gate$wireStrokeWidth = function (appearance) {
 	return appearance.strokeWidth / 2;
 };
-var _user$project$Main$wireAttributes = function (appearance) {
+var _user$project$Gate$wireAttributes = function (appearance) {
 	return {
 		ctor: '::',
 		_0: _user$project$Shape$Stroke(appearance.strokeColour),
 		_1: {
 			ctor: '::',
 			_0: _user$project$Shape$StrokeWidth(
-				_user$project$Main$wireStrokeWidth(appearance)),
+				_user$project$Gate$wireStrokeWidth(appearance)),
 			_1: {
 				ctor: '::',
 				_0: _user$project$Shape$Fill(appearance.fillColour),
@@ -10376,7 +10373,7 @@ var _user$project$Main$wireAttributes = function (appearance) {
 		}
 	};
 };
-var _user$project$Main$attributes = function (appearance) {
+var _user$project$Gate$attributes = function (appearance) {
 	return {
 		ctor: '::',
 		_0: _user$project$Shape$Stroke(appearance.strokeColour),
@@ -10391,8 +10388,8 @@ var _user$project$Main$attributes = function (appearance) {
 		}
 	};
 };
-var _user$project$Main$close = _user$project$Shape$Close;
-var _user$project$Main$mirror = function (segment) {
+var _user$project$Gate$close = _user$project$Shape$Close;
+var _user$project$Gate$mirror = function (segment) {
 	var _p1 = segment.segment;
 	if (_p1.ctor === 'Just') {
 		var _p2 = _p1._0;
@@ -10428,87 +10425,87 @@ var _user$project$Main$mirror = function (segment) {
 		return _elm_lang$core$Maybe$Nothing;
 	}
 };
-var _user$project$Main$half = function (n) {
+var _user$project$Gate$half = function (n) {
 	return n / 2;
 };
-var _user$project$Main$intersectionWithBaseAt = F2(
+var _user$project$Gate$intersectionWithBaseAt = F2(
 	function (r, y) {
-		var cy = _user$project$Main$half(r);
+		var cy = _user$project$Gate$half(r);
 		var cx = 0 - _elm_lang$core$Basics$sqrt(
 			Math.pow(r, 2) - Math.pow(cy, 2));
 		return cx + _elm_lang$core$Basics$sqrt(
 			(((0 - Math.pow(cy, 2)) + ((2 * cy) * y)) + Math.pow(r, 2)) - Math.pow(y, 2));
 	});
-var _user$project$Main$hack = function (appearance) {
+var _user$project$Gate$hack = function (appearance) {
 	return appearance.strokeWidth / 10;
 };
-var _user$project$Main$offsetEdgeCase = F2(
+var _user$project$Gate$offsetEdgeCase = F2(
 	function (dimensions, appearance) {
 		return ((-4.374257426e-2 * dimensions.width) + (1.663181818 * appearance.strokeWidth)) - 0.6681683168;
 	});
-var _user$project$Main$offset = F2(
+var _user$project$Gate$offset = F2(
 	function (dimensions, appearance) {
 		return (appearance.strokeWidth * 1.915) + 3.167;
 	});
-var _user$project$Main$left = F2(
+var _user$project$Gate$left = F2(
 	function (dimensions, appearance) {
-		return (appearance.strokeWidth / 2) - A2(_user$project$Main$offset, dimensions, appearance);
+		return (appearance.strokeWidth / 2) - A2(_user$project$Gate$offset, dimensions, appearance);
 	});
-var _user$project$Main$width = function (dimensions) {
+var _user$project$Gate$width = function (dimensions) {
 	return dimensions.width;
 };
-var _user$project$Main$wireWidth = function (dimensions) {
-	return _user$project$Main$width(dimensions) / 5;
+var _user$project$Gate$wireWidth = function (dimensions) {
+	return _user$project$Gate$width(dimensions) / 5;
 };
-var _user$project$Main$gateWidth = function (dimensions) {
-	return _user$project$Main$width(dimensions) - (_user$project$Main$wireWidth(dimensions) / 2);
+var _user$project$Gate$gateWidth = function (dimensions) {
+	return _user$project$Gate$width(dimensions) - (_user$project$Gate$wireWidth(dimensions) / 2);
 };
-var _user$project$Main$narrowSegmentWidth = function (dimensions) {
-	return (_user$project$Main$gateWidth(dimensions) * 2) / 5;
+var _user$project$Gate$narrowSegmentWidth = function (dimensions) {
+	return (_user$project$Gate$gateWidth(dimensions) * 2) / 5;
 };
-var _user$project$Main$narrowBody = function (dimensions) {
+var _user$project$Gate$narrowBody = function (dimensions) {
 	return {
-		width: _user$project$Main$narrowSegmentWidth(dimensions),
+		width: _user$project$Gate$narrowSegmentWidth(dimensions),
 		height: 0,
 		segment: _elm_lang$core$Maybe$Just(
 			_user$project$Shape$HorizontalLineBy(
-				_user$project$Main$narrowSegmentWidth(dimensions)))
+				_user$project$Gate$narrowSegmentWidth(dimensions)))
 	};
 };
-var _user$project$Main$wideSegmentWidth = function (dimensions) {
-	return (_user$project$Main$gateWidth(dimensions) * 3) / 5;
+var _user$project$Gate$wideSegmentWidth = function (dimensions) {
+	return (_user$project$Gate$gateWidth(dimensions) * 3) / 5;
 };
-var _user$project$Main$wideBody = function (dimensions) {
+var _user$project$Gate$wideBody = function (dimensions) {
 	return {
-		width: _user$project$Main$wideSegmentWidth(dimensions),
+		width: _user$project$Gate$wideSegmentWidth(dimensions),
 		height: 0,
 		segment: _elm_lang$core$Maybe$Just(
 			_user$project$Shape$HorizontalLineBy(
-				_user$project$Main$wideSegmentWidth(dimensions)))
+				_user$project$Gate$wideSegmentWidth(dimensions)))
 	};
 };
-var _user$project$Main$curvedBaseIndent = function (dimensions) {
-	return _user$project$Main$gateWidth(dimensions) / 7;
+var _user$project$Gate$curvedBaseIndent = function (dimensions) {
+	return _user$project$Gate$gateWidth(dimensions) / 7;
 };
-var _user$project$Main$curvedBaseRadius = function (dimensions) {
-	return _user$project$Main$curvedBaseIndent(dimensions) * 6;
+var _user$project$Gate$curvedBaseRadius = function (dimensions) {
+	return _user$project$Gate$curvedBaseIndent(dimensions) * 6;
 };
-var _user$project$Main$twinCurvedBaseRadius = function (dimensions) {
-	return _user$project$Main$curvedBaseIndent(dimensions) * 6.5;
+var _user$project$Gate$twinCurvedBaseRadius = function (dimensions) {
+	return _user$project$Gate$curvedBaseIndent(dimensions) * 6.5;
 };
-var _user$project$Main$right = F2(
+var _user$project$Gate$right = F2(
 	function (dimensions, appearance) {
-		return _user$project$Main$curvedBaseIndent(dimensions) - A2(_user$project$Main$offset, dimensions, appearance);
+		return _user$project$Gate$curvedBaseIndent(dimensions) - A2(_user$project$Gate$offset, dimensions, appearance);
 	});
-var _user$project$Main$inverterRadius = function (dimensions) {
-	return _user$project$Main$gateWidth(dimensions) / 12;
+var _user$project$Gate$inverterRadius = function (dimensions) {
+	return _user$project$Gate$gateWidth(dimensions) / 12;
 };
-var _user$project$Main$inverted = F3(
+var _user$project$Gate$inverted = F3(
 	function (dimensions, appearance, gate) {
 		return {
 			left: 0,
 			top: 0,
-			width: gate.width + (2 * _user$project$Main$inverterRadius(dimensions)),
+			width: gate.width + (2 * _user$project$Gate$inverterRadius(dimensions)),
 			height: gate.height,
 			shape: A2(
 				_user$project$Shape$Group,
@@ -10520,70 +10517,70 @@ var _user$project$Main$inverted = F3(
 						ctor: '::',
 						_0: A4(
 							_user$project$Shape$Circle,
-							(gate.width + _user$project$Main$half(appearance.strokeWidth)) + _user$project$Main$inverterRadius(dimensions),
-							_user$project$Main$half(gate.height),
-							_user$project$Main$inverterRadius(dimensions),
-							_user$project$Main$attributes(appearance)),
+							(gate.width + _user$project$Gate$half(appearance.strokeWidth)) + _user$project$Gate$inverterRadius(dimensions),
+							_user$project$Gate$half(gate.height),
+							_user$project$Gate$inverterRadius(dimensions),
+							_user$project$Gate$attributes(appearance)),
 						_1: {ctor: '[]'}
 					}
 				})
 		};
 	});
-var _user$project$Main$height = function (dimensions) {
-	return (_user$project$Main$gateWidth(dimensions) * 4) / 5;
+var _user$project$Gate$height = function (dimensions) {
+	return (_user$project$Gate$gateWidth(dimensions) * 4) / 5;
 };
-var _user$project$Main$arrowTip = function (dimensions) {
+var _user$project$Gate$arrowTip = function (dimensions) {
 	return {
-		width: _user$project$Main$wideSegmentWidth(dimensions),
-		height: _user$project$Main$half(
-			_user$project$Main$height(dimensions)),
+		width: _user$project$Gate$wideSegmentWidth(dimensions),
+		height: _user$project$Gate$half(
+			_user$project$Gate$height(dimensions)),
 		segment: _elm_lang$core$Maybe$Just(
 			A2(
 				_user$project$Shape$LineBy,
-				_user$project$Main$wideSegmentWidth(dimensions),
-				_user$project$Main$half(
-					_user$project$Main$height(dimensions))))
+				_user$project$Gate$wideSegmentWidth(dimensions),
+				_user$project$Gate$half(
+					_user$project$Gate$height(dimensions))))
 	};
 };
-var _user$project$Main$roundTip = function (dimensions) {
+var _user$project$Gate$roundTip = function (dimensions) {
 	return {
-		width: _user$project$Main$narrowSegmentWidth(dimensions),
-		height: _user$project$Main$height(dimensions),
+		width: _user$project$Gate$narrowSegmentWidth(dimensions),
+		height: _user$project$Gate$height(dimensions),
 		segment: _elm_lang$core$Maybe$Just(
 			A7(
 				_user$project$Shape$ArcTo,
-				_user$project$Main$narrowSegmentWidth(dimensions),
-				_user$project$Main$narrowSegmentWidth(dimensions),
+				_user$project$Gate$narrowSegmentWidth(dimensions),
+				_user$project$Gate$narrowSegmentWidth(dimensions),
 				0,
 				false,
 				true,
-				_user$project$Main$wideSegmentWidth(dimensions),
-				_user$project$Main$height(dimensions)))
+				_user$project$Gate$wideSegmentWidth(dimensions),
+				_user$project$Gate$height(dimensions)))
 	};
 };
-var _user$project$Main$spearTip = function (dimensions) {
+var _user$project$Gate$spearTip = function (dimensions) {
 	return {
-		width: _user$project$Main$wideSegmentWidth(dimensions),
-		height: _user$project$Main$half(
-			_user$project$Main$height(dimensions)),
+		width: _user$project$Gate$wideSegmentWidth(dimensions),
+		height: _user$project$Gate$half(
+			_user$project$Gate$height(dimensions)),
 		segment: _elm_lang$core$Maybe$Just(
 			A7(
 				_user$project$Shape$ArcBy,
-				_user$project$Main$wideSegmentWidth(dimensions),
-				_user$project$Main$wideSegmentWidth(dimensions) * 0.8,
+				_user$project$Gate$wideSegmentWidth(dimensions),
+				_user$project$Gate$wideSegmentWidth(dimensions) * 0.8,
 				0,
 				false,
 				true,
-				_user$project$Main$wideSegmentWidth(dimensions),
-				_user$project$Main$half(
-					_user$project$Main$height(dimensions))))
+				_user$project$Gate$wideSegmentWidth(dimensions),
+				_user$project$Gate$half(
+					_user$project$Gate$height(dimensions))))
 	};
 };
-var _user$project$Main$inputWires = F4(
+var _user$project$Gate$inputWires = F4(
 	function (count, intersectionWithBaseAt, dimensions, appearance) {
-		var height_ = _user$project$Main$height(dimensions);
+		var height_ = _user$project$Gate$height(dimensions);
 		var quarterHeight = height_ / 4;
-		var halfHeight = _user$project$Main$half(height_);
+		var halfHeight = _user$project$Gate$half(height_);
 		var threeQuarterHeight = (height_ * 3) / 4;
 		var stops = _elm_lang$core$Array$fromList(
 			{
@@ -10629,10 +10626,10 @@ var _user$project$Main$inputWires = F4(
 		return {
 			left: 0,
 			top: 0,
-			width: _user$project$Main$wireWidth(dimensions),
-			height: _user$project$Main$wireStrokeWidth(appearance),
+			width: _user$project$Gate$wireWidth(dimensions),
+			height: _user$project$Gate$wireStrokeWidth(appearance),
 			shape: A2(
-				_user$project$Main$path,
+				_user$project$Gate$path,
 				_elm_lang$core$List$concat(
 					A2(
 						_elm_lang$core$List$map,
@@ -10655,7 +10652,7 @@ var _user$project$Main$inputWires = F4(
 								ctor: '::',
 								_0: A2(
 									_user$project$Shape$MoveTo,
-									0 - _user$project$Main$wireWidth(dimensions),
+									0 - _user$project$Gate$wireWidth(dimensions),
 									y),
 								_1: {
 									ctor: '::',
@@ -10665,14 +10662,14 @@ var _user$project$Main$inputWires = F4(
 							};
 						},
 						A2(_elm_lang$core$List$range, 0, count - 1))),
-				_user$project$Main$wireAttributes(appearance))
+				_user$project$Gate$wireAttributes(appearance))
 		};
 	});
-var _user$project$Main$outputWires = F4(
+var _user$project$Gate$outputWires = F4(
 	function (count, intersectionWithTipAt, dimensions, appearance) {
-		var height_ = _user$project$Main$height(dimensions);
+		var height_ = _user$project$Gate$height(dimensions);
 		var quarterHeight = height_ / 4;
-		var halfHeight = _user$project$Main$half(height_);
+		var halfHeight = _user$project$Gate$half(height_);
 		var threeQuarterHeight = (height_ * 3) / 4;
 		var stops = _elm_lang$core$Array$fromList(
 			{
@@ -10718,10 +10715,10 @@ var _user$project$Main$outputWires = F4(
 		return {
 			left: 0,
 			top: 0,
-			width: _user$project$Main$wireWidth(dimensions),
-			height: _user$project$Main$wireStrokeWidth(appearance),
+			width: _user$project$Gate$wireWidth(dimensions),
+			height: _user$project$Gate$wireStrokeWidth(appearance),
 			shape: A2(
-				_user$project$Main$path,
+				_user$project$Gate$path,
 				_elm_lang$core$List$concat(
 					A2(
 						_elm_lang$core$List$map,
@@ -10744,7 +10741,7 @@ var _user$project$Main$outputWires = F4(
 								ctor: '::',
 								_0: A2(
 									_user$project$Shape$MoveTo,
-									(_user$project$Main$gateWidth(dimensions) + (2 * _user$project$Main$inverterRadius(dimensions))) + _user$project$Main$wireWidth(dimensions),
+									(_user$project$Gate$gateWidth(dimensions) + (2 * _user$project$Gate$inverterRadius(dimensions))) + _user$project$Gate$wireWidth(dimensions),
 									y),
 								_1: {
 									ctor: '::',
@@ -10754,27 +10751,27 @@ var _user$project$Main$outputWires = F4(
 							};
 						},
 						A2(_elm_lang$core$List$range, 0, count - 1))),
-				_user$project$Main$wireAttributes(appearance))
+				_user$project$Gate$wireAttributes(appearance))
 		};
 	});
-var _user$project$Main$origin = 0;
-var _user$project$Main$curvedBase = function (dimensions) {
+var _user$project$Gate$origin = 0;
+var _user$project$Gate$curvedBase = function (dimensions) {
 	return {
 		width: 0,
 		height: 0,
 		segment: _elm_lang$core$Maybe$Just(
 			A7(
 				_user$project$Shape$ArcTo,
-				_user$project$Main$height(dimensions),
-				_user$project$Main$height(dimensions),
+				_user$project$Gate$height(dimensions),
+				_user$project$Gate$height(dimensions),
 				0,
 				false,
 				false,
-				_user$project$Main$origin,
-				_user$project$Main$origin))
+				_user$project$Gate$origin,
+				_user$project$Gate$origin))
 	};
 };
-var _user$project$Main$twinCurvedBase = F3(
+var _user$project$Gate$twinCurvedBase = F3(
 	function (dimensions, appearance, xor) {
 		return {
 			left: 0,
@@ -10822,10 +10819,10 @@ var _user$project$Main$twinCurvedBase = F3(
 					}
 				};
 				var hack_ = appearance.strokeWidth / 10;
-				var height_ = _user$project$Main$height(dimensions);
+				var height_ = _user$project$Gate$height(dimensions);
 				var outerRadius = height_;
-				var maybeInnerRadius = outerRadius - A2(_user$project$Main$offset, dimensions, appearance);
-				var cy = _user$project$Main$half(height_);
+				var maybeInnerRadius = outerRadius - A2(_user$project$Gate$offset, dimensions, appearance);
+				var cy = _user$project$Gate$half(height_);
 				var cx = 0 - _elm_lang$core$Basics$sqrt((outerRadius * outerRadius) - (cy * cy));
 				var maybeInnerOffsetX = cx + _elm_lang$core$Basics$sqrt((maybeInnerRadius * maybeInnerRadius) - (cy * cy));
 				var ratio = A2(
@@ -10837,7 +10834,7 @@ var _user$project$Main$twinCurvedBase = F3(
 					'edgeCase',
 					_elm_lang$core$Native_Utils.cmp(ratio, 0.2) > 0);
 				var innerRadius = edgeCase ? (outerRadius * 0.9) : maybeInnerRadius;
-				var transformOffset = edgeCase ? (0 - A2(_user$project$Main$offsetEdgeCase, dimensions, appearance)) : 0;
+				var transformOffset = edgeCase ? (0 - A2(_user$project$Gate$offsetEdgeCase, dimensions, appearance)) : 0;
 				var innerOffsetX = cx + _elm_lang$core$Basics$sqrt((innerRadius * innerRadius) - (cy * cy));
 				return A2(
 					_user$project$Shape$Group,
@@ -10861,7 +10858,7 @@ var _user$project$Main$twinCurvedBase = F3(
 										_user$project$Shape$Path,
 										{
 											ctor: '::',
-											_0: A2(_user$project$Shape$MoveTo, innerOffsetX, _user$project$Main$origin),
+											_0: A2(_user$project$Shape$MoveTo, innerOffsetX, _user$project$Gate$origin),
 											_1: {
 												ctor: '::',
 												_0: A7(_user$project$Shape$ArcTo, innerRadius, innerRadius, 0, false, true, innerOffsetX, height_),
@@ -10870,10 +10867,10 @@ var _user$project$Main$twinCurvedBase = F3(
 													_0: A2(_user$project$Shape$LineTo, innerOffsetX + hack_, height_),
 													_1: {
 														ctor: '::',
-														_0: A7(_user$project$Shape$ArcTo, innerRadius, innerRadius, 0, false, false, innerOffsetX, _user$project$Main$origin),
+														_0: A7(_user$project$Shape$ArcTo, innerRadius, innerRadius, 0, false, false, innerOffsetX, _user$project$Gate$origin),
 														_1: {
 															ctor: '::',
-															_0: A2(_user$project$Shape$LineTo, innerOffsetX + hack_, _user$project$Main$origin),
+															_0: A2(_user$project$Shape$LineTo, innerOffsetX + hack_, _user$project$Gate$origin),
 															_1: {
 																ctor: '::',
 																_0: A7(_user$project$Shape$ArcTo, innerRadius, innerRadius, 0, false, true, innerOffsetX, height_),
@@ -10884,7 +10881,7 @@ var _user$project$Main$twinCurvedBase = F3(
 												}
 											}
 										},
-										_user$project$Main$attributes(appearance)),
+										_user$project$Gate$attributes(appearance)),
 									_1: {ctor: '[]'}
 								}),
 							_1: {ctor: '[]'}
@@ -10893,8 +10890,8 @@ var _user$project$Main$twinCurvedBase = F3(
 			}()
 		};
 	});
-var _user$project$Main$moveToOrigin = _user$project$Shape$MoveToOrigin;
-var _user$project$Main$gate = F5(
+var _user$project$Gate$moveToOrigin = _user$project$Shape$MoveToOrigin;
+var _user$project$Gate$gate = F5(
 	function (dimensions, appearance, base, body, tip) {
 		var tip_ = tip(dimensions);
 		var body_ = body(dimensions);
@@ -10902,7 +10899,7 @@ var _user$project$Main$gate = F5(
 		return {
 			left: 0,
 			top: 0,
-			width: _user$project$Main$totalWidth(
+			width: _user$project$Gate$totalWidth(
 				{
 					ctor: '::',
 					_0: base_,
@@ -10916,8 +10913,8 @@ var _user$project$Main$gate = F5(
 						}
 					}
 				}),
-			height: _user$project$Main$totalHeight(
-				_user$project$Main$dropNothings(
+			height: _user$project$Gate$totalHeight(
+				_user$project$Gate$dropNothings(
 					{
 						ctor: '::',
 						_0: _elm_lang$core$Maybe$Just(body_),
@@ -10926,10 +10923,10 @@ var _user$project$Main$gate = F5(
 							_0: _elm_lang$core$Maybe$Just(tip_),
 							_1: {
 								ctor: '::',
-								_0: _user$project$Main$mirror(tip_),
+								_0: _user$project$Gate$mirror(tip_),
 								_1: {
 									ctor: '::',
-									_0: _user$project$Main$mirror(body_),
+									_0: _user$project$Gate$mirror(body_),
 									_1: {
 										ctor: '::',
 										_0: _elm_lang$core$Maybe$Just(base_),
@@ -10940,11 +10937,11 @@ var _user$project$Main$gate = F5(
 						}
 					})),
 			shape: A2(
-				_user$project$Main$path,
-				_user$project$Main$dropNothings(
+				_user$project$Gate$path,
+				_user$project$Gate$dropNothings(
 					{
 						ctor: '::',
-						_0: _elm_lang$core$Maybe$Just(_user$project$Main$moveToOrigin),
+						_0: _elm_lang$core$Maybe$Just(_user$project$Gate$moveToOrigin),
 						_1: {
 							ctor: '::',
 							_0: body_.segment,
@@ -10953,18 +10950,18 @@ var _user$project$Main$gate = F5(
 								_0: tip_.segment,
 								_1: {
 									ctor: '::',
-									_0: _user$project$Main$unwrap(
-										_user$project$Main$mirror(tip_)),
+									_0: _user$project$Gate$unwrap(
+										_user$project$Gate$mirror(tip_)),
 									_1: {
 										ctor: '::',
-										_0: _user$project$Main$unwrap(
-											_user$project$Main$mirror(body_)),
+										_0: _user$project$Gate$unwrap(
+											_user$project$Gate$mirror(body_)),
 										_1: {
 											ctor: '::',
 											_0: base_.segment,
 											_1: {
 												ctor: '::',
-												_0: _elm_lang$core$Maybe$Just(_user$project$Main$close),
+												_0: _elm_lang$core$Maybe$Just(_user$project$Gate$close),
 												_1: {ctor: '[]'}
 											}
 										}
@@ -10973,28 +10970,28 @@ var _user$project$Main$gate = F5(
 							}
 						}
 					}),
-				_user$project$Main$attributes(appearance))
+				_user$project$Gate$attributes(appearance))
 		};
 	});
-var _user$project$Main$buffer8 = F2(
+var _user$project$Gate$buffer8 = F2(
 	function (dimensions, appearance) {
-		var gate_ = A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$flatBase, _user$project$Main$noBody, _user$project$Main$arrowTip);
-		var offset = 2 * _user$project$Main$inverterRadius(dimensions);
+		var gate_ = A5(_user$project$Gate$gate, dimensions, appearance, _user$project$Gate$flatBase, _user$project$Gate$noBody, _user$project$Gate$arrowTip);
+		var offset = 2 * _user$project$Gate$inverterRadius(dimensions);
 		var buffer = A3(
-			_user$project$Main$centred,
+			_user$project$Gate$centred,
 			dimensions,
 			appearance,
 			_elm_lang$core$Native_Utils.update(
 				gate_,
 				{width: gate_.width + offset}));
-		return _user$project$Main$group(
+		return _user$project$Gate$group(
 			{
 				ctor: '::',
 				_0: buffer,
 				_1: {
 					ctor: '::',
 					_0: A4(
-						_user$project$Main$inputWires,
+						_user$project$Gate$inputWires,
 						1,
 						function (y) {
 							return buffer.left;
@@ -11004,7 +11001,7 @@ var _user$project$Main$buffer8 = F2(
 					_1: {
 						ctor: '::',
 						_0: A4(
-							_user$project$Main$outputWires,
+							_user$project$Gate$outputWires,
 							1,
 							function (y) {
 								return (buffer.left + buffer.width) - offset;
@@ -11016,25 +11013,25 @@ var _user$project$Main$buffer8 = F2(
 				}
 			});
 	});
-var _user$project$Main$not8 = F2(
+var _user$project$Gate$not8 = F2(
 	function (dimensions, appearance) {
 		var not = A3(
-			_user$project$Main$centred,
+			_user$project$Gate$centred,
 			dimensions,
 			appearance,
 			A3(
-				_user$project$Main$inverted,
+				_user$project$Gate$inverted,
 				dimensions,
 				appearance,
-				A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$flatBase, _user$project$Main$noBody, _user$project$Main$arrowTip)));
-		return _user$project$Main$group(
+				A5(_user$project$Gate$gate, dimensions, appearance, _user$project$Gate$flatBase, _user$project$Gate$noBody, _user$project$Gate$arrowTip)));
+		return _user$project$Gate$group(
 			{
 				ctor: '::',
 				_0: not,
 				_1: {
 					ctor: '::',
 					_0: A4(
-						_user$project$Main$inputWires,
+						_user$project$Gate$inputWires,
 						1,
 						function (y) {
 							return not.left;
@@ -11044,7 +11041,7 @@ var _user$project$Main$not8 = F2(
 					_1: {
 						ctor: '::',
 						_0: A4(
-							_user$project$Main$outputWires,
+							_user$project$Gate$outputWires,
 							1,
 							function (y) {
 								return not.left + not.width;
@@ -11056,17 +11053,17 @@ var _user$project$Main$not8 = F2(
 				}
 			});
 	});
-var _user$project$Main$and8 = F2(
+var _user$project$Gate$and8 = F2(
 	function (dimensions, appearance) {
-		var and = A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$flatBase, _user$project$Main$wideBody, _user$project$Main$roundTip);
-		return _user$project$Main$group(
+		var and = A5(_user$project$Gate$gate, dimensions, appearance, _user$project$Gate$flatBase, _user$project$Gate$wideBody, _user$project$Gate$roundTip);
+		return _user$project$Gate$group(
 			{
 				ctor: '::',
 				_0: and,
 				_1: {
 					ctor: '::',
 					_0: A4(
-						_user$project$Main$inputWires,
+						_user$project$Gate$inputWires,
 						2,
 						function (y) {
 							return and.left;
@@ -11076,7 +11073,7 @@ var _user$project$Main$and8 = F2(
 					_1: {
 						ctor: '::',
 						_0: A4(
-							_user$project$Main$outputWires,
+							_user$project$Gate$outputWires,
 							1,
 							function (y) {
 								return and.left + and.width;
@@ -11088,21 +11085,21 @@ var _user$project$Main$and8 = F2(
 				}
 			});
 	});
-var _user$project$Main$nand8 = F2(
+var _user$project$Gate$nand8 = F2(
 	function (dimensions, appearance) {
 		var nand = A3(
-			_user$project$Main$inverted,
+			_user$project$Gate$inverted,
 			dimensions,
 			appearance,
-			A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$flatBase, _user$project$Main$wideBody, _user$project$Main$roundTip));
-		return _user$project$Main$group(
+			A5(_user$project$Gate$gate, dimensions, appearance, _user$project$Gate$flatBase, _user$project$Gate$wideBody, _user$project$Gate$roundTip));
+		return _user$project$Gate$group(
 			{
 				ctor: '::',
 				_0: nand,
 				_1: {
 					ctor: '::',
 					_0: A4(
-						_user$project$Main$inputWires,
+						_user$project$Gate$inputWires,
 						2,
 						function (y) {
 							return nand.left;
@@ -11112,7 +11109,7 @@ var _user$project$Main$nand8 = F2(
 					_1: {
 						ctor: '::',
 						_0: A4(
-							_user$project$Main$outputWires,
+							_user$project$Gate$outputWires,
 							1,
 							function (y) {
 								return nand.left + nand.width;
@@ -11124,26 +11121,26 @@ var _user$project$Main$nand8 = F2(
 				}
 			});
 	});
-var _user$project$Main$or8 = F2(
+var _user$project$Gate$or8 = F2(
 	function (dimensions, appearance) {
-		var or = A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$curvedBase, _user$project$Main$narrowBody, _user$project$Main$spearTip);
-		return _user$project$Main$group(
+		var or = A5(_user$project$Gate$gate, dimensions, appearance, _user$project$Gate$curvedBase, _user$project$Gate$narrowBody, _user$project$Gate$spearTip);
+		return _user$project$Gate$group(
 			{
 				ctor: '::',
 				_0: or,
 				_1: {
 					ctor: '::',
 					_0: A4(
-						_user$project$Main$inputWires,
+						_user$project$Gate$inputWires,
 						2,
-						_user$project$Main$intersectionWithBaseAt(
-							_user$project$Main$height(dimensions)),
+						_user$project$Gate$intersectionWithBaseAt(
+							_user$project$Gate$height(dimensions)),
 						dimensions,
 						appearance),
 					_1: {
 						ctor: '::',
 						_0: A4(
-							_user$project$Main$outputWires,
+							_user$project$Gate$outputWires,
 							1,
 							function (y) {
 								return or.left + or.width;
@@ -11155,30 +11152,30 @@ var _user$project$Main$or8 = F2(
 				}
 			});
 	});
-var _user$project$Main$nor8 = F2(
+var _user$project$Gate$nor8 = F2(
 	function (dimensions, appearance) {
 		var nor = A3(
-			_user$project$Main$inverted,
+			_user$project$Gate$inverted,
 			dimensions,
 			appearance,
-			A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$curvedBase, _user$project$Main$narrowBody, _user$project$Main$spearTip));
-		return _user$project$Main$group(
+			A5(_user$project$Gate$gate, dimensions, appearance, _user$project$Gate$curvedBase, _user$project$Gate$narrowBody, _user$project$Gate$spearTip));
+		return _user$project$Gate$group(
 			{
 				ctor: '::',
 				_0: nor,
 				_1: {
 					ctor: '::',
 					_0: A4(
-						_user$project$Main$inputWires,
+						_user$project$Gate$inputWires,
 						2,
-						_user$project$Main$intersectionWithBaseAt(
-							_user$project$Main$height(dimensions)),
+						_user$project$Gate$intersectionWithBaseAt(
+							_user$project$Gate$height(dimensions)),
 						dimensions,
 						appearance),
 					_1: {
 						ctor: '::',
 						_0: A4(
-							_user$project$Main$outputWires,
+							_user$project$Gate$outputWires,
 							1,
 							function (y) {
 								return nor.left + nor.width;
@@ -11190,26 +11187,26 @@ var _user$project$Main$nor8 = F2(
 				}
 			});
 	});
-var _user$project$Main$xor8 = F2(
+var _user$project$Gate$xor8 = F2(
 	function (dimensions, appearance) {
-		var xor = A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$curvedBase, _user$project$Main$narrowBody, _user$project$Main$spearTip);
-		return _user$project$Main$group(
+		var xor = A5(_user$project$Gate$gate, dimensions, appearance, _user$project$Gate$curvedBase, _user$project$Gate$narrowBody, _user$project$Gate$spearTip);
+		return _user$project$Gate$group(
 			{
 				ctor: '::',
-				_0: A3(_user$project$Main$twinCurvedBase, dimensions, appearance, xor),
+				_0: A3(_user$project$Gate$twinCurvedBase, dimensions, appearance, xor),
 				_1: {
 					ctor: '::',
 					_0: A4(
-						_user$project$Main$inputWires,
+						_user$project$Gate$inputWires,
 						2,
-						_user$project$Main$intersectionWithBaseAt(
-							_user$project$Main$height(dimensions)),
+						_user$project$Gate$intersectionWithBaseAt(
+							_user$project$Gate$height(dimensions)),
 						dimensions,
 						appearance),
 					_1: {
 						ctor: '::',
 						_0: A4(
-							_user$project$Main$outputWires,
+							_user$project$Gate$outputWires,
 							1,
 							function (y) {
 								return xor.left + xor.width;
@@ -11221,30 +11218,30 @@ var _user$project$Main$xor8 = F2(
 				}
 			});
 	});
-var _user$project$Main$xnor8 = F2(
+var _user$project$Gate$xnor8 = F2(
 	function (dimensions, appearance) {
-		var xor = A5(_user$project$Main$gate, dimensions, appearance, _user$project$Main$curvedBase, _user$project$Main$narrowBody, _user$project$Main$spearTip);
-		var xnor = A3(_user$project$Main$inverted, dimensions, appearance, xor);
-		return _user$project$Main$group(
+		var xor = A5(_user$project$Gate$gate, dimensions, appearance, _user$project$Gate$curvedBase, _user$project$Gate$narrowBody, _user$project$Gate$spearTip);
+		var xnor = A3(_user$project$Gate$inverted, dimensions, appearance, xor);
+		return _user$project$Gate$group(
 			{
 				ctor: '::',
 				_0: xnor,
 				_1: {
 					ctor: '::',
-					_0: A3(_user$project$Main$twinCurvedBase, dimensions, appearance, xor),
+					_0: A3(_user$project$Gate$twinCurvedBase, dimensions, appearance, xor),
 					_1: {
 						ctor: '::',
 						_0: A4(
-							_user$project$Main$inputWires,
+							_user$project$Gate$inputWires,
 							2,
-							_user$project$Main$intersectionWithBaseAt(
-								_user$project$Main$height(dimensions)),
+							_user$project$Gate$intersectionWithBaseAt(
+								_user$project$Gate$height(dimensions)),
 							dimensions,
 							appearance),
 						_1: {
 							ctor: '::',
 							_0: A4(
-								_user$project$Main$outputWires,
+								_user$project$Gate$outputWires,
 								1,
 								function (y) {
 									return xnor.left + xnor.width;
@@ -11257,6 +11254,15 @@ var _user$project$Main$xnor8 = F2(
 				}
 			});
 	});
+var _user$project$Gate$Gate = F5(
+	function (a, b, c, d, e) {
+		return {left: a, top: b, width: c, height: d, shape: e};
+	});
+var _user$project$Gate$Segment = F3(
+	function (a, b, c) {
+		return {width: a, height: b, segment: c};
+	});
+
 var _user$project$Main$range = F7(
 	function (id, label, current, min, max, step, msg) {
 		return {
@@ -11341,18 +11347,18 @@ var _user$project$Main$range = F7(
 	});
 var _user$project$Main$updateOrNothing = F3(
 	function (model, number, update) {
-		var _p3 = number;
-		if (_p3.ctor === 'Just') {
-			return update(_p3._0);
+		var _p0 = number;
+		if (_p0.ctor === 'Just') {
+			return update(_p0._0);
 		} else {
 			return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 		}
 	});
 var _user$project$Main$toNumber = function (value) {
-	var _p4 = _elm_lang$core$String$toFloat(value);
-	if (_p4.ctor === 'Ok') {
-		var _p5 = _p4._0;
-		return _elm_lang$core$Basics$isNaN(_p5) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(_p5);
+	var _p1 = _elm_lang$core$String$toFloat(value);
+	if (_p1.ctor === 'Ok') {
+		var _p2 = _p1._0;
+		return _elm_lang$core$Basics$isNaN(_p2) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(_p2);
 	} else {
 		return _elm_lang$core$Maybe$Nothing;
 	}
@@ -11375,14 +11381,6 @@ var _user$project$Main$Model = F5(
 	function (a, b, c, d, e) {
 		return {canvas: a, width: b, horizontalSpacing: c, verticalSpacing: d, strokeWidth: e};
 	});
-var _user$project$Main$Gate = F5(
-	function (a, b, c, d, e) {
-		return {left: a, top: b, width: c, height: d, shape: e};
-	});
-var _user$project$Main$Segment = F3(
-	function (a, b, c) {
-		return {width: a, height: b, segment: c};
-	});
 var _user$project$Main$ChangeStrokeWidth = function (a) {
 	return {ctor: 'ChangeStrokeWidth', _0: a};
 };
@@ -11399,9 +11397,9 @@ var _user$project$Main$Canvas = function (a) {
 	return {ctor: 'Canvas', _0: a};
 };
 var _user$project$Main$init = function () {
-	var _p6 = _user$project$Canvas$init;
-	var canvas = _p6._0;
-	var cmd = _p6._1;
+	var _p3 = _user$project$Canvas$init;
+	var canvas = _p3._0;
+	var cmd = _p3._1;
 	var defaultWidth = 100;
 	var defaultHorizontalSpacing = defaultWidth * 2;
 	var defaultVerticalSpacing = defaultWidth * 1.5;
@@ -11413,12 +11411,12 @@ var _user$project$Main$init = function () {
 }();
 var _user$project$Main$update = F2(
 	function (msg, model) {
-		var _p7 = msg;
-		switch (_p7.ctor) {
+		var _p4 = msg;
+		switch (_p4.ctor) {
 			case 'Canvas':
-				var _p8 = A2(_user$project$Canvas$update, _p7._0, model.canvas);
-				var canvas = _p8._0;
-				var cmd = _p8._1;
+				var _p5 = A2(_user$project$Canvas$update, _p4._0, model.canvas);
+				var canvas = _p5._0;
+				var cmd = _p5._1;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -11430,7 +11428,7 @@ var _user$project$Main$update = F2(
 				return A3(
 					_user$project$Main$updateOrNone,
 					model,
-					_p7._0,
+					_p4._0,
 					function (width) {
 						return _elm_lang$core$Native_Utils.update(
 							model,
@@ -11444,7 +11442,7 @@ var _user$project$Main$update = F2(
 				return A3(
 					_user$project$Main$updateOrNone,
 					model,
-					_p7._0,
+					_p4._0,
 					function (spacing) {
 						return _elm_lang$core$Native_Utils.update(
 							model,
@@ -11457,7 +11455,7 @@ var _user$project$Main$update = F2(
 				return A3(
 					_user$project$Main$updateOrNone,
 					model,
-					_p7._0,
+					_p4._0,
 					function (spacing) {
 						return _elm_lang$core$Native_Utils.update(
 							model,
@@ -11470,7 +11468,7 @@ var _user$project$Main$update = F2(
 				return A3(
 					_user$project$Main$updateOrNone,
 					model,
-					_p7._0,
+					_p4._0,
 					function (width) {
 						return _elm_lang$core$Native_Utils.update(
 							model,
@@ -11487,9 +11485,9 @@ var _user$project$Main$subscriptions = function (model) {
 var _user$project$Main$view = function (model) {
 	var appearance = {strokeWidth: model.strokeWidth, strokeColour: 'black', fillColour: 'none'};
 	var dimensions = {width: model.width};
-	var fullWidth = (1 * model.horizontalSpacing) + _user$project$Main$width(dimensions);
+	var fullWidth = (1 * model.horizontalSpacing) + _user$project$Gate$width(dimensions);
 	var offsetLeft = (_elm_lang$core$Basics$toFloat(model.canvas.windowSize.width) / 2) - (fullWidth / 2);
-	var fullHeight = (3 * model.verticalSpacing) + _user$project$Main$height(dimensions);
+	var fullHeight = (3 * model.verticalSpacing) + _user$project$Gate$height(dimensions);
 	var offsetTop = (_elm_lang$core$Basics$toFloat(model.canvas.windowSize.height) / 2) - (fullHeight / 2);
 	var gate = F3(
 		function (column, row, shape) {
@@ -11544,64 +11542,80 @@ var _user$project$Main$view = function (model) {
 							gate,
 							1,
 							1,
-							_user$project$Main$shape(
-								A2(_user$project$Main$buffer8, dimensions, appearance))),
+							function (_) {
+								return _.shape;
+							}(
+								A2(_user$project$Gate$buffer8, dimensions, appearance))),
 						_1: {
 							ctor: '::',
 							_0: A3(
 								gate,
 								1,
 								2,
-								_user$project$Main$shape(
-									A2(_user$project$Main$not8, dimensions, appearance))),
+								function (_) {
+									return _.shape;
+								}(
+									A2(_user$project$Gate$not8, dimensions, appearance))),
 							_1: {
 								ctor: '::',
 								_0: A3(
 									gate,
 									2,
 									1,
-									_user$project$Main$shape(
-										A2(_user$project$Main$or8, dimensions, appearance))),
+									function (_) {
+										return _.shape;
+									}(
+										A2(_user$project$Gate$or8, dimensions, appearance))),
 								_1: {
 									ctor: '::',
 									_0: A3(
 										gate,
 										2,
 										2,
-										_user$project$Main$shape(
-											A2(_user$project$Main$nor8, dimensions, appearance))),
+										function (_) {
+											return _.shape;
+										}(
+											A2(_user$project$Gate$nor8, dimensions, appearance))),
 									_1: {
 										ctor: '::',
 										_0: A3(
 											gate,
 											1,
 											3,
-											_user$project$Main$shape(
-												A2(_user$project$Main$and8, dimensions, appearance))),
+											function (_) {
+												return _.shape;
+											}(
+												A2(_user$project$Gate$and8, dimensions, appearance))),
 										_1: {
 											ctor: '::',
 											_0: A3(
 												gate,
 												1,
 												4,
-												_user$project$Main$shape(
-													A2(_user$project$Main$nand8, dimensions, appearance))),
+												function (_) {
+													return _.shape;
+												}(
+													A2(_user$project$Gate$nand8, dimensions, appearance))),
 											_1: {
 												ctor: '::',
 												_0: A3(
 													gate,
 													2,
 													3,
-													_user$project$Main$shape(
-														A2(_user$project$Main$xor8, dimensions, appearance))),
+													function (_) {
+														return _.shape;
+													}(
+														A2(_user$project$Gate$xor8, dimensions, appearance))),
 												_1: {
 													ctor: '::',
 													_0: A3(
 														gate,
 														2,
 														4,
-														_user$project$Main$shape(
-															A2(_user$project$Main$xnor8, dimensions, appearance))),
+														function (_) {
+															return _.shape;
+														}(
+															A2(_user$project$Gate$xnor8, dimensions, appearance))),
 													_1: {ctor: '[]'}
 												}
 											}
