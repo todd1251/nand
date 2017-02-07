@@ -9690,18 +9690,18 @@ var _user$project$Canvas$getTransform = function (model) {
 	if (_p0.ctor === 'Nothing') {
 		return model.transform;
 	} else {
-		var _p2 = _p0._0.start;
-		var _p1 = _p0._0.current;
+		var _p2 = _p0._0.to;
+		var _p1 = _p0._0.from;
 		return A3(
 			_user$project$Transform$translate,
 			model.transform,
-			_elm_lang$core$Basics$toFloat(_p1.x - _p2.x),
-			_elm_lang$core$Basics$toFloat(_p1.y - _p2.y));
+			_elm_lang$core$Basics$toFloat(_p2.x - _p1.x),
+			_elm_lang$core$Basics$toFloat(_p2.y - _p1.y));
 	}
 };
 var _user$project$Canvas$Drag = F2(
 	function (a, b) {
-		return {start: a, current: b};
+		return {from: a, to: b};
 	});
 var _user$project$Canvas$update = F2(
 	function (msg, model) {
@@ -9737,7 +9737,7 @@ var _user$project$Canvas$update = F2(
 								_elm_lang$core$Maybe$map,
 								function (_p5) {
 									var _p6 = _p5;
-									return A2(_user$project$Canvas$Drag, _p6.start, _p3._0);
+									return A2(_user$project$Canvas$Drag, _p6.from, _p3._0);
 								},
 								model.drag)
 						}),
@@ -11218,100 +11218,6 @@ var _user$project$Gate$Segment = F3(
 	function (a, b, c) {
 		return {width: a, height: b, segment: c};
 	});
-var _user$project$Application$styles = function () {
-	var css = '\n            html, body {\n                height: 100%;\n                margin: 0;\n                overflow: hidden;\n                padding: 0;\n                width: 100%;\n            }\n\n            * {\n                user-select: none;\n            }\n\n            .container {\n                height: 100%;\n                position: fixed;\n                width: 100%;\n            }\n\n            .controls {\n                background: #eee;\n                border: 1px solid #ccc;\n                border-radius: 5px;\n                margin: 1.5em 0 0 1.5em;\n                padding: 0 0.5em 1em 0.5em;\n                user-select: none;\n                width: 150px;\n            }\n\n            .controls label, .controls input {\n                display: block;\n                margin: 0.25em auto;\n            }\n\n            .controls label {\n                margin: 1.5em 0 0 0.5em;\n            }\n\n            .canvas {\n                background: white;\n                height: 100%;\n                left: 0;\n                position: fixed;\n                top: 0;\n                user-select: none;\n                width: 100%;\n                z-index: -1;\n            }\n            ';
-	return A3(
-		_elm_lang$html$Html$node,
-		'style',
-		{ctor: '[]'},
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html$text(css),
-			_1: {ctor: '[]'}
-		});
-}();
-var _user$project$Application$range = F7(
-	function (id, label, current, min, max, step, msg) {
-		return {
-			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$label,
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$for(id),
-					_1: {ctor: '[]'}
-				},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text(label),
-					_1: {ctor: '[]'}
-				}),
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$input,
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$id(id),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$type_('range'),
-							_1: {
-								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$min(
-									_elm_lang$core$Basics$toString(min)),
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$max(
-										_elm_lang$core$Basics$toString(max)),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$step(
-											_elm_lang$core$Basics$toString(step)),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$value(
-												_elm_lang$core$Basics$toString(current)),
-											_1: {
-												ctor: '::',
-												_0: _elm_lang$html$Html_Events$onInput(msg),
-												_1: {ctor: '[]'}
-											}
-										}
-									}
-								}
-							}
-						}
-					},
-					{ctor: '[]'}),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$input,
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$type_('text'),
-							_1: {
-								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$placeholder(label),
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$value(
-										_elm_lang$core$Basics$toString(current)),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$html$Html_Events$onInput(msg),
-										_1: {ctor: '[]'}
-									}
-								}
-							}
-						},
-						{ctor: '[]'}),
-					_1: {ctor: '[]'}
-				}
-			}
-		};
-	});
 var _user$project$Application$updateOrNothing = F3(
 	function (model, number, update) {
 		var _p0 = number;
@@ -11449,7 +11355,101 @@ var _user$project$Application$subscriptions = function (model) {
 		_user$project$Application$Canvas,
 		_user$project$Canvas$subscriptions(model.canvas));
 };
-var _user$project$Application$view = function (model) {
+var _user$project$UI$styles = function () {
+	var css = '\n            html, body {\n                height: 100%;\n                margin: 0;\n                overflow: hidden;\n                padding: 0;\n                width: 100%;\n            }\n\n            * {\n                user-select: none;\n            }\n\n            .container {\n                height: 100%;\n                position: fixed;\n                width: 100%;\n            }\n\n            .controls {\n                background: #eee;\n                border: 1px solid #ccc;\n                border-radius: 5px;\n                margin: 1.5em 0 0 1.5em;\n                padding: 0 0.5em 1em 0.5em;\n                user-select: none;\n                width: 150px;\n            }\n\n            .controls label, .controls input {\n                display: block;\n                margin: 0.25em auto;\n            }\n\n            .controls label {\n                margin: 1.5em 0 0 0.5em;\n            }\n\n            .canvas {\n                background: white;\n                height: 100%;\n                left: 0;\n                position: fixed;\n                top: 0;\n                user-select: none;\n                width: 100%;\n                z-index: -1;\n            }\n            ';
+	return A3(
+		_elm_lang$html$Html$node,
+		'style',
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html$text(css),
+			_1: {ctor: '[]'}
+		});
+}();
+var _user$project$UI$range = F7(
+	function (id, label, current, min, max, step, msg) {
+		return {
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$label,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$for(id),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(label),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$input,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$id(id),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$type_('range'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$min(
+									_elm_lang$core$Basics$toString(min)),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$max(
+										_elm_lang$core$Basics$toString(max)),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$step(
+											_elm_lang$core$Basics$toString(step)),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$value(
+												_elm_lang$core$Basics$toString(current)),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Events$onInput(msg),
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					{ctor: '[]'}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$input,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$type_('text'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$placeholder(label),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$value(
+										_elm_lang$core$Basics$toString(current)),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Events$onInput(msg),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						},
+						{ctor: '[]'}),
+					_1: {ctor: '[]'}
+				}
+			}
+		};
+	});
+var _user$project$UI$view = function (model) {
 	var appearance = {strokeWidth: model.strokeWidth, strokeColour: 'black', fillColour: 'none'};
 	var dimensions = {width: model.width};
 	var fullWidth = (1 * model.horizontalSpacing) + _user$project$Gate$width(dimensions);
@@ -11478,7 +11478,7 @@ var _user$project$Application$view = function (model) {
 		_user$project$Application$Canvas,
 		{
 			ctor: '::',
-			_0: _user$project$Application$styles,
+			_0: _user$project$UI$styles,
 			_1: {
 				ctor: '::',
 				_0: A2(
@@ -11490,14 +11490,14 @@ var _user$project$Application$view = function (model) {
 					},
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						A7(_user$project$Application$range, 'width', 'Width', model.width, 10, 200, 1, _user$project$Application$Width),
+						A7(_user$project$UI$range, 'width', 'Width', model.width, 10, 200, 1, _user$project$Application$Width),
 						A2(
 							_elm_lang$core$Basics_ops['++'],
-							A7(_user$project$Application$range, 'horizontalSpacing', 'Horizontal spacing', model.horizontalSpacing, 20, 400, 1, _user$project$Application$HorizontalSpacing),
+							A7(_user$project$UI$range, 'horizontalSpacing', 'Horizontal spacing', model.horizontalSpacing, 20, 400, 1, _user$project$Application$HorizontalSpacing),
 							A2(
 								_elm_lang$core$Basics_ops['++'],
-								A7(_user$project$Application$range, 'verticalSpacing', 'Vertical spacing', model.verticalSpacing, 20, 200, 1, _user$project$Application$VerticalSpacing),
-								A7(_user$project$Application$range, 'strokeWidth', 'Stroke width', model.strokeWidth, 1, 10, 0.1, _user$project$Application$ChangeStrokeWidth))))),
+								A7(_user$project$UI$range, 'verticalSpacing', 'Vertical spacing', model.verticalSpacing, 20, 200, 1, _user$project$Application$VerticalSpacing),
+								A7(_user$project$UI$range, 'strokeWidth', 'Stroke width', model.strokeWidth, 1, 10, 0.1, _user$project$Application$ChangeStrokeWidth))))),
 				_1: {ctor: '[]'}
 			}
 		},
@@ -11619,7 +11619,7 @@ var _user$project$Main$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$map,
 		_user$project$Main$Application,
-		_user$project$Application$view(model.application));
+		_user$project$UI$view(model.application));
 };
 var _user$project$Main$update = F2(
 	function (msg, model) {
