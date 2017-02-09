@@ -9599,36 +9599,15 @@ var _user$project$LayoutControl_Domain$defaults = function () {
 var _user$project$LayoutControl_Domain$update = F2(
 	function (msg, model) {
 		var _p0 = msg;
-		switch (_p0.ctor) {
-			case 'WidthChanged':
-				var _p1 = _p0._0;
-				return _elm_lang$core$Native_Utils.update(
-					model,
-					{
-						width: _p1,
-						horizontalSpacing: A2(_elm_lang$core$Basics$max, _p1 * _user$project$LayoutControl_Domain$widthHorizontalSpacingRatio, model.horizontalSpacing),
-						verticalSpacing: A2(_elm_lang$core$Basics$max, _p1 * _user$project$LayoutControl_Domain$widthVerticalSpacingRatio, model.verticalSpacing)
-					});
-			case 'HorizontalSpacingChanged':
-				var _p2 = _p0._0;
-				return _elm_lang$core$Native_Utils.update(
-					model,
-					{
-						width: A2(_elm_lang$core$Basics$min, model.width, _p2 / _user$project$LayoutControl_Domain$widthHorizontalSpacingRatio),
-						horizontalSpacing: _p2
-					});
-			case 'VerticalSpacingChanged':
-				var _p3 = _p0._0;
-				return _elm_lang$core$Native_Utils.update(
-					model,
-					{
-						width: A2(_elm_lang$core$Basics$min, model.width, _p3 / _user$project$LayoutControl_Domain$widthVerticalSpacingRatio),
-						verticalSpacing: _p3
-					});
-			default:
-				return _elm_lang$core$Native_Utils.update(
-					model,
-					{strokeWidth: _p0._0});
+		if (_p0.ctor === 'WidthChanged') {
+			var _p1 = _p0._0;
+			return _elm_lang$core$Native_Utils.update(
+				model,
+				{width: _p1, horizontalSpacing: _p1 * _user$project$LayoutControl_Domain$widthHorizontalSpacingRatio, verticalSpacing: _p1 * _user$project$LayoutControl_Domain$widthVerticalSpacingRatio});
+		} else {
+			return _elm_lang$core$Native_Utils.update(
+				model,
+				{strokeWidth: _p0._0});
 		}
 	});
 var _user$project$LayoutControl_Domain$Model = F4(
@@ -9638,23 +9617,11 @@ var _user$project$LayoutControl_Domain$Model = F4(
 var _user$project$LayoutControl_Domain$StrokeWidthChanged = function (a) {
 	return {ctor: 'StrokeWidthChanged', _0: a};
 };
-var _user$project$LayoutControl_Domain$VerticalSpacingChanged = function (a) {
-	return {ctor: 'VerticalSpacingChanged', _0: a};
-};
-var _user$project$LayoutControl_Domain$HorizontalSpacingChanged = function (a) {
-	return {ctor: 'HorizontalSpacingChanged', _0: a};
-};
 var _user$project$LayoutControl_Domain$WidthChanged = function (a) {
 	return {ctor: 'WidthChanged', _0: a};
 };
 var _user$project$LayoutControl_Message$ChangeStrokeWidth = function (a) {
 	return {ctor: 'ChangeStrokeWidth', _0: a};
-};
-var _user$project$LayoutControl_Message$ChangeVerticalSpacing = function (a) {
-	return {ctor: 'ChangeVerticalSpacing', _0: a};
-};
-var _user$project$LayoutControl_Message$ChangeHorizontalSpacing = function (a) {
-	return {ctor: 'ChangeHorizontalSpacing', _0: a};
 };
 var _user$project$LayoutControl_Message$ChangeWidth = function (a) {
 	return {ctor: 'ChangeWidth', _0: a};
@@ -9690,51 +9657,28 @@ var _user$project$LayoutControl_Application$updateOrNone = F3(
 var _user$project$LayoutControl_Application$update = F2(
 	function (msg, model) {
 		var _p3 = msg;
-		switch (_p3.ctor) {
-			case 'ChangeWidth':
-				return A3(
-					_user$project$LayoutControl_Application$updateOrNone,
-					model,
-					_p3._0,
-					function (width) {
-						return A2(
-							_user$project$LayoutControl_Domain$update,
-							_user$project$LayoutControl_Domain$WidthChanged(width),
-							model);
-					});
-			case 'ChangeHorizontalSpacing':
-				return A3(
-					_user$project$LayoutControl_Application$updateOrNone,
-					model,
-					_p3._0,
-					function (horizontalSpacing) {
-						return A2(
-							_user$project$LayoutControl_Domain$update,
-							_user$project$LayoutControl_Domain$HorizontalSpacingChanged(horizontalSpacing),
-							model);
-					});
-			case 'ChangeVerticalSpacing':
-				return A3(
-					_user$project$LayoutControl_Application$updateOrNone,
-					model,
-					_p3._0,
-					function (verticalSpacing) {
-						return A2(
-							_user$project$LayoutControl_Domain$update,
-							_user$project$LayoutControl_Domain$VerticalSpacingChanged(verticalSpacing),
-							model);
-					});
-			default:
-				return A3(
-					_user$project$LayoutControl_Application$updateOrNone,
-					model,
-					_p3._0,
-					function (strokeWidth) {
-						return A2(
-							_user$project$LayoutControl_Domain$update,
-							_user$project$LayoutControl_Domain$StrokeWidthChanged(strokeWidth),
-							model);
-					});
+		if (_p3.ctor === 'ChangeWidth') {
+			return A3(
+				_user$project$LayoutControl_Application$updateOrNone,
+				model,
+				_p3._0,
+				function (width) {
+					return A2(
+						_user$project$LayoutControl_Domain$update,
+						_user$project$LayoutControl_Domain$WidthChanged(width),
+						model);
+				});
+		} else {
+			return A3(
+				_user$project$LayoutControl_Application$updateOrNone,
+				model,
+				_p3._0,
+				function (strokeWidth) {
+					return A2(
+						_user$project$LayoutControl_Domain$update,
+						_user$project$LayoutControl_Domain$StrokeWidthChanged(strokeWidth),
+						model);
+				});
 		}
 	});
 var _user$project$LayoutControl_Application$init = _user$project$LayoutControl_Domain$defaults;
@@ -9834,16 +9778,8 @@ var _user$project$LayoutControl_UI$view = function (model) {
 				_0: A7(_user$project$UI_Range$view, 'width', 'Width', model.width, 10, 200, 1, _user$project$LayoutControl_Message$ChangeWidth),
 				_1: {
 					ctor: '::',
-					_0: A7(_user$project$UI_Range$view, 'horizontalSpacing', 'Horizontal spacing', model.horizontalSpacing, 20, 400, 1, _user$project$LayoutControl_Message$ChangeHorizontalSpacing),
-					_1: {
-						ctor: '::',
-						_0: A7(_user$project$UI_Range$view, 'verticalSpacing', 'Vertical spacing', model.verticalSpacing, 20, 200, 1, _user$project$LayoutControl_Message$ChangeVerticalSpacing),
-						_1: {
-							ctor: '::',
-							_0: A7(_user$project$UI_Range$view, 'strokeWidth', 'Stroke width', model.strokeWidth, 1, 10, 0.1, _user$project$LayoutControl_Message$ChangeStrokeWidth),
-							_1: {ctor: '[]'}
-						}
-					}
+					_0: A7(_user$project$UI_Range$view, 'strokeWidth', 'Stroke width', model.strokeWidth, 1, 10, 0.1, _user$project$LayoutControl_Message$ChangeStrokeWidth),
+					_1: {ctor: '[]'}
 				}
 			}));
 };
