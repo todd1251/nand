@@ -9592,27 +9592,47 @@ var _user$project$Commons_Transform$scale = F2(
 	});
 var _user$project$LayoutControl_Domain$widthVerticalSpacingRatio = 1.5;
 var _user$project$LayoutControl_Domain$widthHorizontalSpacingRatio = 2;
-var _user$project$LayoutControl_Domain$defaults = function () {
+var _user$project$LayoutControl_Domain$strokeWidth = function (_p0) {
+	var _p1 = _p0;
+	return _p1._0.strokeWidth;
+};
+var _user$project$LayoutControl_Domain$verticalSpacing = function (_p2) {
+	var _p3 = _p2;
+	return _p3._0.verticalSpacing;
+};
+var _user$project$LayoutControl_Domain$horizontalSpacing = function (_p4) {
+	var _p5 = _p4;
+	return _p5._0.horizontalSpacing;
+};
+var _user$project$LayoutControl_Domain$width = function (_p6) {
+	var _p7 = _p6;
+	return _p7._0.width;
+};
+var _user$project$LayoutControl_Domain$LayoutControl = function (a) {
+	return {ctor: 'LayoutControl', _0: a};
+};
+var _user$project$LayoutControl_Domain$init = function () {
 	var width = 100;
-	return {width: width, horizontalSpacing: width * _user$project$LayoutControl_Domain$widthHorizontalSpacingRatio, verticalSpacing: width * _user$project$LayoutControl_Domain$widthVerticalSpacingRatio, strokeWidth: width / 25};
+	return _user$project$LayoutControl_Domain$LayoutControl(
+		{width: width, horizontalSpacing: width * _user$project$LayoutControl_Domain$widthHorizontalSpacingRatio, verticalSpacing: width * _user$project$LayoutControl_Domain$widthVerticalSpacingRatio, strokeWidth: width / 25});
 }();
-var _user$project$LayoutControl_Domain$update = F2(
-	function (msg, model) {
-		var _p0 = msg;
-		if (_p0.ctor === 'WidthChanged') {
-			var _p1 = _p0._0;
-			return _elm_lang$core$Native_Utils.update(
-				model,
-				{width: _p1, horizontalSpacing: _p1 * _user$project$LayoutControl_Domain$widthHorizontalSpacingRatio, verticalSpacing: _p1 * _user$project$LayoutControl_Domain$widthVerticalSpacingRatio});
+var _user$project$LayoutControl_Domain$apply = F2(
+	function (event, _p8) {
+		var _p9 = _p8;
+		var _p12 = _p9._0;
+		var _p10 = event;
+		if (_p10.ctor === 'WidthChanged') {
+			var _p11 = _p10._0;
+			return _user$project$LayoutControl_Domain$LayoutControl(
+				_elm_lang$core$Native_Utils.update(
+					_p12,
+					{width: _p11, horizontalSpacing: _p11 * _user$project$LayoutControl_Domain$widthHorizontalSpacingRatio, verticalSpacing: _p11 * _user$project$LayoutControl_Domain$widthVerticalSpacingRatio}));
 		} else {
-			return _elm_lang$core$Native_Utils.update(
-				model,
-				{strokeWidth: _p0._0});
+			return _user$project$LayoutControl_Domain$LayoutControl(
+				_elm_lang$core$Native_Utils.update(
+					_p12,
+					{strokeWidth: _p10._0}));
 		}
-	});
-var _user$project$LayoutControl_Domain$Model = F4(
-	function (a, b, c, d) {
-		return {width: a, horizontalSpacing: b, verticalSpacing: c, strokeWidth: d};
 	});
 var _user$project$LayoutControl_Domain$StrokeWidthChanged = function (a) {
 	return {ctor: 'StrokeWidthChanged', _0: a};
@@ -9620,68 +9640,6 @@ var _user$project$LayoutControl_Domain$StrokeWidthChanged = function (a) {
 var _user$project$LayoutControl_Domain$WidthChanged = function (a) {
 	return {ctor: 'WidthChanged', _0: a};
 };
-var _user$project$LayoutControl_Message$ChangeStrokeWidth = function (a) {
-	return {ctor: 'ChangeStrokeWidth', _0: a};
-};
-var _user$project$LayoutControl_Message$ChangeWidth = function (a) {
-	return {ctor: 'ChangeWidth', _0: a};
-};
-var _user$project$LayoutControl_Application$updateOrNothing = F3(
-	function (model, number, update) {
-		var _p0 = number;
-		if (_p0.ctor === 'Just') {
-			return update(_p0._0);
-		} else {
-			return model;
-		}
-	});
-var _user$project$LayoutControl_Application$toNumber = function (value) {
-	var _p1 = _elm_lang$core$String$toFloat(value);
-	if (_p1.ctor === 'Ok') {
-		var _p2 = _p1._0;
-		return _elm_lang$core$Basics$isNaN(_p2) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(_p2);
-	} else {
-		return _elm_lang$core$Maybe$Nothing;
-	}
-};
-var _user$project$LayoutControl_Application$updateOrNone = F3(
-	function (model, value, update) {
-		return A3(
-			_user$project$LayoutControl_Application$updateOrNothing,
-			model,
-			_user$project$LayoutControl_Application$toNumber(value),
-			function (number) {
-				return update(number);
-			});
-	});
-var _user$project$LayoutControl_Application$update = F2(
-	function (msg, model) {
-		var _p3 = msg;
-		if (_p3.ctor === 'ChangeWidth') {
-			return A3(
-				_user$project$LayoutControl_Application$updateOrNone,
-				model,
-				_p3._0,
-				function (width) {
-					return A2(
-						_user$project$LayoutControl_Domain$update,
-						_user$project$LayoutControl_Domain$WidthChanged(width),
-						model);
-				});
-		} else {
-			return A3(
-				_user$project$LayoutControl_Application$updateOrNone,
-				model,
-				_p3._0,
-				function (strokeWidth) {
-					return A2(
-						_user$project$LayoutControl_Domain$update,
-						_user$project$LayoutControl_Domain$StrokeWidthChanged(strokeWidth),
-						model);
-				});
-		}
-	});
-var _user$project$LayoutControl_Application$init = _user$project$LayoutControl_Domain$defaults;
 var _user$project$UI_Range$view = F7(
 	function (id, label, current, min, max, step, msg) {
 		return {
@@ -9764,7 +9722,104 @@ var _user$project$UI_Range$view = F7(
 			}
 		};
 	});
-var _user$project$LayoutControl_UI$view = function (model) {
+var _user$project$LayoutControl_UI$toNumber = function (value) {
+	var _p0 = _elm_lang$core$String$toFloat(value);
+	if (_p0.ctor === 'Ok') {
+		var _p1 = _p0._0;
+		return _elm_lang$core$Basics$isNaN(_p1) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(_p1);
+	} else {
+		return _elm_lang$core$Maybe$Nothing;
+	}
+};
+var _user$project$LayoutControl_UI$strokeWidth = function (_p2) {
+	var _p3 = _p2;
+	return _user$project$LayoutControl_Domain$strokeWidth(_p3._0.domain);
+};
+var _user$project$LayoutControl_UI$verticalSpacing = function (_p4) {
+	var _p5 = _p4;
+	return _user$project$LayoutControl_Domain$verticalSpacing(_p5._0.domain);
+};
+var _user$project$LayoutControl_UI$horizontalSpacing = function (_p6) {
+	var _p7 = _p6;
+	return _user$project$LayoutControl_Domain$horizontalSpacing(_p7._0.domain);
+};
+var _user$project$LayoutControl_UI$width = function (_p8) {
+	var _p9 = _p8;
+	return _user$project$LayoutControl_Domain$width(_p9._0.domain);
+};
+var _user$project$LayoutControl_UI$State = function (a) {
+	return {ctor: 'State', _0: a};
+};
+var _user$project$LayoutControl_UI$fromDomainState = function (state) {
+	return _user$project$LayoutControl_UI$State(
+		{
+			domain: state,
+			width: _elm_lang$core$Basics$toString(
+				_user$project$LayoutControl_Domain$width(state)),
+			strokeWidth: _elm_lang$core$Basics$toString(
+				_user$project$LayoutControl_Domain$strokeWidth(state))
+		});
+};
+var _user$project$LayoutControl_UI$init = _user$project$LayoutControl_UI$fromDomainState(_user$project$LayoutControl_Domain$init);
+var _user$project$LayoutControl_UI$updateOrNothing = F3(
+	function (state, number, update) {
+		var _p10 = number;
+		if (_p10.ctor === 'Just') {
+			return _user$project$LayoutControl_UI$fromDomainState(
+				update(_p10._0));
+		} else {
+			return state;
+		}
+	});
+var _user$project$LayoutControl_UI$updateOrNone = F3(
+	function (state, value, update) {
+		return A3(
+			_user$project$LayoutControl_UI$updateOrNothing,
+			state,
+			_user$project$LayoutControl_UI$toNumber(value),
+			function (number) {
+				return update(number);
+			});
+	});
+var _user$project$LayoutControl_UI$execute = F2(
+	function (command, _p11) {
+		var _p12 = _p11;
+		var _p15 = _p12._0;
+		var _p14 = _p12;
+		var _p13 = command;
+		if (_p13.ctor === 'ChangeWidth') {
+			return A3(
+				_user$project$LayoutControl_UI$updateOrNone,
+				_p14,
+				_p13._0,
+				function (width) {
+					return A2(
+						_user$project$LayoutControl_Domain$apply,
+						_user$project$LayoutControl_Domain$WidthChanged(width),
+						_p15.domain);
+				});
+		} else {
+			return A3(
+				_user$project$LayoutControl_UI$updateOrNone,
+				_p14,
+				_p13._0,
+				function (strokeWidth) {
+					return A2(
+						_user$project$LayoutControl_Domain$apply,
+						_user$project$LayoutControl_Domain$StrokeWidthChanged(strokeWidth),
+						_p15.domain);
+				});
+		}
+	});
+var _user$project$LayoutControl_UI$ChangeStrokeWidth = function (a) {
+	return {ctor: 'ChangeStrokeWidth', _0: a};
+};
+var _user$project$LayoutControl_UI$ChangeWidth = function (a) {
+	return {ctor: 'ChangeWidth', _0: a};
+};
+var _user$project$LayoutControl_UI$view = function (_p16) {
+	var _p17 = _p16;
+	var _p18 = _p17._0;
 	return A2(
 		_elm_lang$html$Html$div,
 		{
@@ -9775,10 +9830,26 @@ var _user$project$LayoutControl_UI$view = function (model) {
 		_elm_lang$core$List$concat(
 			{
 				ctor: '::',
-				_0: A7(_user$project$UI_Range$view, 'width', 'Width', model.width, 10, 200, 1, _user$project$LayoutControl_Message$ChangeWidth),
+				_0: A7(
+					_user$project$UI_Range$view,
+					'width',
+					'Width',
+					_user$project$LayoutControl_Domain$width(_p18.domain),
+					10,
+					200,
+					1,
+					_user$project$LayoutControl_UI$ChangeWidth),
 				_1: {
 					ctor: '::',
-					_0: A7(_user$project$UI_Range$view, 'strokeWidth', 'Stroke width', model.strokeWidth, 1, 10, 0.1, _user$project$LayoutControl_Message$ChangeStrokeWidth),
+					_0: A7(
+						_user$project$UI_Range$view,
+						'strokeWidth',
+						'Stroke width',
+						_user$project$LayoutControl_Domain$strokeWidth(_p18.domain),
+						1,
+						10,
+						0.1,
+						_user$project$LayoutControl_UI$ChangeStrokeWidth),
 					_1: {ctor: '[]'}
 				}
 			}));
@@ -11433,10 +11504,6 @@ var _user$project$UI_Styles$stylesheet = A3(
 	});
 var _user$project$Main_UI$view = function (model) {
 	var layoutControl = model.layoutControl;
-	var dimensions = {width: layoutControl.width};
-	var appearance = {strokeWidth: layoutControl.strokeWidth, strokeColour: 'black', fillColour: 'none'};
-	var fullWidth = (1 * layoutControl.horizontalSpacing) + _user$project$UI_Gate$width(dimensions);
-	var fullHeight = (3 * layoutControl.verticalSpacing) + _user$project$UI_Gate$height(dimensions);
 	var view = {
 		ctor: '::',
 		_0: _user$project$UI_Styles$stylesheet,
@@ -11449,6 +11516,18 @@ var _user$project$Main_UI$view = function (model) {
 			_1: {ctor: '[]'}
 		}
 	};
+	var dimensions = {
+		width: _user$project$LayoutControl_UI$width(layoutControl)
+	};
+	var appearance = {
+		strokeWidth: _user$project$LayoutControl_UI$strokeWidth(layoutControl),
+		strokeColour: 'black',
+		fillColour: 'none'
+	};
+	var horizontalSpacing = _user$project$LayoutControl_UI$horizontalSpacing(layoutControl);
+	var fullWidth = (1 * horizontalSpacing) + _user$project$UI_Gate$width(dimensions);
+	var verticalSpacing = _user$project$LayoutControl_UI$verticalSpacing(layoutControl);
+	var fullHeight = (3 * verticalSpacing) + _user$project$UI_Gate$height(dimensions);
 	var canvas = model.canvas;
 	var offsetLeft = (_elm_lang$core$Basics$toFloat(canvas.windowSize.width) / 2) - (fullWidth / 2);
 	var offsetTop = (_elm_lang$core$Basics$toFloat(canvas.windowSize.height) / 2) - (fullHeight / 2);
@@ -11459,7 +11538,7 @@ var _user$project$Main_UI$view = function (model) {
 				{
 					ctor: '::',
 					_0: _user$project$UI_Shape$Transform(
-						A3(_user$project$Commons_Transform$translate, _user$project$Commons_Transform$identity, offsetLeft + ((column - 1) * layoutControl.horizontalSpacing), offsetTop + ((row - 1) * layoutControl.verticalSpacing))),
+						A3(_user$project$Commons_Transform$translate, _user$project$Commons_Transform$identity, offsetLeft + ((column - 1) * horizontalSpacing), offsetTop + ((row - 1) * verticalSpacing))),
 					_1: {ctor: '[]'}
 				},
 				{
@@ -11593,7 +11672,7 @@ var _user$project$Main$update = F2(
 				_0: _elm_lang$core$Native_Utils.update(
 					model,
 					{
-						layoutControl: A2(_user$project$LayoutControl_Application$update, _p0._0, model.layoutControl)
+						layoutControl: A2(_user$project$LayoutControl_UI$execute, _p0._0, model.layoutControl)
 					}),
 				_1: _elm_lang$core$Platform_Cmd$none
 			};
@@ -11605,7 +11684,7 @@ var _user$project$Main$init = function () {
 	var cmd = _p2._1;
 	return {
 		ctor: '_Tuple2',
-		_0: {canvas: canvas, layoutControl: _user$project$LayoutControl_Application$init},
+		_0: {canvas: canvas, layoutControl: _user$project$LayoutControl_UI$init},
 		_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main_Message$Canvas, cmd)
 	};
 }();
