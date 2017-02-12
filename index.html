@@ -9468,128 +9468,6 @@ var _elm_lang$window$Window$subMap = F2(
 			});
 	});
 _elm_lang$core$Native_Platform.effectManagers['Window'] = {pkg: 'elm-lang/window', init: _elm_lang$window$Window$init, onEffects: _elm_lang$window$Window$onEffects, onSelfMsg: _elm_lang$window$Window$onSelfMsg, tag: 'sub', subMap: _elm_lang$window$Window$subMap};
-var _user$project$Commons_Transform$toSvgTransform = function (transform) {
-	return A2(
-		_elm_lang$core$Basics_ops['++'],
-		'matrix(',
-		A2(
-			_elm_lang$core$Basics_ops['++'],
-			A2(
-				_elm_lang$core$String$join,
-				', ',
-				_elm_lang$core$Array$toList(
-					A2(_elm_lang$core$Array$map, _elm_lang$core$Basics$toString, transform))),
-			')'));
-};
-var _user$project$Commons_Transform$identity = _elm_lang$core$Array$fromList(
-	{
-		ctor: '::',
-		_0: 1,
-		_1: {
-			ctor: '::',
-			_0: 0,
-			_1: {
-				ctor: '::',
-				_0: 0,
-				_1: {
-					ctor: '::',
-					_0: 1,
-					_1: {
-						ctor: '::',
-						_0: 0,
-						_1: {
-							ctor: '::',
-							_0: 0,
-							_1: {ctor: '[]'}
-						}
-					}
-				}
-			}
-		}
-	});
-var _user$project$Commons_Transform$elementAtIndex = F2(
-	function (index, transform) {
-		var _p0 = A2(_elm_lang$core$Array$get, index, transform);
-		if (_p0.ctor === 'Just') {
-			return _p0._0;
-		} else {
-			return _elm_lang$core$Native_Utils.crashCase(
-				'Commons.Transform',
-				{
-					start: {line: 19, column: 5},
-					end: {line: 26, column: 115}
-				},
-				_p0)(
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					'Index out of bounds: ',
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						_elm_lang$core$Basics$toString(index),
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							' in transform: ',
-							_elm_lang$core$Basics$toString(transform)))));
-		}
-	});
-var _user$project$Commons_Transform$translate = F3(
-	function (transform, dx, dy) {
-		return _elm_lang$core$Array$fromList(
-			{
-				ctor: '::',
-				_0: A2(_user$project$Commons_Transform$elementAtIndex, 0, transform),
-				_1: {
-					ctor: '::',
-					_0: A2(_user$project$Commons_Transform$elementAtIndex, 1, transform),
-					_1: {
-						ctor: '::',
-						_0: A2(_user$project$Commons_Transform$elementAtIndex, 2, transform),
-						_1: {
-							ctor: '::',
-							_0: A2(_user$project$Commons_Transform$elementAtIndex, 3, transform),
-							_1: {
-								ctor: '::',
-								_0: A2(_user$project$Commons_Transform$elementAtIndex, 4, transform) + dx,
-								_1: {
-									ctor: '::',
-									_0: A2(_user$project$Commons_Transform$elementAtIndex, 5, transform) + dy,
-									_1: {ctor: '[]'}
-								}
-							}
-						}
-					}
-				}
-			});
-	});
-var _user$project$Commons_Transform$scale = F2(
-	function (transform, scale) {
-		return _elm_lang$core$Array$fromList(
-			{
-				ctor: '::',
-				_0: A2(_user$project$Commons_Transform$elementAtIndex, 0, transform) * scale,
-				_1: {
-					ctor: '::',
-					_0: A2(_user$project$Commons_Transform$elementAtIndex, 1, transform) * scale,
-					_1: {
-						ctor: '::',
-						_0: A2(_user$project$Commons_Transform$elementAtIndex, 2, transform) * scale,
-						_1: {
-							ctor: '::',
-							_0: A2(_user$project$Commons_Transform$elementAtIndex, 3, transform) * scale,
-							_1: {
-								ctor: '::',
-								_0: A2(_user$project$Commons_Transform$elementAtIndex, 4, transform) * scale,
-								_1: {
-									ctor: '::',
-									_0: A2(_user$project$Commons_Transform$elementAtIndex, 5, transform) * scale,
-									_1: {ctor: '[]'}
-								}
-							}
-						}
-					}
-				}
-			});
-	});
 var _user$project$LayoutControl_Domain$widthVerticalSpacingRatio = 1.5;
 var _user$project$LayoutControl_Domain$widthHorizontalSpacingRatio = 2;
 var _user$project$LayoutControl_Domain$init = function () {
@@ -9798,6 +9676,128 @@ var _user$project$LayoutControl_UI$view = function (state) {
 				}
 			}));
 };
+var _user$project$Transform$toSvgTransform = function (transform) {
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		'matrix(',
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			A2(
+				_elm_lang$core$String$join,
+				', ',
+				_elm_lang$core$Array$toList(
+					A2(_elm_lang$core$Array$map, _elm_lang$core$Basics$toString, transform))),
+			')'));
+};
+var _user$project$Transform$identity = _elm_lang$core$Array$fromList(
+	{
+		ctor: '::',
+		_0: 1,
+		_1: {
+			ctor: '::',
+			_0: 0,
+			_1: {
+				ctor: '::',
+				_0: 0,
+				_1: {
+					ctor: '::',
+					_0: 1,
+					_1: {
+						ctor: '::',
+						_0: 0,
+						_1: {
+							ctor: '::',
+							_0: 0,
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			}
+		}
+	});
+var _user$project$Transform$elementAtIndex = F2(
+	function (index, transform) {
+		var _p0 = A2(_elm_lang$core$Array$get, index, transform);
+		if (_p0.ctor === 'Just') {
+			return _p0._0;
+		} else {
+			return _elm_lang$core$Native_Utils.crashCase(
+				'Transform',
+				{
+					start: {line: 19, column: 5},
+					end: {line: 26, column: 115}
+				},
+				_p0)(
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'Index out of bounds: ',
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Basics$toString(index),
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							' in transform: ',
+							_elm_lang$core$Basics$toString(transform)))));
+		}
+	});
+var _user$project$Transform$translate = F3(
+	function (transform, dx, dy) {
+		return _elm_lang$core$Array$fromList(
+			{
+				ctor: '::',
+				_0: A2(_user$project$Transform$elementAtIndex, 0, transform),
+				_1: {
+					ctor: '::',
+					_0: A2(_user$project$Transform$elementAtIndex, 1, transform),
+					_1: {
+						ctor: '::',
+						_0: A2(_user$project$Transform$elementAtIndex, 2, transform),
+						_1: {
+							ctor: '::',
+							_0: A2(_user$project$Transform$elementAtIndex, 3, transform),
+							_1: {
+								ctor: '::',
+								_0: A2(_user$project$Transform$elementAtIndex, 4, transform) + dx,
+								_1: {
+									ctor: '::',
+									_0: A2(_user$project$Transform$elementAtIndex, 5, transform) + dy,
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}
+			});
+	});
+var _user$project$Transform$scale = F2(
+	function (transform, scale) {
+		return _elm_lang$core$Array$fromList(
+			{
+				ctor: '::',
+				_0: A2(_user$project$Transform$elementAtIndex, 0, transform) * scale,
+				_1: {
+					ctor: '::',
+					_0: A2(_user$project$Transform$elementAtIndex, 1, transform) * scale,
+					_1: {
+						ctor: '::',
+						_0: A2(_user$project$Transform$elementAtIndex, 2, transform) * scale,
+						_1: {
+							ctor: '::',
+							_0: A2(_user$project$Transform$elementAtIndex, 3, transform) * scale,
+							_1: {
+								ctor: '::',
+								_0: A2(_user$project$Transform$elementAtIndex, 4, transform) * scale,
+								_1: {
+									ctor: '::',
+									_0: A2(_user$project$Transform$elementAtIndex, 5, transform) * scale,
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}
+			});
+	});
 var _user$project$Mouse_Wheel_ops = _user$project$Mouse_Wheel_ops || {};
 _user$project$Mouse_Wheel_ops['&>'] = F2(
 	function (t1, t2) {
@@ -9893,16 +9893,16 @@ var _user$project$Mouse_Wheel$subMap = F2(
 			});
 	});
 _elm_lang$core$Native_Platform.effectManagers['Mouse.Wheel'] = {pkg: 'user/project', init: _user$project$Mouse_Wheel$init, onEffects: _user$project$Mouse_Wheel$onEffects, onSelfMsg: _user$project$Mouse_Wheel$onSelfMsg, tag: 'sub', subMap: _user$project$Mouse_Wheel$subMap};
-var _user$project$UI_Canvas$getTransform = function (model) {
-	var _p0 = model.drag;
+var _user$project$UI_Canvas$currentTransform = function (state) {
+	var _p0 = state.drag;
 	if (_p0.ctor === 'Nothing') {
-		return model.transform;
+		return state.transform;
 	} else {
 		var _p2 = _p0._0.to;
 		var _p1 = _p0._0.from;
 		return A3(
-			_user$project$Commons_Transform$translate,
-			model.transform,
+			_user$project$Transform$translate,
+			state.transform,
 			_elm_lang$core$Basics$toFloat(_p2.x - _p1.x),
 			_elm_lang$core$Basics$toFloat(_p2.y - _p1.y));
 	}
@@ -9912,14 +9912,14 @@ var _user$project$UI_Canvas$Drag = F2(
 		return {from: a, to: b};
 	});
 var _user$project$UI_Canvas$update = F2(
-	function (msg, model) {
-		var _p3 = msg;
+	function (message, state) {
+		var _p3 = message;
 		switch (_p3.ctor) {
 			case 'WindowResized':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
-						model,
+						state,
 						{windowSize: _p3._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -9928,7 +9928,7 @@ var _user$project$UI_Canvas$update = F2(
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
-						model,
+						state,
 						{
 							drag: _elm_lang$core$Maybe$Just(
 								A2(_user$project$UI_Canvas$Drag, _p4, _p4))
@@ -9939,7 +9939,7 @@ var _user$project$UI_Canvas$update = F2(
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
-						model,
+						state,
 						{
 							drag: A2(
 								_elm_lang$core$Maybe$map,
@@ -9947,7 +9947,7 @@ var _user$project$UI_Canvas$update = F2(
 									var _p6 = _p5;
 									return A2(_user$project$UI_Canvas$Drag, _p6.from, _p3._0);
 								},
-								model.drag)
+								state.drag)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -9955,9 +9955,9 @@ var _user$project$UI_Canvas$update = F2(
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
-						model,
+						state,
 						{
-							transform: _user$project$UI_Canvas$getTransform(model),
+							transform: _user$project$UI_Canvas$currentTransform(state),
 							drag: _elm_lang$core$Maybe$Nothing
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
@@ -9965,22 +9965,22 @@ var _user$project$UI_Canvas$update = F2(
 			default:
 				var _p7 = _p3._0;
 				var pan = A2(_elm_lang$mouse$Mouse$Position, _p7.offsetX, _p7.offsetY);
-				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, model.distanceScrolled + _p7.wheelDelta);
+				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, state.distanceScrolled + _p7.wheelDelta);
 				var zoomPerUnitDistance = 1 + (0.1 / 100);
 				var zoom = Math.pow(
 					zoomPerUnitDistance,
-					_elm_lang$core$Basics$toFloat(model.distanceScrolled)) / Math.pow(
+					_elm_lang$core$Basics$toFloat(state.distanceScrolled)) / Math.pow(
 					zoomPerUnitDistance,
 					_elm_lang$core$Basics$toFloat(distanceScrolled));
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
-						model,
+						state,
 						{
 							distanceScrolled: distanceScrolled,
 							transform: A3(
-								_user$project$Commons_Transform$translate,
-								A2(_user$project$Commons_Transform$scale, model.transform, zoom),
+								_user$project$Transform$translate,
+								A2(_user$project$Transform$scale, state.transform, zoom),
 								(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.x),
 								(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.y))
 						}),
@@ -9988,7 +9988,7 @@ var _user$project$UI_Canvas$update = F2(
 				};
 		}
 	});
-var _user$project$UI_Canvas$Model = F4(
+var _user$project$UI_Canvas$State = F4(
 	function (a, b, c, d) {
 		return {windowSize: a, drag: b, distanceScrolled: c, transform: d};
 	});
@@ -10009,7 +10009,7 @@ var _user$project$UI_Canvas$onMouseDown = A2(
 	'mousedown',
 	A2(_elm_lang$core$Json_Decode$map, _user$project$UI_Canvas$DragStart, _elm_lang$mouse$Mouse$position));
 var _user$project$UI_Canvas$view = F4(
-	function (model, message, elements, shapes) {
+	function (state, message, elements, shapes) {
 		return A2(
 			_elm_lang$html$Html$div,
 			{
@@ -10040,8 +10040,8 @@ var _user$project$UI_Canvas$view = F4(
 								{
 									ctor: '::',
 									_0: _elm_lang$svg$Svg_Attributes$transform(
-										_user$project$Commons_Transform$toSvgTransform(
-											_user$project$UI_Canvas$getTransform(model))),
+										_user$project$Transform$toSvgTransform(
+											_user$project$UI_Canvas$currentTransform(state))),
 									_1: {ctor: '[]'}
 								},
 								shapes),
@@ -10059,51 +10059,41 @@ var _user$project$UI_Canvas$init = {
 		windowSize: {width: 800, height: 600},
 		drag: _elm_lang$core$Maybe$Nothing,
 		distanceScrolled: 0,
-		transform: _user$project$Commons_Transform$identity
+		transform: _user$project$Transform$identity
 	},
 	_1: A2(_elm_lang$core$Task$perform, _user$project$UI_Canvas$WindowResized, _elm_lang$window$Window$size)
 };
-var _user$project$UI_Canvas$subscriptions = function (model) {
+var _user$project$UI_Canvas$subscriptions = function (state) {
 	return _elm_lang$core$Platform_Sub$batch(
 		{
 			ctor: '::',
 			_0: _elm_lang$window$Window$resizes(_user$project$UI_Canvas$WindowResized),
 			_1: {
 				ctor: '::',
-				_0: function () {
-					var _p8 = model.drag;
-					if (_p8.ctor === 'Nothing') {
-						return _elm_lang$core$Platform_Sub$none;
-					} else {
-						return _elm_lang$core$Platform_Sub$batch(
-							{
-								ctor: '::',
-								_0: _elm_lang$mouse$Mouse$moves(_user$project$UI_Canvas$DragAt),
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$mouse$Mouse$ups(_user$project$UI_Canvas$DragEnd),
-									_1: {ctor: '[]'}
-								}
-							});
-					}
-				}(),
+				_0: _user$project$Mouse_Wheel$deltas(_user$project$UI_Canvas$WheelScrolled),
 				_1: {
 					ctor: '::',
-					_0: _user$project$Mouse_Wheel$deltas(_user$project$UI_Canvas$WheelScrolled),
+					_0: function () {
+						var _p8 = state.drag;
+						if (_p8.ctor === 'Nothing') {
+							return _elm_lang$core$Platform_Sub$none;
+						} else {
+							return _elm_lang$core$Platform_Sub$batch(
+								{
+									ctor: '::',
+									_0: _elm_lang$mouse$Mouse$moves(_user$project$UI_Canvas$DragAt),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$mouse$Mouse$ups(_user$project$UI_Canvas$DragEnd),
+										_1: {ctor: '[]'}
+									}
+								});
+						}
+					}(),
 					_1: {ctor: '[]'}
 				}
 			}
 		});
-};
-var _user$project$Main_Domain$Model = F2(
-	function (a, b) {
-		return {canvas: a, layoutControl: b};
-	});
-var _user$project$Main_Message$LayoutControl = function (a) {
-	return {ctor: 'LayoutControl', _0: a};
-};
-var _user$project$Main_Message$Canvas = function (a) {
-	return {ctor: 'Canvas', _0: a};
 };
 var _user$project$UI_Shape$fromDescription = function (description) {
 	return A2(
@@ -10305,7 +10295,7 @@ var _user$project$UI_Shape$fromAttributes = function (attributes) {
 					return _elm_lang$svg$Svg_Attributes$fill(_p1._0);
 				default:
 					return _elm_lang$svg$Svg_Attributes$transform(
-						_user$project$Commons_Transform$toSvgTransform(_p1._0));
+						_user$project$Transform$toSvgTransform(_p1._0));
 			}
 		},
 		attributes);
@@ -10488,7 +10478,7 @@ var _user$project$UI_Gate$centred = F3(
 			shape: A2(
 				_user$project$UI_Gate$transformation,
 				gate.shape,
-				A3(_user$project$Commons_Transform$translate, _user$project$Commons_Transform$identity, left, top))
+				A3(_user$project$Transform$translate, _user$project$Transform$identity, left, top))
 		};
 	});
 var _user$project$UI_Gate$noBody = function (dimensions) {
@@ -11023,7 +11013,7 @@ var _user$project$UI_Gate$twinCurvedBase = F3(
 								{
 									ctor: '::',
 									_0: _user$project$UI_Shape$Transform(
-										A3(_user$project$Commons_Transform$translate, _user$project$Commons_Transform$identity, transformOffset, 0)),
+										A3(_user$project$Transform$translate, _user$project$Transform$identity, transformOffset, 0)),
 									_1: {ctor: '[]'}
 								},
 								{
@@ -11446,8 +11436,18 @@ var _user$project$UI_Styles$stylesheet = A3(
 		_0: _elm_lang$html$Html$text(_user$project$UI_Styles$css),
 		_1: {ctor: '[]'}
 	});
-var _user$project$Main_UI$view = function (model) {
-	var layoutControl = model.layoutControl;
+var _user$project$Main_UI$State = F2(
+	function (a, b) {
+		return {canvas: a, layoutControl: b};
+	});
+var _user$project$Main_UI$LayoutControl = function (a) {
+	return {ctor: 'LayoutControl', _0: a};
+};
+var _user$project$Main_UI$Canvas = function (a) {
+	return {ctor: 'Canvas', _0: a};
+};
+var _user$project$Main_UI$view = function (state) {
+	var layoutControl = state.layoutControl;
 	var view = {
 		ctor: '::',
 		_0: _user$project$UI_Styles$stylesheet,
@@ -11455,7 +11455,7 @@ var _user$project$Main_UI$view = function (model) {
 			ctor: '::',
 			_0: A2(
 				_elm_lang$html$Html$map,
-				_user$project$Main_Message$LayoutControl,
+				_user$project$Main_UI$LayoutControl,
 				_user$project$LayoutControl_UI$view(layoutControl)),
 			_1: {ctor: '[]'}
 		}
@@ -11466,7 +11466,7 @@ var _user$project$Main_UI$view = function (model) {
 	var fullWidth = (1 * horizontalSpacing) + _user$project$UI_Gate$width(dimensions);
 	var verticalSpacing = layoutControl.domain.verticalSpacing;
 	var fullHeight = (3 * verticalSpacing) + _user$project$UI_Gate$height(dimensions);
-	var canvas = model.canvas;
+	var canvas = state.canvas;
 	var offsetLeft = (_elm_lang$core$Basics$toFloat(canvas.windowSize.width) / 2) - (fullWidth / 2);
 	var offsetTop = (_elm_lang$core$Basics$toFloat(canvas.windowSize.height) / 2) - (fullHeight / 2);
 	var gate = F3(
@@ -11476,7 +11476,7 @@ var _user$project$Main_UI$view = function (model) {
 				{
 					ctor: '::',
 					_0: _user$project$UI_Shape$Transform(
-						A3(_user$project$Commons_Transform$translate, _user$project$Commons_Transform$identity, offsetLeft + ((column - 1) * horizontalSpacing), offsetTop + ((row - 1) * verticalSpacing))),
+						A3(_user$project$Transform$translate, _user$project$Transform$identity, offsetLeft + ((column - 1) * horizontalSpacing), offsetTop + ((row - 1) * verticalSpacing))),
 					_1: {ctor: '[]'}
 				},
 				{
@@ -11582,35 +11582,35 @@ var _user$project$Main_UI$view = function (model) {
 				})),
 		_1: {ctor: '[]'}
 	};
-	return A4(_user$project$UI_Canvas$view, canvas, _user$project$Main_Message$Canvas, view, shapes);
+	return A4(_user$project$UI_Canvas$view, canvas, _user$project$Main_UI$Canvas, view, shapes);
 };
 var _user$project$Main$subscriptions = function (model) {
 	return A2(
 		_elm_lang$core$Platform_Sub$map,
-		_user$project$Main_Message$Canvas,
+		_user$project$Main_UI$Canvas,
 		_user$project$UI_Canvas$subscriptions(model.canvas));
 };
 var _user$project$Main$update = F2(
-	function (msg, model) {
-		var _p0 = msg;
+	function (message, state) {
+		var _p0 = message;
 		if (_p0.ctor === 'Canvas') {
-			var _p1 = A2(_user$project$UI_Canvas$update, _p0._0, model.canvas);
+			var _p1 = A2(_user$project$UI_Canvas$update, _p0._0, state.canvas);
 			var canvas = _p1._0;
 			var cmd = _p1._1;
 			return {
 				ctor: '_Tuple2',
 				_0: _elm_lang$core$Native_Utils.update(
-					model,
+					state,
 					{canvas: canvas}),
-				_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main_Message$Canvas, cmd)
+				_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main_UI$Canvas, cmd)
 			};
 		} else {
 			return {
 				ctor: '_Tuple2',
 				_0: _elm_lang$core$Native_Utils.update(
-					model,
+					state,
 					{
-						layoutControl: A2(_user$project$LayoutControl_UI$execute, _p0._0, model.layoutControl)
+						layoutControl: A2(_user$project$LayoutControl_UI$execute, _p0._0, state.layoutControl)
 					}),
 				_1: _elm_lang$core$Platform_Cmd$none
 			};
@@ -11623,7 +11623,7 @@ var _user$project$Main$init = function () {
 	return {
 		ctor: '_Tuple2',
 		_0: {canvas: canvas, layoutControl: _user$project$LayoutControl_UI$init},
-		_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main_Message$Canvas, cmd)
+		_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main_UI$Canvas, cmd)
 	};
 }();
 var _user$project$Main$main = _elm_lang$html$Html$program(
