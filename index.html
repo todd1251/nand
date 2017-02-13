@@ -9468,6 +9468,379 @@ var _elm_lang$window$Window$subMap = F2(
 			});
 	});
 _elm_lang$core$Native_Platform.effectManagers['Window'] = {pkg: 'elm-lang/window', init: _elm_lang$window$Window$init, onEffects: _elm_lang$window$Window$onEffects, onSelfMsg: _elm_lang$window$Window$onSelfMsg, tag: 'sub', subMap: _elm_lang$window$Window$subMap};
+var _user$project$Mouse_Wheel_ops = _user$project$Mouse_Wheel_ops || {};
+_user$project$Mouse_Wheel_ops['&>'] = F2(
+	function (t1, t2) {
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (_p0) {
+				return t2;
+			},
+			t1);
+	});
+var _user$project$Mouse_Wheel$onSelfMsg = F3(
+	function (router, delta, state) {
+		var _p1 = state;
+		if (_p1.ctor === 'Nothing') {
+			return _elm_lang$core$Task$succeed(state);
+		} else {
+			var send = function (_p2) {
+				var _p3 = _p2;
+				return A2(
+					_elm_lang$core$Platform$sendToApp,
+					router,
+					_p3._0(delta));
+			};
+			return A2(
+				_user$project$Mouse_Wheel_ops['&>'],
+				_elm_lang$core$Task$sequence(
+					A2(_elm_lang$core$List$map, send, _p1._0.subs)),
+				_elm_lang$core$Task$succeed(state));
+		}
+	});
+var _user$project$Mouse_Wheel$init = _elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing);
+var _user$project$Mouse_Wheel$subscription = _elm_lang$core$Native_Platform.leaf('Mouse.Wheel');
+var _user$project$Mouse_Wheel$Delta = F5(
+	function (a, b, c, d, e) {
+		return {wheelDelta: a, deltaX: b, deltaY: c, offsetX: d, offsetY: e};
+	});
+var _user$project$Mouse_Wheel$delta = A6(
+	_elm_lang$core$Json_Decode$map5,
+	_user$project$Mouse_Wheel$Delta,
+	A2(_elm_lang$core$Json_Decode$field, 'wheelDelta', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'deltaX', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'deltaY', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'offsetX', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'offsetY', _elm_lang$core$Json_Decode$int));
+var _user$project$Mouse_Wheel$onEffects = F3(
+	function (router, newSubs, oldState) {
+		var _p4 = {ctor: '_Tuple2', _0: oldState, _1: newSubs};
+		if (_p4._0.ctor === 'Nothing') {
+			if (_p4._1.ctor === '[]') {
+				return _elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing);
+			} else {
+				return A2(
+					_elm_lang$core$Task$andThen,
+					function (pid) {
+						return _elm_lang$core$Task$succeed(
+							_elm_lang$core$Maybe$Just(
+								{subs: newSubs, pid: pid}));
+					},
+					_elm_lang$core$Process$spawn(
+						A3(
+							_elm_lang$dom$Dom_LowLevel$onWindow,
+							'wheel',
+							_user$project$Mouse_Wheel$delta,
+							_elm_lang$core$Platform$sendToSelf(router))));
+			}
+		} else {
+			if (_p4._1.ctor === '[]') {
+				return A2(
+					_user$project$Mouse_Wheel_ops['&>'],
+					_elm_lang$core$Process$kill(_p4._0._0.pid),
+					_elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing));
+			} else {
+				return _elm_lang$core$Task$succeed(
+					_elm_lang$core$Maybe$Just(
+						{subs: newSubs, pid: _p4._0._0.pid}));
+			}
+		}
+	});
+var _user$project$Mouse_Wheel$MySub = function (a) {
+	return {ctor: 'MySub', _0: a};
+};
+var _user$project$Mouse_Wheel$deltas = function (tagger) {
+	return _user$project$Mouse_Wheel$subscription(
+		_user$project$Mouse_Wheel$MySub(tagger));
+};
+var _user$project$Mouse_Wheel$subMap = F2(
+	function (func, _p5) {
+		var _p6 = _p5;
+		return _user$project$Mouse_Wheel$MySub(
+			function (_p7) {
+				return func(
+					_p6._0(_p7));
+			});
+	});
+_elm_lang$core$Native_Platform.effectManagers['Mouse.Wheel'] = {pkg: 'user/project', init: _user$project$Mouse_Wheel$init, onEffects: _user$project$Mouse_Wheel$onEffects, onSelfMsg: _user$project$Mouse_Wheel$onSelfMsg, tag: 'sub', subMap: _user$project$Mouse_Wheel$subMap};
+var _user$project$Message$WheelScrolledBy = function (a) {
+	return {ctor: 'WheelScrolledBy', _0: a};
+};
+var _user$project$Message$DragEndedAt = function (a) {
+	return {ctor: 'DragEndedAt', _0: a};
+};
+var _user$project$Message$DragMovedTo = function (a) {
+	return {ctor: 'DragMovedTo', _0: a};
+};
+var _user$project$Message$DragStartedAt = function (a) {
+	return {ctor: 'DragStartedAt', _0: a};
+};
+var _user$project$Message$WindowResizedTo = function (a) {
+	return {ctor: 'WindowResizedTo', _0: a};
+};
+var _user$project$Transform$toSvgTransform = function (transform) {
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		'matrix(',
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			A2(
+				_elm_lang$core$String$join,
+				', ',
+				_elm_lang$core$Array$toList(
+					A2(_elm_lang$core$Array$map, _elm_lang$core$Basics$toString, transform))),
+			')'));
+};
+var _user$project$Transform$identity = _elm_lang$core$Array$fromList(
+	{
+		ctor: '::',
+		_0: 1,
+		_1: {
+			ctor: '::',
+			_0: 0,
+			_1: {
+				ctor: '::',
+				_0: 0,
+				_1: {
+					ctor: '::',
+					_0: 1,
+					_1: {
+						ctor: '::',
+						_0: 0,
+						_1: {
+							ctor: '::',
+							_0: 0,
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			}
+		}
+	});
+var _user$project$Transform$elementAtIndex = F2(
+	function (index, transform) {
+		var _p0 = A2(_elm_lang$core$Array$get, index, transform);
+		if (_p0.ctor === 'Just') {
+			return _p0._0;
+		} else {
+			return _elm_lang$core$Native_Utils.crashCase(
+				'Transform',
+				{
+					start: {line: 19, column: 5},
+					end: {line: 26, column: 115}
+				},
+				_p0)(
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'Index out of bounds: ',
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Basics$toString(index),
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							' in transform: ',
+							_elm_lang$core$Basics$toString(transform)))));
+		}
+	});
+var _user$project$Transform$translate = F3(
+	function (transform, dx, dy) {
+		return _elm_lang$core$Array$fromList(
+			{
+				ctor: '::',
+				_0: A2(_user$project$Transform$elementAtIndex, 0, transform),
+				_1: {
+					ctor: '::',
+					_0: A2(_user$project$Transform$elementAtIndex, 1, transform),
+					_1: {
+						ctor: '::',
+						_0: A2(_user$project$Transform$elementAtIndex, 2, transform),
+						_1: {
+							ctor: '::',
+							_0: A2(_user$project$Transform$elementAtIndex, 3, transform),
+							_1: {
+								ctor: '::',
+								_0: A2(_user$project$Transform$elementAtIndex, 4, transform) + dx,
+								_1: {
+									ctor: '::',
+									_0: A2(_user$project$Transform$elementAtIndex, 5, transform) + dy,
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}
+			});
+	});
+var _user$project$Transform$scale = F2(
+	function (transform, scale) {
+		return _elm_lang$core$Array$fromList(
+			{
+				ctor: '::',
+				_0: A2(_user$project$Transform$elementAtIndex, 0, transform) * scale,
+				_1: {
+					ctor: '::',
+					_0: A2(_user$project$Transform$elementAtIndex, 1, transform) * scale,
+					_1: {
+						ctor: '::',
+						_0: A2(_user$project$Transform$elementAtIndex, 2, transform) * scale,
+						_1: {
+							ctor: '::',
+							_0: A2(_user$project$Transform$elementAtIndex, 3, transform) * scale,
+							_1: {
+								ctor: '::',
+								_0: A2(_user$project$Transform$elementAtIndex, 4, transform) * scale,
+								_1: {
+									ctor: '::',
+									_0: A2(_user$project$Transform$elementAtIndex, 5, transform) * scale,
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}
+			});
+	});
+var _user$project$ViewModel$currentTransform = function (state) {
+	var _p0 = state.drag;
+	if (_p0.ctor === 'Nothing') {
+		return state.transform;
+	} else {
+		var _p2 = _p0._0.to;
+		var _p1 = _p0._0.from;
+		return A3(
+			_user$project$Transform$translate,
+			state.transform,
+			_elm_lang$core$Basics$toFloat(_p2.x - _p1.x),
+			_elm_lang$core$Basics$toFloat(_p2.y - _p1.y));
+	}
+};
+var _user$project$ViewModel$Drag = F2(
+	function (a, b) {
+		return {from: a, to: b};
+	});
+var _user$project$ViewModel$ViewModel = F4(
+	function (a, b, c, d) {
+		return {windowSize: a, drag: b, distanceScrolled: c, transform: d};
+	});
+var _user$project$Canvas$subscriptions = function (state) {
+	return _elm_lang$core$Platform_Sub$batch(
+		{
+			ctor: '::',
+			_0: _elm_lang$window$Window$resizes(_user$project$Message$WindowResizedTo),
+			_1: {
+				ctor: '::',
+				_0: _user$project$Mouse_Wheel$deltas(_user$project$Message$WheelScrolledBy),
+				_1: {
+					ctor: '::',
+					_0: function () {
+						var _p0 = state.drag;
+						if (_p0.ctor === 'Nothing') {
+							return _elm_lang$core$Platform_Sub$none;
+						} else {
+							return _elm_lang$core$Platform_Sub$batch(
+								{
+									ctor: '::',
+									_0: _elm_lang$mouse$Mouse$moves(_user$project$Message$DragMovedTo),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$mouse$Mouse$ups(_user$project$Message$DragEndedAt),
+										_1: {ctor: '[]'}
+									}
+								});
+						}
+					}(),
+					_1: {ctor: '[]'}
+				}
+			}
+		});
+};
+var _user$project$Canvas$update = F2(
+	function (message, state) {
+		var _p1 = message;
+		switch (_p1.ctor) {
+			case 'WindowResizedTo':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						state,
+						{windowSize: _p1._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'DragStartedAt':
+				var _p2 = _p1._0;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						state,
+						{
+							drag: _elm_lang$core$Maybe$Just(
+								A2(_user$project$ViewModel$Drag, _p2, _p2))
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'DragMovedTo':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						state,
+						{
+							drag: A2(
+								_elm_lang$core$Maybe$map,
+								function (_p3) {
+									var _p4 = _p3;
+									return A2(_user$project$ViewModel$Drag, _p4.from, _p1._0);
+								},
+								state.drag)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'DragEndedAt':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						state,
+						{
+							transform: _user$project$ViewModel$currentTransform(state),
+							drag: _elm_lang$core$Maybe$Nothing
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				var _p5 = _p1._0;
+				var pan = A2(_elm_lang$mouse$Mouse$Position, _p5.offsetX, _p5.offsetY);
+				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, state.distanceScrolled + _p5.wheelDelta);
+				var zoomPerUnitDistance = 1 + (0.1 / 100);
+				var zoom = Math.pow(
+					zoomPerUnitDistance,
+					_elm_lang$core$Basics$toFloat(state.distanceScrolled)) / Math.pow(
+					zoomPerUnitDistance,
+					_elm_lang$core$Basics$toFloat(distanceScrolled));
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						state,
+						{
+							distanceScrolled: distanceScrolled,
+							transform: A3(
+								_user$project$Transform$translate,
+								A2(_user$project$Transform$scale, state.transform, zoom),
+								(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.x),
+								(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.y))
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+		}
+	});
+var _user$project$Canvas$init = {
+	ctor: '_Tuple2',
+	_0: {
+		windowSize: {width: 800, height: 600},
+		drag: _elm_lang$core$Maybe$Nothing,
+		distanceScrolled: 0,
+		transform: _user$project$Transform$identity
+	},
+	_1: A2(_elm_lang$core$Task$perform, _user$project$Message$WindowResizedTo, _elm_lang$window$Window$size)
+};
 var _user$project$LayoutControl_Domain$widthVerticalSpacingRatio = 1.5;
 var _user$project$LayoutControl_Domain$widthHorizontalSpacingRatio = 2;
 var _user$project$LayoutControl_Domain$init = function () {
@@ -9675,425 +10048,6 @@ var _user$project$LayoutControl_UI$view = function (state) {
 					_1: {ctor: '[]'}
 				}
 			}));
-};
-var _user$project$Transform$toSvgTransform = function (transform) {
-	return A2(
-		_elm_lang$core$Basics_ops['++'],
-		'matrix(',
-		A2(
-			_elm_lang$core$Basics_ops['++'],
-			A2(
-				_elm_lang$core$String$join,
-				', ',
-				_elm_lang$core$Array$toList(
-					A2(_elm_lang$core$Array$map, _elm_lang$core$Basics$toString, transform))),
-			')'));
-};
-var _user$project$Transform$identity = _elm_lang$core$Array$fromList(
-	{
-		ctor: '::',
-		_0: 1,
-		_1: {
-			ctor: '::',
-			_0: 0,
-			_1: {
-				ctor: '::',
-				_0: 0,
-				_1: {
-					ctor: '::',
-					_0: 1,
-					_1: {
-						ctor: '::',
-						_0: 0,
-						_1: {
-							ctor: '::',
-							_0: 0,
-							_1: {ctor: '[]'}
-						}
-					}
-				}
-			}
-		}
-	});
-var _user$project$Transform$elementAtIndex = F2(
-	function (index, transform) {
-		var _p0 = A2(_elm_lang$core$Array$get, index, transform);
-		if (_p0.ctor === 'Just') {
-			return _p0._0;
-		} else {
-			return _elm_lang$core$Native_Utils.crashCase(
-				'Transform',
-				{
-					start: {line: 19, column: 5},
-					end: {line: 26, column: 115}
-				},
-				_p0)(
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					'Index out of bounds: ',
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						_elm_lang$core$Basics$toString(index),
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							' in transform: ',
-							_elm_lang$core$Basics$toString(transform)))));
-		}
-	});
-var _user$project$Transform$translate = F3(
-	function (transform, dx, dy) {
-		return _elm_lang$core$Array$fromList(
-			{
-				ctor: '::',
-				_0: A2(_user$project$Transform$elementAtIndex, 0, transform),
-				_1: {
-					ctor: '::',
-					_0: A2(_user$project$Transform$elementAtIndex, 1, transform),
-					_1: {
-						ctor: '::',
-						_0: A2(_user$project$Transform$elementAtIndex, 2, transform),
-						_1: {
-							ctor: '::',
-							_0: A2(_user$project$Transform$elementAtIndex, 3, transform),
-							_1: {
-								ctor: '::',
-								_0: A2(_user$project$Transform$elementAtIndex, 4, transform) + dx,
-								_1: {
-									ctor: '::',
-									_0: A2(_user$project$Transform$elementAtIndex, 5, transform) + dy,
-									_1: {ctor: '[]'}
-								}
-							}
-						}
-					}
-				}
-			});
-	});
-var _user$project$Transform$scale = F2(
-	function (transform, scale) {
-		return _elm_lang$core$Array$fromList(
-			{
-				ctor: '::',
-				_0: A2(_user$project$Transform$elementAtIndex, 0, transform) * scale,
-				_1: {
-					ctor: '::',
-					_0: A2(_user$project$Transform$elementAtIndex, 1, transform) * scale,
-					_1: {
-						ctor: '::',
-						_0: A2(_user$project$Transform$elementAtIndex, 2, transform) * scale,
-						_1: {
-							ctor: '::',
-							_0: A2(_user$project$Transform$elementAtIndex, 3, transform) * scale,
-							_1: {
-								ctor: '::',
-								_0: A2(_user$project$Transform$elementAtIndex, 4, transform) * scale,
-								_1: {
-									ctor: '::',
-									_0: A2(_user$project$Transform$elementAtIndex, 5, transform) * scale,
-									_1: {ctor: '[]'}
-								}
-							}
-						}
-					}
-				}
-			});
-	});
-var _user$project$Mouse_Wheel_ops = _user$project$Mouse_Wheel_ops || {};
-_user$project$Mouse_Wheel_ops['&>'] = F2(
-	function (t1, t2) {
-		return A2(
-			_elm_lang$core$Task$andThen,
-			function (_p0) {
-				return t2;
-			},
-			t1);
-	});
-var _user$project$Mouse_Wheel$onSelfMsg = F3(
-	function (router, delta, state) {
-		var _p1 = state;
-		if (_p1.ctor === 'Nothing') {
-			return _elm_lang$core$Task$succeed(state);
-		} else {
-			var send = function (_p2) {
-				var _p3 = _p2;
-				return A2(
-					_elm_lang$core$Platform$sendToApp,
-					router,
-					_p3._0(delta));
-			};
-			return A2(
-				_user$project$Mouse_Wheel_ops['&>'],
-				_elm_lang$core$Task$sequence(
-					A2(_elm_lang$core$List$map, send, _p1._0.subs)),
-				_elm_lang$core$Task$succeed(state));
-		}
-	});
-var _user$project$Mouse_Wheel$init = _elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing);
-var _user$project$Mouse_Wheel$subscription = _elm_lang$core$Native_Platform.leaf('Mouse.Wheel');
-var _user$project$Mouse_Wheel$Delta = F5(
-	function (a, b, c, d, e) {
-		return {wheelDelta: a, deltaX: b, deltaY: c, offsetX: d, offsetY: e};
-	});
-var _user$project$Mouse_Wheel$delta = A6(
-	_elm_lang$core$Json_Decode$map5,
-	_user$project$Mouse_Wheel$Delta,
-	A2(_elm_lang$core$Json_Decode$field, 'wheelDelta', _elm_lang$core$Json_Decode$int),
-	A2(_elm_lang$core$Json_Decode$field, 'deltaX', _elm_lang$core$Json_Decode$int),
-	A2(_elm_lang$core$Json_Decode$field, 'deltaY', _elm_lang$core$Json_Decode$int),
-	A2(_elm_lang$core$Json_Decode$field, 'offsetX', _elm_lang$core$Json_Decode$int),
-	A2(_elm_lang$core$Json_Decode$field, 'offsetY', _elm_lang$core$Json_Decode$int));
-var _user$project$Mouse_Wheel$onEffects = F3(
-	function (router, newSubs, oldState) {
-		var _p4 = {ctor: '_Tuple2', _0: oldState, _1: newSubs};
-		if (_p4._0.ctor === 'Nothing') {
-			if (_p4._1.ctor === '[]') {
-				return _elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing);
-			} else {
-				return A2(
-					_elm_lang$core$Task$andThen,
-					function (pid) {
-						return _elm_lang$core$Task$succeed(
-							_elm_lang$core$Maybe$Just(
-								{subs: newSubs, pid: pid}));
-					},
-					_elm_lang$core$Process$spawn(
-						A3(
-							_elm_lang$dom$Dom_LowLevel$onWindow,
-							'wheel',
-							_user$project$Mouse_Wheel$delta,
-							_elm_lang$core$Platform$sendToSelf(router))));
-			}
-		} else {
-			if (_p4._1.ctor === '[]') {
-				return A2(
-					_user$project$Mouse_Wheel_ops['&>'],
-					_elm_lang$core$Process$kill(_p4._0._0.pid),
-					_elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing));
-			} else {
-				return _elm_lang$core$Task$succeed(
-					_elm_lang$core$Maybe$Just(
-						{subs: newSubs, pid: _p4._0._0.pid}));
-			}
-		}
-	});
-var _user$project$Mouse_Wheel$MySub = function (a) {
-	return {ctor: 'MySub', _0: a};
-};
-var _user$project$Mouse_Wheel$deltas = function (tagger) {
-	return _user$project$Mouse_Wheel$subscription(
-		_user$project$Mouse_Wheel$MySub(tagger));
-};
-var _user$project$Mouse_Wheel$subMap = F2(
-	function (func, _p5) {
-		var _p6 = _p5;
-		return _user$project$Mouse_Wheel$MySub(
-			function (_p7) {
-				return func(
-					_p6._0(_p7));
-			});
-	});
-_elm_lang$core$Native_Platform.effectManagers['Mouse.Wheel'] = {pkg: 'user/project', init: _user$project$Mouse_Wheel$init, onEffects: _user$project$Mouse_Wheel$onEffects, onSelfMsg: _user$project$Mouse_Wheel$onSelfMsg, tag: 'sub', subMap: _user$project$Mouse_Wheel$subMap};
-var _user$project$UI_Canvas$currentTransform = function (state) {
-	var _p0 = state.drag;
-	if (_p0.ctor === 'Nothing') {
-		return state.transform;
-	} else {
-		var _p2 = _p0._0.to;
-		var _p1 = _p0._0.from;
-		return A3(
-			_user$project$Transform$translate,
-			state.transform,
-			_elm_lang$core$Basics$toFloat(_p2.x - _p1.x),
-			_elm_lang$core$Basics$toFloat(_p2.y - _p1.y));
-	}
-};
-var _user$project$UI_Canvas$Drag = F2(
-	function (a, b) {
-		return {from: a, to: b};
-	});
-var _user$project$UI_Canvas$update = F2(
-	function (message, state) {
-		var _p3 = message;
-		switch (_p3.ctor) {
-			case 'WindowResized':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						state,
-						{windowSize: _p3._0}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'DragStart':
-				var _p4 = _p3._0;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						state,
-						{
-							drag: _elm_lang$core$Maybe$Just(
-								A2(_user$project$UI_Canvas$Drag, _p4, _p4))
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'DragAt':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						state,
-						{
-							drag: A2(
-								_elm_lang$core$Maybe$map,
-								function (_p5) {
-									var _p6 = _p5;
-									return A2(_user$project$UI_Canvas$Drag, _p6.from, _p3._0);
-								},
-								state.drag)
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'DragEnd':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						state,
-						{
-							transform: _user$project$UI_Canvas$currentTransform(state),
-							drag: _elm_lang$core$Maybe$Nothing
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			default:
-				var _p7 = _p3._0;
-				var pan = A2(_elm_lang$mouse$Mouse$Position, _p7.offsetX, _p7.offsetY);
-				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, state.distanceScrolled + _p7.wheelDelta);
-				var zoomPerUnitDistance = 1 + (0.1 / 100);
-				var zoom = Math.pow(
-					zoomPerUnitDistance,
-					_elm_lang$core$Basics$toFloat(state.distanceScrolled)) / Math.pow(
-					zoomPerUnitDistance,
-					_elm_lang$core$Basics$toFloat(distanceScrolled));
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						state,
-						{
-							distanceScrolled: distanceScrolled,
-							transform: A3(
-								_user$project$Transform$translate,
-								A2(_user$project$Transform$scale, state.transform, zoom),
-								(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.x),
-								(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.y))
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-		}
-	});
-var _user$project$UI_Canvas$State = F4(
-	function (a, b, c, d) {
-		return {windowSize: a, drag: b, distanceScrolled: c, transform: d};
-	});
-var _user$project$UI_Canvas$WheelScrolled = function (a) {
-	return {ctor: 'WheelScrolled', _0: a};
-};
-var _user$project$UI_Canvas$DragEnd = function (a) {
-	return {ctor: 'DragEnd', _0: a};
-};
-var _user$project$UI_Canvas$DragAt = function (a) {
-	return {ctor: 'DragAt', _0: a};
-};
-var _user$project$UI_Canvas$DragStart = function (a) {
-	return {ctor: 'DragStart', _0: a};
-};
-var _user$project$UI_Canvas$onMouseDown = A2(
-	_elm_lang$html$Html_Events$on,
-	'mousedown',
-	A2(_elm_lang$core$Json_Decode$map, _user$project$UI_Canvas$DragStart, _elm_lang$mouse$Mouse$position));
-var _user$project$UI_Canvas$view = F4(
-	function (state, message, elements, shapes) {
-		return A2(
-			_elm_lang$html$Html$div,
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('container'),
-				_1: {
-					ctor: '::',
-					_0: A2(_elm_lang$html$Html_Attributes$map, message, _user$project$UI_Canvas$onMouseDown),
-					_1: {ctor: '[]'}
-				}
-			},
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				elements,
-				{
-					ctor: '::',
-					_0: A2(
-						_elm_lang$svg$Svg$svg,
-						{
-							ctor: '::',
-							_0: _elm_lang$svg$Svg_Attributes$class('canvas'),
-							_1: {ctor: '[]'}
-						},
-						{
-							ctor: '::',
-							_0: A2(
-								_elm_lang$svg$Svg$g,
-								{
-									ctor: '::',
-									_0: _elm_lang$svg$Svg_Attributes$transform(
-										_user$project$Transform$toSvgTransform(
-											_user$project$UI_Canvas$currentTransform(state))),
-									_1: {ctor: '[]'}
-								},
-								shapes),
-							_1: {ctor: '[]'}
-						}),
-					_1: {ctor: '[]'}
-				}));
-	});
-var _user$project$UI_Canvas$WindowResized = function (a) {
-	return {ctor: 'WindowResized', _0: a};
-};
-var _user$project$UI_Canvas$init = {
-	ctor: '_Tuple2',
-	_0: {
-		windowSize: {width: 800, height: 600},
-		drag: _elm_lang$core$Maybe$Nothing,
-		distanceScrolled: 0,
-		transform: _user$project$Transform$identity
-	},
-	_1: A2(_elm_lang$core$Task$perform, _user$project$UI_Canvas$WindowResized, _elm_lang$window$Window$size)
-};
-var _user$project$UI_Canvas$subscriptions = function (state) {
-	return _elm_lang$core$Platform_Sub$batch(
-		{
-			ctor: '::',
-			_0: _elm_lang$window$Window$resizes(_user$project$UI_Canvas$WindowResized),
-			_1: {
-				ctor: '::',
-				_0: _user$project$Mouse_Wheel$deltas(_user$project$UI_Canvas$WheelScrolled),
-				_1: {
-					ctor: '::',
-					_0: function () {
-						var _p8 = state.drag;
-						if (_p8.ctor === 'Nothing') {
-							return _elm_lang$core$Platform_Sub$none;
-						} else {
-							return _elm_lang$core$Platform_Sub$batch(
-								{
-									ctor: '::',
-									_0: _elm_lang$mouse$Mouse$moves(_user$project$UI_Canvas$DragAt),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$mouse$Mouse$ups(_user$project$UI_Canvas$DragEnd),
-										_1: {ctor: '[]'}
-									}
-								});
-						}
-					}(),
-					_1: {ctor: '[]'}
-				}
-			}
-		});
 };
 var _user$project$UI_Shape$fromDescription = function (description) {
 	return A2(
@@ -11436,6 +11390,52 @@ var _user$project$UI_Styles$stylesheet = A3(
 		_0: _elm_lang$html$Html$text(_user$project$UI_Styles$css),
 		_1: {ctor: '[]'}
 	});
+var _user$project$UI$onMouseDown = A2(
+	_elm_lang$html$Html_Events$on,
+	'mousedown',
+	A2(_elm_lang$core$Json_Decode$map, _user$project$Message$DragStartedAt, _elm_lang$mouse$Mouse$position));
+var _user$project$UI$view = F4(
+	function (state, message, fixedContent, fluidContent) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('container'),
+				_1: {
+					ctor: '::',
+					_0: A2(_elm_lang$html$Html_Attributes$map, message, _user$project$UI$onMouseDown),
+					_1: {ctor: '[]'}
+				}
+			},
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				fixedContent,
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$svg$Svg$svg,
+						{
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$class('canvas'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$svg$Svg$g,
+								{
+									ctor: '::',
+									_0: _elm_lang$svg$Svg_Attributes$transform(
+										_user$project$Transform$toSvgTransform(
+											_user$project$ViewModel$currentTransform(state))),
+									_1: {ctor: '[]'}
+								},
+								fluidContent),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				}));
+	});
 var _user$project$Main_UI$State = F2(
 	function (a, b) {
 		return {canvas: a, layoutControl: b};
@@ -11471,12 +11471,14 @@ var _user$project$Main_UI$view = function (state) {
 	var offsetTop = (_elm_lang$core$Basics$toFloat(canvas.windowSize.height) / 2) - (fullHeight / 2);
 	var gate = F3(
 		function (column, row, shape) {
+			var y = offsetTop + ((row - 1) * verticalSpacing);
+			var x = offsetLeft + ((column - 1) * horizontalSpacing);
 			return A2(
 				_user$project$UI_Shape$Group,
 				{
 					ctor: '::',
 					_0: _user$project$UI_Shape$Transform(
-						A3(_user$project$Transform$translate, _user$project$Transform$identity, offsetLeft + ((column - 1) * horizontalSpacing), offsetTop + ((row - 1) * verticalSpacing))),
+						A3(_user$project$Transform$translate, _user$project$Transform$identity, x, y)),
 					_1: {ctor: '[]'}
 				},
 				{
@@ -11582,27 +11584,27 @@ var _user$project$Main_UI$view = function (state) {
 				})),
 		_1: {ctor: '[]'}
 	};
-	return A4(_user$project$UI_Canvas$view, canvas, _user$project$Main_UI$Canvas, view, shapes);
+	return A4(_user$project$UI$view, canvas, _user$project$Main_UI$Canvas, view, shapes);
 };
 var _user$project$Main$subscriptions = function (model) {
 	return A2(
 		_elm_lang$core$Platform_Sub$map,
 		_user$project$Main_UI$Canvas,
-		_user$project$UI_Canvas$subscriptions(model.canvas));
+		_user$project$Canvas$subscriptions(model.canvas));
 };
 var _user$project$Main$update = F2(
 	function (message, state) {
 		var _p0 = message;
 		if (_p0.ctor === 'Canvas') {
-			var _p1 = A2(_user$project$UI_Canvas$update, _p0._0, state.canvas);
+			var _p1 = A2(_user$project$Canvas$update, _p0._0, state.canvas);
 			var canvas = _p1._0;
-			var cmd = _p1._1;
+			var command = _p1._1;
 			return {
 				ctor: '_Tuple2',
 				_0: _elm_lang$core$Native_Utils.update(
 					state,
 					{canvas: canvas}),
-				_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main_UI$Canvas, cmd)
+				_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main_UI$Canvas, command)
 			};
 		} else {
 			return {
@@ -11617,13 +11619,13 @@ var _user$project$Main$update = F2(
 		}
 	});
 var _user$project$Main$init = function () {
-	var _p2 = _user$project$UI_Canvas$init;
+	var _p2 = _user$project$Canvas$init;
 	var canvas = _p2._0;
-	var cmd = _p2._1;
+	var command = _p2._1;
 	return {
 		ctor: '_Tuple2',
 		_0: {canvas: canvas, layoutControl: _user$project$LayoutControl_UI$init},
-		_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main_UI$Canvas, cmd)
+		_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main_UI$Canvas, command)
 	};
 }();
 var _user$project$Main$main = _elm_lang$html$Html$program(
