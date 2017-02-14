@@ -9563,19 +9563,19 @@ var _user$project$Mouse_Wheel$subMap = F2(
 			});
 	});
 _elm_lang$core$Native_Platform.effectManagers['Mouse.Wheel'] = {pkg: 'user/project', init: _user$project$Mouse_Wheel$init, onEffects: _user$project$Mouse_Wheel$onEffects, onSelfMsg: _user$project$Mouse_Wheel$onSelfMsg, tag: 'sub', subMap: _user$project$Mouse_Wheel$subMap};
-var _user$project$Message$WheelScrolledBy = function (a) {
+var _user$project$Canvas_Message$WheelScrolledBy = function (a) {
 	return {ctor: 'WheelScrolledBy', _0: a};
 };
-var _user$project$Message$DragEndedAt = function (a) {
+var _user$project$Canvas_Message$DragEndedAt = function (a) {
 	return {ctor: 'DragEndedAt', _0: a};
 };
-var _user$project$Message$DragMovedTo = function (a) {
+var _user$project$Canvas_Message$DragMovedTo = function (a) {
 	return {ctor: 'DragMovedTo', _0: a};
 };
-var _user$project$Message$DragStartedAt = function (a) {
+var _user$project$Canvas_Message$DragStartedAt = function (a) {
 	return {ctor: 'DragStartedAt', _0: a};
 };
-var _user$project$Message$WindowResizedTo = function (a) {
+var _user$project$Canvas_Message$WindowResizedTo = function (a) {
 	return {ctor: 'WindowResizedTo', _0: a};
 };
 var _user$project$Transform$toSvgTransform = function (transform) {
@@ -9700,36 +9700,67 @@ var _user$project$Transform$scale = F2(
 				}
 			});
 	});
-var _user$project$ViewModel$currentTransform = function (state) {
-	var _p0 = state.drag;
-	if (_p0.ctor === 'Nothing') {
-		return state.transform;
-	} else {
-		var _p2 = _p0._0.to;
-		var _p1 = _p0._0.from;
-		return A3(
-			_user$project$Transform$translate,
-			state.transform,
-			_elm_lang$core$Basics$toFloat(_p2.x - _p1.x),
-			_elm_lang$core$Basics$toFloat(_p2.y - _p1.y));
-	}
-};
-var _user$project$ViewModel$Drag = F2(
+var _user$project$Canvas_UI$onMouseDown = A2(
+	_elm_lang$html$Html_Events$on,
+	'mousedown',
+	A2(_elm_lang$core$Json_Decode$map, _user$project$Canvas_Message$DragStartedAt, _elm_lang$mouse$Mouse$position));
+var _user$project$Canvas_UI$view = F4(
+	function (state, message, fixedContent, fluidContent) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('container'),
+				_1: {
+					ctor: '::',
+					_0: A2(_elm_lang$html$Html_Attributes$map, message, _user$project$Canvas_UI$onMouseDown),
+					_1: {ctor: '[]'}
+				}
+			},
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				fixedContent,
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$svg$Svg$svg,
+						{
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$class('canvas'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$svg$Svg$g,
+								{
+									ctor: '::',
+									_0: _elm_lang$svg$Svg_Attributes$transform(
+										_user$project$Transform$toSvgTransform(state.transform)),
+									_1: {ctor: '[]'}
+								},
+								fluidContent),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				}));
+	});
+var _user$project$Canvas_UI$Drag = F2(
 	function (a, b) {
 		return {from: a, to: b};
 	});
-var _user$project$ViewModel$ViewModel = F4(
+var _user$project$Canvas_UI$ViewModel = F4(
 	function (a, b, c, d) {
 		return {windowSize: a, drag: b, distanceScrolled: c, transform: d};
 	});
-var _user$project$Canvas$subscriptions = function (state) {
+var _user$project$Canvas_Controller$subscriptions = function (state) {
 	return _elm_lang$core$Platform_Sub$batch(
 		{
 			ctor: '::',
-			_0: _elm_lang$window$Window$resizes(_user$project$Message$WindowResizedTo),
+			_0: _elm_lang$window$Window$resizes(_user$project$Canvas_Message$WindowResizedTo),
 			_1: {
 				ctor: '::',
-				_0: _user$project$Mouse_Wheel$deltas(_user$project$Message$WheelScrolledBy),
+				_0: _user$project$Mouse_Wheel$deltas(_user$project$Canvas_Message$WheelScrolledBy),
 				_1: {
 					ctor: '::',
 					_0: function () {
@@ -9740,10 +9771,10 @@ var _user$project$Canvas$subscriptions = function (state) {
 							return _elm_lang$core$Platform_Sub$batch(
 								{
 									ctor: '::',
-									_0: _elm_lang$mouse$Mouse$moves(_user$project$Message$DragMovedTo),
+									_0: _elm_lang$mouse$Mouse$moves(_user$project$Canvas_Message$DragMovedTo),
 									_1: {
 										ctor: '::',
-										_0: _elm_lang$mouse$Mouse$ups(_user$project$Message$DragEndedAt),
+										_0: _elm_lang$mouse$Mouse$ups(_user$project$Canvas_Message$DragEndedAt),
 										_1: {ctor: '[]'}
 									}
 								});
@@ -9754,27 +9785,41 @@ var _user$project$Canvas$subscriptions = function (state) {
 			}
 		});
 };
-var _user$project$Canvas$update = F2(
+var _user$project$Canvas_Controller$currentTransform = function (state) {
+	var _p1 = state.drag;
+	if (_p1.ctor === 'Nothing') {
+		return state.transform;
+	} else {
+		var _p3 = _p1._0.to;
+		var _p2 = _p1._0.from;
+		return A3(
+			_user$project$Transform$translate,
+			state.transform,
+			_elm_lang$core$Basics$toFloat(_p3.x - _p2.x),
+			_elm_lang$core$Basics$toFloat(_p3.y - _p2.y));
+	}
+};
+var _user$project$Canvas_Controller$update = F2(
 	function (message, state) {
-		var _p1 = message;
-		switch (_p1.ctor) {
+		var _p4 = message;
+		switch (_p4.ctor) {
 			case 'WindowResizedTo':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						state,
-						{windowSize: _p1._0}),
+						{windowSize: _p4._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'DragStartedAt':
-				var _p2 = _p1._0;
+				var _p5 = _p4._0;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						state,
 						{
 							drag: _elm_lang$core$Maybe$Just(
-								A2(_user$project$ViewModel$Drag, _p2, _p2))
+								A2(_user$project$Canvas_UI$Drag, _p5, _p5))
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -9786,9 +9831,9 @@ var _user$project$Canvas$update = F2(
 						{
 							drag: A2(
 								_elm_lang$core$Maybe$map,
-								function (_p3) {
-									var _p4 = _p3;
-									return A2(_user$project$ViewModel$Drag, _p4.from, _p1._0);
+								function (_p6) {
+									var _p7 = _p6;
+									return A2(_user$project$Canvas_UI$Drag, _p7.from, _p4._0);
 								},
 								state.drag)
 						}),
@@ -9800,15 +9845,15 @@ var _user$project$Canvas$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						state,
 						{
-							transform: _user$project$ViewModel$currentTransform(state),
+							transform: _user$project$Canvas_Controller$currentTransform(state),
 							drag: _elm_lang$core$Maybe$Nothing
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
-				var _p5 = _p1._0;
-				var pan = A2(_elm_lang$mouse$Mouse$Position, _p5.offsetX, _p5.offsetY);
-				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, state.distanceScrolled + _p5.wheelDelta);
+				var _p8 = _p4._0;
+				var pan = A2(_elm_lang$mouse$Mouse$Position, _p8.offsetX, _p8.offsetY);
+				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, state.distanceScrolled + _p8.wheelDelta);
 				var zoomPerUnitDistance = 1 + (0.1 / 100);
 				var zoom = Math.pow(
 					zoomPerUnitDistance,
@@ -9831,7 +9876,7 @@ var _user$project$Canvas$update = F2(
 				};
 		}
 	});
-var _user$project$Canvas$init = {
+var _user$project$Canvas_Controller$init = {
 	ctor: '_Tuple2',
 	_0: {
 		windowSize: {width: 800, height: 600},
@@ -9839,8 +9884,29 @@ var _user$project$Canvas$init = {
 		distanceScrolled: 0,
 		transform: _user$project$Transform$identity
 	},
-	_1: A2(_elm_lang$core$Task$perform, _user$project$Message$WindowResizedTo, _elm_lang$window$Window$size)
+	_1: A2(_elm_lang$core$Task$perform, _user$project$Canvas_Message$WindowResizedTo, _elm_lang$window$Window$size)
 };
+var _user$project$Canvas_Canvas$view = F4(
+	function (state, message, fixedContent, fluidContent) {
+		return A4(
+			_user$project$Canvas_UI$view,
+			_elm_lang$core$Native_Utils.update(
+				state,
+				{
+					transform: _user$project$Canvas_Controller$currentTransform(state)
+				}),
+			message,
+			fixedContent,
+			fluidContent);
+	});
+var _user$project$Canvas_Canvas$subscriptions = function (state) {
+	return _user$project$Canvas_Controller$subscriptions(state);
+};
+var _user$project$Canvas_Canvas$update = F2(
+	function (message, state) {
+		return A2(_user$project$Canvas_Controller$update, message, state);
+	});
+var _user$project$Canvas_Canvas$init = _user$project$Canvas_Controller$init;
 var _user$project$LayoutControl_Domain$widthVerticalSpacingRatio = 1.5;
 var _user$project$LayoutControl_Domain$widthHorizontalSpacingRatio = 2;
 var _user$project$LayoutControl_Domain$init = function () {
@@ -11390,52 +11456,6 @@ var _user$project$UI_Styles$stylesheet = A3(
 		_0: _elm_lang$html$Html$text(_user$project$UI_Styles$css),
 		_1: {ctor: '[]'}
 	});
-var _user$project$UI$onMouseDown = A2(
-	_elm_lang$html$Html_Events$on,
-	'mousedown',
-	A2(_elm_lang$core$Json_Decode$map, _user$project$Message$DragStartedAt, _elm_lang$mouse$Mouse$position));
-var _user$project$UI$view = F4(
-	function (state, message, fixedContent, fluidContent) {
-		return A2(
-			_elm_lang$html$Html$div,
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('container'),
-				_1: {
-					ctor: '::',
-					_0: A2(_elm_lang$html$Html_Attributes$map, message, _user$project$UI$onMouseDown),
-					_1: {ctor: '[]'}
-				}
-			},
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				fixedContent,
-				{
-					ctor: '::',
-					_0: A2(
-						_elm_lang$svg$Svg$svg,
-						{
-							ctor: '::',
-							_0: _elm_lang$svg$Svg_Attributes$class('canvas'),
-							_1: {ctor: '[]'}
-						},
-						{
-							ctor: '::',
-							_0: A2(
-								_elm_lang$svg$Svg$g,
-								{
-									ctor: '::',
-									_0: _elm_lang$svg$Svg_Attributes$transform(
-										_user$project$Transform$toSvgTransform(
-											_user$project$ViewModel$currentTransform(state))),
-									_1: {ctor: '[]'}
-								},
-								fluidContent),
-							_1: {ctor: '[]'}
-						}),
-					_1: {ctor: '[]'}
-				}));
-	});
 var _user$project$Main_UI$State = F2(
 	function (a, b) {
 		return {canvas: a, layoutControl: b};
@@ -11584,19 +11604,19 @@ var _user$project$Main_UI$view = function (state) {
 				})),
 		_1: {ctor: '[]'}
 	};
-	return A4(_user$project$UI$view, canvas, _user$project$Main_UI$Canvas, view, shapes);
+	return A4(_user$project$Canvas_Canvas$view, canvas, _user$project$Main_UI$Canvas, view, shapes);
 };
 var _user$project$Main$subscriptions = function (model) {
 	return A2(
 		_elm_lang$core$Platform_Sub$map,
 		_user$project$Main_UI$Canvas,
-		_user$project$Canvas$subscriptions(model.canvas));
+		_user$project$Canvas_Canvas$subscriptions(model.canvas));
 };
 var _user$project$Main$update = F2(
 	function (message, state) {
 		var _p0 = message;
 		if (_p0.ctor === 'Canvas') {
-			var _p1 = A2(_user$project$Canvas$update, _p0._0, state.canvas);
+			var _p1 = A2(_user$project$Canvas_Canvas$update, _p0._0, state.canvas);
 			var canvas = _p1._0;
 			var command = _p1._1;
 			return {
@@ -11619,7 +11639,7 @@ var _user$project$Main$update = F2(
 		}
 	});
 var _user$project$Main$init = function () {
-	var _p2 = _user$project$Canvas$init;
+	var _p2 = _user$project$Canvas_Canvas$init;
 	var canvas = _p2._0;
 	var command = _p2._1;
 	return {
