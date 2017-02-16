@@ -9886,7 +9886,7 @@ var _user$project$Canvas_Controller$init = {
 	},
 	_1: A2(_elm_lang$core$Task$perform, _user$project$Canvas_Message$WindowResizedTo, _elm_lang$window$Window$size)
 };
-var _user$project$Canvas_Canvas$view = F4(
+var _user$project$Canvas$view = F4(
 	function (state, message, fixedContent, fluidContent) {
 		return A4(
 			_user$project$Canvas_UI$view,
@@ -9899,14 +9899,14 @@ var _user$project$Canvas_Canvas$view = F4(
 			fixedContent,
 			fluidContent);
 	});
-var _user$project$Canvas_Canvas$subscriptions = function (state) {
+var _user$project$Canvas$subscriptions = function (state) {
 	return _user$project$Canvas_Controller$subscriptions(state);
 };
-var _user$project$Canvas_Canvas$update = F2(
+var _user$project$Canvas$update = F2(
 	function (message, state) {
 		return A2(_user$project$Canvas_Controller$update, message, state);
 	});
-var _user$project$Canvas_Canvas$init = _user$project$Canvas_Controller$init;
+var _user$project$Canvas$init = _user$project$Canvas_Controller$init;
 var _user$project$LayoutControl_Domain$widthVerticalSpacingRatio = 1.5;
 var _user$project$LayoutControl_Domain$widthHorizontalSpacingRatio = 2;
 var _user$project$LayoutControl_Domain$init = function () {
@@ -11456,17 +11456,17 @@ var _user$project$UI_Styles$stylesheet = A3(
 		_0: _elm_lang$html$Html$text(_user$project$UI_Styles$css),
 		_1: {ctor: '[]'}
 	});
-var _user$project$Main_UI$State = F2(
+var _user$project$Application_UI$State = F2(
 	function (a, b) {
 		return {canvas: a, layoutControl: b};
 	});
-var _user$project$Main_UI$LayoutControl = function (a) {
+var _user$project$Application_UI$LayoutControl = function (a) {
 	return {ctor: 'LayoutControl', _0: a};
 };
-var _user$project$Main_UI$Canvas = function (a) {
+var _user$project$Application_UI$Canvas = function (a) {
 	return {ctor: 'Canvas', _0: a};
 };
-var _user$project$Main_UI$view = function (state) {
+var _user$project$Application_UI$view = function (state) {
 	var layoutControl = state.layoutControl;
 	var view = {
 		ctor: '::',
@@ -11475,7 +11475,7 @@ var _user$project$Main_UI$view = function (state) {
 			ctor: '::',
 			_0: A2(
 				_elm_lang$html$Html$map,
-				_user$project$Main_UI$LayoutControl,
+				_user$project$Application_UI$LayoutControl,
 				_user$project$LayoutControl_UI$view(layoutControl)),
 			_1: {ctor: '[]'}
 		}
@@ -11604,19 +11604,19 @@ var _user$project$Main_UI$view = function (state) {
 				})),
 		_1: {ctor: '[]'}
 	};
-	return A4(_user$project$Canvas_Canvas$view, canvas, _user$project$Main_UI$Canvas, view, shapes);
+	return A4(_user$project$Canvas$view, canvas, _user$project$Application_UI$Canvas, view, shapes);
 };
-var _user$project$Main_Controller$subscriptions = function (model) {
+var _user$project$Application_Controller$subscriptions = function (state) {
 	return A2(
 		_elm_lang$core$Platform_Sub$map,
-		_user$project$Main_UI$Canvas,
-		_user$project$Canvas_Canvas$subscriptions(model.canvas));
+		_user$project$Application_UI$Canvas,
+		_user$project$Canvas$subscriptions(state.canvas));
 };
-var _user$project$Main_Controller$update = F2(
+var _user$project$Application_Controller$update = F2(
 	function (message, state) {
 		var _p0 = message;
 		if (_p0.ctor === 'Canvas') {
-			var _p1 = A2(_user$project$Canvas_Canvas$update, _p0._0, state.canvas);
+			var _p1 = A2(_user$project$Canvas$update, _p0._0, state.canvas);
 			var canvas = _p1._0;
 			var command = _p1._1;
 			return {
@@ -11624,7 +11624,7 @@ var _user$project$Main_Controller$update = F2(
 				_0: _elm_lang$core$Native_Utils.update(
 					state,
 					{canvas: canvas}),
-				_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main_UI$Canvas, command)
+				_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Application_UI$Canvas, command)
 			};
 		} else {
 			return {
@@ -11638,18 +11638,22 @@ var _user$project$Main_Controller$update = F2(
 			};
 		}
 	});
-var _user$project$Main_Controller$init = function () {
-	var _p2 = _user$project$Canvas_Canvas$init;
+var _user$project$Application_Controller$init = function () {
+	var _p2 = _user$project$Canvas$init;
 	var canvas = _p2._0;
 	var command = _p2._1;
 	return {
 		ctor: '_Tuple2',
 		_0: {canvas: canvas, layoutControl: _user$project$LayoutControl_UI$init},
-		_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main_UI$Canvas, command)
+		_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Application_UI$Canvas, command)
 	};
 }();
+var _user$project$Application$view = _user$project$Application_UI$view;
+var _user$project$Application$subscriptions = _user$project$Application_Controller$subscriptions;
+var _user$project$Application$update = _user$project$Application_Controller$update;
+var _user$project$Application$init = _user$project$Application_Controller$init;
 var _user$project$Main$main = _elm_lang$html$Html$program(
-	{init: _user$project$Main_Controller$init, view: _user$project$Main_UI$view, update: _user$project$Main_Controller$update, subscriptions: _user$project$Main_Controller$subscriptions})();
+	{init: _user$project$Application$init, view: _user$project$Application$view, update: _user$project$Application$update, subscriptions: _user$project$Application$subscriptions})();
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _user$project$Main$main !== 'undefined') {
