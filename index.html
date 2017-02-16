@@ -11606,13 +11606,13 @@ var _user$project$Main_UI$view = function (state) {
 	};
 	return A4(_user$project$Canvas_Canvas$view, canvas, _user$project$Main_UI$Canvas, view, shapes);
 };
-var _user$project$Main$subscriptions = function (model) {
+var _user$project$Main_Controller$subscriptions = function (model) {
 	return A2(
 		_elm_lang$core$Platform_Sub$map,
 		_user$project$Main_UI$Canvas,
 		_user$project$Canvas_Canvas$subscriptions(model.canvas));
 };
-var _user$project$Main$update = F2(
+var _user$project$Main_Controller$update = F2(
 	function (message, state) {
 		var _p0 = message;
 		if (_p0.ctor === 'Canvas') {
@@ -11638,7 +11638,7 @@ var _user$project$Main$update = F2(
 			};
 		}
 	});
-var _user$project$Main$init = function () {
+var _user$project$Main_Controller$init = function () {
 	var _p2 = _user$project$Canvas_Canvas$init;
 	var canvas = _p2._0;
 	var command = _p2._1;
@@ -11649,7 +11649,7 @@ var _user$project$Main$init = function () {
 	};
 }();
 var _user$project$Main$main = _elm_lang$html$Html$program(
-	{init: _user$project$Main$init, view: _user$project$Main_UI$view, update: _user$project$Main$update, subscriptions: _user$project$Main$subscriptions})();
+	{init: _user$project$Main_Controller$init, view: _user$project$Main_UI$view, update: _user$project$Main_Controller$update, subscriptions: _user$project$Main_Controller$subscriptions})();
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};
 if (typeof _user$project$Main$main !== 'undefined') {
