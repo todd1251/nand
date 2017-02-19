@@ -9876,15 +9876,21 @@ var _user$project$Canvas_Controller$update = F2(
 				};
 		}
 	});
-var _user$project$Canvas_Controller$init = {
-	ctor: '_Tuple2',
-	_0: {
-		windowSize: {width: 800, height: 600},
-		drag: _elm_lang$core$Maybe$Nothing,
-		distanceScrolled: 0,
-		transform: _user$project$Transform$identity
-	},
-	_1: A2(_elm_lang$core$Task$perform, _user$project$Canvas_Message$WindowResizedTo, _elm_lang$window$Window$size)
+var _user$project$Canvas_Controller$init = function (state) {
+	return {
+		ctor: '_Tuple2',
+		_0: _elm_lang$core$Native_Utils.update(
+			state,
+			{
+				canvas: {
+					windowSize: {width: 800, height: 600},
+					drag: _elm_lang$core$Maybe$Nothing,
+					distanceScrolled: 0,
+					transform: _user$project$Transform$identity
+				}
+			}),
+		_1: A2(_elm_lang$core$Task$perform, _user$project$Canvas_Message$WindowResizedTo, _elm_lang$window$Window$size)
+	};
 };
 var _user$project$Canvas$view = F4(
 	function (state, message, fixedContent, fluidContent) {
@@ -10078,18 +10084,22 @@ var _user$project$LayoutControl_UI$execute = F2(
 				});
 		}
 	});
-var _user$project$LayoutControl_UI$init = function () {
+var _user$project$LayoutControl_UI$init = function (state) {
 	var domain = _user$project$LayoutControl_Domain$init;
 	return {
 		ctor: '_Tuple2',
-		_0: {
-			domain: domain,
-			width: _elm_lang$core$Basics$toString(domain.width),
-			strokeWidth: _elm_lang$core$Basics$toString(domain.strokeWidth)
-		},
+		_0: _elm_lang$core$Native_Utils.update(
+			state,
+			{
+				layoutControl: {
+					domain: domain,
+					width: _elm_lang$core$Basics$toString(domain.width),
+					strokeWidth: _elm_lang$core$Basics$toString(domain.strokeWidth)
+				}
+			}),
 		_1: _elm_lang$core$Platform_Cmd$none
 	};
-}();
+};
 var _user$project$LayoutControl_UI$State = F3(
 	function (a, b, c) {
 		return {domain: a, width: b, strokeWidth: c};
@@ -11642,6 +11652,40 @@ var _user$project$Main_UI_Controller$update = F2(
 			};
 		}
 	});
+var _user$project$Main_UI_Controller$wrapMessages = F3(
+	function (wrap, init, _p2) {
+		var _p3 = _p2;
+		var _p4 = init(_p3._0);
+		var state2 = _p4._0;
+		var command2 = _p4._1;
+		return {
+			ctor: '_Tuple2',
+			_0: state2,
+			_1: _elm_lang$core$Platform_Cmd$batch(
+				{
+					ctor: '::',
+					_0: _p3._1,
+					_1: {
+						ctor: '::',
+						_0: A2(_elm_lang$core$Platform_Cmd$map, wrap, command2),
+						_1: {ctor: '[]'}
+					}
+				})
+		};
+	});
+var _user$project$Main_UI_Controller$init = A3(
+	_user$project$Main_UI_Controller$wrapMessages,
+	_user$project$Main_UI$Canvas,
+	_user$project$Canvas$init,
+	A3(
+		_user$project$Main_UI_Controller$wrapMessages,
+		_elm_lang$core$Basics$identity,
+		_user$project$LayoutControl_UI$init,
+		{
+			ctor: '_Tuple2',
+			_0: {layoutControl: _elm_lang$core$Maybe$Nothing, canvas: _elm_lang$core$Maybe$Nothing},
+			_1: _elm_lang$core$Platform_Cmd$none
+		}));
 var _user$project$Main_UI_Controller$uCanvas = F2(
 	function (canvas, record) {
 		return _elm_lang$core$Native_Utils.update(
@@ -11654,32 +11698,6 @@ var _user$project$Main_UI_Controller$uLayoutControl = F2(
 			record,
 			{layoutControl: layoutControl});
 	});
-var _user$project$Main_UI_Controller$init = function () {
-	var command = _elm_lang$core$Platform_Cmd$batch(
-		{
-			ctor: '::',
-			_0: A2(
-				_elm_lang$core$Platform_Cmd$map,
-				_user$project$Main_UI$LayoutControl,
-				_elm_lang$core$Tuple$second(_user$project$LayoutControl_UI$init)),
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_elm_lang$core$Platform_Cmd$map,
-					_user$project$Main_UI$Canvas,
-					_elm_lang$core$Tuple$second(_user$project$Canvas$init)),
-				_1: {ctor: '[]'}
-			}
-		});
-	var state = A2(
-		_user$project$Main_UI_Controller$uCanvas,
-		_elm_lang$core$Tuple$first(_user$project$Canvas$init),
-		A2(
-			_user$project$Main_UI_Controller$uLayoutControl,
-			_elm_lang$core$Tuple$first(_user$project$LayoutControl_UI$init),
-			{layoutControl: _elm_lang$core$Maybe$Nothing, canvas: _elm_lang$core$Maybe$Nothing}));
-	return {ctor: '_Tuple2', _0: state, _1: command};
-}();
 var _user$project$Main$view = _user$project$Main_UI$view;
 var _user$project$Main$subscriptions = _user$project$Main_UI_Controller$subscriptions;
 var _user$project$Main$update = _user$project$Main_UI_Controller$update;
