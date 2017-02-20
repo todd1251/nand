@@ -9801,6 +9801,7 @@ var _user$project$Canvas_Controller$currentTransform = function (state) {
 };
 var _user$project$Canvas_Controller$update = F2(
 	function (message, state) {
+		var canvas = state.canvas;
 		var _p4 = message;
 		switch (_p4.ctor) {
 			case 'WindowResizedTo':
@@ -9808,7 +9809,11 @@ var _user$project$Canvas_Controller$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						state,
-						{windowSize: _p4._0}),
+						{
+							canvas: _elm_lang$core$Native_Utils.update(
+								canvas,
+								{windowSize: _p4._0})
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'DragStartedAt':
@@ -9818,8 +9823,12 @@ var _user$project$Canvas_Controller$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						state,
 						{
-							drag: _elm_lang$core$Maybe$Just(
-								A2(_user$project$Canvas_UI$Drag, _p5, _p5))
+							canvas: _elm_lang$core$Native_Utils.update(
+								canvas,
+								{
+									drag: _elm_lang$core$Maybe$Just(
+										A2(_user$project$Canvas_UI$Drag, _p5, _p5))
+								})
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -9829,13 +9838,17 @@ var _user$project$Canvas_Controller$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						state,
 						{
-							drag: A2(
-								_elm_lang$core$Maybe$map,
-								function (_p6) {
-									var _p7 = _p6;
-									return A2(_user$project$Canvas_UI$Drag, _p7.from, _p4._0);
-								},
-								state.drag)
+							canvas: _elm_lang$core$Native_Utils.update(
+								canvas,
+								{
+									drag: A2(
+										_elm_lang$core$Maybe$map,
+										function (_p6) {
+											var _p7 = _p6;
+											return A2(_user$project$Canvas_UI$Drag, _p7.from, _p4._0);
+										},
+										canvas.drag)
+								})
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -9845,19 +9858,23 @@ var _user$project$Canvas_Controller$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						state,
 						{
-							transform: _user$project$Canvas_Controller$currentTransform(state),
-							drag: _elm_lang$core$Maybe$Nothing
+							canvas: _elm_lang$core$Native_Utils.update(
+								canvas,
+								{
+									transform: _user$project$Canvas_Controller$currentTransform(canvas),
+									drag: _elm_lang$core$Maybe$Nothing
+								})
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
 				var _p8 = _p4._0;
 				var pan = A2(_elm_lang$mouse$Mouse$Position, _p8.offsetX, _p8.offsetY);
-				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, state.distanceScrolled + _p8.wheelDelta);
+				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, canvas.distanceScrolled + _p8.wheelDelta);
 				var zoomPerUnitDistance = 1 + (0.1 / 100);
 				var zoom = Math.pow(
 					zoomPerUnitDistance,
-					_elm_lang$core$Basics$toFloat(state.distanceScrolled)) / Math.pow(
+					_elm_lang$core$Basics$toFloat(canvas.distanceScrolled)) / Math.pow(
 					zoomPerUnitDistance,
 					_elm_lang$core$Basics$toFloat(distanceScrolled));
 				return {
@@ -9865,12 +9882,16 @@ var _user$project$Canvas_Controller$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						state,
 						{
-							distanceScrolled: distanceScrolled,
-							transform: A3(
-								_user$project$Transform$translate,
-								A2(_user$project$Transform$scale, state.transform, zoom),
-								(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.x),
-								(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.y))
+							canvas: _elm_lang$core$Native_Utils.update(
+								canvas,
+								{
+									distanceScrolled: distanceScrolled,
+									transform: A3(
+										_user$project$Transform$translate,
+										A2(_user$project$Transform$scale, canvas.transform, zoom),
+										(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.x),
+										(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.y))
+								})
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -9913,6 +9934,48 @@ var _user$project$Canvas$update = F2(
 		return A2(_user$project$Canvas_Controller$update, message, state);
 	});
 var _user$project$Canvas$init = _user$project$Canvas_Controller$init;
+var _user$project$Component$subscriptions = F3(
+	function (wrap, subscription2, subscription1) {
+		return _elm_lang$core$Platform_Sub$batch(
+			{
+				ctor: '::',
+				_0: subscription1,
+				_1: {
+					ctor: '::',
+					_0: A2(_elm_lang$core$Platform_Sub$map, wrap, subscription2),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _user$project$Component$init = F3(
+	function (wrap, init, _p0) {
+		var _p1 = _p0;
+		var _p2 = init(_p1._0);
+		var state2 = _p2._0;
+		var command2 = _p2._1;
+		return {
+			ctor: '_Tuple2',
+			_0: state2,
+			_1: _elm_lang$core$Platform_Cmd$batch(
+				{
+					ctor: '::',
+					_0: _p1._1,
+					_1: {
+						ctor: '::',
+						_0: A2(_elm_lang$core$Platform_Cmd$map, wrap, command2),
+						_1: {ctor: '[]'}
+					}
+				})
+		};
+	});
+var _user$project$Component$update = F3(
+	function (wrap, update, state1) {
+		return A3(
+			_user$project$Component$init,
+			wrap,
+			update,
+			{ctor: '_Tuple2', _0: state1, _1: _elm_lang$core$Platform_Cmd$none});
+	});
 var _user$project$LayoutControl_Domain$widthVerticalSpacingRatio = 1.5;
 var _user$project$LayoutControl_Domain$widthHorizontalSpacingRatio = 2;
 var _user$project$LayoutControl_Domain$init = function () {
@@ -10057,31 +10120,48 @@ var _user$project$LayoutControl_UI$updateOrNone = F3(
 				return update(number);
 			});
 	});
-var _user$project$LayoutControl_UI$execute = F2(
+var _user$project$LayoutControl_UI$update = F2(
 	function (command, state) {
+		var layoutControl = state.layoutControl;
 		var _p3 = command;
 		if (_p3.ctor === 'ChangeWidth') {
-			return A3(
-				_user$project$LayoutControl_UI$updateOrNone,
-				state,
-				_p3._0,
-				function (width) {
-					return A2(
-						_user$project$LayoutControl_Domain$apply,
-						_user$project$LayoutControl_Domain$WidthChanged(width),
-						state.domain);
-				});
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					state,
+					{
+						layoutControl: A3(
+							_user$project$LayoutControl_UI$updateOrNone,
+							layoutControl,
+							_p3._0,
+							function (width) {
+								return A2(
+									_user$project$LayoutControl_Domain$apply,
+									_user$project$LayoutControl_Domain$WidthChanged(width),
+									layoutControl.domain);
+							})
+					}),
+				_1: _elm_lang$core$Platform_Cmd$none
+			};
 		} else {
-			return A3(
-				_user$project$LayoutControl_UI$updateOrNone,
-				state,
-				_p3._0,
-				function (strokeWidth) {
-					return A2(
-						_user$project$LayoutControl_Domain$apply,
-						_user$project$LayoutControl_Domain$StrokeWidthChanged(strokeWidth),
-						state.domain);
-				});
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					state,
+					{
+						layoutControl: A3(
+							_user$project$LayoutControl_UI$updateOrNone,
+							layoutControl,
+							_p3._0,
+							function (strokeWidth) {
+								return A2(
+									_user$project$LayoutControl_Domain$apply,
+									_user$project$LayoutControl_Domain$StrokeWidthChanged(strokeWidth),
+									layoutControl.domain);
+							})
+					}),
+				_1: _elm_lang$core$Platform_Cmd$none
+			};
 		}
 	});
 var _user$project$LayoutControl_UI$init = function (state) {
@@ -11621,83 +11701,42 @@ var _user$project$Main_UI$view = function (state) {
 	return A4(_user$project$Canvas$view, canvas, _user$project$Main_UI$Canvas, view, shapes);
 };
 var _user$project$Main_UI_Controller$subscriptions = function (state) {
-	return A2(
-		_elm_lang$core$Platform_Sub$map,
+	return A3(
+		_user$project$Component$subscriptions,
 		_user$project$Main_UI$Canvas,
-		_user$project$Canvas$subscriptions(state.canvas));
+		_user$project$Canvas$subscriptions(state.canvas),
+		_elm_lang$core$Platform_Sub$none);
 };
 var _user$project$Main_UI_Controller$update = F2(
 	function (message, state) {
 		var _p0 = message;
-		if (_p0.ctor === 'Canvas') {
-			var _p1 = A2(_user$project$Canvas$update, _p0._0, state.canvas);
-			var canvas = _p1._0;
-			var command = _p1._1;
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Native_Utils.update(
-					state,
-					{canvas: canvas}),
-				_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Main_UI$Canvas, command)
-			};
+		if (_p0.ctor === 'LayoutControl') {
+			return A3(
+				_user$project$Component$update,
+				_user$project$Main_UI$LayoutControl,
+				_user$project$LayoutControl_UI$update(_p0._0),
+				state);
 		} else {
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Native_Utils.update(
-					state,
-					{
-						layoutControl: A2(_user$project$LayoutControl_UI$execute, _p0._0, state.layoutControl)
-					}),
-				_1: _elm_lang$core$Platform_Cmd$none
-			};
+			return A3(
+				_user$project$Component$update,
+				_user$project$Main_UI$Canvas,
+				_user$project$Canvas$update(_p0._0),
+				state);
 		}
 	});
-var _user$project$Main_UI_Controller$wrapMessages = F3(
-	function (wrap, init, _p2) {
-		var _p3 = _p2;
-		var _p4 = init(_p3._0);
-		var state2 = _p4._0;
-		var command2 = _p4._1;
-		return {
-			ctor: '_Tuple2',
-			_0: state2,
-			_1: _elm_lang$core$Platform_Cmd$batch(
-				{
-					ctor: '::',
-					_0: _p3._1,
-					_1: {
-						ctor: '::',
-						_0: A2(_elm_lang$core$Platform_Cmd$map, wrap, command2),
-						_1: {ctor: '[]'}
-					}
-				})
-		};
-	});
 var _user$project$Main_UI_Controller$init = A3(
-	_user$project$Main_UI_Controller$wrapMessages,
+	_user$project$Component$init,
 	_user$project$Main_UI$Canvas,
 	_user$project$Canvas$init,
 	A3(
-		_user$project$Main_UI_Controller$wrapMessages,
-		_elm_lang$core$Basics$identity,
+		_user$project$Component$init,
+		_user$project$Main_UI$LayoutControl,
 		_user$project$LayoutControl_UI$init,
 		{
 			ctor: '_Tuple2',
 			_0: {layoutControl: _elm_lang$core$Maybe$Nothing, canvas: _elm_lang$core$Maybe$Nothing},
 			_1: _elm_lang$core$Platform_Cmd$none
 		}));
-var _user$project$Main_UI_Controller$uCanvas = F2(
-	function (canvas, record) {
-		return _elm_lang$core$Native_Utils.update(
-			record,
-			{canvas: canvas});
-	});
-var _user$project$Main_UI_Controller$uLayoutControl = F2(
-	function (layoutControl, record) {
-		return _elm_lang$core$Native_Utils.update(
-			record,
-			{layoutControl: layoutControl});
-	});
 var _user$project$Main$view = _user$project$Main_UI$view;
 var _user$project$Main$subscriptions = _user$project$Main_UI_Controller$subscriptions;
 var _user$project$Main$update = _user$project$Main_UI_Controller$update;
