@@ -9475,38 +9475,60 @@ var _user$project$Drag$onDrag = F2(
 				return lift(state);
 			});
 	});
-var _user$project$Drag$init = {
-	ctor: '_Tuple2',
-	_0: {
-		dragging: false,
-		from: {x: 0, y: 0},
-		to: {x: 0, y: 0}
-	},
-	_1: _elm_lang$core$Platform_Cmd$none
+var _user$project$Drag$notDragging = {
+	dragging: false,
+	from: {x: 0, y: 0},
+	to: {x: 0, y: 0}
+};
+var _user$project$Drag$init = function (state) {
+	return {
+		ctor: '_Tuple2',
+		_0: _elm_lang$core$Native_Utils.update(
+			state,
+			{drag: _user$project$Drag$notDragging}),
+		_1: _elm_lang$core$Platform_Cmd$none
+	};
 };
 var _user$project$Drag$update = F2(
-	function (message, state) {
-		var _p0 = message;
-		switch (_p0.ctor) {
+	function (message, _p0) {
+		var _p1 = _p0;
+		var _p5 = _p1;
+		var _p4 = _p1.drag;
+		var _p2 = message;
+		switch (_p2.ctor) {
 			case 'StartedAt':
-				var _p1 = _p0._0;
+				var _p3 = _p2._0;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
-						state,
-						{dragging: true, from: _p1, to: _p1}),
+						_p5,
+						{
+							drag: _elm_lang$core$Native_Utils.update(
+								_p4,
+								{dragging: true, from: _p3, to: _p3})
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'MovedTo':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
-						state,
-						{to: _p0._0}),
+						_p5,
+						{
+							drag: _elm_lang$core$Native_Utils.update(
+								_p4,
+								{to: _p2._0})
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
-				return _user$project$Drag$init;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						_p5,
+						{drag: _user$project$Drag$notDragging}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 		}
 	});
 var _user$project$Drag$State = F3(
@@ -9821,162 +9843,6 @@ var _user$project$Canvas_Controller_WindowResizedTo$update = F2(
 			canvas,
 			{windowSize: windowSize});
 	});
-var _user$project$Canvas_Controller$subscriptions = function (state) {
-	return _elm_lang$core$Platform_Sub$batch(
-		{
-			ctor: '::',
-			_0: _elm_lang$window$Window$resizes(_user$project$Canvas_Message$WindowResizedTo),
-			_1: {
-				ctor: '::',
-				_0: _user$project$Mouse_Wheel$deltas(_user$project$Canvas_Message$WheelScrolledBy),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$core$Platform_Sub$map,
-						_user$project$Canvas_Message$Drag,
-						_user$project$Drag$subscriptions(state.drag)),
-					_1: {
-						ctor: '::',
-						_0: A2(_user$project$Drag$onDrag, _user$project$Canvas_Message$Dragged, state.drag),
-						_1: {ctor: '[]'}
-					}
-				}
-			}
-		});
-};
-var _user$project$Canvas_Controller$update = F2(
-	function (message, _p0) {
-		var _p1 = _p0;
-		var _p8 = _p1;
-		var _p7 = _p1.canvas;
-		var _p2 = message;
-		switch (_p2.ctor) {
-			case 'WindowResizedTo':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						_p8,
-						{
-							canvas: A2(_user$project$Canvas_Controller_WindowResizedTo$update, _p2._0, _p7)
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'Drag':
-				var _p3 = A2(_user$project$Drag$update, _p2._0, _p7.drag);
-				var drag = _p3._0;
-				var command = _p3._1;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						_p8,
-						{
-							canvas: _elm_lang$core$Native_Utils.update(
-								_p7,
-								{drag: drag})
-						}),
-					_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Canvas_Message$Drag, command)
-				};
-			case 'Dragged':
-				var _p5 = _p2._0.to;
-				var _p4 = _p2._0.from;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						_p8,
-						{
-							canvas: _elm_lang$core$Native_Utils.update(
-								_p7,
-								{
-									transform: A3(
-										_user$project$Transform$translate,
-										_p7.transform,
-										_elm_lang$core$Basics$toFloat(_p5.x - _p4.x),
-										_elm_lang$core$Basics$toFloat(_p5.y - _p4.y))
-								})
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			default:
-				var _p6 = _p2._0;
-				var pan = A2(_elm_lang$mouse$Mouse$Position, _p6.offsetX, _p6.offsetY);
-				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, _p7.distanceScrolled + _p6.wheelDelta);
-				var zoomPerUnitDistance = 1 + (0.1 / 100);
-				var zoom = Math.pow(
-					zoomPerUnitDistance,
-					_elm_lang$core$Basics$toFloat(_p7.distanceScrolled)) / Math.pow(
-					zoomPerUnitDistance,
-					_elm_lang$core$Basics$toFloat(distanceScrolled));
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						_p8,
-						{
-							canvas: _elm_lang$core$Native_Utils.update(
-								_p7,
-								{
-									distanceScrolled: distanceScrolled,
-									transform: A3(
-										_user$project$Transform$translate,
-										A2(_user$project$Transform$scale, _p7.transform, zoom),
-										(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.x),
-										(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.y))
-								})
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-		}
-	});
-var _user$project$Canvas_Controller$currentTransform = function (state) {
-	if (state.drag.dragging) {
-		var _p9 = {ctor: '_Tuple2', _0: state.drag.from, _1: state.drag.to};
-		var from = _p9._0;
-		var to = _p9._1;
-		return A3(
-			_user$project$Transform$translate,
-			state.transform,
-			_elm_lang$core$Basics$toFloat(to.x - from.x),
-			_elm_lang$core$Basics$toFloat(to.y - from.y));
-	} else {
-		return state.transform;
-	}
-};
-var _user$project$Canvas_Controller$init = function (state) {
-	return {
-		ctor: '_Tuple2',
-		_0: _elm_lang$core$Native_Utils.update(
-			state,
-			{
-				canvas: {
-					windowSize: {width: 800, height: 600},
-					drag: _elm_lang$core$Tuple$first(_user$project$Drag$init),
-					distanceScrolled: 0,
-					transform: _user$project$Transform$identity
-				}
-			}),
-		_1: A2(_elm_lang$core$Task$perform, _user$project$Canvas_Message$WindowResizedTo, _elm_lang$window$Window$size)
-	};
-};
-var _user$project$Canvas$view = F4(
-	function (state, message, fixedContent, fluidContent) {
-		return A4(
-			_user$project$Canvas_UI$view,
-			_elm_lang$core$Native_Utils.update(
-				state,
-				{
-					transform: _user$project$Canvas_Controller$currentTransform(state)
-				}),
-			message,
-			fixedContent,
-			fluidContent);
-	});
-var _user$project$Canvas$subscriptions = function (state) {
-	return _user$project$Canvas_Controller$subscriptions(state);
-};
-var _user$project$Canvas$update = F2(
-	function (message, state) {
-		return A2(_user$project$Canvas_Controller$update, message, state);
-	});
-var _user$project$Canvas$init = _user$project$Canvas_Controller$init;
 var _user$project$Component$subscriptions = F3(
 	function (wrap, subscription2, subscription1) {
 		return _elm_lang$core$Platform_Sub$batch(
@@ -10019,6 +9885,165 @@ var _user$project$Component$update = F3(
 			update,
 			{ctor: '_Tuple2', _0: state1, _1: _elm_lang$core$Platform_Cmd$none});
 	});
+var _user$project$Canvas_Controller$subscriptions = function (state) {
+	return _elm_lang$core$Platform_Sub$batch(
+		{
+			ctor: '::',
+			_0: _elm_lang$window$Window$resizes(_user$project$Canvas_Message$WindowResizedTo),
+			_1: {
+				ctor: '::',
+				_0: _user$project$Mouse_Wheel$deltas(_user$project$Canvas_Message$WheelScrolledBy),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$core$Platform_Sub$map,
+						_user$project$Canvas_Message$Drag,
+						_user$project$Drag$subscriptions(state.drag)),
+					_1: {
+						ctor: '::',
+						_0: A2(_user$project$Drag$onDrag, _user$project$Canvas_Message$Dragged, state.drag),
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		});
+};
+var _user$project$Canvas_Controller$currentTransform = function (state) {
+	if (state.drag.dragging) {
+		var _p0 = {ctor: '_Tuple2', _0: state.drag.from, _1: state.drag.to};
+		var from = _p0._0;
+		var to = _p0._1;
+		return A3(
+			_user$project$Transform$translate,
+			state.transform,
+			_elm_lang$core$Basics$toFloat(to.x - from.x),
+			_elm_lang$core$Basics$toFloat(to.y - from.y));
+	} else {
+		return state.transform;
+	}
+};
+var _user$project$Canvas_Controller$lift = F2(
+	function (state, canvas) {
+		return _elm_lang$core$Native_Utils.update(
+			state,
+			{canvas: canvas});
+	});
+var _user$project$Canvas_Controller$init = function (state) {
+	return A2(
+		_elm_lang$core$Tuple$mapFirst,
+		_user$project$Canvas_Controller$lift(state),
+		A3(
+			_user$project$Component$init,
+			_user$project$Canvas_Message$Drag,
+			_user$project$Drag$init,
+			{
+				ctor: '_Tuple2',
+				_0: {
+					windowSize: {width: 800, height: 600},
+					drag: _elm_lang$core$Maybe$Nothing,
+					distanceScrolled: 0,
+					transform: _user$project$Transform$identity
+				},
+				_1: A2(_elm_lang$core$Task$perform, _user$project$Canvas_Message$WindowResizedTo, _elm_lang$window$Window$size)
+			}));
+};
+var _user$project$Canvas_Controller$update = F2(
+	function (message, _p1) {
+		var _p2 = _p1;
+		var _p8 = _p2;
+		var _p7 = _p2.canvas;
+		var _p3 = message;
+		switch (_p3.ctor) {
+			case 'WindowResizedTo':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						_p8,
+						{
+							canvas: A2(_user$project$Canvas_Controller_WindowResizedTo$update, _p3._0, _p7)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Drag':
+				return A2(
+					_elm_lang$core$Tuple$mapFirst,
+					_user$project$Canvas_Controller$lift(_p8),
+					A3(
+						_user$project$Component$update,
+						_user$project$Canvas_Message$Drag,
+						_user$project$Drag$update(_p3._0),
+						_p7));
+			case 'Dragged':
+				var _p5 = _p3._0.to;
+				var _p4 = _p3._0.from;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						_p8,
+						{
+							canvas: _elm_lang$core$Native_Utils.update(
+								_p7,
+								{
+									transform: A3(
+										_user$project$Transform$translate,
+										_p7.transform,
+										_elm_lang$core$Basics$toFloat(_p5.x - _p4.x),
+										_elm_lang$core$Basics$toFloat(_p5.y - _p4.y))
+								})
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				var _p6 = _p3._0;
+				var pan = A2(_elm_lang$mouse$Mouse$Position, _p6.offsetX, _p6.offsetY);
+				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, _p7.distanceScrolled + _p6.wheelDelta);
+				var zoomPerUnitDistance = 1 + (0.1 / 100);
+				var zoom = Math.pow(
+					zoomPerUnitDistance,
+					_elm_lang$core$Basics$toFloat(_p7.distanceScrolled)) / Math.pow(
+					zoomPerUnitDistance,
+					_elm_lang$core$Basics$toFloat(distanceScrolled));
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						_p8,
+						{
+							canvas: _elm_lang$core$Native_Utils.update(
+								_p7,
+								{
+									distanceScrolled: distanceScrolled,
+									transform: A3(
+										_user$project$Transform$translate,
+										A2(_user$project$Transform$scale, _p7.transform, zoom),
+										(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.x),
+										(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.y))
+								})
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+		}
+	});
+var _user$project$Canvas$view = F4(
+	function (state, message, fixedContent, fluidContent) {
+		return A4(
+			_user$project$Canvas_UI$view,
+			_elm_lang$core$Native_Utils.update(
+				state,
+				{
+					transform: _user$project$Canvas_Controller$currentTransform(state)
+				}),
+			message,
+			fixedContent,
+			fluidContent);
+	});
+var _user$project$Canvas$subscriptions = function (state) {
+	return _user$project$Canvas_Controller$subscriptions(state);
+};
+var _user$project$Canvas$update = F2(
+	function (message, state) {
+		return A2(_user$project$Canvas_Controller$update, message, state);
+	});
+var _user$project$Canvas$init = _user$project$Canvas_Controller$init;
 var _user$project$LayoutControl_Domain$widthVerticalSpacingRatio = 1.5;
 var _user$project$LayoutControl_Domain$widthHorizontalSpacingRatio = 2;
 var _user$project$LayoutControl_Domain$init = function () {
