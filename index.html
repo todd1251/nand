@@ -9908,19 +9908,19 @@ var _user$project$Canvas_Controller$subscriptions = function (state) {
 			}
 		});
 };
-var _user$project$Canvas_Controller$currentTransform = function (state) {
-	if (state.drag.dragging) {
-		var _p0 = {ctor: '_Tuple2', _0: state.drag.from, _1: state.drag.to};
-		var from = _p0._0;
-		var to = _p0._1;
+var _user$project$Canvas_Controller$pan = F2(
+	function (transform, _p0) {
+		var _p1 = _p0;
+		var _p3 = _p1.to;
+		var _p2 = _p1.from;
 		return A3(
 			_user$project$Transform$translate,
-			state.transform,
-			_elm_lang$core$Basics$toFloat(to.x - from.x),
-			_elm_lang$core$Basics$toFloat(to.y - from.y));
-	} else {
-		return state.transform;
-	}
+			transform,
+			_elm_lang$core$Basics$toFloat(_p3.x - _p2.x),
+			_elm_lang$core$Basics$toFloat(_p3.y - _p2.y));
+	});
+var _user$project$Canvas_Controller$currentTransform = function (state) {
+	return state.drag.dragging ? A2(_user$project$Canvas_Controller$pan, state.transform, state.drag) : state.transform;
 };
 var _user$project$Canvas_Controller$lift = F2(
 	function (state, canvas) {
@@ -9948,73 +9948,67 @@ var _user$project$Canvas_Controller$init = function (state) {
 			}));
 };
 var _user$project$Canvas_Controller$update = F2(
-	function (message, _p1) {
-		var _p2 = _p1;
-		var _p8 = _p2;
-		var _p7 = _p2.canvas;
-		var _p3 = message;
-		switch (_p3.ctor) {
+	function (message, _p4) {
+		var _p5 = _p4;
+		var _p9 = _p5;
+		var _p8 = _p5.canvas;
+		var _p6 = message;
+		switch (_p6.ctor) {
 			case 'WindowResizedTo':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
-						_p8,
+						_p9,
 						{
-							canvas: A2(_user$project$Canvas_Controller_WindowResizedTo$update, _p3._0, _p7)
+							canvas: A2(_user$project$Canvas_Controller_WindowResizedTo$update, _p6._0, _p8)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Drag':
 				return A2(
 					_elm_lang$core$Tuple$mapFirst,
-					_user$project$Canvas_Controller$lift(_p8),
+					_user$project$Canvas_Controller$lift(_p9),
 					A3(
 						_user$project$Component$update,
 						_user$project$Canvas_Message$Drag,
-						_user$project$Drag$update(_p3._0),
-						_p7));
+						_user$project$Drag$update(_p6._0),
+						_p8));
 			case 'Dragged':
-				var _p5 = _p3._0.to;
-				var _p4 = _p3._0.from;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
-						_p8,
+						_p9,
 						{
 							canvas: _elm_lang$core$Native_Utils.update(
-								_p7,
+								_p8,
 								{
-									transform: A3(
-										_user$project$Transform$translate,
-										_p7.transform,
-										_elm_lang$core$Basics$toFloat(_p5.x - _p4.x),
-										_elm_lang$core$Basics$toFloat(_p5.y - _p4.y))
+									transform: A2(_user$project$Canvas_Controller$pan, _p8.transform, _p6._0)
 								})
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
-				var _p6 = _p3._0;
-				var pan = A2(_elm_lang$mouse$Mouse$Position, _p6.offsetX, _p6.offsetY);
-				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, _p7.distanceScrolled + _p6.wheelDelta);
+				var _p7 = _p6._0;
+				var pan = A2(_elm_lang$mouse$Mouse$Position, _p7.offsetX, _p7.offsetY);
+				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, _p8.distanceScrolled + _p7.wheelDelta);
 				var zoomPerUnitDistance = 1 + (0.1 / 100);
 				var zoom = Math.pow(
 					zoomPerUnitDistance,
-					_elm_lang$core$Basics$toFloat(_p7.distanceScrolled)) / Math.pow(
+					_elm_lang$core$Basics$toFloat(_p8.distanceScrolled)) / Math.pow(
 					zoomPerUnitDistance,
 					_elm_lang$core$Basics$toFloat(distanceScrolled));
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
-						_p8,
+						_p9,
 						{
 							canvas: _elm_lang$core$Native_Utils.update(
-								_p7,
+								_p8,
 								{
 									distanceScrolled: distanceScrolled,
 									transform: A3(
 										_user$project$Transform$translate,
-										A2(_user$project$Transform$scale, _p7.transform, zoom),
+										A2(_user$project$Transform$scale, _p8.transform, zoom),
 										(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.x),
 										(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.y))
 								})
