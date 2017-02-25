@@ -9468,12 +9468,21 @@ var _elm_lang$window$Window$subMap = F2(
 			});
 	});
 _elm_lang$core$Native_Platform.effectManagers['Window'] = {pkg: 'elm-lang/window', init: _elm_lang$window$Window$init, onEffects: _elm_lang$window$Window$onEffects, onSelfMsg: _elm_lang$window$Window$onSelfMsg, tag: 'sub', subMap: _elm_lang$window$Window$subMap};
-var _user$project$Drag$onDrag = F2(
+var _user$project$Drag$onDragged = F2(
 	function (lift, state) {
-		return _elm_lang$mouse$Mouse$ups(
+		return state.dragging ? _elm_lang$mouse$Mouse$ups(
 			function (position) {
-				return lift(state);
-			});
+				return lift(
+					{dragging: false, from: state.from, to: position});
+			}) : _elm_lang$core$Platform_Sub$none;
+	});
+var _user$project$Drag$onDragging = F2(
+	function (lift, state) {
+		return state.dragging ? _elm_lang$mouse$Mouse$moves(
+			function (position) {
+				return lift(
+					{dragging: true, from: state.from, to: position});
+			}) : _elm_lang$core$Platform_Sub$none;
 	});
 var _user$project$Drag$notDragging = {
 	dragging: false,
@@ -9658,8 +9667,11 @@ _elm_lang$core$Native_Platform.effectManagers['Mouse.Wheel'] = {pkg: 'user/proje
 var _user$project$Canvas_Message$WheelScrolledBy = function (a) {
 	return {ctor: 'WheelScrolledBy', _0: a};
 };
-var _user$project$Canvas_Message$Dragged = function (a) {
-	return {ctor: 'Dragged', _0: a};
+var _user$project$Canvas_Message$Panned = function (a) {
+	return {ctor: 'Panned', _0: a};
+};
+var _user$project$Canvas_Message$Panning = function (a) {
+	return {ctor: 'Panning', _0: a};
 };
 var _user$project$Canvas_Message$Drag = function (a) {
 	return {ctor: 'Drag', _0: a};
@@ -9789,6 +9801,10 @@ var _user$project$Transform$scale = F2(
 				}
 			});
 	});
+var _user$project$Canvas_UI$transform = function (state) {
+	return _user$project$Transform$toSvgTransform(
+		A2(_elm_lang$core$Maybe$withDefault, state.transform, state.pan));
+};
 var _user$project$Canvas_UI$view = F4(
 	function (state, message, fixedContent, fluidContent) {
 		return A2(
@@ -9824,7 +9840,7 @@ var _user$project$Canvas_UI$view = F4(
 								{
 									ctor: '::',
 									_0: _elm_lang$svg$Svg_Attributes$transform(
-										_user$project$Transform$toSvgTransform(state.transform)),
+										_user$project$Canvas_UI$transform(state)),
 									_1: {ctor: '[]'}
 								},
 								fluidContent),
@@ -9833,9 +9849,9 @@ var _user$project$Canvas_UI$view = F4(
 					_1: {ctor: '[]'}
 				}));
 	});
-var _user$project$Canvas_UI$ViewModel = F4(
-	function (a, b, c, d) {
-		return {windowSize: a, drag: b, distanceScrolled: c, transform: d};
+var _user$project$Canvas_UI$ViewModel = F5(
+	function (a, b, c, d, e) {
+		return {windowSize: a, drag: b, distanceScrolled: c, transform: d, pan: e};
 	});
 var _user$project$Canvas_Controller_WindowResizedTo$update = F2(
 	function (windowSize, canvas) {
@@ -9901,26 +9917,16 @@ var _user$project$Canvas_Controller$subscriptions = function (state) {
 						_user$project$Drag$subscriptions(state.drag)),
 					_1: {
 						ctor: '::',
-						_0: A2(_user$project$Drag$onDrag, _user$project$Canvas_Message$Dragged, state.drag),
-						_1: {ctor: '[]'}
+						_0: A2(_user$project$Drag$onDragging, _user$project$Canvas_Message$Panning, state.drag),
+						_1: {
+							ctor: '::',
+							_0: A2(_user$project$Drag$onDragged, _user$project$Canvas_Message$Panned, state.drag),
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			}
 		});
-};
-var _user$project$Canvas_Controller$pan = F2(
-	function (transform, _p0) {
-		var _p1 = _p0;
-		var _p3 = _p1.to;
-		var _p2 = _p1.from;
-		return A3(
-			_user$project$Transform$translate,
-			transform,
-			_elm_lang$core$Basics$toFloat(_p3.x - _p2.x),
-			_elm_lang$core$Basics$toFloat(_p3.y - _p2.y));
-	});
-var _user$project$Canvas_Controller$currentTransform = function (state) {
-	return state.drag.dragging ? A2(_user$project$Canvas_Controller$pan, state.transform, state.drag) : state.transform;
 };
 var _user$project$Canvas_Controller$lift = F2(
 	function (state, canvas) {
@@ -9942,25 +9948,26 @@ var _user$project$Canvas_Controller$init = function (state) {
 					windowSize: {width: 800, height: 600},
 					drag: _elm_lang$core$Maybe$Nothing,
 					distanceScrolled: 0,
-					transform: _user$project$Transform$identity
+					transform: _user$project$Transform$identity,
+					pan: _elm_lang$core$Maybe$Nothing
 				},
 				_1: A2(_elm_lang$core$Task$perform, _user$project$Canvas_Message$WindowResizedTo, _elm_lang$window$Window$size)
 			}));
 };
 var _user$project$Canvas_Controller$update = F2(
-	function (message, _p4) {
-		var _p5 = _p4;
-		var _p9 = _p5;
-		var _p8 = _p5.canvas;
-		var _p6 = message;
-		switch (_p6.ctor) {
+	function (message, _p0) {
+		var _p1 = _p0;
+		var _p9 = _p1;
+		var _p8 = _p1.canvas;
+		var _p2 = message;
+		switch (_p2.ctor) {
 			case 'WindowResizedTo':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						_p9,
 						{
-							canvas: A2(_user$project$Canvas_Controller_WindowResizedTo$update, _p6._0, _p8)
+							canvas: A2(_user$project$Canvas_Controller_WindowResizedTo$update, _p2._0, _p8)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -9971,9 +9978,11 @@ var _user$project$Canvas_Controller$update = F2(
 					A3(
 						_user$project$Component$update,
 						_user$project$Canvas_Message$Drag,
-						_user$project$Drag$update(_p6._0),
+						_user$project$Drag$update(_p2._0),
 						_p8));
-			case 'Dragged':
+			case 'Panning':
+				var _p4 = _p2._0.to;
+				var _p3 = _p2._0.from;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -9982,13 +9991,39 @@ var _user$project$Canvas_Controller$update = F2(
 							canvas: _elm_lang$core$Native_Utils.update(
 								_p8,
 								{
-									transform: A2(_user$project$Canvas_Controller$pan, _p8.transform, _p6._0)
+									pan: _elm_lang$core$Maybe$Just(
+										A3(
+											_user$project$Transform$translate,
+											_p8.transform,
+											_elm_lang$core$Basics$toFloat(_p4.x - _p3.x),
+											_elm_lang$core$Basics$toFloat(_p4.y - _p3.y)))
+								})
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Panned':
+				var _p6 = _p2._0.to;
+				var _p5 = _p2._0.from;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						_p9,
+						{
+							canvas: _elm_lang$core$Native_Utils.update(
+								_p8,
+								{
+									transform: A3(
+										_user$project$Transform$translate,
+										_p8.transform,
+										_elm_lang$core$Basics$toFloat(_p6.x - _p5.x),
+										_elm_lang$core$Basics$toFloat(_p6.y - _p5.y)),
+									pan: _elm_lang$core$Maybe$Nothing
 								})
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
-				var _p7 = _p6._0;
+				var _p7 = _p2._0;
 				var pan = A2(_elm_lang$mouse$Mouse$Position, _p7.offsetX, _p7.offsetY);
 				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, _p8.distanceScrolled + _p7.wheelDelta);
 				var zoomPerUnitDistance = 1 + (0.1 / 100);
@@ -10017,26 +10052,9 @@ var _user$project$Canvas_Controller$update = F2(
 				};
 		}
 	});
-var _user$project$Canvas$view = F4(
-	function (state, message, fixedContent, fluidContent) {
-		return A4(
-			_user$project$Canvas_UI$view,
-			_elm_lang$core$Native_Utils.update(
-				state,
-				{
-					transform: _user$project$Canvas_Controller$currentTransform(state)
-				}),
-			message,
-			fixedContent,
-			fluidContent);
-	});
-var _user$project$Canvas$subscriptions = function (state) {
-	return _user$project$Canvas_Controller$subscriptions(state);
-};
-var _user$project$Canvas$update = F2(
-	function (message, state) {
-		return A2(_user$project$Canvas_Controller$update, message, state);
-	});
+var _user$project$Canvas$view = _user$project$Canvas_UI$view;
+var _user$project$Canvas$subscriptions = _user$project$Canvas_Controller$subscriptions;
+var _user$project$Canvas$update = _user$project$Canvas_Controller$update;
 var _user$project$Canvas$init = _user$project$Canvas_Controller$init;
 var _user$project$LayoutControl_Domain$widthVerticalSpacingRatio = 1.5;
 var _user$project$LayoutControl_Domain$widthHorizontalSpacingRatio = 2;
