@@ -9803,7 +9803,20 @@ var _user$project$Transform$scale = F2(
 	});
 var _user$project$Canvas_UI$transform = function (state) {
 	return _user$project$Transform$toSvgTransform(
-		A2(_elm_lang$core$Maybe$withDefault, state.transform, state.pan));
+		function () {
+			if (state.drag.dragging) {
+				var _p0 = state.drag;
+				var from = _p0.from;
+				var to = _p0.to;
+				return A3(
+					_user$project$Transform$translate,
+					state.transform,
+					_elm_lang$core$Basics$toFloat(to.x - from.x),
+					_elm_lang$core$Basics$toFloat(to.y - from.y));
+			} else {
+				return state.transform;
+			}
+		}());
 };
 var _user$project$Canvas_UI$view = F4(
 	function (state, message, fixedContent, fluidContent) {
