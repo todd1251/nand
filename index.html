@@ -9468,107 +9468,290 @@ var _elm_lang$window$Window$subMap = F2(
 			});
 	});
 _elm_lang$core$Native_Platform.effectManagers['Window'] = {pkg: 'elm-lang/window', init: _elm_lang$window$Window$init, onEffects: _elm_lang$window$Window$onEffects, onSelfMsg: _elm_lang$window$Window$onSelfMsg, tag: 'sub', subMap: _elm_lang$window$Window$subMap};
-var _user$project$Drag$onDragged = F2(
-	function (lift, state) {
-		return state.dragging ? _elm_lang$mouse$Mouse$ups(
-			function (position) {
-				return lift(
-					{dragging: false, from: state.from, to: position});
-			}) : _elm_lang$core$Platform_Sub$none;
-	});
-var _user$project$Drag$onDragging = F2(
-	function (lift, state) {
-		return state.dragging ? _elm_lang$mouse$Mouse$moves(
-			function (position) {
-				return lift(
-					{dragging: true, from: state.from, to: position});
-			}) : _elm_lang$core$Platform_Sub$none;
-	});
-var _user$project$Drag$notDragging = {
-	dragging: false,
-	from: {x: 0, y: 0},
-	to: {x: 0, y: 0}
+var _zaboco$elm_draggable$Cmd_Extra$message = function (x) {
+	return A2(
+		_elm_lang$core$Task$perform,
+		_elm_lang$core$Basics$identity,
+		_elm_lang$core$Task$succeed(x));
 };
-var _user$project$Drag$init = function (state) {
-	return {
-		ctor: '_Tuple2',
-		_0: _elm_lang$core$Native_Utils.update(
-			state,
-			{drag: _user$project$Drag$notDragging}),
-		_1: _elm_lang$core$Platform_Cmd$none
-	};
+var _zaboco$elm_draggable$Cmd_Extra$multiMessage = function (xs) {
+	return _elm_lang$core$Platform_Cmd$batch(
+		A2(_elm_lang$core$List$map, _zaboco$elm_draggable$Cmd_Extra$message, xs));
 };
-var _user$project$Drag$update = F2(
-	function (message, _p0) {
-		var _p1 = _p0;
-		var _p5 = _p1;
-		var _p4 = _p1.drag;
-		var _p2 = A2(_elm_lang$core$Debug$log, 'drag', message);
-		switch (_p2.ctor) {
-			case 'StartedAt':
-				var _p3 = _p2._0;
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						_p5,
-						{
-							drag: _elm_lang$core$Native_Utils.update(
-								_p4,
-								{dragging: true, from: _p3, to: _p3})
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'MovedTo':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						_p5,
-						{
-							drag: _elm_lang$core$Native_Utils.update(
-								_p4,
-								{to: _p2._0})
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			default:
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						_p5,
-						{drag: _user$project$Drag$notDragging}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
+var _zaboco$elm_draggable$Cmd_Extra$optionalMessage = function (msgMaybe) {
+	return A2(
+		_elm_lang$core$Maybe$withDefault,
+		_elm_lang$core$Platform_Cmd$none,
+		A2(_elm_lang$core$Maybe$map, _zaboco$elm_draggable$Cmd_Extra$message, msgMaybe));
+};
+var _zaboco$elm_draggable$Internal$logInvalidState = F3(
+	function (drag, msg, result) {
+		var str = A2(
+			_elm_lang$core$String$join,
+			'',
+			{
+				ctor: '::',
+				_0: 'Invalid drag state: ',
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$core$Basics$toString(drag),
+					_1: {
+						ctor: '::',
+						_0: ': ',
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$core$Basics$toString(msg),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			});
+		var _p0 = _elm_lang$core$Debug$log(str);
+		return result;
+	});
+var _zaboco$elm_draggable$Internal$distanceTo = F2(
+	function (end, start) {
+		return {
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Basics$toFloat(end.x - start.x),
+			_1: _elm_lang$core$Basics$toFloat(end.y - start.y)
+		};
+	});
+var _zaboco$elm_draggable$Internal$defaultConfig = {
+	onDragStart: function (_p1) {
+		return _elm_lang$core$Maybe$Nothing;
+	},
+	onDragBy: function (_p2) {
+		return _elm_lang$core$Maybe$Nothing;
+	},
+	onDragEnd: _elm_lang$core$Maybe$Nothing,
+	onClick: function (_p3) {
+		return _elm_lang$core$Maybe$Nothing;
+	},
+	onMouseDown: function (_p4) {
+		return _elm_lang$core$Maybe$Nothing;
+	}
+};
+var _zaboco$elm_draggable$Internal$Config = F5(
+	function (a, b, c, d, e) {
+		return {onDragStart: a, onDragBy: b, onDragEnd: c, onClick: d, onMouseDown: e};
+	});
+var _zaboco$elm_draggable$Internal$Dragging = function (a) {
+	return {ctor: 'Dragging', _0: a};
+};
+var _zaboco$elm_draggable$Internal$DraggingTentative = F2(
+	function (a, b) {
+		return {ctor: 'DraggingTentative', _0: a, _1: b};
+	});
+var _zaboco$elm_draggable$Internal$NotDragging = {ctor: 'NotDragging'};
+var _zaboco$elm_draggable$Internal$updateAndEmit = F3(
+	function (config, msg, drag) {
+		var _p5 = {ctor: '_Tuple2', _0: drag, _1: msg};
+		_v0_5:
+		do {
+			if (_p5.ctor === '_Tuple2') {
+				switch (_p5._0.ctor) {
+					case 'NotDragging':
+						if (_p5._1.ctor === 'StartDragging') {
+							var _p6 = _p5._1._0;
+							return {
+								ctor: '_Tuple2',
+								_0: A2(_zaboco$elm_draggable$Internal$DraggingTentative, _p6, _p5._1._1),
+								_1: config.onMouseDown(_p6)
+							};
+						} else {
+							break _v0_5;
+						}
+					case 'DraggingTentative':
+						switch (_p5._1.ctor) {
+							case 'DragAt':
+								return {
+									ctor: '_Tuple2',
+									_0: _zaboco$elm_draggable$Internal$Dragging(_p5._0._1),
+									_1: config.onDragStart(_p5._0._0)
+								};
+							case 'StopDragging':
+								return {
+									ctor: '_Tuple2',
+									_0: _zaboco$elm_draggable$Internal$NotDragging,
+									_1: config.onClick(_p5._0._0)
+								};
+							default:
+								break _v0_5;
+						}
+					default:
+						switch (_p5._1.ctor) {
+							case 'DragAt':
+								var _p7 = _p5._1._0;
+								return {
+									ctor: '_Tuple2',
+									_0: _zaboco$elm_draggable$Internal$Dragging(_p7),
+									_1: config.onDragBy(
+										A2(_zaboco$elm_draggable$Internal$distanceTo, _p7, _p5._0._0))
+								};
+							case 'StopDragging':
+								return {ctor: '_Tuple2', _0: _zaboco$elm_draggable$Internal$NotDragging, _1: config.onDragEnd};
+							default:
+								break _v0_5;
+						}
+				}
+			} else {
+				break _v0_5;
+			}
+		} while(false);
+		return A3(
+			_zaboco$elm_draggable$Internal$logInvalidState,
+			drag,
+			msg,
+			{ctor: '_Tuple2', _0: drag, _1: _elm_lang$core$Maybe$Nothing});
+	});
+var _zaboco$elm_draggable$Internal$StopDragging = {ctor: 'StopDragging'};
+var _zaboco$elm_draggable$Internal$DragAt = function (a) {
+	return {ctor: 'DragAt', _0: a};
+};
+var _zaboco$elm_draggable$Internal$StartDragging = F2(
+	function (a, b) {
+		return {ctor: 'StartDragging', _0: a, _1: b};
+	});
+var _zaboco$elm_draggable$Draggable$whenLeftMouseButtonPressed = function (decoder) {
+	return A2(
+		_elm_lang$core$Json_Decode$andThen,
+		function (button) {
+			var _p0 = button;
+			if (_p0 === 0) {
+				return decoder;
+			} else {
+				return _elm_lang$core$Json_Decode$fail('Event is only relevant when the main mouse button was pressed.');
+			}
+		},
+		A2(_elm_lang$core$Json_Decode$field, 'button', _elm_lang$core$Json_Decode$int));
+};
+var _zaboco$elm_draggable$Draggable$ignoreDefaults = A2(_elm_lang$virtual_dom$VirtualDom$Options, true, true);
+var _zaboco$elm_draggable$Draggable$State = function (a) {
+	return {ctor: 'State', _0: a};
+};
+var _zaboco$elm_draggable$Draggable$init = _zaboco$elm_draggable$Draggable$State(_zaboco$elm_draggable$Internal$NotDragging);
+var _zaboco$elm_draggable$Draggable$updateDraggable = F3(
+	function (_p3, _p2, _p1) {
+		var _p4 = _p3;
+		var _p5 = _p2;
+		var _p6 = _p1;
+		var _p7 = A3(_zaboco$elm_draggable$Internal$updateAndEmit, _p4._0, _p5._0, _p6._0);
+		var newDrag = _p7._0;
+		var newMsgMaybe = _p7._1;
+		return {
+			ctor: '_Tuple2',
+			_0: _zaboco$elm_draggable$Draggable$State(newDrag),
+			_1: _zaboco$elm_draggable$Cmd_Extra$optionalMessage(newMsgMaybe)
+		};
+	});
+var _zaboco$elm_draggable$Draggable$update = F3(
+	function (config, msg, model) {
+		var _p8 = A3(_zaboco$elm_draggable$Draggable$updateDraggable, config, msg, model.drag);
+		var dragState = _p8._0;
+		var dragCmd = _p8._1;
+		return A2(
+			_elm_lang$core$Platform_Cmd_ops['!'],
+			_elm_lang$core$Native_Utils.update(
+				model,
+				{drag: dragState}),
+			{
+				ctor: '::',
+				_0: dragCmd,
+				_1: {ctor: '[]'}
+			});
+	});
+var _zaboco$elm_draggable$Draggable$Msg = function (a) {
+	return {ctor: 'Msg', _0: a};
+};
+var _zaboco$elm_draggable$Draggable$subscriptions = F2(
+	function (envelope, _p9) {
+		var _p10 = _p9;
+		var _p11 = _p10._0;
+		if (_p11.ctor === 'NotDragging') {
+			return _elm_lang$core$Platform_Sub$none;
+		} else {
+			return A2(
+				_elm_lang$core$Platform_Sub$map,
+				function (_p12) {
+					return envelope(
+						_zaboco$elm_draggable$Draggable$Msg(_p12));
+				},
+				_elm_lang$core$Platform_Sub$batch(
+					{
+						ctor: '::',
+						_0: _elm_lang$mouse$Mouse$moves(_zaboco$elm_draggable$Internal$DragAt),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$mouse$Mouse$ups(
+								function (_p13) {
+									return _zaboco$elm_draggable$Internal$StopDragging;
+								}),
+							_1: {ctor: '[]'}
+						}
+					}));
 		}
 	});
-var _user$project$Drag$State = F3(
-	function (a, b, c) {
-		return {dragging: a, from: b, to: c};
+var _zaboco$elm_draggable$Draggable$positionDecoder = function (key) {
+	return _zaboco$elm_draggable$Draggable$whenLeftMouseButtonPressed(
+		A2(
+			_elm_lang$core$Json_Decode$map,
+			function (_p14) {
+				return _zaboco$elm_draggable$Draggable$Msg(
+					A2(_zaboco$elm_draggable$Internal$StartDragging, key, _p14));
+			},
+			_elm_lang$mouse$Mouse$position));
+};
+var _zaboco$elm_draggable$Draggable$mouseTrigger = F2(
+	function (key, envelope) {
+		return A3(
+			_elm_lang$virtual_dom$VirtualDom$onWithOptions,
+			'mousedown',
+			_zaboco$elm_draggable$Draggable$ignoreDefaults,
+			A2(
+				_elm_lang$core$Json_Decode$map,
+				envelope,
+				_zaboco$elm_draggable$Draggable$positionDecoder(key)));
 	});
-var _user$project$Drag$EndedAt = function (a) {
-	return {ctor: 'EndedAt', _0: a};
+var _zaboco$elm_draggable$Draggable$customMouseTrigger = F2(
+	function (customDecoder, customEnvelope) {
+		return A3(
+			_elm_lang$virtual_dom$VirtualDom$onWithOptions,
+			'mousedown',
+			_zaboco$elm_draggable$Draggable$ignoreDefaults,
+			A3(
+				_elm_lang$core$Json_Decode$map2,
+				customEnvelope,
+				_zaboco$elm_draggable$Draggable$positionDecoder(
+					{ctor: '_Tuple0'}),
+				customDecoder));
+	});
+var _zaboco$elm_draggable$Draggable$Config = function (a) {
+	return {ctor: 'Config', _0: a};
 };
-var _user$project$Drag$MovedTo = function (a) {
-	return {ctor: 'MovedTo', _0: a};
+var _zaboco$elm_draggable$Draggable$basicConfig = function (onDragByListener) {
+	var defaultConfig = _zaboco$elm_draggable$Internal$defaultConfig;
+	return _zaboco$elm_draggable$Draggable$Config(
+		_elm_lang$core$Native_Utils.update(
+			defaultConfig,
+			{
+				onDragBy: function (_p15) {
+					return _elm_lang$core$Maybe$Just(
+						onDragByListener(_p15));
+				}
+			}));
 };
-var _user$project$Drag$subscriptions = function (state) {
-	return state.dragging ? _elm_lang$core$Platform_Sub$batch(
-		{
-			ctor: '::',
-			_0: _elm_lang$mouse$Mouse$moves(_user$project$Drag$MovedTo),
-			_1: {
-				ctor: '::',
-				_0: _elm_lang$mouse$Mouse$ups(_user$project$Drag$EndedAt),
-				_1: {ctor: '[]'}
-			}
-		}) : _elm_lang$core$Platform_Sub$none;
+var _zaboco$elm_draggable$Draggable$customConfig = function (events) {
+	return _zaboco$elm_draggable$Draggable$Config(
+		A3(
+			_elm_lang$core$List$foldl,
+			F2(
+				function (x, y) {
+					return x(y);
+				}),
+			_zaboco$elm_draggable$Internal$defaultConfig,
+			events));
 };
-var _user$project$Drag$StartedAt = function (a) {
-	return {ctor: 'StartedAt', _0: a};
-};
-var _user$project$Drag$onMouseDown = A2(
-	_elm_lang$html$Html_Events$on,
-	'mousedown',
-	A2(_elm_lang$core$Json_Decode$map, _user$project$Drag$StartedAt, _elm_lang$mouse$Mouse$position));
 var _user$project$Mouse_Wheel_ops = _user$project$Mouse_Wheel_ops || {};
 _user$project$Mouse_Wheel_ops['&>'] = F2(
 	function (t1, t2) {
@@ -9667,11 +9850,9 @@ _elm_lang$core$Native_Platform.effectManagers['Mouse.Wheel'] = {pkg: 'user/proje
 var _user$project$Canvas_Message$WheelScrolledBy = function (a) {
 	return {ctor: 'WheelScrolledBy', _0: a};
 };
-var _user$project$Canvas_Message$Panned = function (a) {
-	return {ctor: 'Panned', _0: a};
-};
-var _user$project$Canvas_Message$Panning = function (a) {
-	return {ctor: 'Panning', _0: a};
+var _user$project$Canvas_Message$OnDragEnd = {ctor: 'OnDragEnd'};
+var _user$project$Canvas_Message$OnDragBy = function (a) {
+	return {ctor: 'OnDragBy', _0: a};
 };
 var _user$project$Canvas_Message$Drag = function (a) {
 	return {ctor: 'Drag', _0: a};
@@ -9817,7 +9998,10 @@ var _user$project$Canvas_UI$view = F4(
 					_0: A2(
 						_elm_lang$html$Html_Attributes$map,
 						message,
-						A2(_elm_lang$html$Html_Attributes$map, _user$project$Canvas_Message$Drag, _user$project$Drag$onMouseDown)),
+						A2(
+							_zaboco$elm_draggable$Draggable$mouseTrigger,
+							{ctor: '_Tuple0'},
+							_user$project$Canvas_Message$Drag)),
 					_1: {ctor: '[]'}
 				}
 			},
@@ -9860,20 +10044,20 @@ var _user$project$Canvas_Controller_WindowResizedTo$update = F2(
 			{windowSize: windowSize});
 	});
 var _user$project$Component$subscriptions = F3(
-	function (wrap, subscription2, subscription1) {
+	function (envelope, subscription2, subscription1) {
 		return _elm_lang$core$Platform_Sub$batch(
 			{
 				ctor: '::',
 				_0: subscription1,
 				_1: {
 					ctor: '::',
-					_0: A2(_elm_lang$core$Platform_Sub$map, wrap, subscription2),
+					_0: A2(_elm_lang$core$Platform_Sub$map, envelope, subscription2),
 					_1: {ctor: '[]'}
 				}
 			});
 	});
 var _user$project$Component$init = F3(
-	function (wrap, init, _p0) {
+	function (envelope, init, _p0) {
 		var _p1 = _p0;
 		var _p2 = init(_p1._0);
 		var state2 = _p2._0;
@@ -9887,19 +10071,71 @@ var _user$project$Component$init = F3(
 					_0: _p1._1,
 					_1: {
 						ctor: '::',
-						_0: A2(_elm_lang$core$Platform_Cmd$map, wrap, command2),
+						_0: A2(_elm_lang$core$Platform_Cmd$map, envelope, command2),
 						_1: {ctor: '[]'}
 					}
 				})
 		};
 	});
 var _user$project$Component$update = F3(
-	function (wrap, update, state1) {
+	function (envelope, update, state1) {
 		return A3(
 			_user$project$Component$init,
-			wrap,
+			envelope,
 			update,
 			{ctor: '_Tuple2', _0: state1, _1: _elm_lang$core$Platform_Cmd$none});
+	});
+var _zaboco$elm_draggable$Draggable_Events$onMouseDown = F2(
+	function (toMsg, config) {
+		return _elm_lang$core$Native_Utils.update(
+			config,
+			{
+				onMouseDown: function (_p0) {
+					return _elm_lang$core$Maybe$Just(
+						toMsg(_p0));
+				}
+			});
+	});
+var _zaboco$elm_draggable$Draggable_Events$onClick = F2(
+	function (toMsg, config) {
+		return _elm_lang$core$Native_Utils.update(
+			config,
+			{
+				onClick: function (_p1) {
+					return _elm_lang$core$Maybe$Just(
+						toMsg(_p1));
+				}
+			});
+	});
+var _zaboco$elm_draggable$Draggable_Events$onDragBy = F2(
+	function (toMsg, config) {
+		return _elm_lang$core$Native_Utils.update(
+			config,
+			{
+				onDragBy: function (_p2) {
+					return _elm_lang$core$Maybe$Just(
+						toMsg(_p2));
+				}
+			});
+	});
+var _zaboco$elm_draggable$Draggable_Events$onDragEnd = F2(
+	function (toMsg, config) {
+		return _elm_lang$core$Native_Utils.update(
+			config,
+			{
+				onDragEnd: _elm_lang$core$Maybe$Just(toMsg)
+			});
+	});
+var _zaboco$elm_draggable$Draggable_Events$onDragStart = F2(
+	function (toMsg, config) {
+		return _elm_lang$core$Native_Utils.update(
+			config,
+			{
+				onDragStart: function (_p3) {
+					return _elm_lang$core$Maybe$Just(
+						toMsg(_p3));
+				}
+			});
 	});
 var _user$project$Canvas_Controller$subscriptions = function (state) {
 	return _elm_lang$core$Platform_Sub$batch(
@@ -9911,23 +10147,22 @@ var _user$project$Canvas_Controller$subscriptions = function (state) {
 				_0: _user$project$Mouse_Wheel$deltas(_user$project$Canvas_Message$WheelScrolledBy),
 				_1: {
 					ctor: '::',
-					_0: A2(
-						_elm_lang$core$Platform_Sub$map,
-						_user$project$Canvas_Message$Drag,
-						_user$project$Drag$subscriptions(state.drag)),
-					_1: {
-						ctor: '::',
-						_0: A2(_user$project$Drag$onDragging, _user$project$Canvas_Message$Panning, state.drag),
-						_1: {
-							ctor: '::',
-							_0: A2(_user$project$Drag$onDragged, _user$project$Canvas_Message$Panned, state.drag),
-							_1: {ctor: '[]'}
-						}
-					}
+					_0: A2(_zaboco$elm_draggable$Draggable$subscriptions, _user$project$Canvas_Message$Drag, state.drag),
+					_1: {ctor: '[]'}
 				}
 			}
 		});
 };
+var _user$project$Canvas_Controller$dragConfig = _zaboco$elm_draggable$Draggable$customConfig(
+	{
+		ctor: '::',
+		_0: _zaboco$elm_draggable$Draggable_Events$onDragBy(_user$project$Canvas_Message$OnDragBy),
+		_1: {
+			ctor: '::',
+			_0: _zaboco$elm_draggable$Draggable_Events$onDragEnd(_user$project$Canvas_Message$OnDragEnd),
+			_1: {ctor: '[]'}
+		}
+	});
 var _user$project$Canvas_Controller$lift = F2(
 	function (state, canvas) {
 		return _elm_lang$core$Native_Utils.update(
@@ -9941,7 +10176,15 @@ var _user$project$Canvas_Controller$init = function (state) {
 		A3(
 			_user$project$Component$init,
 			_user$project$Canvas_Message$Drag,
-			_user$project$Drag$init,
+			function (state) {
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						state,
+						{drag: _zaboco$elm_draggable$Draggable$init}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			},
 			{
 				ctor: '_Tuple2',
 				_0: {
@@ -9957,93 +10200,81 @@ var _user$project$Canvas_Controller$init = function (state) {
 var _user$project$Canvas_Controller$update = F2(
 	function (message, _p0) {
 		var _p1 = _p0;
-		var _p9 = _p1;
-		var _p8 = _p1.canvas;
+		var _p5 = _p1;
+		var _p4 = _p1.canvas;
 		var _p2 = message;
 		switch (_p2.ctor) {
 			case 'WindowResizedTo':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
-						_p9,
+						_p5,
 						{
-							canvas: A2(_user$project$Canvas_Controller_WindowResizedTo$update, _p2._0, _p8)
+							canvas: A2(_user$project$Canvas_Controller_WindowResizedTo$update, _p2._0, _p4)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Drag':
 				return A2(
 					_elm_lang$core$Tuple$mapFirst,
-					_user$project$Canvas_Controller$lift(_p9),
-					A3(
-						_user$project$Component$update,
-						_user$project$Canvas_Message$Drag,
-						_user$project$Drag$update(_p2._0),
-						_p8));
-			case 'Panning':
-				var _p4 = _p2._0.to;
-				var _p3 = _p2._0.from;
+					_user$project$Canvas_Controller$lift(_p5),
+					A3(_zaboco$elm_draggable$Draggable$update, _user$project$Canvas_Controller$dragConfig, _p2._0, _p4));
+			case 'OnDragBy':
 				return {
 					ctor: '_Tuple2',
-					_0: _p8.drag.dragging ? _elm_lang$core$Native_Utils.update(
-						_p9,
+					_0: _elm_lang$core$Native_Utils.update(
+						_p5,
 						{
 							canvas: _elm_lang$core$Native_Utils.update(
-								_p8,
+								_p4,
 								{
 									pan: _elm_lang$core$Maybe$Just(
 										A3(
 											_user$project$Transform$translate,
-											_p8.transform,
-											_elm_lang$core$Basics$toFloat(_p4.x - _p3.x),
-											_elm_lang$core$Basics$toFloat(_p4.y - _p3.y)))
+											A2(_elm_lang$core$Maybe$withDefault, _p4.transform, _p4.pan),
+											_p2._0._0,
+											_p2._0._1))
 								})
-						}) : _p9,
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'Panned':
-				var _p6 = _p2._0.to;
-				var _p5 = _p2._0.from;
+			case 'OnDragEnd':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
-						_p9,
+						_p5,
 						{
 							canvas: _elm_lang$core$Native_Utils.update(
-								_p8,
+								_p4,
 								{
-									transform: A3(
-										_user$project$Transform$translate,
-										_p8.transform,
-										_elm_lang$core$Basics$toFloat(_p6.x - _p5.x),
-										_elm_lang$core$Basics$toFloat(_p6.y - _p5.y)),
+									transform: A2(_elm_lang$core$Maybe$withDefault, _p4.transform, _p4.pan),
 									pan: _elm_lang$core$Maybe$Nothing
 								})
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
-				var _p7 = _p2._0;
-				var pan = A2(_elm_lang$mouse$Mouse$Position, _p7.offsetX, _p7.offsetY);
-				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, _p8.distanceScrolled + _p7.wheelDelta);
+				var _p3 = _p2._0;
+				var pan = A2(_elm_lang$mouse$Mouse$Position, _p3.offsetX, _p3.offsetY);
+				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, _p4.distanceScrolled + _p3.wheelDelta);
 				var zoomPerUnitDistance = 1 + (0.1 / 100);
 				var zoom = Math.pow(
 					zoomPerUnitDistance,
-					_elm_lang$core$Basics$toFloat(_p8.distanceScrolled)) / Math.pow(
+					_elm_lang$core$Basics$toFloat(_p4.distanceScrolled)) / Math.pow(
 					zoomPerUnitDistance,
 					_elm_lang$core$Basics$toFloat(distanceScrolled));
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
-						_p9,
+						_p5,
 						{
 							canvas: _elm_lang$core$Native_Utils.update(
-								_p8,
+								_p4,
 								{
 									distanceScrolled: distanceScrolled,
 									transform: A3(
 										_user$project$Transform$translate,
-										A2(_user$project$Transform$scale, _p8.transform, zoom),
+										A2(_user$project$Transform$scale, _p4.transform, zoom),
 										(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.x),
 										(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.y))
 								})
