@@ -9752,101 +9752,10 @@ var _zaboco$elm_draggable$Draggable$customConfig = function (events) {
 			_zaboco$elm_draggable$Internal$defaultConfig,
 			events));
 };
-var _user$project$Mouse_Wheel_ops = _user$project$Mouse_Wheel_ops || {};
-_user$project$Mouse_Wheel_ops['&>'] = F2(
-	function (t1, t2) {
-		return A2(
-			_elm_lang$core$Task$andThen,
-			function (_p0) {
-				return t2;
-			},
-			t1);
-	});
-var _user$project$Mouse_Wheel$onSelfMsg = F3(
-	function (router, delta, state) {
-		var _p1 = state;
-		if (_p1.ctor === 'Nothing') {
-			return _elm_lang$core$Task$succeed(state);
-		} else {
-			var send = function (_p2) {
-				var _p3 = _p2;
-				return A2(
-					_elm_lang$core$Platform$sendToApp,
-					router,
-					_p3._0(delta));
-			};
-			return A2(
-				_user$project$Mouse_Wheel_ops['&>'],
-				_elm_lang$core$Task$sequence(
-					A2(_elm_lang$core$List$map, send, _p1._0.subs)),
-				_elm_lang$core$Task$succeed(state));
-		}
-	});
-var _user$project$Mouse_Wheel$init = _elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing);
-var _user$project$Mouse_Wheel$subscription = _elm_lang$core$Native_Platform.leaf('Mouse.Wheel');
-var _user$project$Mouse_Wheel$Delta = F5(
+var _user$project$Canvas_Message$Delta = F5(
 	function (a, b, c, d, e) {
 		return {wheelDelta: a, deltaX: b, deltaY: c, offsetX: d, offsetY: e};
 	});
-var _user$project$Mouse_Wheel$delta = A6(
-	_elm_lang$core$Json_Decode$map5,
-	_user$project$Mouse_Wheel$Delta,
-	A2(_elm_lang$core$Json_Decode$field, 'wheelDelta', _elm_lang$core$Json_Decode$int),
-	A2(_elm_lang$core$Json_Decode$field, 'deltaX', _elm_lang$core$Json_Decode$int),
-	A2(_elm_lang$core$Json_Decode$field, 'deltaY', _elm_lang$core$Json_Decode$int),
-	A2(_elm_lang$core$Json_Decode$field, 'offsetX', _elm_lang$core$Json_Decode$int),
-	A2(_elm_lang$core$Json_Decode$field, 'offsetY', _elm_lang$core$Json_Decode$int));
-var _user$project$Mouse_Wheel$onEffects = F3(
-	function (router, newSubs, oldState) {
-		var _p4 = {ctor: '_Tuple2', _0: oldState, _1: newSubs};
-		if (_p4._0.ctor === 'Nothing') {
-			if (_p4._1.ctor === '[]') {
-				return _elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing);
-			} else {
-				return A2(
-					_elm_lang$core$Task$andThen,
-					function (pid) {
-						return _elm_lang$core$Task$succeed(
-							_elm_lang$core$Maybe$Just(
-								{subs: newSubs, pid: pid}));
-					},
-					_elm_lang$core$Process$spawn(
-						A3(
-							_elm_lang$dom$Dom_LowLevel$onWindow,
-							'wheel',
-							_user$project$Mouse_Wheel$delta,
-							_elm_lang$core$Platform$sendToSelf(router))));
-			}
-		} else {
-			if (_p4._1.ctor === '[]') {
-				return A2(
-					_user$project$Mouse_Wheel_ops['&>'],
-					_elm_lang$core$Process$kill(_p4._0._0.pid),
-					_elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing));
-			} else {
-				return _elm_lang$core$Task$succeed(
-					_elm_lang$core$Maybe$Just(
-						{subs: newSubs, pid: _p4._0._0.pid}));
-			}
-		}
-	});
-var _user$project$Mouse_Wheel$MySub = function (a) {
-	return {ctor: 'MySub', _0: a};
-};
-var _user$project$Mouse_Wheel$deltas = function (tagger) {
-	return _user$project$Mouse_Wheel$subscription(
-		_user$project$Mouse_Wheel$MySub(tagger));
-};
-var _user$project$Mouse_Wheel$subMap = F2(
-	function (func, _p5) {
-		var _p6 = _p5;
-		return _user$project$Mouse_Wheel$MySub(
-			function (_p7) {
-				return func(
-					_p6._0(_p7));
-			});
-	});
-_elm_lang$core$Native_Platform.effectManagers['Mouse.Wheel'] = {pkg: 'user/project', init: _user$project$Mouse_Wheel$init, onEffects: _user$project$Mouse_Wheel$onEffects, onSelfMsg: _user$project$Mouse_Wheel$onSelfMsg, tag: 'sub', subMap: _user$project$Mouse_Wheel$subMap};
 var _user$project$Canvas_Message$WheelScrolledBy = function (a) {
 	return {ctor: 'WheelScrolledBy', _0: a};
 };
@@ -9982,6 +9891,15 @@ var _user$project$Transform$scale = F2(
 				}
 			});
 	});
+var _user$project$Canvas_UI$delta = A6(
+	_elm_lang$core$Json_Decode$map5,
+	_user$project$Canvas_Message$Delta,
+	A2(_elm_lang$core$Json_Decode$field, 'wheelDelta', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'deltaX', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'deltaY', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'offsetX', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'offsetY', _elm_lang$core$Json_Decode$int));
+var _user$project$Canvas_UI$ignoreDefaults = A2(_elm_lang$html$Html_Events$Options, true, true);
 var _user$project$Canvas_UI$transform = function (state) {
 	return _user$project$Transform$toSvgTransform(
 		A2(_elm_lang$core$Maybe$withDefault, state.transform, state.pan));
@@ -9990,21 +9908,7 @@ var _user$project$Canvas_UI$view = F4(
 	function (state, message, fixedContent, fluidContent) {
 		return A2(
 			_elm_lang$html$Html$div,
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('container'),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html_Attributes$map,
-						message,
-						A2(
-							_zaboco$elm_draggable$Draggable$mouseTrigger,
-							{ctor: '_Tuple0'},
-							_user$project$Canvas_Message$Drag)),
-					_1: {ctor: '[]'}
-				}
-			},
+			{ctor: '[]'},
 			A2(
 				_elm_lang$core$Basics_ops['++'],
 				fixedContent,
@@ -10015,7 +9919,27 @@ var _user$project$Canvas_UI$view = F4(
 						{
 							ctor: '::',
 							_0: _elm_lang$svg$Svg_Attributes$class('canvas'),
-							_1: {ctor: '[]'}
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html_Attributes$map,
+									message,
+									A2(
+										_zaboco$elm_draggable$Draggable$mouseTrigger,
+										{ctor: '_Tuple0'},
+										_user$project$Canvas_Message$Drag)),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html_Attributes$map,
+										function (_p0) {
+											return message(
+												_user$project$Canvas_Message$WheelScrolledBy(_p0));
+										},
+										A3(_elm_lang$html$Html_Events$onWithOptions, 'wheel', _user$project$Canvas_UI$ignoreDefaults, _user$project$Canvas_UI$delta)),
+									_1: {ctor: '[]'}
+								}
+							}
 						},
 						{
 							ctor: '::',
@@ -10144,14 +10068,13 @@ var _user$project$Canvas_Controller$subscriptions = function (state) {
 			_0: _elm_lang$window$Window$resizes(_user$project$Canvas_Message$WindowResizedTo),
 			_1: {
 				ctor: '::',
-				_0: _user$project$Mouse_Wheel$deltas(_user$project$Canvas_Message$WheelScrolledBy),
-				_1: {
-					ctor: '::',
-					_0: A2(_zaboco$elm_draggable$Draggable$subscriptions, _user$project$Canvas_Message$Drag, state.drag),
-					_1: {ctor: '[]'}
-				}
+				_0: A2(_zaboco$elm_draggable$Draggable$subscriptions, _user$project$Canvas_Message$Drag, state.drag),
+				_1: {ctor: '[]'}
 			}
 		});
+};
+var _user$project$Canvas_Controller$currentPan = function (canvas) {
+	return A2(_elm_lang$core$Maybe$withDefault, canvas.transform, canvas.pan);
 };
 var _user$project$Canvas_Controller$dragConfig = _zaboco$elm_draggable$Draggable$customConfig(
 	{
@@ -10231,7 +10154,7 @@ var _user$project$Canvas_Controller$update = F2(
 									pan: _elm_lang$core$Maybe$Just(
 										A3(
 											_user$project$Transform$translate,
-											A2(_elm_lang$core$Maybe$withDefault, _p4.transform, _p4.pan),
+											_user$project$Canvas_Controller$currentPan(_p4),
 											_p2._0._0,
 											_p2._0._1))
 								})
@@ -10247,7 +10170,7 @@ var _user$project$Canvas_Controller$update = F2(
 							canvas: _elm_lang$core$Native_Utils.update(
 								_p4,
 								{
-									transform: A2(_elm_lang$core$Maybe$withDefault, _p4.transform, _p4.pan),
+									transform: _user$project$Canvas_Controller$currentPan(_p4),
 									pan: _elm_lang$core$Maybe$Nothing
 								})
 						}),
@@ -11845,7 +11768,7 @@ var _user$project$UI_Gate$Segment = F3(
 	function (a, b, c) {
 		return {width: a, height: b, segment: c};
 	});
-var _user$project$UI_Styles$css = '\n    html, body {\n        height: 100%;\n        margin: 0;\n        overflow: hidden;\n        padding: 0;\n        width: 100%;\n    }\n\n    * {\n        user-select: none;\n    }\n\n    .container {\n        height: 100%;\n        position: fixed;\n        width: 100%;\n    }\n\n    .controls {\n        background: #eee;\n        border: 1px solid #ccc;\n        border-radius: 5px;\n        margin: 1.5em 0 0 1.5em;\n        padding: 0 0.5em 1em 0.5em;\n        user-select: none;\n        width: 150px;\n    }\n\n    .controls label, .controls input {\n        display: block;\n        margin: 0.25em auto;\n    }\n\n    .controls label {\n        margin: 1.5em 0 0 0.5em;\n    }\n\n    .canvas {\n        background: white;\n        height: 100%;\n        left: 0;\n        position: fixed;\n        top: 0;\n        user-select: none;\n        width: 100%;\n        z-index: -1;\n    }\n    ';
+var _user$project$UI_Styles$css = '\n    html, body {\n        xheight: 100%;\n        margin: 0;\n        xoverflow: hidden;\n        padding: 0;\n        xwidth: 100%;\n    }\n\n    * {\n        user-select: none;\n    }\n\n    .controls {\n        background: #eee;\n        border: 1px solid #ccc;\n        border-radius: 5px;\n        margin: 1.5em 0 0 1.5em;\n        padding: 0 0.5em 1em 0.5em;\n        position: fixed;\n        user-select: none;\n        width: 150px;\n        z-index: 1;\n    }\n\n    .controls label, .controls input {\n        display: block;\n        margin: 0.25em auto;\n    }\n\n    .controls label {\n        margin: 1.5em 0 0 0.5em;\n    }\n\n    .canvas {\n        background: white;\n        height: 100%;\n        position: fixed;\n        user-select: none;\n        width: 100%;\n    }\n    ';
 var _user$project$UI_Styles$stylesheet = A3(
 	_elm_lang$html$Html$node,
 	'style',
