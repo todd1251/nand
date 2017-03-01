@@ -9967,6 +9967,27 @@ var _user$project$Canvas_Controller_WindowResizedTo$update = F2(
 			canvas,
 			{windowSize: windowSize});
 	});
+var _user$project$Canvas_Controller_WheelScrolledBy$update = F2(
+	function (delta, canvas) {
+		var pan = A2(_elm_lang$mouse$Mouse$Position, delta.offsetX, delta.offsetY);
+		var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, canvas.distanceScrolled + delta.wheelDelta);
+		var zoomPerUnitDistance = 1 + (0.1 / 100);
+		var zoom = Math.pow(
+			zoomPerUnitDistance,
+			_elm_lang$core$Basics$toFloat(canvas.distanceScrolled)) / Math.pow(
+			zoomPerUnitDistance,
+			_elm_lang$core$Basics$toFloat(distanceScrolled));
+		return _elm_lang$core$Native_Utils.update(
+			canvas,
+			{
+				distanceScrolled: distanceScrolled,
+				transform: A3(
+					_user$project$Transform$translate,
+					A2(_user$project$Transform$scale, canvas.transform, zoom),
+					(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.x),
+					(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.y))
+			});
+	});
 var _user$project$Component$subscriptions = F3(
 	function (envelope, subscription2, subscription1) {
 		return _elm_lang$core$Platform_Sub$batch(
@@ -10086,7 +10107,7 @@ var _user$project$Canvas_Controller$dragConfig = _zaboco$elm_draggable$Draggable
 			_1: {ctor: '[]'}
 		}
 	});
-var _user$project$Canvas_Controller$lift = F2(
+var _user$project$Canvas_Controller$envelope = F2(
 	function (state, canvas) {
 		return _elm_lang$core$Native_Utils.update(
 			state,
@@ -10095,7 +10116,7 @@ var _user$project$Canvas_Controller$lift = F2(
 var _user$project$Canvas_Controller$init = function (state) {
 	return A2(
 		_elm_lang$core$Tuple$mapFirst,
-		_user$project$Canvas_Controller$lift(state),
+		_user$project$Canvas_Controller$envelope(state),
 		A3(
 			_user$project$Component$init,
 			_user$project$Canvas_Message$Drag,
@@ -10123,38 +10144,38 @@ var _user$project$Canvas_Controller$init = function (state) {
 var _user$project$Canvas_Controller$update = F2(
 	function (message, _p0) {
 		var _p1 = _p0;
-		var _p5 = _p1;
-		var _p4 = _p1.canvas;
+		var _p4 = _p1;
+		var _p3 = _p1.canvas;
 		var _p2 = message;
 		switch (_p2.ctor) {
 			case 'WindowResizedTo':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
-						_p5,
+						_p4,
 						{
-							canvas: A2(_user$project$Canvas_Controller_WindowResizedTo$update, _p2._0, _p4)
+							canvas: A2(_user$project$Canvas_Controller_WindowResizedTo$update, _p2._0, _p3)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Drag':
 				return A2(
 					_elm_lang$core$Tuple$mapFirst,
-					_user$project$Canvas_Controller$lift(_p5),
-					A3(_zaboco$elm_draggable$Draggable$update, _user$project$Canvas_Controller$dragConfig, _p2._0, _p4));
+					_user$project$Canvas_Controller$envelope(_p4),
+					A3(_zaboco$elm_draggable$Draggable$update, _user$project$Canvas_Controller$dragConfig, _p2._0, _p3));
 			case 'OnDragBy':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
-						_p5,
+						_p4,
 						{
 							canvas: _elm_lang$core$Native_Utils.update(
-								_p4,
+								_p3,
 								{
 									pan: _elm_lang$core$Maybe$Just(
 										A3(
 											_user$project$Transform$translate,
-											_user$project$Canvas_Controller$currentPan(_p4),
+											_user$project$Canvas_Controller$currentPan(_p3),
 											_p2._0._0,
 											_p2._0._1))
 								})
@@ -10165,42 +10186,24 @@ var _user$project$Canvas_Controller$update = F2(
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
-						_p5,
+						_p4,
 						{
 							canvas: _elm_lang$core$Native_Utils.update(
-								_p4,
+								_p3,
 								{
-									transform: _user$project$Canvas_Controller$currentPan(_p4),
+									transform: _user$project$Canvas_Controller$currentPan(_p3),
 									pan: _elm_lang$core$Maybe$Nothing
 								})
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
-				var _p3 = _p2._0;
-				var pan = A2(_elm_lang$mouse$Mouse$Position, _p3.offsetX, _p3.offsetY);
-				var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, _p4.distanceScrolled + _p3.wheelDelta);
-				var zoomPerUnitDistance = 1 + (0.1 / 100);
-				var zoom = Math.pow(
-					zoomPerUnitDistance,
-					_elm_lang$core$Basics$toFloat(_p4.distanceScrolled)) / Math.pow(
-					zoomPerUnitDistance,
-					_elm_lang$core$Basics$toFloat(distanceScrolled));
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
-						_p5,
+						_p4,
 						{
-							canvas: _elm_lang$core$Native_Utils.update(
-								_p4,
-								{
-									distanceScrolled: distanceScrolled,
-									transform: A3(
-										_user$project$Transform$translate,
-										A2(_user$project$Transform$scale, _p4.transform, zoom),
-										(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.x),
-										(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.y))
-								})
+							canvas: A2(_user$project$Canvas_Controller_WheelScrolledBy$update, _p2._0, _p3)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
