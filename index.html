@@ -10172,12 +10172,6 @@ var _user$project$Canvas_Message$DragToPan = function (a) {
 var _user$project$Canvas_Message$WindowResizedTo = function (a) {
 	return {ctor: 'WindowResizedTo', _0: a};
 };
-var _user$project$Canvas_Controller_WindowResizedTo$update = F2(
-	function (windowSize, canvas) {
-		return _elm_lang$core$Native_Utils.update(
-			canvas,
-			{windowSize: windowSize});
-	});
 var _user$project$Canvas_Controller$subscriptions = function (state) {
 	return _elm_lang$core$Platform_Sub$batch(
 		{
@@ -10236,7 +10230,9 @@ var _user$project$Canvas_Controller$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						_p4,
 						{
-							canvas: A2(_user$project$Canvas_Controller_WindowResizedTo$update, _p2._0, _p3)
+							canvas: _elm_lang$core$Native_Utils.update(
+								_p3,
+								{windowSize: _p2._0})
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
