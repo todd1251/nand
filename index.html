@@ -10550,7 +10550,58 @@ var _user$project$LayoutControl_UI$view = function (state) {
 				}
 			}));
 };
+var _user$project$UI_Shape$spaceSeparated = F2(
+	function (command, elements) {
+		return A2(
+			_elm_lang$core$String$join,
+			' ',
+			A2(
+				F2(
+					function (x, y) {
+						return {ctor: '::', _0: x, _1: y};
+					}),
+				command,
+				A2(_elm_lang$core$List$map, _elm_lang$core$Basics$toString, elements)));
+	});
 var _user$project$UI_Shape$fromDescription = function (description) {
+	var arc = F8(
+		function (command, rx, ry, rotation, largeArcFlag, sweepFlag, x, y) {
+			var toFloat = function (flag) {
+				return flag ? 1 : 0;
+			};
+			return A2(
+				_user$project$UI_Shape$spaceSeparated,
+				command,
+				{
+					ctor: '::',
+					_0: rx,
+					_1: {
+						ctor: '::',
+						_0: ry,
+						_1: {
+							ctor: '::',
+							_0: rotation,
+							_1: {
+								ctor: '::',
+								_0: toFloat(largeArcFlag),
+								_1: {
+									ctor: '::',
+									_0: toFloat(sweepFlag),
+									_1: {
+										ctor: '::',
+										_0: x,
+										_1: {
+											ctor: '::',
+											_0: y,
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							}
+						}
+					}
+				});
+		});
 	return A2(
 		_elm_lang$core$String$join,
 		' ',
@@ -10560,175 +10611,92 @@ var _user$project$UI_Shape$fromDescription = function (description) {
 				var _p0 = description;
 				switch (_p0.ctor) {
 					case 'MoveToOrigin':
-						return 'M 0 0';
-					case 'MoveTo':
 						return A2(
-							_elm_lang$core$String$join,
-							' ',
+							_user$project$UI_Shape$spaceSeparated,
+							'M',
 							{
 								ctor: '::',
-								_0: 'M',
+								_0: 0,
 								_1: {
 									ctor: '::',
-									_0: _elm_lang$core$Basics$toString(_p0._0),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$core$Basics$toString(_p0._1),
-										_1: {ctor: '[]'}
-									}
+									_0: 0,
+									_1: {ctor: '[]'}
+								}
+							});
+					case 'MoveTo':
+						return A2(
+							_user$project$UI_Shape$spaceSeparated,
+							'M',
+							{
+								ctor: '::',
+								_0: _p0._0,
+								_1: {
+									ctor: '::',
+									_0: _p0._1,
+									_1: {ctor: '[]'}
 								}
 							});
 					case 'MoveBy':
 						return A2(
-							_elm_lang$core$String$join,
-							' ',
+							_user$project$UI_Shape$spaceSeparated,
+							'm',
 							{
 								ctor: '::',
-								_0: 'm',
+								_0: _p0._0,
 								_1: {
 									ctor: '::',
-									_0: _elm_lang$core$Basics$toString(_p0._0),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$core$Basics$toString(_p0._1),
-										_1: {ctor: '[]'}
-									}
+									_0: _p0._1,
+									_1: {ctor: '[]'}
 								}
 							});
 					case 'LineTo':
 						return A2(
-							_elm_lang$core$String$join,
-							' ',
+							_user$project$UI_Shape$spaceSeparated,
+							'L',
 							{
 								ctor: '::',
-								_0: 'L',
+								_0: _p0._0,
 								_1: {
 									ctor: '::',
-									_0: _elm_lang$core$Basics$toString(_p0._0),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$core$Basics$toString(_p0._1),
-										_1: {ctor: '[]'}
-									}
+									_0: _p0._1,
+									_1: {ctor: '[]'}
 								}
 							});
 					case 'LineBy':
 						return A2(
-							_elm_lang$core$String$join,
-							' ',
+							_user$project$UI_Shape$spaceSeparated,
+							'l',
 							{
 								ctor: '::',
-								_0: 'l',
+								_0: _p0._0,
 								_1: {
 									ctor: '::',
-									_0: _elm_lang$core$Basics$toString(_p0._0),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$core$Basics$toString(_p0._1),
-										_1: {ctor: '[]'}
-									}
+									_0: _p0._1,
+									_1: {ctor: '[]'}
 								}
 							});
 					case 'HorizontalLineTo':
 						return A2(
-							_elm_lang$core$String$join,
-							' ',
+							_user$project$UI_Shape$spaceSeparated,
+							'H',
 							{
 								ctor: '::',
-								_0: 'H',
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$core$Basics$toString(_p0._0),
-									_1: {ctor: '[]'}
-								}
+								_0: _p0._0,
+								_1: {ctor: '[]'}
 							});
 					case 'HorizontalLineBy':
 						return A2(
-							_elm_lang$core$String$join,
-							' ',
+							_user$project$UI_Shape$spaceSeparated,
+							'h',
 							{
 								ctor: '::',
-								_0: 'h',
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$core$Basics$toString(_p0._0),
-									_1: {ctor: '[]'}
-								}
+								_0: _p0._0,
+								_1: {ctor: '[]'}
 							});
 					case 'ArcTo':
-						return A2(
-							_elm_lang$core$String$join,
-							' ',
-							{
-								ctor: '::',
-								_0: 'A',
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$core$Basics$toString(_p0._0),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$core$Basics$toString(_p0._1),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$core$Basics$toString(_p0._2),
-											_1: {
-												ctor: '::',
-												_0: _p0._3 ? '1' : '0',
-												_1: {
-													ctor: '::',
-													_0: _p0._4 ? '1' : '0',
-													_1: {
-														ctor: '::',
-														_0: _elm_lang$core$Basics$toString(_p0._5),
-														_1: {
-															ctor: '::',
-															_0: _elm_lang$core$Basics$toString(_p0._6),
-															_1: {ctor: '[]'}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							});
+						return A8(arc, 'A', _p0._0, _p0._1, _p0._2, _p0._3, _p0._4, _p0._5, _p0._6);
 					case 'ArcBy':
-						return A2(
-							_elm_lang$core$String$join,
-							' ',
-							{
-								ctor: '::',
-								_0: 'a',
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$core$Basics$toString(_p0._0),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$core$Basics$toString(_p0._1),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$core$Basics$toString(_p0._2),
-											_1: {
-												ctor: '::',
-												_0: _p0._3 ? '1' : '0',
-												_1: {
-													ctor: '::',
-													_0: _p0._4 ? '1' : '0',
-													_1: {
-														ctor: '::',
-														_0: _elm_lang$core$Basics$toString(_p0._5),
-														_1: {
-															ctor: '::',
-															_0: _elm_lang$core$Basics$toString(_p0._6),
-															_1: {ctor: '[]'}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							});
+						return A8(arc, 'a', _p0._0, _p0._1, _p0._2, _p0._3, _p0._4, _p0._5, _p0._6);
 					default:
 						return 'Z';
 				}
