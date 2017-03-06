@@ -10172,7 +10172,7 @@ var _user$project$Canvas_Message$DragToPan = function (a) {
 var _user$project$Canvas_Message$WindowResizedTo = function (a) {
 	return {ctor: 'WindowResizedTo', _0: a};
 };
-var _user$project$Canvas_Controller$subscriptions = function (state) {
+var _user$project$Canvas$subscriptions = function (state) {
 	return _elm_lang$core$Platform_Sub$batch(
 		{
 			ctor: '::',
@@ -10184,21 +10184,21 @@ var _user$project$Canvas_Controller$subscriptions = function (state) {
 			}
 		});
 };
-var _user$project$Canvas_Controller$transform = function (canvas) {
+var _user$project$Canvas$transform = function (canvas) {
 	return _user$project$Canvas_Controller_DragToPan$transform(canvas.dragToPan);
 };
-var _user$project$Canvas_Controller$scrollToZoom = _user$project$Canvas_Controller_ScrollToZoom$scrollToZoom(_user$project$Canvas_Message$ScrollToZoom);
-var _user$project$Canvas_Controller$dragToPan = _user$project$Canvas_Controller_DragToPan$dragToPan(_user$project$Canvas_Message$DragToPan);
-var _user$project$Canvas_Controller$envelope = F2(
+var _user$project$Canvas$scrollToZoom = _user$project$Canvas_Controller_ScrollToZoom$scrollToZoom(_user$project$Canvas_Message$ScrollToZoom);
+var _user$project$Canvas$dragToPan = _user$project$Canvas_Controller_DragToPan$dragToPan(_user$project$Canvas_Message$DragToPan);
+var _user$project$Canvas$envelope = F2(
 	function (state, canvas) {
 		return _elm_lang$core$Native_Utils.update(
 			state,
 			{canvas: canvas});
 	});
-var _user$project$Canvas_Controller$init = function (state) {
+var _user$project$Canvas$init = function (state) {
 	return A2(
 		_elm_lang$core$Tuple$mapFirst,
-		_user$project$Canvas_Controller$envelope(state),
+		_user$project$Canvas$envelope(state),
 		A3(
 			_user$project$Component$init,
 			_user$project$Canvas_Message$ScrollToZoom,
@@ -10217,7 +10217,7 @@ var _user$project$Canvas_Controller$init = function (state) {
 					_1: A2(_elm_lang$core$Task$perform, _user$project$Canvas_Message$WindowResizedTo, _elm_lang$window$Window$size)
 				})));
 };
-var _user$project$Canvas_Controller$update = F2(
+var _user$project$Canvas$update = F2(
 	function (message, _p0) {
 		var _p1 = _p0;
 		var _p4 = _p1;
@@ -10239,7 +10239,7 @@ var _user$project$Canvas_Controller$update = F2(
 			case 'DragToPan':
 				return A2(
 					_elm_lang$core$Tuple$mapFirst,
-					_user$project$Canvas_Controller$envelope(_p4),
+					_user$project$Canvas$envelope(_p4),
 					A3(
 						_user$project$Component$update,
 						_user$project$Canvas_Message$DragToPan,
@@ -10248,7 +10248,7 @@ var _user$project$Canvas_Controller$update = F2(
 			default:
 				return A2(
 					_elm_lang$core$Tuple$mapFirst,
-					_user$project$Canvas_Controller$envelope(_p4),
+					_user$project$Canvas$envelope(_p4),
 					A3(
 						_user$project$Component$update,
 						_user$project$Canvas_Message$ScrollToZoom,
@@ -10258,7 +10258,7 @@ var _user$project$Canvas_Controller$update = F2(
 	});
 var _user$project$Canvas_UI$transform = function (state) {
 	return _user$project$Transform$toSvgTransform(
-		_user$project$Canvas_Controller$transform(state));
+		_user$project$Canvas$transform(state));
 };
 var _user$project$Canvas_UI$view = F4(
 	function (state, message, fixedContent, fluidContent) {
@@ -10283,7 +10283,7 @@ var _user$project$Canvas_UI$view = F4(
 										return message(
 											_user$project$Canvas_Message$DragToPan(_p0));
 									},
-									_user$project$Canvas_Controller$dragToPan),
+									_user$project$Canvas$dragToPan),
 								_1: {
 									ctor: '::',
 									_0: A2(
@@ -10292,7 +10292,7 @@ var _user$project$Canvas_UI$view = F4(
 											return message(
 												_user$project$Canvas_Message$ScrollToZoom(_p1));
 										},
-										_user$project$Canvas_Controller$scrollToZoom),
+										_user$project$Canvas$scrollToZoom),
 									_1: {ctor: '[]'}
 								}
 							}
@@ -10313,10 +10313,6 @@ var _user$project$Canvas_UI$view = F4(
 					_1: {ctor: '[]'}
 				}));
 	});
-var _user$project$Canvas$view = _user$project$Canvas_UI$view;
-var _user$project$Canvas$subscriptions = _user$project$Canvas_Controller$subscriptions;
-var _user$project$Canvas$update = _user$project$Canvas_Controller$update;
-var _user$project$Canvas$init = _user$project$Canvas_Controller$init;
 var _user$project$LayoutControl_Domain$widthVerticalSpacingRatio = 1.5;
 var _user$project$LayoutControl_Domain$widthHorizontalSpacingRatio = 2;
 var _user$project$LayoutControl_Domain$init = function () {
@@ -12001,7 +11997,7 @@ var _user$project$Main_UI$view = function (state) {
 				})),
 		_1: {ctor: '[]'}
 	};
-	return A4(_user$project$Canvas$view, canvas, _user$project$Main_UI$Canvas, view, shapes);
+	return A4(_user$project$Canvas_UI$view, canvas, _user$project$Main_UI$Canvas, view, shapes);
 };
 var _user$project$Main_UI_Controller$subscriptions = function (state) {
 	return A3(
