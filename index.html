@@ -10857,8 +10857,26 @@ var _user$project$UI_Gate$group = function (shapes) {
 	return {
 		left: 0,
 		top: 0,
-		width: 0,
-		height: 0,
+		width: A2(
+			_elm_lang$core$Maybe$withDefault,
+			0,
+			_elm_lang$core$List$maximum(
+				A2(
+					_elm_lang$core$List$map,
+					function (_) {
+						return _.width;
+					},
+					shapes))),
+		height: A2(
+			_elm_lang$core$Maybe$withDefault,
+			0,
+			_elm_lang$core$List$maximum(
+				A2(
+					_elm_lang$core$List$map,
+					function (_) {
+						return _.height;
+					},
+					shapes))),
 		shape: A2(
 			_user$project$UI_Shape$Group,
 			{ctor: '[]'},
@@ -11849,10 +11867,161 @@ var _user$project$UI_Styles$stylesheet = A3(
 		_0: _elm_lang$html$Html$text(_user$project$UI_Styles$css),
 		_1: {ctor: '[]'}
 	});
-var _user$project$Main_UI$State = F2(
-	function (a, b) {
-		return {canvas: a, layoutControl: b};
+var _user$project$Main_UI$gates = F2(
+	function (dimensions, appearance) {
+		return {
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple3',
+				_0: 1,
+				_1: 1,
+				_2: A2(
+					_user$project$UI_Gate$buffer8,
+					dimensions,
+					appearance(0))
+			},
+			_1: {
+				ctor: '::',
+				_0: {
+					ctor: '_Tuple3',
+					_0: 1,
+					_1: 2,
+					_2: A2(
+						_user$project$UI_Gate$not8,
+						dimensions,
+						appearance(1))
+				},
+				_1: {
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple3',
+						_0: 2,
+						_1: 1,
+						_2: A2(
+							_user$project$UI_Gate$or8,
+							dimensions,
+							appearance(2))
+					},
+					_1: {
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple3',
+							_0: 2,
+							_1: 2,
+							_2: A2(
+								_user$project$UI_Gate$nor8,
+								dimensions,
+								appearance(3))
+						},
+						_1: {
+							ctor: '::',
+							_0: {
+								ctor: '_Tuple3',
+								_0: 1,
+								_1: 3,
+								_2: A2(
+									_user$project$UI_Gate$and8,
+									dimensions,
+									appearance(4))
+							},
+							_1: {
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple3',
+									_0: 1,
+									_1: 4,
+									_2: A2(
+										_user$project$UI_Gate$nand8,
+										dimensions,
+										appearance(5))
+								},
+								_1: {
+									ctor: '::',
+									_0: {
+										ctor: '_Tuple3',
+										_0: 2,
+										_1: 3,
+										_2: A2(
+											_user$project$UI_Gate$xor8,
+											dimensions,
+											appearance(6))
+									},
+									_1: {
+										ctor: '::',
+										_0: {
+											ctor: '_Tuple3',
+											_0: 2,
+											_1: 4,
+											_2: A2(
+												_user$project$UI_Gate$xnor8,
+												dimensions,
+												appearance(7))
+										},
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		};
 	});
+var _user$project$Main_UI$hitTest = F2(
+	function (state, _p0) {
+		var _p1 = _p0;
+		var y_ = _elm_lang$core$Basics$toFloat(_p1.y);
+		var x_ = _elm_lang$core$Basics$toFloat(_p1.x);
+		var layoutControl = state.layoutControl;
+		var dimensions = {width: layoutControl.domain.width};
+		var appearance = {strokeWidth: layoutControl.domain.strokeWidth, strokeColour: 'black', fillColour: 'none'};
+		var horizontalSpacing = layoutControl.domain.horizontalSpacing;
+		var fullWidth = (1 * horizontalSpacing) + _user$project$UI_Gate$width(dimensions);
+		var verticalSpacing = layoutControl.domain.verticalSpacing;
+		var fullHeight = (3 * verticalSpacing) + _user$project$UI_Gate$height(dimensions);
+		var canvas = state.canvas;
+		var offsetLeft = (_elm_lang$core$Basics$toFloat(canvas.windowSize.width) / 2) - (fullWidth / 2);
+		var offsetTop = (_elm_lang$core$Basics$toFloat(canvas.windowSize.height) / 2) - (fullHeight / 2);
+		var hits = A2(
+			_elm_lang$core$List$indexedMap,
+			F2(
+				function (index, _p2) {
+					var _p3 = _p2;
+					var _p4 = _p3._2;
+					var height = _p4.height;
+					var width = _p4.width;
+					var top = A2(
+						_elm_lang$core$Maybe$withDefault,
+						0,
+						A2(_elm_lang$core$Array$get, 5, canvas.dragToPan.transform)) + (A2(
+						_elm_lang$core$Maybe$withDefault,
+						1,
+						A2(_elm_lang$core$Array$get, 3, canvas.dragToPan.transform)) * ((offsetTop + ((_p3._1 - 1) * verticalSpacing)) + _p4.top));
+					var left = A2(
+						_elm_lang$core$Maybe$withDefault,
+						0,
+						A2(_elm_lang$core$Array$get, 4, canvas.dragToPan.transform)) + (A2(
+						_elm_lang$core$Maybe$withDefault,
+						1,
+						A2(_elm_lang$core$Array$get, 0, canvas.dragToPan.transform)) * ((offsetLeft + ((_p3._0 - 1) * horizontalSpacing)) + _p4.left));
+					return ((_elm_lang$core$Native_Utils.cmp(x_, left) > -1) && ((_elm_lang$core$Native_Utils.cmp(x_, left + width) < 1) && ((_elm_lang$core$Native_Utils.cmp(y_, top) > -1) && (_elm_lang$core$Native_Utils.cmp(y_, top + height) < 1)))) ? _elm_lang$core$Maybe$Just(index) : _elm_lang$core$Maybe$Nothing;
+				}),
+			A2(
+				_user$project$Main_UI$gates,
+				dimensions,
+				function (_p5) {
+					return appearance;
+				}));
+		return _elm_lang$core$List$head(
+			A2(_elm_lang$core$List$filterMap, _elm_lang$core$Basics$identity, hits));
+	});
+var _user$project$Main_UI$State = F3(
+	function (a, b, c) {
+		return {canvas: a, layoutControl: b, highlightedGate: c};
+	});
+var _user$project$Main_UI$MouseMoved = function (a) {
+	return {ctor: 'MouseMoved', _0: a};
+};
 var _user$project$Main_UI$LayoutControl = function (a) {
 	return {ctor: 'LayoutControl', _0: a};
 };
@@ -11875,6 +12044,17 @@ var _user$project$Main_UI$view = function (state) {
 	};
 	var dimensions = {width: layoutControl.domain.width};
 	var appearance = {strokeWidth: layoutControl.domain.strokeWidth, strokeColour: 'black', fillColour: 'none'};
+	var highlightedAppearance = _elm_lang$core$Native_Utils.update(
+		appearance,
+		{strokeWidth: appearance.strokeWidth * 1.5});
+	var gates_ = A2(
+		_user$project$Main_UI$gates,
+		dimensions,
+		function (index) {
+			return _elm_lang$core$Native_Utils.eq(
+				index,
+				A2(_elm_lang$core$Maybe$withDefault, -1, state.highlightedGate)) ? highlightedAppearance : appearance;
+		});
 	var horizontalSpacing = layoutControl.domain.horizontalSpacing;
 	var fullWidth = (1 * horizontalSpacing) + _user$project$UI_Gate$width(dimensions);
 	var verticalSpacing = layoutControl.domain.verticalSpacing;
@@ -11906,121 +12086,59 @@ var _user$project$Main_UI$view = function (state) {
 			A2(
 				_user$project$UI_Shape$Group,
 				{ctor: '[]'},
-				{
-					ctor: '::',
-					_0: A3(
-						gate,
-						1,
-						1,
-						function (_) {
-							return _.shape;
-						}(
-							A2(_user$project$UI_Gate$buffer8, dimensions, appearance))),
-					_1: {
-						ctor: '::',
-						_0: A3(
-							gate,
-							1,
-							2,
-							function (_) {
-								return _.shape;
-							}(
-								A2(_user$project$UI_Gate$not8, dimensions, appearance))),
-						_1: {
-							ctor: '::',
-							_0: A3(
-								gate,
-								2,
-								1,
-								function (_) {
-									return _.shape;
-								}(
-									A2(_user$project$UI_Gate$or8, dimensions, appearance))),
-							_1: {
-								ctor: '::',
-								_0: A3(
-									gate,
-									2,
-									2,
-									function (_) {
-										return _.shape;
-									}(
-										A2(_user$project$UI_Gate$nor8, dimensions, appearance))),
-								_1: {
-									ctor: '::',
-									_0: A3(
-										gate,
-										1,
-										3,
-										function (_) {
-											return _.shape;
-										}(
-											A2(_user$project$UI_Gate$and8, dimensions, appearance))),
-									_1: {
-										ctor: '::',
-										_0: A3(
-											gate,
-											1,
-											4,
-											function (_) {
-												return _.shape;
-											}(
-												A2(_user$project$UI_Gate$nand8, dimensions, appearance))),
-										_1: {
-											ctor: '::',
-											_0: A3(
-												gate,
-												2,
-												3,
-												function (_) {
-													return _.shape;
-												}(
-													A2(_user$project$UI_Gate$xor8, dimensions, appearance))),
-											_1: {
-												ctor: '::',
-												_0: A3(
-													gate,
-													2,
-													4,
-													function (_) {
-														return _.shape;
-													}(
-														A2(_user$project$UI_Gate$xnor8, dimensions, appearance))),
-												_1: {ctor: '[]'}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				})),
+				A2(
+					_elm_lang$core$List$map,
+					function (_p6) {
+						var _p7 = _p6;
+						return A3(gate, _p7._0, _p7._1, _p7._2.shape);
+					},
+					gates_))),
 		_1: {ctor: '[]'}
 	};
 	return A4(_user$project$Canvas_UI$view, canvas, _user$project$Main_UI$Canvas, view, shapes);
 };
 var _user$project$Main_UI_Controller$subscriptions = function (state) {
-	return A3(
-		_user$project$Component$subscriptions,
-		_user$project$Main_UI$Canvas,
-		_user$project$Canvas$subscriptions(state.canvas),
-		_elm_lang$core$Platform_Sub$none);
+	return _elm_lang$core$Platform_Sub$batch(
+		{
+			ctor: '::',
+			_0: A3(
+				_user$project$Component$subscriptions,
+				_user$project$Main_UI$Canvas,
+				_user$project$Canvas$subscriptions(state.canvas),
+				_elm_lang$core$Platform_Sub$none),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$mouse$Mouse$moves(_user$project$Main_UI$MouseMoved),
+				_1: {ctor: '[]'}
+			}
+		});
 };
 var _user$project$Main_UI_Controller$update = F2(
 	function (message, state) {
 		var _p0 = message;
-		if (_p0.ctor === 'LayoutControl') {
-			return A3(
-				_user$project$Component$update,
-				_user$project$Main_UI$LayoutControl,
-				_user$project$LayoutControl_UI$update(_p0._0),
-				state);
-		} else {
-			return A3(
-				_user$project$Component$update,
-				_user$project$Main_UI$Canvas,
-				_user$project$Canvas$update(_p0._0),
-				state);
+		switch (_p0.ctor) {
+			case 'LayoutControl':
+				return A3(
+					_user$project$Component$update,
+					_user$project$Main_UI$LayoutControl,
+					_user$project$LayoutControl_UI$update(_p0._0),
+					state);
+			case 'Canvas':
+				return A3(
+					_user$project$Component$update,
+					_user$project$Main_UI$Canvas,
+					_user$project$Canvas$update(_p0._0),
+					state);
+			default:
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						state,
+						{
+							highlightedGate: A2(_user$project$Main_UI$hitTest, state, _p0._0)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 		}
 	});
 var _user$project$Main_UI_Controller$init = A3(
@@ -12033,7 +12151,7 @@ var _user$project$Main_UI_Controller$init = A3(
 		_user$project$LayoutControl_UI$init,
 		{
 			ctor: '_Tuple2',
-			_0: {layoutControl: _elm_lang$core$Maybe$Nothing, canvas: _elm_lang$core$Maybe$Nothing},
+			_0: {layoutControl: _elm_lang$core$Maybe$Nothing, canvas: _elm_lang$core$Maybe$Nothing, highlightedGate: _elm_lang$core$Maybe$Nothing},
 			_1: _elm_lang$core$Platform_Cmd$none
 		}));
 var _user$project$Main$view = _user$project$Main_UI$view;
