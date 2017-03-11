@@ -12061,11 +12061,11 @@ var _user$project$Main_UI$hitTest = F2(
 					var left = (offsetLeft + ((_p5._0 - 1) * horizontalSpacing)) + _p6.left;
 					var topLeft = A2(
 						_benansell$elm_geometric_transformation$Transformer2D$apply,
-						A2(_benansell$elm_geometric_transformation$Transformer2D$combine, transform, canvas.dragToPan.transform),
+						A2(_benansell$elm_geometric_transformation$Transformer2D$combine, canvas.dragToPan.transform, transform),
 						{x: left, y: top});
 					var bottomRight = A2(
 						_benansell$elm_geometric_transformation$Transformer2D$apply,
-						A2(_benansell$elm_geometric_transformation$Transformer2D$combine, transform, canvas.dragToPan.transform),
+						A2(_benansell$elm_geometric_transformation$Transformer2D$combine, canvas.dragToPan.transform, transform),
 						{x: left + width, y: top + height});
 					return ((_elm_lang$core$Native_Utils.cmp(x_, topLeft.x) > -1) && ((_elm_lang$core$Native_Utils.cmp(x_, bottomRight.x) < 1) && ((_elm_lang$core$Native_Utils.cmp(y_, topLeft.y) > -1) && (_elm_lang$core$Native_Utils.cmp(y_, bottomRight.y) < 1)))) ? _elm_lang$core$Maybe$Just(index) : _elm_lang$core$Maybe$Nothing;
 				}),
@@ -12118,6 +12118,8 @@ var _user$project$Main_UI$view = function (state) {
 			var x = offsetLeft + ((column - 1) * horizontalSpacing);
 			var transform = A2(
 				_benansell$elm_geometric_transformation$Transformer2D$combine,
+				_benansell$elm_geometric_transformation$Transformer2D$translate(
+					{ctor: '_Tuple2', _0: x, _1: y}),
 				A2(
 					_elm_lang$core$Maybe$withDefault,
 					_user$project$Transform$identity,
@@ -12125,9 +12127,7 @@ var _user$project$Main_UI$view = function (state) {
 						_elm_lang$core$Array$get,
 						index,
 						_elm_lang$core$Array$fromList(
-							_user$project$Main_UI$transforms(state)))),
-				_benansell$elm_geometric_transformation$Transformer2D$translate(
-					{ctor: '_Tuple2', _0: x, _1: y}));
+							_user$project$Main_UI$transforms(state)))));
 			return A3(
 				_user$project$UI_Shape$toDraggableSvg,
 				index,
@@ -12264,9 +12264,8 @@ var _user$project$Main_UI_Controller$update = F2(
 									_elm_lang$core$Native_Utils.update(
 										_p7,
 										{
-											transform: A3(
-												_user$project$Transform$translateBeforeScale,
-												function () {
+											transform: function () {
+												var transform = function () {
 													var _p5 = _elm_lang$core$List$head(
 														A2(
 															_elm_lang$core$List$drop,
@@ -12278,8 +12277,8 @@ var _user$project$Main_UI_Controller$update = F2(
 														return _elm_lang$core$Native_Utils.crashCase(
 															'Main.UI.Controller',
 															{
-																start: {line: 99, column: 54},
-																end: {line: 104, column: 134}
+																start: {line: 101, column: 57},
+																end: {line: 106, column: 138}
 															},
 															_p5)(
 															A2(
@@ -12287,9 +12286,13 @@ var _user$project$Main_UI_Controller$update = F2(
 																'Transform not found with index: ',
 																_elm_lang$core$Basics$toString(_p7.index)));
 													}
-												}(),
-												_p2._0._0,
-												_p2._0._1)
+												}();
+												return A2(
+													_benansell$elm_geometric_transformation$Transformer2D$combine,
+													_benansell$elm_geometric_transformation$Transformer2D$translate(
+														{ctor: '_Tuple2', _0: _p2._0._0 / state.canvas.dragToPan.transform.a, _1: _p2._0._1 / state.canvas.dragToPan.transform.d}),
+													transform);
+											}()
 										}))
 							});
 					} else {
