@@ -11919,13 +11919,13 @@ var _user$project$UI_Gate$Nand = {ctor: 'Nand'};
 var _user$project$UI_Gate$And = {ctor: 'And'};
 var _user$project$UI_Gate$Not = {ctor: 'Not'};
 var _user$project$UI_Gate$Buffer = {ctor: 'Buffer'};
-var _user$project$Main_UI_Message$GateViewModel = F5(
-	function (a, b, c, d, e) {
-		return {column: a, row: b, gate: c, highlighted: d, transform: e};
-	});
-var _user$project$Main_UI_Message$State = F6(
+var _user$project$Main_UI_Message$GateViewModel = F6(
 	function (a, b, c, d, e, f) {
-		return {canvas: a, layoutControl: b, gates: c, drag: d, transforms: e, move: f};
+		return {column: a, row: b, gate: c, highlighted: d, transform: e, move: f};
+	});
+var _user$project$Main_UI_Message$State = F4(
+	function (a, b, c, d) {
+		return {canvas: a, layoutControl: b, gates: c, drag: d};
 	});
 var _user$project$Main_UI_Message$OnDragEnd = {ctor: 'OnDragEnd'};
 var _user$project$Main_UI_Message$OnDragBy = function (a) {
@@ -11956,15 +11956,132 @@ var _user$project$UI_Styles$stylesheet = A3(
 		_0: _elm_lang$html$Html$text(_user$project$UI_Styles$css),
 		_1: {ctor: '[]'}
 	});
+var _user$project$Main_UI$view = function (state) {
+	var layoutControl = state.layoutControl;
+	var view = {
+		ctor: '::',
+		_0: _user$project$UI_Styles$stylesheet,
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$map,
+				_user$project$Main_UI_Message$LayoutControl,
+				_user$project$LayoutControl_UI$view(layoutControl)),
+			_1: {ctor: '[]'}
+		}
+	};
+	var dimensions = {width: layoutControl.domain.width};
+	var appearance = {strokeWidth: layoutControl.domain.strokeWidth, strokeColour: 'black', fillColour: 'transparent'};
+	var highlightedAppearance = _elm_lang$core$Native_Utils.update(
+		appearance,
+		{strokeWidth: appearance.strokeWidth * 1.5});
+	var horizontalSpacing = layoutControl.domain.horizontalSpacing;
+	var fullWidth = (1 * horizontalSpacing) + _user$project$UI_Gate$width(dimensions);
+	var verticalSpacing = layoutControl.domain.verticalSpacing;
+	var fullHeight = (3 * verticalSpacing) + _user$project$UI_Gate$height(dimensions);
+	var canvas = state.canvas;
+	var offsetLeft = (_elm_lang$core$Basics$toFloat(canvas.windowSize.width) / 2) - (fullWidth / 2);
+	var offsetTop = (_elm_lang$core$Basics$toFloat(canvas.windowSize.height) / 2) - (fullHeight / 2);
+	var gate = F2(
+		function (index, model) {
+			var row = _elm_lang$core$Basics$toFloat(model.row);
+			var y = offsetTop + ((row - 1) * verticalSpacing);
+			var column = _elm_lang$core$Basics$toFloat(model.column);
+			var x = offsetLeft + ((column - 1) * horizontalSpacing);
+			var transform = A2(
+				_benansell$elm_geometric_transformation$Transformer2D$combine,
+				_benansell$elm_geometric_transformation$Transformer2D$translate(
+					{ctor: '_Tuple2', _0: x, _1: y}),
+				A2(_elm_lang$core$Maybe$withDefault, model.transform, model.move));
+			return A3(
+				_user$project$UI_Shape$toDraggableSvg,
+				index,
+				_user$project$Main_UI_Message$Drag,
+				A2(
+					_user$project$UI_Shape$Group,
+					{
+						ctor: '::',
+						_0: _user$project$UI_Shape$Transform(transform),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: A3(
+							_user$project$UI_Gate$toShape,
+							dimensions,
+							model.highlighted ? highlightedAppearance : appearance,
+							model.gate).shape,
+						_1: {ctor: '[]'}
+					}));
+		});
+	var shapes = A2(_elm_lang$core$List$indexedMap, gate, state.gates);
+	return A4(_user$project$Canvas_UI$view, canvas, _user$project$Main_UI_Message$Canvas, view, shapes);
+};
+var _user$project$Main_UI$hitTest = F2(
+	function (state, _p0) {
+		var _p1 = _p0;
+		var y_ = _elm_lang$core$Basics$toFloat(_p1.y);
+		var x_ = _elm_lang$core$Basics$toFloat(_p1.x);
+		var layoutControl = state.layoutControl;
+		var dimensions = {width: layoutControl.domain.width};
+		var appearance = {strokeWidth: layoutControl.domain.strokeWidth, strokeColour: 'black', fillColour: 'none'};
+		var horizontalSpacing = layoutControl.domain.horizontalSpacing;
+		var fullWidth = (1 * horizontalSpacing) + _user$project$UI_Gate$width(dimensions);
+		var verticalSpacing = layoutControl.domain.verticalSpacing;
+		var fullHeight = (3 * verticalSpacing) + _user$project$UI_Gate$height(dimensions);
+		var canvas = state.canvas;
+		var offsetLeft = (_elm_lang$core$Basics$toFloat(canvas.windowSize.width) / 2) - (fullWidth / 2);
+		var offsetTop = (_elm_lang$core$Basics$toFloat(canvas.windowSize.height) / 2) - (fullHeight / 2);
+		var hits = A2(
+			_elm_lang$core$List$filterMap,
+			_elm_lang$core$Basics$identity,
+			A2(
+				_elm_lang$core$List$indexedMap,
+				F2(
+					function (index, model) {
+						var transform = A2(_elm_lang$core$Maybe$withDefault, model.transform, model.move);
+						var gate_ = A3(_user$project$UI_Gate$toShape, dimensions, appearance, model.gate);
+						var width = gate_.width;
+						var height = gate_.height;
+						var row_ = _elm_lang$core$Basics$toFloat(model.row);
+						var top = (offsetTop + ((row_ - 1) * verticalSpacing)) + gate_.top;
+						var column_ = _elm_lang$core$Basics$toFloat(model.column);
+						var left = (offsetLeft + ((column_ - 1) * horizontalSpacing)) + gate_.left;
+						var topLeft = A2(
+							_benansell$elm_geometric_transformation$Transformer2D$apply,
+							A2(_benansell$elm_geometric_transformation$Transformer2D$combine, canvas.dragToPan.transform, transform),
+							{x: left, y: top});
+						var bottomRight = A2(
+							_benansell$elm_geometric_transformation$Transformer2D$apply,
+							A2(_benansell$elm_geometric_transformation$Transformer2D$combine, canvas.dragToPan.transform, transform),
+							{x: left + width, y: top + height});
+						return ((_elm_lang$core$Native_Utils.cmp(x_, topLeft.x) > -1) && ((_elm_lang$core$Native_Utils.cmp(x_, bottomRight.x) < 1) && ((_elm_lang$core$Native_Utils.cmp(y_, topLeft.y) > -1) && (_elm_lang$core$Native_Utils.cmp(y_, bottomRight.y) < 1)))) ? _elm_lang$core$Maybe$Just(index) : _elm_lang$core$Maybe$Nothing;
+					}),
+				state.gates));
+		var isHighlighted = function (index) {
+			return A2(_elm_lang$core$List$member, index, hits);
+		};
+		return A2(
+			_elm_lang$core$List$indexedMap,
+			F2(
+				function (index, model) {
+					return _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							highlighted: isHighlighted(index)
+						});
+				}),
+			state.gates);
+	});
 var _user$project$Main_UI$initGates = function (state) {
 	var layoutControl = state.layoutControl;
 	var dimensions = {width: layoutControl.domain.width};
 	var appearance = {strokeWidth: layoutControl.domain.strokeWidth, strokeColour: 'black', fillColour: 'none'};
 	return A2(
 		_elm_lang$core$List$map,
-		function (_p0) {
-			var _p1 = _p0;
-			return {column: _p1._0, row: _p1._1, gate: _p1._2, highlighted: false, transform: _user$project$Transform$identity};
+		function (_p2) {
+			var _p3 = _p2;
+			return {column: _p3._0, row: _p3._1, gate: _p3._2, highlighted: false, transform: _user$project$Transform$identity, move: _elm_lang$core$Maybe$Nothing};
 		},
 		{
 			ctor: '::',
@@ -12000,161 +12117,6 @@ var _user$project$Main_UI$initGates = function (state) {
 			}
 		});
 };
-var _user$project$Main_UI$transforms = function (state) {
-	var _p2 = state.move;
-	if (_p2.ctor === 'Just') {
-		var _p3 = _p2._0;
-		return _elm_lang$core$Array$toList(
-			A3(
-				_elm_lang$core$Array$set,
-				_p3.index,
-				_p3.transform,
-				_elm_lang$core$Array$fromList(state.transforms)));
-	} else {
-		return state.transforms;
-	}
-};
-var _user$project$Main_UI$hitTest = F2(
-	function (state, _p4) {
-		var _p5 = _p4;
-		var y_ = _elm_lang$core$Basics$toFloat(_p5.y);
-		var x_ = _elm_lang$core$Basics$toFloat(_p5.x);
-		var layoutControl = state.layoutControl;
-		var dimensions = {width: layoutControl.domain.width};
-		var appearance = {strokeWidth: layoutControl.domain.strokeWidth, strokeColour: 'black', fillColour: 'none'};
-		var horizontalSpacing = layoutControl.domain.horizontalSpacing;
-		var fullWidth = (1 * horizontalSpacing) + _user$project$UI_Gate$width(dimensions);
-		var verticalSpacing = layoutControl.domain.verticalSpacing;
-		var fullHeight = (3 * verticalSpacing) + _user$project$UI_Gate$height(dimensions);
-		var canvas = state.canvas;
-		var offsetLeft = (_elm_lang$core$Basics$toFloat(canvas.windowSize.width) / 2) - (fullWidth / 2);
-		var offsetTop = (_elm_lang$core$Basics$toFloat(canvas.windowSize.height) / 2) - (fullHeight / 2);
-		var hits = A2(
-			_elm_lang$core$List$filterMap,
-			_elm_lang$core$Basics$identity,
-			A2(
-				_elm_lang$core$List$indexedMap,
-				F2(
-					function (index, _p6) {
-						var _p7 = _p6;
-						var transform = A2(
-							_elm_lang$core$Maybe$withDefault,
-							_user$project$Transform$identity,
-							A2(
-								_elm_lang$core$Array$get,
-								index,
-								_elm_lang$core$Array$fromList(
-									_user$project$Main_UI$transforms(state))));
-						var gate_ = A3(_user$project$UI_Gate$toShape, dimensions, appearance, _p7.gate);
-						var width = gate_.width;
-						var height = gate_.height;
-						var row_ = _elm_lang$core$Basics$toFloat(_p7.row);
-						var top = (offsetTop + ((row_ - 1) * verticalSpacing)) + gate_.top;
-						var column_ = _elm_lang$core$Basics$toFloat(_p7.column);
-						var left = (offsetLeft + ((column_ - 1) * horizontalSpacing)) + gate_.left;
-						var topLeft = A2(
-							_benansell$elm_geometric_transformation$Transformer2D$apply,
-							A2(_benansell$elm_geometric_transformation$Transformer2D$combine, canvas.dragToPan.transform, transform),
-							{x: left, y: top});
-						var bottomRight = A2(
-							_benansell$elm_geometric_transformation$Transformer2D$apply,
-							A2(_benansell$elm_geometric_transformation$Transformer2D$combine, canvas.dragToPan.transform, transform),
-							{x: left + width, y: top + height});
-						return ((_elm_lang$core$Native_Utils.cmp(x_, topLeft.x) > -1) && ((_elm_lang$core$Native_Utils.cmp(x_, bottomRight.x) < 1) && ((_elm_lang$core$Native_Utils.cmp(y_, topLeft.y) > -1) && (_elm_lang$core$Native_Utils.cmp(y_, bottomRight.y) < 1)))) ? _elm_lang$core$Maybe$Just(index) : _elm_lang$core$Maybe$Nothing;
-					}),
-				state.gates));
-		var isHighlighted = function (index) {
-			return A2(_elm_lang$core$List$member, index, hits);
-		};
-		return A2(
-			_elm_lang$core$List$indexedMap,
-			F2(
-				function (index, model) {
-					return _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							highlighted: isHighlighted(index)
-						});
-				}),
-			state.gates);
-	});
-var _user$project$Main_UI$view = function (state) {
-	var layoutControl = state.layoutControl;
-	var view = {
-		ctor: '::',
-		_0: _user$project$UI_Styles$stylesheet,
-		_1: {
-			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$map,
-				_user$project$Main_UI_Message$LayoutControl,
-				_user$project$LayoutControl_UI$view(layoutControl)),
-			_1: {ctor: '[]'}
-		}
-	};
-	var dimensions = {width: layoutControl.domain.width};
-	var appearance = {strokeWidth: layoutControl.domain.strokeWidth, strokeColour: 'black', fillColour: 'transparent'};
-	var highlightedAppearance = _elm_lang$core$Native_Utils.update(
-		appearance,
-		{strokeWidth: appearance.strokeWidth * 1.5});
-	var horizontalSpacing = layoutControl.domain.horizontalSpacing;
-	var fullWidth = (1 * horizontalSpacing) + _user$project$UI_Gate$width(dimensions);
-	var verticalSpacing = layoutControl.domain.verticalSpacing;
-	var fullHeight = (3 * verticalSpacing) + _user$project$UI_Gate$height(dimensions);
-	var canvas = state.canvas;
-	var offsetLeft = (_elm_lang$core$Basics$toFloat(canvas.windowSize.width) / 2) - (fullWidth / 2);
-	var offsetTop = (_elm_lang$core$Basics$toFloat(canvas.windowSize.height) / 2) - (fullHeight / 2);
-	var gate = F4(
-		function (index, column, row, shape) {
-			var y = offsetTop + ((row - 1) * verticalSpacing);
-			var x = offsetLeft + ((column - 1) * horizontalSpacing);
-			var transform = A2(
-				_benansell$elm_geometric_transformation$Transformer2D$combine,
-				_benansell$elm_geometric_transformation$Transformer2D$translate(
-					{ctor: '_Tuple2', _0: x, _1: y}),
-				A2(
-					_elm_lang$core$Maybe$withDefault,
-					_user$project$Transform$identity,
-					A2(
-						_elm_lang$core$Array$get,
-						index,
-						_elm_lang$core$Array$fromList(
-							_user$project$Main_UI$transforms(state)))));
-			return A3(
-				_user$project$UI_Shape$toDraggableSvg,
-				index,
-				_user$project$Main_UI_Message$Drag,
-				A2(
-					_user$project$UI_Shape$Group,
-					{
-						ctor: '::',
-						_0: _user$project$UI_Shape$Transform(transform),
-						_1: {ctor: '[]'}
-					},
-					{
-						ctor: '::',
-						_0: shape,
-						_1: {ctor: '[]'}
-					}));
-		});
-	var shapes = A2(
-		_elm_lang$core$List$indexedMap,
-		F2(
-			function (index, model) {
-				return A4(
-					gate,
-					index,
-					_elm_lang$core$Basics$toFloat(model.column),
-					_elm_lang$core$Basics$toFloat(model.row),
-					A3(
-						_user$project$UI_Gate$toShape,
-						dimensions,
-						model.highlighted ? highlightedAppearance : appearance,
-						model.gate).shape);
-			}),
-		state.gates);
-	return A4(_user$project$Canvas_UI$view, canvas, _user$project$Main_UI_Message$Canvas, view, shapes);
-};
 var _user$project$Main_UI_Controller$subscriptions = function (state) {
 	return _elm_lang$core$Platform_Sub$batch(
 		{
@@ -12175,20 +12137,6 @@ var _user$project$Main_UI_Controller$subscriptions = function (state) {
 			}
 		});
 };
-var _user$project$Main_UI_Controller$transforms = function (state) {
-	var _p0 = state.move;
-	if (_p0.ctor === 'Just') {
-		var _p1 = _p0._0;
-		return _elm_lang$core$Array$toList(
-			A3(
-				_elm_lang$core$Array$set,
-				_p1.index,
-				_p1.transform,
-				_elm_lang$core$Array$fromList(state.transforms)));
-	} else {
-		return state.transforms;
-	}
-};
 var _user$project$Main_UI_Controller$dragConfig = _zaboco$elm_draggable$Draggable$customConfig(
 	{
 		ctor: '::',
@@ -12205,19 +12153,19 @@ var _user$project$Main_UI_Controller$dragConfig = _zaboco$elm_draggable$Draggabl
 	});
 var _user$project$Main_UI_Controller$update = F2(
 	function (message, state) {
-		var _p2 = message;
-		switch (_p2.ctor) {
+		var _p0 = message;
+		switch (_p0.ctor) {
 			case 'LayoutControl':
 				return A3(
 					_user$project$Component$update,
 					_user$project$Main_UI_Message$LayoutControl,
-					_user$project$LayoutControl_UI$update(_p2._0),
+					_user$project$LayoutControl_UI$update(_p0._0),
 					state);
 			case 'Canvas':
 				return A3(
 					_user$project$Component$update,
 					_user$project$Main_UI_Message$Canvas,
-					_user$project$Canvas$update(_p2._0),
+					_user$project$Canvas$update(_p0._0),
 					state);
 			case 'MouseMoved':
 				return {
@@ -12225,109 +12173,96 @@ var _user$project$Main_UI_Controller$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						state,
 						{
-							gates: A2(_user$project$Main_UI$hitTest, state, _p2._0)
+							gates: A2(_user$project$Main_UI$hitTest, state, _p0._0)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Drag':
-				return A3(_zaboco$elm_draggable$Draggable$update, _user$project$Main_UI_Controller$dragConfig, _p2._0, state);
+				return A3(_zaboco$elm_draggable$Draggable$update, _user$project$Main_UI_Controller$dragConfig, _p0._0, state);
 			case 'OnDragStart':
-				var _p3 = _p2._0;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						state,
 						{
-							move: _elm_lang$core$Maybe$Just(
-								{
-									index: _p3,
-									transform: A2(
-										_elm_lang$core$Maybe$withDefault,
-										_user$project$Transform$identity,
-										A2(
-											_elm_lang$core$Array$get,
-											_p3,
-											_elm_lang$core$Array$fromList(state.transforms)))
-								})
+							gates: A2(
+								_elm_lang$core$List$indexedMap,
+								F2(
+									function (gateIndex, gate) {
+										return _elm_lang$core$Native_Utils.eq(gateIndex, _p0._0) ? _elm_lang$core$Native_Utils.update(
+											gate,
+											{
+												move: _elm_lang$core$Maybe$Just(gate.transform)
+											}) : gate;
+									}),
+								state.gates)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'OnDragBy':
-				var state_ = function () {
-					var _p4 = state.move;
-					if (_p4.ctor === 'Just') {
-						var _p7 = _p4._0;
-						return _elm_lang$core$Native_Utils.update(
-							state,
-							{
-								move: _elm_lang$core$Maybe$Just(
-									_elm_lang$core$Native_Utils.update(
-										_p7,
-										{
-											transform: function () {
-												var transform = function () {
-													var _p5 = _elm_lang$core$List$head(
-														A2(
-															_elm_lang$core$List$drop,
-															_p7.index,
-															_user$project$Main_UI_Controller$transforms(state)));
-													if (_p5.ctor === 'Just') {
-														return _p5._0;
-													} else {
-														return _elm_lang$core$Native_Utils.crashCase(
-															'Main.UI.Controller',
-															{
-																start: {line: 104, column: 57},
-																end: {line: 109, column: 138}
-															},
-															_p5)(
-															A2(
-																_elm_lang$core$Basics_ops['++'],
-																'Transform not found with index: ',
-																_elm_lang$core$Basics$toString(_p7.index)));
-													}
-												}();
-												return A2(
-													_benansell$elm_geometric_transformation$Transformer2D$combine,
-													_benansell$elm_geometric_transformation$Transformer2D$translate(
-														{ctor: '_Tuple2', _0: _p2._0._0 / state.canvas.dragToPan.transform.a, _1: _p2._0._1 / state.canvas.dragToPan.transform.d}),
-													transform);
-											}()
-										}))
-							});
-					} else {
-						return state;
-					}
-				}();
-				return {ctor: '_Tuple2', _0: state_, _1: _elm_lang$core$Platform_Cmd$none};
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						state,
+						{
+							gates: A2(
+								_elm_lang$core$List$map,
+								function (gate) {
+									var _p1 = gate.move;
+									if (_p1.ctor === 'Just') {
+										return _elm_lang$core$Native_Utils.update(
+											gate,
+											{
+												move: _elm_lang$core$Maybe$Just(
+													A2(
+														_benansell$elm_geometric_transformation$Transformer2D$combine,
+														_benansell$elm_geometric_transformation$Transformer2D$translate(
+															{ctor: '_Tuple2', _0: _p0._0._0 / state.canvas.dragToPan.transform.a, _1: _p0._0._1 / state.canvas.dragToPan.transform.d}),
+														_p1._0))
+											});
+									} else {
+										return gate;
+									}
+								},
+								state.gates)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 			default:
-				var state_ = function () {
-					var _p8 = state.move;
-					if (_p8.ctor === 'Just') {
-						return _elm_lang$core$Native_Utils.update(
-							state,
-							{
-								move: _elm_lang$core$Maybe$Nothing,
-								transforms: _user$project$Main_UI_Controller$transforms(state)
-							});
-					} else {
-						return state;
-					}
-				}();
-				return {ctor: '_Tuple2', _0: state_, _1: _elm_lang$core$Platform_Cmd$none};
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						state,
+						{
+							gates: A2(
+								_elm_lang$core$List$map,
+								function (gate) {
+									var _p2 = gate.move;
+									if (_p2.ctor === 'Just') {
+										return _elm_lang$core$Native_Utils.update(
+											gate,
+											{move: _elm_lang$core$Maybe$Nothing, transform: _p2._0});
+									} else {
+										return gate;
+									}
+								},
+								state.gates)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 		}
 	});
-var _user$project$Main_UI_Controller$init = function (_p9) {
-	var _p10 = _p9;
-	var _p11 = _p10._0;
+var _user$project$Main_UI_Controller$init = function (_p3) {
+	var _p4 = _p3;
+	var _p5 = _p4._0;
 	return {
 		ctor: '_Tuple2',
 		_0: _elm_lang$core$Native_Utils.update(
-			_p11,
+			_p5,
 			{
-				gates: _user$project$Main_UI$initGates(_p11)
+				gates: _user$project$Main_UI$initGates(_p5)
 			}),
-		_1: _p10._1
+		_1: _p4._1
 	};
 }(
 	A3(
@@ -12340,14 +12275,7 @@ var _user$project$Main_UI_Controller$init = function (_p9) {
 			_user$project$LayoutControl_UI$init,
 			{
 				ctor: '_Tuple2',
-				_0: {
-					layoutControl: _elm_lang$core$Maybe$Nothing,
-					canvas: _elm_lang$core$Maybe$Nothing,
-					gates: _elm_lang$core$Maybe$Nothing,
-					drag: _zaboco$elm_draggable$Draggable$init,
-					transforms: A2(_elm_lang$core$List$repeat, 8, _user$project$Transform$identity),
-					move: _elm_lang$core$Maybe$Nothing
-				},
+				_0: {layoutControl: _elm_lang$core$Maybe$Nothing, canvas: _elm_lang$core$Maybe$Nothing, gates: _elm_lang$core$Maybe$Nothing, drag: _zaboco$elm_draggable$Draggable$init},
 				_1: _elm_lang$core$Platform_Cmd$none
 			})));
 var _user$project$Main$view = _user$project$Main_UI$view;
