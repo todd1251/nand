@@ -9417,6 +9417,33 @@ var _elm_lang$svg$Svg_Attributes$additive = _elm_lang$virtual_dom$VirtualDom$att
 var _elm_lang$svg$Svg_Attributes$accumulate = _elm_lang$virtual_dom$VirtualDom$attribute('accumulate');
 var _elm_lang$svg$Svg_Attributes$accelerate = _elm_lang$virtual_dom$VirtualDom$attribute('accelerate');
 var _elm_lang$svg$Svg_Attributes$accentHeight = _elm_lang$virtual_dom$VirtualDom$attribute('accent-height');
+var _elm_lang$svg$Svg_Events$on = _elm_lang$virtual_dom$VirtualDom$on;
+var _elm_lang$svg$Svg_Events$simpleOn = F2(
+	function (name, msg) {
+		return A2(
+			_elm_lang$svg$Svg_Events$on,
+			name,
+			_elm_lang$core$Json_Decode$succeed(msg));
+	});
+var _elm_lang$svg$Svg_Events$onBegin = _elm_lang$svg$Svg_Events$simpleOn('begin');
+var _elm_lang$svg$Svg_Events$onEnd = _elm_lang$svg$Svg_Events$simpleOn('end');
+var _elm_lang$svg$Svg_Events$onRepeat = _elm_lang$svg$Svg_Events$simpleOn('repeat');
+var _elm_lang$svg$Svg_Events$onAbort = _elm_lang$svg$Svg_Events$simpleOn('abort');
+var _elm_lang$svg$Svg_Events$onError = _elm_lang$svg$Svg_Events$simpleOn('error');
+var _elm_lang$svg$Svg_Events$onResize = _elm_lang$svg$Svg_Events$simpleOn('resize');
+var _elm_lang$svg$Svg_Events$onScroll = _elm_lang$svg$Svg_Events$simpleOn('scroll');
+var _elm_lang$svg$Svg_Events$onLoad = _elm_lang$svg$Svg_Events$simpleOn('load');
+var _elm_lang$svg$Svg_Events$onUnload = _elm_lang$svg$Svg_Events$simpleOn('unload');
+var _elm_lang$svg$Svg_Events$onZoom = _elm_lang$svg$Svg_Events$simpleOn('zoom');
+var _elm_lang$svg$Svg_Events$onActivate = _elm_lang$svg$Svg_Events$simpleOn('activate');
+var _elm_lang$svg$Svg_Events$onClick = _elm_lang$svg$Svg_Events$simpleOn('click');
+var _elm_lang$svg$Svg_Events$onFocusIn = _elm_lang$svg$Svg_Events$simpleOn('focusin');
+var _elm_lang$svg$Svg_Events$onFocusOut = _elm_lang$svg$Svg_Events$simpleOn('focusout');
+var _elm_lang$svg$Svg_Events$onMouseDown = _elm_lang$svg$Svg_Events$simpleOn('mousedown');
+var _elm_lang$svg$Svg_Events$onMouseMove = _elm_lang$svg$Svg_Events$simpleOn('mousemove');
+var _elm_lang$svg$Svg_Events$onMouseOut = _elm_lang$svg$Svg_Events$simpleOn('mouseout');
+var _elm_lang$svg$Svg_Events$onMouseOver = _elm_lang$svg$Svg_Events$simpleOn('mouseover');
+var _elm_lang$svg$Svg_Events$onMouseUp = _elm_lang$svg$Svg_Events$simpleOn('mouseup');
 var _elm_lang$window$Native_Window = function()
 {
 
@@ -10800,15 +10827,11 @@ var _user$project$UI_Shape$toSvg = function (shape) {
 				A2(_elm_lang$core$List$map, _user$project$UI_Shape$toSvg, _p2._1));
 	}
 };
-var _user$project$UI_Shape$toDraggableSvg = F3(
-	function (id, envelope, shape) {
+var _user$project$UI_Shape$toSvgWithEvents = F2(
+	function (events, shape) {
 		return A2(
 			_elm_lang$svg$Svg$g,
-			{
-				ctor: '::',
-				_0: A2(_zaboco$elm_draggable$Draggable$mouseTrigger, id, envelope),
-				_1: {ctor: '[]'}
-			},
+			events,
 			{
 				ctor: '::',
 				_0: _user$project$UI_Shape$toSvg(shape),
@@ -11402,45 +11425,6 @@ var _user$project$UI_Gate$twinCurvedBase = F3(
 			width: xor.width,
 			height: xor.height,
 			shape: function () {
-				var blue = {
-					ctor: '::',
-					_0: _user$project$UI_Shape$Stroke('blue'),
-					_1: {
-						ctor: '::',
-						_0: _user$project$UI_Shape$StrokeWidth(appearance.strokeWidth),
-						_1: {
-							ctor: '::',
-							_0: _user$project$UI_Shape$Fill(appearance.fillColour),
-							_1: {ctor: '[]'}
-						}
-					}
-				};
-				var green = {
-					ctor: '::',
-					_0: _user$project$UI_Shape$Stroke('green'),
-					_1: {
-						ctor: '::',
-						_0: _user$project$UI_Shape$StrokeWidth(appearance.strokeWidth),
-						_1: {
-							ctor: '::',
-							_0: _user$project$UI_Shape$Fill(appearance.fillColour),
-							_1: {ctor: '[]'}
-						}
-					}
-				};
-				var red = {
-					ctor: '::',
-					_0: _user$project$UI_Shape$Stroke('red'),
-					_1: {
-						ctor: '::',
-						_0: _user$project$UI_Shape$StrokeWidth(appearance.strokeWidth),
-						_1: {
-							ctor: '::',
-							_0: _user$project$UI_Shape$Fill(appearance.fillColour),
-							_1: {ctor: '[]'}
-						}
-					}
-				};
 				var hack_ = appearance.strokeWidth / 10;
 				var height_ = _user$project$UI_Gate$height(dimensions);
 				var outerRadius = height_;
@@ -11937,8 +11921,11 @@ var _user$project$Main_UI_Message$OnDragStart = function (a) {
 var _user$project$Main_UI_Message$Drag = function (a) {
 	return {ctor: 'Drag', _0: a};
 };
-var _user$project$Main_UI_Message$MouseMoved = function (a) {
-	return {ctor: 'MouseMoved', _0: a};
+var _user$project$Main_UI_Message$MouseOut = function (a) {
+	return {ctor: 'MouseOut', _0: a};
+};
+var _user$project$Main_UI_Message$MouseOver = function (a) {
+	return {ctor: 'MouseOver', _0: a};
 };
 var _user$project$Main_UI_Message$LayoutControl = function (a) {
 	return {ctor: 'LayoutControl', _0: a};
@@ -11993,10 +11980,23 @@ var _user$project$Main_UI$view = function (state) {
 				_benansell$elm_geometric_transformation$Transformer2D$translate(
 					{ctor: '_Tuple2', _0: x, _1: y}),
 				A2(_elm_lang$core$Maybe$withDefault, model.transform, model.move));
-			return A3(
-				_user$project$UI_Shape$toDraggableSvg,
-				index,
-				_user$project$Main_UI_Message$Drag,
+			return A2(
+				_user$project$UI_Shape$toSvgWithEvents,
+				{
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Events$onMouseOver(
+						_user$project$Main_UI_Message$MouseOver(index)),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Events$onMouseOut(
+							_user$project$Main_UI_Message$MouseOut(index)),
+						_1: {
+							ctor: '::',
+							_0: A2(_zaboco$elm_draggable$Draggable$mouseTrigger, index, _user$project$Main_UI_Message$Drag),
+							_1: {ctor: '[]'}
+						}
+					}
+				},
 				A2(
 					_user$project$UI_Shape$Group,
 					{
@@ -12017,71 +12017,15 @@ var _user$project$Main_UI$view = function (state) {
 	var shapes = A2(_elm_lang$core$List$indexedMap, gate, state.gates);
 	return A4(_user$project$Canvas_UI$view, canvas, _user$project$Main_UI_Message$Canvas, view, shapes);
 };
-var _user$project$Main_UI$hitTest = F2(
-	function (state, _p0) {
-		var _p1 = _p0;
-		var y_ = _elm_lang$core$Basics$toFloat(_p1.y);
-		var x_ = _elm_lang$core$Basics$toFloat(_p1.x);
-		var layoutControl = state.layoutControl;
-		var dimensions = {width: layoutControl.domain.width};
-		var appearance = {strokeWidth: layoutControl.domain.strokeWidth, strokeColour: 'black', fillColour: 'none'};
-		var horizontalSpacing = layoutControl.domain.horizontalSpacing;
-		var fullWidth = (1 * horizontalSpacing) + _user$project$UI_Gate$width(dimensions);
-		var verticalSpacing = layoutControl.domain.verticalSpacing;
-		var fullHeight = (3 * verticalSpacing) + _user$project$UI_Gate$height(dimensions);
-		var canvas = state.canvas;
-		var offsetLeft = (_elm_lang$core$Basics$toFloat(canvas.windowSize.width) / 2) - (fullWidth / 2);
-		var offsetTop = (_elm_lang$core$Basics$toFloat(canvas.windowSize.height) / 2) - (fullHeight / 2);
-		var hits = A2(
-			_elm_lang$core$List$filterMap,
-			_elm_lang$core$Basics$identity,
-			A2(
-				_elm_lang$core$List$indexedMap,
-				F2(
-					function (index, model) {
-						var transform = A2(_elm_lang$core$Maybe$withDefault, model.transform, model.move);
-						var gate_ = A3(_user$project$UI_Gate$toShape, dimensions, appearance, model.gate);
-						var width = gate_.width;
-						var height = gate_.height;
-						var row_ = _elm_lang$core$Basics$toFloat(model.row);
-						var top = (offsetTop + ((row_ - 1) * verticalSpacing)) + gate_.top;
-						var column_ = _elm_lang$core$Basics$toFloat(model.column);
-						var left = (offsetLeft + ((column_ - 1) * horizontalSpacing)) + gate_.left;
-						var topLeft = A2(
-							_benansell$elm_geometric_transformation$Transformer2D$apply,
-							A2(_benansell$elm_geometric_transformation$Transformer2D$combine, canvas.dragToPan.transform, transform),
-							{x: left, y: top});
-						var bottomRight = A2(
-							_benansell$elm_geometric_transformation$Transformer2D$apply,
-							A2(_benansell$elm_geometric_transformation$Transformer2D$combine, canvas.dragToPan.transform, transform),
-							{x: left + width, y: top + height});
-						return ((_elm_lang$core$Native_Utils.cmp(x_, topLeft.x) > -1) && ((_elm_lang$core$Native_Utils.cmp(x_, bottomRight.x) < 1) && ((_elm_lang$core$Native_Utils.cmp(y_, topLeft.y) > -1) && (_elm_lang$core$Native_Utils.cmp(y_, bottomRight.y) < 1)))) ? _elm_lang$core$Maybe$Just(index) : _elm_lang$core$Maybe$Nothing;
-					}),
-				state.gates));
-		var isHighlighted = function (index) {
-			return A2(_elm_lang$core$List$member, index, hits);
-		};
-		return A2(
-			_elm_lang$core$List$indexedMap,
-			F2(
-				function (index, model) {
-					return _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							highlighted: isHighlighted(index)
-						});
-				}),
-			state.gates);
-	});
 var _user$project$Main_UI$initGates = function (state) {
 	var layoutControl = state.layoutControl;
 	var dimensions = {width: layoutControl.domain.width};
 	var appearance = {strokeWidth: layoutControl.domain.strokeWidth, strokeColour: 'black', fillColour: 'none'};
 	return A2(
 		_elm_lang$core$List$map,
-		function (_p2) {
-			var _p3 = _p2;
-			return {column: _p3._0, row: _p3._1, gate: _p3._2, highlighted: false, transform: _user$project$Transform$identity, move: _elm_lang$core$Maybe$Nothing};
+		function (_p0) {
+			var _p1 = _p0;
+			return {column: _p1._0, row: _p1._1, gate: _p1._2, highlighted: false, transform: _user$project$Transform$identity, move: _elm_lang$core$Maybe$Nothing};
 		},
 		{
 			ctor: '::',
@@ -12128,12 +12072,8 @@ var _user$project$Main_UI_Controller$subscriptions = function (state) {
 				_elm_lang$core$Platform_Sub$none),
 			_1: {
 				ctor: '::',
-				_0: _elm_lang$mouse$Mouse$moves(_user$project$Main_UI_Message$MouseMoved),
-				_1: {
-					ctor: '::',
-					_0: A2(_zaboco$elm_draggable$Draggable$subscriptions, _user$project$Main_UI_Message$Drag, state.drag),
-					_1: {ctor: '[]'}
-				}
+				_0: A2(_zaboco$elm_draggable$Draggable$subscriptions, _user$project$Main_UI_Message$Drag, state.drag),
+				_1: {ctor: '[]'}
 			}
 		});
 };
@@ -12167,13 +12107,41 @@ var _user$project$Main_UI_Controller$update = F2(
 					_user$project$Main_UI_Message$Canvas,
 					_user$project$Canvas$update(_p0._0),
 					state);
-			case 'MouseMoved':
+			case 'MouseOver':
+				var _p1 = A2(_elm_lang$core$Debug$log, 'message', message);
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						state,
 						{
-							gates: A2(_user$project$Main_UI$hitTest, state, _p0._0)
+							gates: A2(
+								_elm_lang$core$List$indexedMap,
+								F2(
+									function (gateIndex, gate) {
+										return _elm_lang$core$Native_Utils.eq(gateIndex, _p0._0) ? _elm_lang$core$Native_Utils.update(
+											gate,
+											{highlighted: true}) : gate;
+									}),
+								state.gates)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'MouseOut':
+				var _p2 = A2(_elm_lang$core$Debug$log, 'message', message);
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						state,
+						{
+							gates: A2(
+								_elm_lang$core$List$indexedMap,
+								F2(
+									function (gateIndex, gate) {
+										return _elm_lang$core$Native_Utils.eq(gateIndex, _p0._0) ? _elm_lang$core$Native_Utils.update(
+											gate,
+											{highlighted: false}) : gate;
+									}),
+								state.gates)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -12192,8 +12160,11 @@ var _user$project$Main_UI_Controller$update = F2(
 										return _elm_lang$core$Native_Utils.eq(gateIndex, _p0._0) ? _elm_lang$core$Native_Utils.update(
 											gate,
 											{
-												move: _elm_lang$core$Maybe$Just(gate.transform)
-											}) : gate;
+												move: _elm_lang$core$Maybe$Just(gate.transform),
+												highlighted: true
+											}) : _elm_lang$core$Native_Utils.update(
+											gate,
+											{highlighted: false});
 									}),
 								state.gates)
 						}),
@@ -12208,8 +12179,8 @@ var _user$project$Main_UI_Controller$update = F2(
 							gates: A2(
 								_elm_lang$core$List$map,
 								function (gate) {
-									var _p1 = gate.move;
-									if (_p1.ctor === 'Just') {
+									var _p3 = gate.move;
+									if (_p3.ctor === 'Just') {
 										return _elm_lang$core$Native_Utils.update(
 											gate,
 											{
@@ -12218,10 +12189,13 @@ var _user$project$Main_UI_Controller$update = F2(
 														_benansell$elm_geometric_transformation$Transformer2D$combine,
 														_benansell$elm_geometric_transformation$Transformer2D$translate(
 															{ctor: '_Tuple2', _0: _p0._0._0 / state.canvas.dragToPan.transform.a, _1: _p0._0._1 / state.canvas.dragToPan.transform.d}),
-														_p1._0))
+														_p3._0)),
+												highlighted: true
 											});
 									} else {
-										return gate;
+										return _elm_lang$core$Native_Utils.update(
+											gate,
+											{highlighted: false});
 									}
 								},
 								state.gates)
@@ -12237,11 +12211,11 @@ var _user$project$Main_UI_Controller$update = F2(
 							gates: A2(
 								_elm_lang$core$List$map,
 								function (gate) {
-									var _p2 = gate.move;
-									if (_p2.ctor === 'Just') {
+									var _p4 = gate.move;
+									if (_p4.ctor === 'Just') {
 										return _elm_lang$core$Native_Utils.update(
 											gate,
-											{move: _elm_lang$core$Maybe$Nothing, transform: _p2._0});
+											{move: _elm_lang$core$Maybe$Nothing, transform: _p4._0});
 									} else {
 										return gate;
 									}
@@ -12252,17 +12226,17 @@ var _user$project$Main_UI_Controller$update = F2(
 				};
 		}
 	});
-var _user$project$Main_UI_Controller$init = function (_p3) {
-	var _p4 = _p3;
-	var _p5 = _p4._0;
+var _user$project$Main_UI_Controller$init = function (_p5) {
+	var _p6 = _p5;
+	var _p7 = _p6._0;
 	return {
 		ctor: '_Tuple2',
 		_0: _elm_lang$core$Native_Utils.update(
-			_p5,
+			_p7,
 			{
-				gates: _user$project$Main_UI$initGates(_p5)
+				gates: _user$project$Main_UI$initGates(_p7)
 			}),
-		_1: _p4._1
+		_1: _p6._1
 	};
 }(
 	A3(
