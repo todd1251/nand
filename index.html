@@ -10112,9 +10112,7 @@ var _user$project$Canvas_Controller_DragToPan$subscriptions = F2(
 			envelope,
 			A2(_zaboco$elm_draggable$Draggable$subscriptions, _user$project$Canvas_Controller_DragToPan$Drag, state.drag));
 	});
-var _user$project$Canvas_Controller_DragToPan$dragToPan = function (envelope) {
-	return A2(_zaboco$elm_draggable$Draggable$mouseTrigger, 'canvas', _user$project$Canvas_Controller_DragToPan$Drag);
-};
+var _user$project$Canvas_Controller_DragToPan$dragToPan = A2(_zaboco$elm_draggable$Draggable$mouseTrigger, 'canvas', _user$project$Canvas_Controller_DragToPan$Drag);
 var _user$project$Canvas_Controller_ScrollToZoom$ignoreDefaults = A2(_elm_lang$html$Html_Events$Options, true, true);
 var _user$project$Canvas_Controller_ScrollToZoom$update = F2(
 	function (message, _p0) {
@@ -10187,16 +10185,150 @@ var _user$project$Canvas_Controller_ScrollToZoom$ViewModel = function (a) {
 var _user$project$Canvas_Controller_ScrollToZoom$WheelScrolledBy = function (a) {
 	return {ctor: 'WheelScrolledBy', _0: a};
 };
-var _user$project$Canvas_Controller_ScrollToZoom$scrollToZoom = function (envelope) {
-	return A2(
-		_elm_lang$html$Html_Attributes$map,
-		_user$project$Canvas_Controller_ScrollToZoom$WheelScrolledBy,
-		A3(_elm_lang$html$Html_Events$onWithOptions, 'wheel', _user$project$Canvas_Controller_ScrollToZoom$ignoreDefaults, _user$project$Canvas_Controller_ScrollToZoom$delta));
-};
-var _user$project$Canvas_Message$ViewModel = F3(
-	function (a, b, c) {
-		return {windowSize: a, dragToPan: b, scrollToZoom: c};
+var _user$project$Canvas_Controller_ScrollToZoom$scrollToZoom = A2(
+	_elm_lang$html$Html_Attributes$map,
+	_user$project$Canvas_Controller_ScrollToZoom$WheelScrolledBy,
+	A3(_elm_lang$html$Html_Events$onWithOptions, 'wheel', _user$project$Canvas_Controller_ScrollToZoom$ignoreDefaults, _user$project$Canvas_Controller_ScrollToZoom$delta));
+var _user$project$Canvas_Controller_ShiftDragToSelect$envelope = F2(
+	function (state, shiftDragToSelect) {
+		return _elm_lang$core$Native_Utils.update(
+			state,
+			{shiftDragToSelect: shiftDragToSelect});
 	});
+var _user$project$Canvas_Controller_ShiftDragToSelect$Rectangle = F4(
+	function (a, b, c, d) {
+		return {left: a, top: b, width: c, height: d};
+	});
+var _user$project$Canvas_Controller_ShiftDragToSelect$ViewModel = F2(
+	function (a, b) {
+		return {drag: a, selection: b};
+	});
+var _user$project$Canvas_Controller_ShiftDragToSelect$OnDragEnd = {ctor: 'OnDragEnd'};
+var _user$project$Canvas_Controller_ShiftDragToSelect$OnDragBy = function (a) {
+	return {ctor: 'OnDragBy', _0: a};
+};
+var _user$project$Canvas_Controller_ShiftDragToSelect$dragConfig = _zaboco$elm_draggable$Draggable$customConfig(
+	{
+		ctor: '::',
+		_0: _zaboco$elm_draggable$Draggable_Events$onDragBy(_user$project$Canvas_Controller_ShiftDragToSelect$OnDragBy),
+		_1: {
+			ctor: '::',
+			_0: _zaboco$elm_draggable$Draggable_Events$onDragEnd(_user$project$Canvas_Controller_ShiftDragToSelect$OnDragEnd),
+			_1: {ctor: '[]'}
+		}
+	});
+var _user$project$Canvas_Controller_ShiftDragToSelect$update = F2(
+	function (message, _p0) {
+		var _p1 = _p0;
+		var _p9 = _p1;
+		var _p8 = _p1.shiftDragToSelect;
+		var _p2 = message;
+		switch (_p2.ctor) {
+			case 'Drag':
+				var _p4 = _p2._0._0;
+				var _p3 = A2(_elm_lang$core$Debug$log, 'shiftKey', _p4);
+				return _p4 ? A2(
+					_elm_lang$core$Tuple$mapFirst,
+					_user$project$Canvas_Controller_ShiftDragToSelect$envelope(_p9),
+					A3(_zaboco$elm_draggable$Draggable$update, _user$project$Canvas_Controller_ShiftDragToSelect$dragConfig, _p2._0._1, _p8)) : {ctor: '_Tuple2', _0: _p9, _1: _elm_lang$core$Platform_Cmd$none};
+			case 'OnDragBy':
+				var _p7 = _p2._0._1;
+				var _p6 = _p2._0._0;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						_p9,
+						{
+							shiftDragToSelect: _elm_lang$core$Native_Utils.update(
+								_p8,
+								{
+									selection: function () {
+										var _p5 = _p8.selection;
+										if (_p5.ctor === 'Just') {
+											return _elm_lang$core$Maybe$Just(
+												{left: _p5._0.left, top: _p5._0.top, width: _p5._0.width + _p6, height: _p5._0.height + _p7});
+										} else {
+											return _elm_lang$core$Maybe$Just(
+												{left: _p6, top: _p7, width: 0, height: 0});
+										}
+									}()
+								})
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						_p9,
+						{
+							shiftDragToSelect: _elm_lang$core$Native_Utils.update(
+								_p8,
+								{selection: _elm_lang$core$Maybe$Nothing})
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+		}
+	});
+var _user$project$Canvas_Controller_ShiftDragToSelect$Drag = function (a) {
+	return {ctor: 'Drag', _0: a};
+};
+var _user$project$Canvas_Controller_ShiftDragToSelect$init = function (state) {
+	return A2(
+		_elm_lang$core$Tuple$mapFirst,
+		_user$project$Canvas_Controller_ShiftDragToSelect$envelope(state),
+		A3(
+			_user$project$Component$init,
+			_user$project$Canvas_Controller_ShiftDragToSelect$Drag,
+			function (state) {
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						state,
+						{drag: _zaboco$elm_draggable$Draggable$init}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			},
+			{
+				ctor: '_Tuple2',
+				_0: {drag: _elm_lang$core$Maybe$Nothing, selection: _elm_lang$core$Maybe$Nothing},
+				_1: _elm_lang$core$Platform_Cmd$none
+			}));
+};
+var _user$project$Canvas_Controller_ShiftDragToSelect$subscriptions = F2(
+	function (envelope, state) {
+		return A2(
+			_elm_lang$core$Platform_Sub$map,
+			envelope,
+			A2(
+				_zaboco$elm_draggable$Draggable$subscriptions,
+				function (_p10) {
+					return _user$project$Canvas_Controller_ShiftDragToSelect$Drag(
+						A2(
+							F2(
+								function (v0, v1) {
+									return {ctor: '_Tuple2', _0: v0, _1: v1};
+								}),
+							false,
+							_p10));
+				},
+				state.drag));
+	});
+var _user$project$Canvas_Controller_ShiftDragToSelect$shiftDragToSelect = A2(
+	_zaboco$elm_draggable$Draggable$customMouseTrigger,
+	A2(_elm_lang$core$Json_Decode$field, 'shiftKey', _elm_lang$core$Json_Decode$bool),
+	F2(
+		function (message, shiftKey) {
+			return _user$project$Canvas_Controller_ShiftDragToSelect$Drag(
+				{ctor: '_Tuple2', _0: shiftKey, _1: message});
+		}));
+var _user$project$Canvas_Message$ViewModel = F4(
+	function (a, b, c, d) {
+		return {windowSize: a, dragToPan: b, scrollToZoom: c, shiftDragToSelect: d};
+	});
+var _user$project$Canvas_Message$ShiftDragToSelect = function (a) {
+	return {ctor: 'ShiftDragToSelect', _0: a};
+};
 var _user$project$Canvas_Message$ScrollToZoom = function (a) {
 	return {ctor: 'ScrollToZoom', _0: a};
 };
@@ -10214,15 +10346,20 @@ var _user$project$Canvas$subscriptions = function (state) {
 			_1: {
 				ctor: '::',
 				_0: A2(_user$project$Canvas_Controller_DragToPan$subscriptions, _user$project$Canvas_Message$DragToPan, state.dragToPan),
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: A2(_user$project$Canvas_Controller_ShiftDragToSelect$subscriptions, _user$project$Canvas_Message$ShiftDragToSelect, state.shiftDragToSelect),
+					_1: {ctor: '[]'}
+				}
 			}
 		});
 };
 var _user$project$Canvas$transform = function (canvas) {
 	return _user$project$Canvas_Controller_DragToPan$transform(canvas.dragToPan);
 };
-var _user$project$Canvas$scrollToZoom = _user$project$Canvas_Controller_ScrollToZoom$scrollToZoom(_user$project$Canvas_Message$ScrollToZoom);
-var _user$project$Canvas$dragToPan = _user$project$Canvas_Controller_DragToPan$dragToPan(_user$project$Canvas_Message$DragToPan);
+var _user$project$Canvas$shiftDragToSelect = _user$project$Canvas_Controller_ShiftDragToSelect$shiftDragToSelect;
+var _user$project$Canvas$scrollToZoom = _user$project$Canvas_Controller_ScrollToZoom$scrollToZoom;
+var _user$project$Canvas$dragToPan = _user$project$Canvas_Controller_DragToPan$dragToPan;
 var _user$project$Canvas$envelope = F2(
 	function (state, canvas) {
 		return _elm_lang$core$Native_Utils.update(
@@ -10235,21 +10372,26 @@ var _user$project$Canvas$init = function (state) {
 		_user$project$Canvas$envelope(state),
 		A3(
 			_user$project$Component$init,
-			_user$project$Canvas_Message$ScrollToZoom,
-			_user$project$Canvas_Controller_ScrollToZoom$init,
+			_user$project$Canvas_Message$ShiftDragToSelect,
+			_user$project$Canvas_Controller_ShiftDragToSelect$init,
 			A3(
 				_user$project$Component$init,
-				_user$project$Canvas_Message$DragToPan,
-				_user$project$Canvas_Controller_DragToPan$init,
-				{
-					ctor: '_Tuple2',
-					_0: {
-						dragToPan: _elm_lang$core$Maybe$Nothing,
-						scrollToZoom: _elm_lang$core$Maybe$Nothing,
-						windowSize: {width: 800, height: 600}
-					},
-					_1: A2(_elm_lang$core$Task$perform, _user$project$Canvas_Message$WindowResizedTo, _elm_lang$window$Window$size)
-				})));
+				_user$project$Canvas_Message$ScrollToZoom,
+				_user$project$Canvas_Controller_ScrollToZoom$init,
+				A3(
+					_user$project$Component$init,
+					_user$project$Canvas_Message$DragToPan,
+					_user$project$Canvas_Controller_DragToPan$init,
+					{
+						ctor: '_Tuple2',
+						_0: {
+							windowSize: {width: 800, height: 600},
+							dragToPan: _elm_lang$core$Maybe$Nothing,
+							scrollToZoom: _elm_lang$core$Maybe$Nothing,
+							shiftDragToSelect: _elm_lang$core$Maybe$Nothing
+						},
+						_1: A2(_elm_lang$core$Task$perform, _user$project$Canvas_Message$WindowResizedTo, _elm_lang$window$Window$size)
+					}))));
 };
 var _user$project$Canvas$update = F2(
 	function (message, _p0) {
@@ -10279,7 +10421,7 @@ var _user$project$Canvas$update = F2(
 						_user$project$Canvas_Message$DragToPan,
 						_user$project$Canvas_Controller_DragToPan$update(_p2._0),
 						_p3));
-			default:
+			case 'ScrollToZoom':
 				return A2(
 					_elm_lang$core$Tuple$mapFirst,
 					_user$project$Canvas$envelope(_p4),
@@ -10287,6 +10429,15 @@ var _user$project$Canvas$update = F2(
 						_user$project$Component$update,
 						_user$project$Canvas_Message$ScrollToZoom,
 						_user$project$Canvas_Controller_ScrollToZoom$update(_p2._0),
+						_p3));
+			default:
+				return A2(
+					_elm_lang$core$Tuple$mapFirst,
+					_user$project$Canvas$envelope(_p4),
+					A3(
+						_user$project$Component$update,
+						_user$project$Canvas_Message$ShiftDragToSelect,
+						_user$project$Canvas_Controller_ShiftDragToSelect$update(_p2._0),
 						_p3));
 		}
 	});
@@ -10327,7 +10478,17 @@ var _user$project$Canvas_UI$view = F4(
 												_user$project$Canvas_Message$ScrollToZoom(_p1));
 										},
 										_user$project$Canvas$scrollToZoom),
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html_Attributes$map,
+											function (_p2) {
+												return message(
+													_user$project$Canvas_Message$ShiftDragToSelect(_p2));
+											},
+											_user$project$Canvas$shiftDragToSelect),
+										_1: {ctor: '[]'}
+									}
 								}
 							}
 						},
@@ -12108,7 +12269,6 @@ var _user$project$Main_UI_Controller$update = F2(
 					_user$project$Canvas$update(_p0._0),
 					state);
 			case 'MouseOver':
-				var _p1 = A2(_elm_lang$core$Debug$log, 'message', message);
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -12127,7 +12287,6 @@ var _user$project$Main_UI_Controller$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'MouseOut':
-				var _p2 = A2(_elm_lang$core$Debug$log, 'message', message);
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -12179,8 +12338,8 @@ var _user$project$Main_UI_Controller$update = F2(
 							gates: A2(
 								_elm_lang$core$List$map,
 								function (gate) {
-									var _p3 = gate.move;
-									if (_p3.ctor === 'Just') {
+									var _p1 = gate.move;
+									if (_p1.ctor === 'Just') {
 										return _elm_lang$core$Native_Utils.update(
 											gate,
 											{
@@ -12189,7 +12348,7 @@ var _user$project$Main_UI_Controller$update = F2(
 														_benansell$elm_geometric_transformation$Transformer2D$combine,
 														_benansell$elm_geometric_transformation$Transformer2D$translate(
 															{ctor: '_Tuple2', _0: _p0._0._0 / state.canvas.dragToPan.transform.a, _1: _p0._0._1 / state.canvas.dragToPan.transform.d}),
-														_p3._0)),
+														_p1._0)),
 												highlighted: true
 											});
 									} else {
@@ -12211,11 +12370,11 @@ var _user$project$Main_UI_Controller$update = F2(
 							gates: A2(
 								_elm_lang$core$List$map,
 								function (gate) {
-									var _p4 = gate.move;
-									if (_p4.ctor === 'Just') {
+									var _p2 = gate.move;
+									if (_p2.ctor === 'Just') {
 										return _elm_lang$core$Native_Utils.update(
 											gate,
-											{move: _elm_lang$core$Maybe$Nothing, transform: _p4._0});
+											{move: _elm_lang$core$Maybe$Nothing, transform: _p2._0});
 									} else {
 										return gate;
 									}
@@ -12226,17 +12385,17 @@ var _user$project$Main_UI_Controller$update = F2(
 				};
 		}
 	});
-var _user$project$Main_UI_Controller$init = function (_p5) {
-	var _p6 = _p5;
-	var _p7 = _p6._0;
+var _user$project$Main_UI_Controller$init = function (_p3) {
+	var _p4 = _p3;
+	var _p5 = _p4._0;
 	return {
 		ctor: '_Tuple2',
 		_0: _elm_lang$core$Native_Utils.update(
-			_p7,
+			_p5,
 			{
-				gates: _user$project$Main_UI$initGates(_p7)
+				gates: _user$project$Main_UI$initGates(_p5)
 			}),
-		_1: _p6._1
+		_1: _p4._1
 	};
 }(
 	A3(
