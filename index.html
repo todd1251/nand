@@ -10195,6 +10195,10 @@ var _user$project$Canvas_Controller_ShiftDragToSelect$envelope = F2(
 			state,
 			{shiftDragToSelect: shiftDragToSelect});
 	});
+var _user$project$Canvas_Controller_ShiftDragToSelect$MouseEvent = F3(
+	function (a, b, c) {
+		return {shiftKey: a, offsetX: b, offsetY: c};
+	});
 var _user$project$Canvas_Controller_ShiftDragToSelect$Rectangle = F4(
 	function (a, b, c, d) {
 		return {left: a, top: b, width: c, height: d};
@@ -10220,36 +10224,46 @@ var _user$project$Canvas_Controller_ShiftDragToSelect$dragConfig = _zaboco$elm_d
 var _user$project$Canvas_Controller_ShiftDragToSelect$update = F2(
 	function (message, _p0) {
 		var _p1 = _p0;
-		var _p9 = _p1;
-		var _p8 = _p1.shiftDragToSelect;
+		var _p7 = _p1;
+		var _p6 = _p1.shiftDragToSelect;
 		var _p2 = message;
 		switch (_p2.ctor) {
 			case 'Drag':
-				var _p4 = _p2._0._0;
-				var _p3 = A2(_elm_lang$core$Debug$log, 'shiftKey', _p4);
-				return _p4 ? A2(
+				var _p3 = _p2._0._0;
+				var shiftDragToSelect_ = _p3.shiftKey ? _elm_lang$core$Native_Utils.update(
+					_p6,
+					{
+						selection: _elm_lang$core$Maybe$Just(
+							{
+								left: _elm_lang$core$Basics$toFloat(_p3.offsetX),
+								top: _elm_lang$core$Basics$toFloat(_p3.offsetY),
+								width: 0,
+								height: 0
+							})
+					}) : _p6;
+				return A2(
 					_elm_lang$core$Tuple$mapFirst,
-					_user$project$Canvas_Controller_ShiftDragToSelect$envelope(_p9),
-					A3(_zaboco$elm_draggable$Draggable$update, _user$project$Canvas_Controller_ShiftDragToSelect$dragConfig, _p2._0._1, _p8)) : {ctor: '_Tuple2', _0: _p9, _1: _elm_lang$core$Platform_Cmd$none};
+					_user$project$Canvas_Controller_ShiftDragToSelect$envelope(_p7),
+					A3(_zaboco$elm_draggable$Draggable$update, _user$project$Canvas_Controller_ShiftDragToSelect$dragConfig, _p2._0._1, shiftDragToSelect_));
 			case 'OnDragBy':
-				var _p7 = _p2._0._1;
-				var _p6 = _p2._0._0;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
-						_p9,
+						_p7,
 						{
 							shiftDragToSelect: _elm_lang$core$Native_Utils.update(
-								_p8,
+								_p6,
 								{
 									selection: function () {
-										var _p5 = _p8.selection;
-										if (_p5.ctor === 'Just') {
+										var _p4 = _p6.selection;
+										if (_p4.ctor === 'Just') {
+											var _p5 = _p4._0;
 											return _elm_lang$core$Maybe$Just(
-												{left: _p5._0.left, top: _p5._0.top, width: _p5._0.width + _p6, height: _p5._0.height + _p7});
+												_elm_lang$core$Native_Utils.update(
+													_p5,
+													{width: _p5.width + _p2._0._0, height: _p5.height + _p2._0._1}));
 										} else {
-											return _elm_lang$core$Maybe$Just(
-												{left: _p6, top: _p7, width: 0, height: 0});
+											return _elm_lang$core$Maybe$Nothing;
 										}
 									}()
 								})
@@ -10260,10 +10274,10 @@ var _user$project$Canvas_Controller_ShiftDragToSelect$update = F2(
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
-						_p9,
+						_p7,
 						{
 							shiftDragToSelect: _elm_lang$core$Native_Utils.update(
-								_p8,
+								_p6,
 								{selection: _elm_lang$core$Maybe$Nothing})
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
@@ -10302,25 +10316,30 @@ var _user$project$Canvas_Controller_ShiftDragToSelect$subscriptions = F2(
 			envelope,
 			A2(
 				_zaboco$elm_draggable$Draggable$subscriptions,
-				function (_p10) {
+				function (_p8) {
 					return _user$project$Canvas_Controller_ShiftDragToSelect$Drag(
 						A2(
 							F2(
 								function (v0, v1) {
 									return {ctor: '_Tuple2', _0: v0, _1: v1};
 								}),
-							false,
-							_p10));
+							{shiftKey: false, offsetX: 0, offsetY: 0},
+							_p8));
 				},
 				state.drag));
 	});
 var _user$project$Canvas_Controller_ShiftDragToSelect$shiftDragToSelect = A2(
 	_zaboco$elm_draggable$Draggable$customMouseTrigger,
-	A2(_elm_lang$core$Json_Decode$field, 'shiftKey', _elm_lang$core$Json_Decode$bool),
+	A4(
+		_elm_lang$core$Json_Decode$map3,
+		_user$project$Canvas_Controller_ShiftDragToSelect$MouseEvent,
+		A2(_elm_lang$core$Json_Decode$field, 'shiftKey', _elm_lang$core$Json_Decode$bool),
+		A2(_elm_lang$core$Json_Decode$field, 'offsetX', _elm_lang$core$Json_Decode$int),
+		A2(_elm_lang$core$Json_Decode$field, 'offsetY', _elm_lang$core$Json_Decode$int)),
 	F2(
-		function (message, shiftKey) {
+		function (message, event) {
 			return _user$project$Canvas_Controller_ShiftDragToSelect$Drag(
-				{ctor: '_Tuple2', _0: shiftKey, _1: message});
+				{ctor: '_Tuple2', _0: event, _1: message});
 		}));
 var _user$project$Canvas_Message$ViewModel = F4(
 	function (a, b, c, d) {
@@ -10492,19 +10511,69 @@ var _user$project$Canvas_UI$view = F4(
 								}
 							}
 						},
-						{
-							ctor: '::',
-							_0: A2(
-								_elm_lang$svg$Svg$g,
-								{
-									ctor: '::',
-									_0: _elm_lang$svg$Svg_Attributes$transform(
-										_user$project$Canvas_UI$transform(state)),
-									_1: {ctor: '[]'}
-								},
-								fluidContent),
-							_1: {ctor: '[]'}
-						}),
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							{
+								ctor: '::',
+								_0: A2(
+									_elm_lang$svg$Svg$g,
+									{
+										ctor: '::',
+										_0: _elm_lang$svg$Svg_Attributes$transform(
+											_user$project$Canvas_UI$transform(state)),
+										_1: {ctor: '[]'}
+									},
+									fluidContent),
+								_1: {ctor: '[]'}
+							},
+							function () {
+								var _p3 = state.shiftDragToSelect.selection;
+								if (_p3.ctor === 'Just') {
+									var _p4 = _p3._0;
+									return {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$svg$Svg$rect,
+											{
+												ctor: '::',
+												_0: _elm_lang$svg$Svg_Attributes$x(
+													_elm_lang$core$Basics$toString(_p4.left)),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$svg$Svg_Attributes$y(
+														_elm_lang$core$Basics$toString(_p4.top)),
+													_1: {
+														ctor: '::',
+														_0: _elm_lang$svg$Svg_Attributes$width(
+															_elm_lang$core$Basics$toString(_p4.width)),
+														_1: {
+															ctor: '::',
+															_0: _elm_lang$svg$Svg_Attributes$height(
+																_elm_lang$core$Basics$toString(_p4.height)),
+															_1: {
+																ctor: '::',
+																_0: _elm_lang$svg$Svg_Attributes$strokeWidth('1'),
+																_1: {
+																	ctor: '::',
+																	_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
+																	_1: {
+																		ctor: '::',
+																		_0: _elm_lang$svg$Svg_Attributes$fill('none'),
+																		_1: {ctor: '[]'}
+																	}
+																}
+															}
+														}
+													}
+												}
+											},
+											{ctor: '[]'}),
+										_1: {ctor: '[]'}
+									};
+								} else {
+									return {ctor: '[]'};
+								}
+							}())),
 					_1: {ctor: '[]'}
 				}));
 	});
