@@ -10001,8 +10001,8 @@ var _user$project$Canvas_Controller_ShiftDragToSelect$update = F2(
 										{
 											left: _elm_lang$core$Basics$toFloat(_p3.offsetX),
 											top: _elm_lang$core$Basics$toFloat(_p3.offsetY),
-											width: 0,
-											height: 0
+											right: _elm_lang$core$Basics$toFloat(_p3.offsetX),
+											bottom: _elm_lang$core$Basics$toFloat(_p3.offsetY)
 										})
 								})
 						}),
@@ -10024,7 +10024,7 @@ var _user$project$Canvas_Controller_ShiftDragToSelect$update = F2(
 											return _elm_lang$core$Maybe$Just(
 												_elm_lang$core$Native_Utils.update(
 													_p5,
-													{width: _p5.width + _p2._0._0, height: _p5.height + _p2._0._1}));
+													{right: _p5.right + _p2._0._0, top: _p5.top + _p2._0._1}));
 										} else {
 											return _elm_lang$core$Maybe$Nothing;
 										}
@@ -10067,9 +10067,9 @@ var _user$project$Canvas_Controller_ShiftDragToSelect$MouseEvent = F3(
 	function (a, b, c) {
 		return {shiftKey: a, offsetX: b, offsetY: c};
 	});
-var _user$project$Canvas_Controller_ShiftDragToSelect$Rectangle = F4(
+var _user$project$Canvas_Controller_ShiftDragToSelect$Selection = F4(
 	function (a, b, c, d) {
-		return {left: a, top: b, width: c, height: d};
+		return {left: a, top: b, right: c, bottom: d};
 	});
 var _user$project$Canvas_Controller_ShiftDragToSelect$ViewModel = function (a) {
 	return {selection: a};
@@ -10576,6 +10576,19 @@ var _user$project$Canvas$update = F2(
 						_p3));
 		}
 	});
+var _user$project$Canvas_UI$toRectangle = function (_p0) {
+	var _p1 = _p0;
+	var _p5 = _p1.top;
+	var _p4 = _p1.right;
+	var _p3 = _p1.left;
+	var _p2 = _p1.bottom;
+	return {
+		left: A2(_elm_lang$core$Basics$min, _p3, _p4),
+		top: A2(_elm_lang$core$Basics$min, _p5, _p2),
+		width: _elm_lang$core$Basics$abs(_p3 - _p4),
+		height: _elm_lang$core$Basics$abs(_p5 - _p2)
+	};
+};
 var _user$project$Canvas_UI$transform = function (state) {
 	return _user$project$Transform$toSvgTransform(
 		_user$project$Canvas$transform(state));
@@ -10599,18 +10612,18 @@ var _user$project$Canvas_UI$view = F4(
 								ctor: '::',
 								_0: A2(
 									_elm_lang$html$Html_Attributes$map,
-									function (_p0) {
+									function (_p6) {
 										return message(
-											_user$project$Canvas_Message$DragChain(_p0));
+											_user$project$Canvas_Message$DragChain(_p6));
 									},
 									_user$project$Canvas$dragChain),
 								_1: {
 									ctor: '::',
 									_0: A2(
 										_elm_lang$html$Html_Attributes$map,
-										function (_p1) {
+										function (_p7) {
 											return message(
-												_user$project$Canvas_Message$ScrollToZoom(_p1));
+												_user$project$Canvas_Message$ScrollToZoom(_p7));
 										},
 										_user$project$Canvas$scrollToZoom),
 									_1: {ctor: '[]'}
@@ -10633,9 +10646,9 @@ var _user$project$Canvas_UI$view = F4(
 								_1: {ctor: '[]'}
 							},
 							function () {
-								var _p2 = state.dragChain.shiftDragToSelect.selection;
-								if (_p2.ctor === 'Just') {
-									var _p3 = _p2._0;
+								var _p8 = state.dragChain.shiftDragToSelect.selection;
+								if (_p8.ctor === 'Just') {
+									var rectangle = _user$project$Canvas_UI$toRectangle(_p8._0);
 									return {
 										ctor: '::',
 										_0: A2(
@@ -10643,19 +10656,19 @@ var _user$project$Canvas_UI$view = F4(
 											{
 												ctor: '::',
 												_0: _elm_lang$svg$Svg_Attributes$x(
-													_elm_lang$core$Basics$toString(_p3.left)),
+													_elm_lang$core$Basics$toString(rectangle.left)),
 												_1: {
 													ctor: '::',
 													_0: _elm_lang$svg$Svg_Attributes$y(
-														_elm_lang$core$Basics$toString(_p3.top)),
+														_elm_lang$core$Basics$toString(rectangle.top)),
 													_1: {
 														ctor: '::',
 														_0: _elm_lang$svg$Svg_Attributes$width(
-															_elm_lang$core$Basics$toString(_p3.width)),
+															_elm_lang$core$Basics$toString(rectangle.width)),
 														_1: {
 															ctor: '::',
 															_0: _elm_lang$svg$Svg_Attributes$height(
-																_elm_lang$core$Basics$toString(_p3.height)),
+																_elm_lang$core$Basics$toString(rectangle.height)),
 															_1: {
 																ctor: '::',
 																_0: _elm_lang$svg$Svg_Attributes$strokeWidth('1'),
@@ -10664,8 +10677,12 @@ var _user$project$Canvas_UI$view = F4(
 																	_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
 																	_1: {
 																		ctor: '::',
-																		_0: _elm_lang$svg$Svg_Attributes$fill('none'),
-																		_1: {ctor: '[]'}
+																		_0: _elm_lang$svg$Svg_Attributes$strokeDasharray('5,5'),
+																		_1: {
+																			ctor: '::',
+																			_0: _elm_lang$svg$Svg_Attributes$fill('none'),
+																			_1: {ctor: '[]'}
+																		}
 																	}
 																}
 															}
@@ -10682,6 +10699,10 @@ var _user$project$Canvas_UI$view = F4(
 							}())),
 					_1: {ctor: '[]'}
 				}));
+	});
+var _user$project$Canvas_UI$Rectangle = F4(
+	function (a, b, c, d) {
+		return {left: a, top: b, width: c, height: d};
 	});
 var _user$project$LayoutControl_Domain$widthVerticalSpacingRatio = 1.5;
 var _user$project$LayoutControl_Domain$widthHorizontalSpacingRatio = 2;
