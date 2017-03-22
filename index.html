@@ -10460,7 +10460,7 @@ var _user$project$Canvas_Controller_ScrollToZoom$update = F2(
 							scrollToZoom,
 							{
 								distanceScrolled: distanceScrolled,
-								transform: A2(_user$project$Transform$scale, scrollToZoom.transform, zoom)
+								transform: A2(_user$project$Transform$scaleAll, scrollToZoom.transform, zoom)
 							})
 					}),
 				_1: A2(
@@ -10470,8 +10470,8 @@ var _user$project$Canvas_Controller_ScrollToZoom$update = F2(
 						_user$project$Canvas_Event$Panned(
 							{
 								ctor: '_Tuple2',
-								_0: (1 - zoom) * _elm_lang$core$Basics$toFloat(pan.x),
-								_1: (1 - zoom) * _elm_lang$core$Basics$toFloat(pan.y)
+								_0: ((1 - zoom) * _elm_lang$core$Basics$toFloat(pan.x)) * scrollToZoom.transform.a,
+								_1: ((1 - zoom) * _elm_lang$core$Basics$toFloat(pan.y)) * scrollToZoom.transform.d
 							})))
 			};
 		} else {
