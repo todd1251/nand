@@ -9911,6 +9911,25 @@ var _user$project$Transform$translateBeforeScale = F3(
 var _user$project$Transform$identity = _benansell$elm_geometric_transformation$Transformer2D$identity(
 	_benansell$elm_geometric_transformation$Transformer2D$toPoint(
 		{ctor: '_Tuple2', _0: 0, _1: 0}));
+var _user$project$Canvas_Controller_DragToPan$update = F2(
+	function (message, _p0) {
+		var _p1 = _p0;
+		var _p3 = _p1;
+		var _p2 = message;
+		if (_p2.ctor === 'OnDragBy') {
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					_p3,
+					{
+						transform: A3(_user$project$Transform$translateBeforeScale, _p1.transform, _p2._0._0, _p2._0._1)
+					}),
+				_1: _elm_lang$core$Platform_Cmd$none
+			};
+		} else {
+			return {ctor: '_Tuple2', _0: _p3, _1: _elm_lang$core$Platform_Cmd$none};
+		}
+	});
 var _user$project$Canvas_Controller_DragToPan$envelope = F2(
 	function (state, dragToPan) {
 		return _elm_lang$core$Native_Utils.update(
@@ -9923,59 +9942,11 @@ var _user$project$Canvas_Controller_DragToPan$init = function (state) {
 		_user$project$Canvas_Controller_DragToPan$envelope(state),
 		{
 			ctor: '_Tuple2',
-			_0: {transform: _user$project$Transform$identity, pan: _elm_lang$core$Maybe$Nothing},
+			_0: {},
 			_1: _elm_lang$core$Platform_Cmd$none
 		});
 };
-var _user$project$Canvas_Controller_DragToPan$transform = function (model) {
-	return A2(_elm_lang$core$Maybe$withDefault, model.transform, model.pan);
-};
-var _user$project$Canvas_Controller_DragToPan$update = F2(
-	function (message, _p0) {
-		var _p1 = _p0;
-		var _p4 = _p1;
-		var _p3 = _p1.dragToPan;
-		var _p2 = message;
-		if (_p2.ctor === 'OnDragBy') {
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Native_Utils.update(
-					_p4,
-					{
-						dragToPan: _elm_lang$core$Native_Utils.update(
-							_p3,
-							{
-								pan: _elm_lang$core$Maybe$Just(
-									A2(
-										_benansell$elm_geometric_transformation$Transformer2D$combine,
-										_benansell$elm_geometric_transformation$Transformer2D$translate(
-											{ctor: '_Tuple2', _0: _p2._0._0 / 1, _1: _p2._0._1 / 1}),
-										_user$project$Canvas_Controller_DragToPan$transform(_p3)))
-							})
-					}),
-				_1: _elm_lang$core$Platform_Cmd$none
-			};
-		} else {
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Native_Utils.update(
-					_p4,
-					{
-						dragToPan: _elm_lang$core$Native_Utils.update(
-							_p3,
-							{
-								transform: _user$project$Canvas_Controller_DragToPan$transform(_p3),
-								pan: _elm_lang$core$Maybe$Nothing
-							})
-					}),
-				_1: _elm_lang$core$Platform_Cmd$none
-			};
-		}
-	});
-var _user$project$Canvas_Controller_DragToPan$ViewModel = F2(
-	function (a, b) {
-		return {transform: a, pan: b};
-	});
+var _user$project$Canvas_Controller_DragToPan$ViewModel = {};
 var _user$project$Canvas_Controller_DragToPan$OnDragEnd = {ctor: 'OnDragEnd'};
 var _user$project$Canvas_Controller_DragToPan$OnDragBy = function (a) {
 	return {ctor: 'OnDragBy', _0: a};
@@ -10179,15 +10150,15 @@ var _user$project$Canvas_Controller_DragChain$envelope = F2(
 	function (state, dragChain) {
 		return _elm_lang$core$Native_Utils.update(
 			state,
-			{dragChain: dragChain});
+			{dragChain: dragChain, transform: dragChain.transform});
 	});
 var _user$project$Canvas_Controller_DragChain$MouseEvent = F3(
 	function (a, b, c) {
 		return {shiftKey: a, offsetX: b, offsetY: c};
 	});
-var _user$project$Canvas_Controller_DragChain$ViewModel = F4(
-	function (a, b, c, d) {
-		return {drag: a, dragToPan: b, shiftDragToSelect: c, operation: d};
+var _user$project$Canvas_Controller_DragChain$ViewModel = F5(
+	function (a, b, c, d, e) {
+		return {drag: a, dragToPan: b, shiftDragToSelect: c, operation: d, transform: e};
 	});
 var _user$project$Canvas_Controller_DragChain$OnDragEnd = {ctor: 'OnDragEnd'};
 var _user$project$Canvas_Controller_DragChain$OnDragBy = function (a) {
@@ -10277,7 +10248,7 @@ var _user$project$Canvas_Controller_DragChain$init = function (state) {
 							_user$project$Canvas_Controller_DragToPan$init,
 							{
 								ctor: '_Tuple2',
-								_0: {drag: _elm_lang$core$Maybe$Nothing, dragToPan: _elm_lang$core$Maybe$Nothing, shiftDragToSelect: _elm_lang$core$Maybe$Nothing, operation: _user$project$Canvas_Controller_DragChain$None},
+								_0: {drag: _elm_lang$core$Maybe$Nothing, dragToPan: _elm_lang$core$Maybe$Nothing, shiftDragToSelect: _elm_lang$core$Maybe$Nothing, operation: _user$project$Canvas_Controller_DragChain$None, transform: state.transform},
 								_1: _elm_lang$core$Platform_Cmd$none
 							}))))));
 };
@@ -10302,7 +10273,7 @@ var _user$project$Canvas_Controller_DragChain$update = F2(
 									_user$project$Canvas_Controller_ShiftDragToSelect$OnDragStart(_p7)),
 								_elm_lang$core$Native_Utils.update(
 									_p15,
-									{operation: operation})));
+									{operation: operation, transform: _p4.transform})));
 					} else {
 						return _p15;
 					}
@@ -10398,10 +10369,39 @@ var _user$project$Canvas_Controller_DragChain$update = F2(
 				}
 		}
 	});
-var _user$project$Canvas_Event$Panned = function (a) {
-	return {ctor: 'Panned', _0: a};
-};
 var _user$project$Canvas_Controller_ScrollToZoom$ignoreDefaults = A2(_elm_lang$html$Html_Events$Options, true, true);
+var _user$project$Canvas_Controller_ScrollToZoom$update = F2(
+	function (message, _p0) {
+		var _p1 = _p0;
+		var _p4 = _p1;
+		var _p2 = message;
+		var _p3 = _p2._0;
+		var scrollToZoom = _p4.scrollToZoom;
+		var pan = A2(_elm_lang$mouse$Mouse$Position, _p3.offsetX, _p3.offsetY);
+		var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, scrollToZoom.distanceScrolled + _p3.wheelDelta);
+		var zoomPerUnitDistance = 1 + (0.1 / 100);
+		var zoom = Math.pow(
+			zoomPerUnitDistance,
+			_elm_lang$core$Basics$toFloat(scrollToZoom.distanceScrolled)) / Math.pow(
+			zoomPerUnitDistance,
+			_elm_lang$core$Basics$toFloat(distanceScrolled));
+		return {
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Native_Utils.update(
+				_p4,
+				{
+					scrollToZoom: _elm_lang$core$Native_Utils.update(
+						scrollToZoom,
+						{distanceScrolled: distanceScrolled}),
+					transform: A3(
+						_user$project$Transform$translateBeforeScale,
+						A2(_user$project$Transform$scaleAll, _p1.transform, zoom),
+						(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.x),
+						(1 - zoom) * _elm_lang$core$Basics$toFloat(pan.y))
+				}),
+			_1: _elm_lang$core$Platform_Cmd$none
+		};
+	});
 var _user$project$Canvas_Controller_ScrollToZoom$envelope = F2(
 	function (state, scrollToZoom) {
 		return _elm_lang$core$Native_Utils.update(
@@ -10414,7 +10414,7 @@ var _user$project$Canvas_Controller_ScrollToZoom$init = function (state) {
 		_user$project$Canvas_Controller_ScrollToZoom$envelope(state),
 		{
 			ctor: '_Tuple2',
-			_0: {distanceScrolled: 0, transform: _user$project$Transform$identity},
+			_0: {distanceScrolled: 0},
 			_1: _elm_lang$core$Platform_Cmd$none
 		});
 };
@@ -10428,56 +10428,9 @@ var _user$project$Canvas_Controller_ScrollToZoom$delta = A4(
 	A2(_elm_lang$core$Json_Decode$field, 'wheelDelta', _elm_lang$core$Json_Decode$int),
 	A2(_elm_lang$core$Json_Decode$field, 'offsetX', _elm_lang$core$Json_Decode$int),
 	A2(_elm_lang$core$Json_Decode$field, 'offsetY', _elm_lang$core$Json_Decode$int));
-var _user$project$Canvas_Controller_ScrollToZoom$ViewModel = F2(
-	function (a, b) {
-		return {distanceScrolled: a, transform: b};
-	});
-var _user$project$Canvas_Controller_ScrollToZoom$Event = function (a) {
-	return {ctor: 'Event', _0: a};
+var _user$project$Canvas_Controller_ScrollToZoom$ViewModel = function (a) {
+	return {distanceScrolled: a};
 };
-var _user$project$Canvas_Controller_ScrollToZoom$update = F2(
-	function (message, _p0) {
-		var _p1 = _p0;
-		var _p4 = _p1;
-		var _p2 = message;
-		if (_p2.ctor === 'WheelScrolledBy') {
-			var _p3 = _p2._0;
-			var scrollToZoom = _p4.scrollToZoom;
-			var pan = A2(_elm_lang$mouse$Mouse$Position, _p3.offsetX, _p3.offsetY);
-			var distanceScrolled = A3(_elm_lang$core$Basics$clamp, -5000, 2500, scrollToZoom.distanceScrolled + _p3.wheelDelta);
-			var zoomPerUnitDistance = 1 + (0.1 / 100);
-			var zoom = Math.pow(
-				zoomPerUnitDistance,
-				_elm_lang$core$Basics$toFloat(scrollToZoom.distanceScrolled)) / Math.pow(
-				zoomPerUnitDistance,
-				_elm_lang$core$Basics$toFloat(distanceScrolled));
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Native_Utils.update(
-					_p4,
-					{
-						scrollToZoom: _elm_lang$core$Native_Utils.update(
-							scrollToZoom,
-							{
-								distanceScrolled: distanceScrolled,
-								transform: A2(_user$project$Transform$scaleAll, scrollToZoom.transform, zoom)
-							})
-					}),
-				_1: A2(
-					_elm_lang$core$Task$perform,
-					_user$project$Canvas_Controller_ScrollToZoom$Event,
-					_elm_lang$core$Task$succeed(
-						_user$project$Canvas_Event$Panned(
-							{
-								ctor: '_Tuple2',
-								_0: ((1 - zoom) * _elm_lang$core$Basics$toFloat(pan.x)) * scrollToZoom.transform.a,
-								_1: ((1 - zoom) * _elm_lang$core$Basics$toFloat(pan.y)) * scrollToZoom.transform.d
-							})))
-			};
-		} else {
-			return {ctor: '_Tuple2', _0: _p4, _1: _elm_lang$core$Platform_Cmd$none};
-		}
-	});
 var _user$project$Canvas_Controller_ScrollToZoom$WheelScrolledBy = function (a) {
 	return {ctor: 'WheelScrolledBy', _0: a};
 };
@@ -10485,9 +10438,9 @@ var _user$project$Canvas_Controller_ScrollToZoom$scrollToZoom = A2(
 	_elm_lang$html$Html_Attributes$map,
 	_user$project$Canvas_Controller_ScrollToZoom$WheelScrolledBy,
 	A3(_elm_lang$html$Html_Events$onWithOptions, 'wheel', _user$project$Canvas_Controller_ScrollToZoom$ignoreDefaults, _user$project$Canvas_Controller_ScrollToZoom$delta));
-var _user$project$Canvas_Message$ViewModel = F3(
-	function (a, b, c) {
-		return {windowSize: a, dragChain: b, scrollToZoom: c};
+var _user$project$Canvas_Message$ViewModel = F4(
+	function (a, b, c, d) {
+		return {windowSize: a, dragChain: b, scrollToZoom: c, transform: d};
 	});
 var _user$project$Canvas_Message$ScrollToZoom = function (a) {
 	return {ctor: 'ScrollToZoom', _0: a};
@@ -10509,12 +10462,6 @@ var _user$project$Canvas$subscriptions = function (state) {
 				_1: {ctor: '[]'}
 			}
 		});
-};
-var _user$project$Canvas$transform = function (canvas) {
-	return A2(
-		_benansell$elm_geometric_transformation$Transformer2D$combine,
-		_user$project$Canvas_Controller_DragToPan$transform(canvas.dragChain.dragToPan),
-		canvas.scrollToZoom.transform);
 };
 var _user$project$Canvas$scrollToZoom = _user$project$Canvas_Controller_ScrollToZoom$scrollToZoom;
 var _user$project$Canvas$dragChain = _user$project$Canvas_Controller_DragChain$dragChain;
@@ -10541,7 +10488,8 @@ var _user$project$Canvas$init = function (state) {
 					_0: {
 						windowSize: {width: 800, height: 600},
 						dragChain: _elm_lang$core$Maybe$Nothing,
-						scrollToZoom: _elm_lang$core$Maybe$Nothing
+						scrollToZoom: _elm_lang$core$Maybe$Nothing,
+						transform: _user$project$Transform$identity
 					},
 					_1: A2(_elm_lang$core$Task$perform, _user$project$Canvas_Message$WindowResizedTo, _elm_lang$window$Window$size)
 				})));
@@ -10549,18 +10497,18 @@ var _user$project$Canvas$init = function (state) {
 var _user$project$Canvas$update = F2(
 	function (message, _p0) {
 		var _p1 = _p0;
-		var _p7 = _p1;
-		var _p6 = _p1.canvas;
+		var _p4 = _p1;
+		var _p3 = _p1.canvas;
 		var _p2 = message;
 		switch (_p2.ctor) {
 			case 'WindowResizedTo':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
-						_p7,
+						_p4,
 						{
 							canvas: _elm_lang$core$Native_Utils.update(
-								_p6,
+								_p3,
 								{windowSize: _p2._0})
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
@@ -10568,43 +10516,21 @@ var _user$project$Canvas$update = F2(
 			case 'DragChain':
 				return A2(
 					_elm_lang$core$Tuple$mapFirst,
-					_user$project$Canvas$envelope(_p7),
+					_user$project$Canvas$envelope(_p4),
 					A3(
 						_user$project$Component$update,
 						_user$project$Canvas_Message$DragChain,
 						_user$project$Canvas_Controller_DragChain$update(_p2._0),
-						_p6));
+						_p3));
 			default:
-				var _p5 = _p2._0;
-				var _p3 = A2(_elm_lang$core$Debug$log, 'scrollToZoom', _p5);
-				if (_p3.ctor === 'Event') {
-					var _p4 = _p3._0;
-					return {
-						ctor: '_Tuple2',
-						_0: A2(
-							_user$project$Canvas$envelope,
-							_p7,
-							_elm_lang$core$Native_Utils.update(
-								_p6,
-								{
-									dragChain: _elm_lang$core$Tuple$first(
-										A2(
-											_user$project$Canvas_Controller_DragToPan$update,
-											_user$project$Canvas_Controller_DragToPan$OnDragBy(_p4._0),
-											_p6.dragChain))
-								})),
-						_1: _elm_lang$core$Platform_Cmd$none
-					};
-				} else {
-					return A2(
-						_elm_lang$core$Tuple$mapFirst,
-						_user$project$Canvas$envelope(_p7),
-						A3(
-							_user$project$Component$update,
-							_user$project$Canvas_Message$ScrollToZoom,
-							_user$project$Canvas_Controller_ScrollToZoom$update(_p5),
-							_p6));
-				}
+				return A2(
+					_elm_lang$core$Tuple$mapFirst,
+					_user$project$Canvas$envelope(_p4),
+					A3(
+						_user$project$Component$update,
+						_user$project$Canvas_Message$ScrollToZoom,
+						_user$project$Canvas_Controller_ScrollToZoom$update(_p2._0),
+						_p3));
 		}
 	});
 var _user$project$Canvas_UI$toRectangle = function (_p0) {
@@ -10621,8 +10547,7 @@ var _user$project$Canvas_UI$toRectangle = function (_p0) {
 	};
 };
 var _user$project$Canvas_UI$transform = function (state) {
-	return _user$project$Transform$toSvgTransform(
-		_user$project$Canvas$transform(state));
+	return _user$project$Transform$toSvgTransform(state.transform);
 };
 var _user$project$Canvas_UI$view = F4(
 	function (state, message, fixedContent, fluidContent) {
@@ -12574,7 +12499,7 @@ var _user$project$Main_UI_Controller$update = F2(
 													A2(
 														_benansell$elm_geometric_transformation$Transformer2D$combine,
 														_benansell$elm_geometric_transformation$Transformer2D$translate(
-															{ctor: '_Tuple2', _0: _p0._0._0 / state.canvas.scrollToZoom.transform.a, _1: _p0._0._1 / state.canvas.scrollToZoom.transform.d}),
+															{ctor: '_Tuple2', _0: _p0._0._0 / state.canvas.transform.a, _1: _p0._0._1 / state.canvas.transform.d}),
 														_p1._0)),
 												highlighted: true
 											});
