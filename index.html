@@ -9417,33 +9417,6 @@ var _elm_lang$svg$Svg_Attributes$additive = _elm_lang$virtual_dom$VirtualDom$att
 var _elm_lang$svg$Svg_Attributes$accumulate = _elm_lang$virtual_dom$VirtualDom$attribute('accumulate');
 var _elm_lang$svg$Svg_Attributes$accelerate = _elm_lang$virtual_dom$VirtualDom$attribute('accelerate');
 var _elm_lang$svg$Svg_Attributes$accentHeight = _elm_lang$virtual_dom$VirtualDom$attribute('accent-height');
-var _elm_lang$svg$Svg_Events$on = _elm_lang$virtual_dom$VirtualDom$on;
-var _elm_lang$svg$Svg_Events$simpleOn = F2(
-	function (name, msg) {
-		return A2(
-			_elm_lang$svg$Svg_Events$on,
-			name,
-			_elm_lang$core$Json_Decode$succeed(msg));
-	});
-var _elm_lang$svg$Svg_Events$onBegin = _elm_lang$svg$Svg_Events$simpleOn('begin');
-var _elm_lang$svg$Svg_Events$onEnd = _elm_lang$svg$Svg_Events$simpleOn('end');
-var _elm_lang$svg$Svg_Events$onRepeat = _elm_lang$svg$Svg_Events$simpleOn('repeat');
-var _elm_lang$svg$Svg_Events$onAbort = _elm_lang$svg$Svg_Events$simpleOn('abort');
-var _elm_lang$svg$Svg_Events$onError = _elm_lang$svg$Svg_Events$simpleOn('error');
-var _elm_lang$svg$Svg_Events$onResize = _elm_lang$svg$Svg_Events$simpleOn('resize');
-var _elm_lang$svg$Svg_Events$onScroll = _elm_lang$svg$Svg_Events$simpleOn('scroll');
-var _elm_lang$svg$Svg_Events$onLoad = _elm_lang$svg$Svg_Events$simpleOn('load');
-var _elm_lang$svg$Svg_Events$onUnload = _elm_lang$svg$Svg_Events$simpleOn('unload');
-var _elm_lang$svg$Svg_Events$onZoom = _elm_lang$svg$Svg_Events$simpleOn('zoom');
-var _elm_lang$svg$Svg_Events$onActivate = _elm_lang$svg$Svg_Events$simpleOn('activate');
-var _elm_lang$svg$Svg_Events$onClick = _elm_lang$svg$Svg_Events$simpleOn('click');
-var _elm_lang$svg$Svg_Events$onFocusIn = _elm_lang$svg$Svg_Events$simpleOn('focusin');
-var _elm_lang$svg$Svg_Events$onFocusOut = _elm_lang$svg$Svg_Events$simpleOn('focusout');
-var _elm_lang$svg$Svg_Events$onMouseDown = _elm_lang$svg$Svg_Events$simpleOn('mousedown');
-var _elm_lang$svg$Svg_Events$onMouseMove = _elm_lang$svg$Svg_Events$simpleOn('mousemove');
-var _elm_lang$svg$Svg_Events$onMouseOut = _elm_lang$svg$Svg_Events$simpleOn('mouseout');
-var _elm_lang$svg$Svg_Events$onMouseOver = _elm_lang$svg$Svg_Events$simpleOn('mouseover');
-var _elm_lang$svg$Svg_Events$onMouseUp = _elm_lang$svg$Svg_Events$simpleOn('mouseup');
 var _elm_lang$window$Native_Window = function()
 {
 
@@ -10660,239 +10633,6 @@ var _user$project$Canvas_UI$Rectangle = F4(
 	function (a, b, c, d) {
 		return {left: a, top: b, width: c, height: d};
 	});
-var _user$project$LayoutControl_Domain$widthVerticalSpacingRatio = 1.5;
-var _user$project$LayoutControl_Domain$widthHorizontalSpacingRatio = 2;
-var _user$project$LayoutControl_Domain$init = function () {
-	var width = 100;
-	return {width: width, horizontalSpacing: width * _user$project$LayoutControl_Domain$widthHorizontalSpacingRatio, verticalSpacing: width * _user$project$LayoutControl_Domain$widthVerticalSpacingRatio, strokeWidth: width / 25};
-}();
-var _user$project$LayoutControl_Domain$apply = F2(
-	function (event, state) {
-		var _p0 = event;
-		if (_p0.ctor === 'WidthChanged') {
-			var _p1 = _p0._0;
-			return _elm_lang$core$Native_Utils.update(
-				state,
-				{width: _p1, horizontalSpacing: _p1 * _user$project$LayoutControl_Domain$widthHorizontalSpacingRatio, verticalSpacing: _p1 * _user$project$LayoutControl_Domain$widthVerticalSpacingRatio});
-		} else {
-			return _elm_lang$core$Native_Utils.update(
-				state,
-				{strokeWidth: _p0._0});
-		}
-	});
-var _user$project$LayoutControl_Domain$State = F4(
-	function (a, b, c, d) {
-		return {width: a, horizontalSpacing: b, verticalSpacing: c, strokeWidth: d};
-	});
-var _user$project$LayoutControl_Domain$StrokeWidthChanged = function (a) {
-	return {ctor: 'StrokeWidthChanged', _0: a};
-};
-var _user$project$LayoutControl_Domain$WidthChanged = function (a) {
-	return {ctor: 'WidthChanged', _0: a};
-};
-var _user$project$UI_Range$view = F7(
-	function (id, label, current, min, max, step, msg) {
-		return {
-			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$label,
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$for(id),
-					_1: {ctor: '[]'}
-				},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text(label),
-					_1: {ctor: '[]'}
-				}),
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$input,
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$id(id),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$type_('range'),
-							_1: {
-								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$min(
-									_elm_lang$core$Basics$toString(min)),
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$max(
-										_elm_lang$core$Basics$toString(max)),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$step(
-											_elm_lang$core$Basics$toString(step)),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$value(
-												_elm_lang$core$Basics$toString(current)),
-											_1: {
-												ctor: '::',
-												_0: _elm_lang$html$Html_Events$onInput(msg),
-												_1: {ctor: '[]'}
-											}
-										}
-									}
-								}
-							}
-						}
-					},
-					{ctor: '[]'}),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$input,
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$type_('text'),
-							_1: {
-								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$placeholder(label),
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$value(
-										_elm_lang$core$Basics$toString(current)),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$html$Html_Events$onInput(msg),
-										_1: {ctor: '[]'}
-									}
-								}
-							}
-						},
-						{ctor: '[]'}),
-					_1: {ctor: '[]'}
-				}
-			}
-		};
-	});
-var _user$project$LayoutControl_UI$updateOrNothing = F3(
-	function (state, number, update) {
-		var _p0 = number;
-		if (_p0.ctor === 'Just') {
-			return _elm_lang$core$Native_Utils.update(
-				state,
-				{
-					domain: update(_p0._0)
-				});
-		} else {
-			return state;
-		}
-	});
-var _user$project$LayoutControl_UI$toNumber = function (value) {
-	var _p1 = _elm_lang$core$String$toFloat(value);
-	if (_p1.ctor === 'Ok') {
-		var _p2 = _p1._0;
-		return _elm_lang$core$Basics$isNaN(_p2) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(_p2);
-	} else {
-		return _elm_lang$core$Maybe$Nothing;
-	}
-};
-var _user$project$LayoutControl_UI$updateOrNone = F3(
-	function (state, value, update) {
-		return A3(
-			_user$project$LayoutControl_UI$updateOrNothing,
-			state,
-			_user$project$LayoutControl_UI$toNumber(value),
-			function (number) {
-				return update(number);
-			});
-	});
-var _user$project$LayoutControl_UI$update = F2(
-	function (command, state) {
-		var layoutControl = state.layoutControl;
-		var _p3 = command;
-		if (_p3.ctor === 'ChangeWidth') {
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Native_Utils.update(
-					state,
-					{
-						layoutControl: A3(
-							_user$project$LayoutControl_UI$updateOrNone,
-							layoutControl,
-							_p3._0,
-							function (width) {
-								return A2(
-									_user$project$LayoutControl_Domain$apply,
-									_user$project$LayoutControl_Domain$WidthChanged(width),
-									layoutControl.domain);
-							})
-					}),
-				_1: _elm_lang$core$Platform_Cmd$none
-			};
-		} else {
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Native_Utils.update(
-					state,
-					{
-						layoutControl: A3(
-							_user$project$LayoutControl_UI$updateOrNone,
-							layoutControl,
-							_p3._0,
-							function (strokeWidth) {
-								return A2(
-									_user$project$LayoutControl_Domain$apply,
-									_user$project$LayoutControl_Domain$StrokeWidthChanged(strokeWidth),
-									layoutControl.domain);
-							})
-					}),
-				_1: _elm_lang$core$Platform_Cmd$none
-			};
-		}
-	});
-var _user$project$LayoutControl_UI$init = function (state) {
-	var domain = _user$project$LayoutControl_Domain$init;
-	return {
-		ctor: '_Tuple2',
-		_0: _elm_lang$core$Native_Utils.update(
-			state,
-			{
-				layoutControl: {
-					domain: domain,
-					width: _elm_lang$core$Basics$toString(domain.width),
-					strokeWidth: _elm_lang$core$Basics$toString(domain.strokeWidth)
-				}
-			}),
-		_1: _elm_lang$core$Platform_Cmd$none
-	};
-};
-var _user$project$LayoutControl_UI$State = F3(
-	function (a, b, c) {
-		return {domain: a, width: b, strokeWidth: c};
-	});
-var _user$project$LayoutControl_UI$ChangeStrokeWidth = function (a) {
-	return {ctor: 'ChangeStrokeWidth', _0: a};
-};
-var _user$project$LayoutControl_UI$ChangeWidth = function (a) {
-	return {ctor: 'ChangeWidth', _0: a};
-};
-var _user$project$LayoutControl_UI$view = function (state) {
-	return A2(
-		_elm_lang$html$Html$div,
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('controls'),
-			_1: {ctor: '[]'}
-		},
-		_elm_lang$core$List$concat(
-			{
-				ctor: '::',
-				_0: A7(_user$project$UI_Range$view, 'width', 'Width', state.domain.width, 10, 200, 1, _user$project$LayoutControl_UI$ChangeWidth),
-				_1: {
-					ctor: '::',
-					_0: A7(_user$project$UI_Range$view, 'strokeWidth', 'Stroke width', state.domain.strokeWidth, 1, 10, 0.1, _user$project$LayoutControl_UI$ChangeStrokeWidth),
-					_1: {ctor: '[]'}
-				}
-			}));
-};
 var _user$project$UI_Shape$spaceSeparated = F2(
 	function (command, elements) {
 		return A2(
@@ -12233,9 +11973,9 @@ var _user$project$Main_UI_Message$GateViewModel = F6(
 	function (a, b, c, d, e, f) {
 		return {column: a, row: b, gate: c, selected: d, transform: e, move: f};
 	});
-var _user$project$Main_UI_Message$State = F5(
-	function (a, b, c, d, e) {
-		return {canvas: a, layoutControl: b, gates: c, drag: d, selected: e};
+var _user$project$Main_UI_Message$State = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {canvas: a, width: b, strokeWidth: c, horizontalSpacing: d, verticalSpacing: e, gates: f, drag: g, selected: h};
 	});
 var _user$project$Main_UI_Message$OnDragEnd = {ctor: 'OnDragEnd'};
 var _user$project$Main_UI_Message$OnDragBy = function (a) {
@@ -12246,9 +11986,6 @@ var _user$project$Main_UI_Message$OnDragStart = function (a) {
 };
 var _user$project$Main_UI_Message$Drag = function (a) {
 	return {ctor: 'Drag', _0: a};
-};
-var _user$project$Main_UI_Message$LayoutControl = function (a) {
-	return {ctor: 'LayoutControl', _0: a};
 };
 var _user$project$Main_UI_Message$Canvas = function (a) {
 	return {ctor: 'Canvas', _0: a};
@@ -12264,26 +12001,18 @@ var _user$project$UI_Styles$stylesheet = A3(
 		_1: {ctor: '[]'}
 	});
 var _user$project$Main_UI$view = function (state) {
-	var layoutControl = state.layoutControl;
-	var view = {
-		ctor: '::',
-		_0: _user$project$UI_Styles$stylesheet,
-		_1: {
-			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$map,
-				_user$project$Main_UI_Message$LayoutControl,
-				_user$project$LayoutControl_UI$view(layoutControl)),
-			_1: {ctor: '[]'}
-		}
-	};
-	var dimensions = {width: layoutControl.domain.width};
-	var appearance = {strokeWidth: layoutControl.domain.strokeWidth, strokeColour: 'black', fillColour: 'transparent'};
+	var verticalSpacing = state.verticalSpacing;
+	var horizontalSpacing = state.horizontalSpacing;
+	var appearance = {strokeWidth: state.strokeWidth, strokeColour: 'black', fillColour: 'transparent'};
 	var highlightedAppearance = _elm_lang$core$Native_Utils.update(
 		appearance,
 		{strokeWidth: appearance.strokeWidth * 1.5});
-	var horizontalSpacing = layoutControl.domain.horizontalSpacing;
-	var verticalSpacing = layoutControl.domain.verticalSpacing;
+	var dimensions = {width: state.width};
+	var view = {
+		ctor: '::',
+		_0: _user$project$UI_Styles$stylesheet,
+		_1: {ctor: '[]'}
+	};
 	var canvas = state.canvas;
 	var gate = F3(
 		function (selected, index, model) {
@@ -12322,9 +12051,8 @@ var _user$project$Main_UI$view = function (state) {
 	return A4(_user$project$Canvas_UI$view, canvas, _user$project$Main_UI_Message$Canvas, view, shapes);
 };
 var _user$project$Main_UI$initGates = function (state) {
-	var layoutControl = state.layoutControl;
-	var dimensions = {width: layoutControl.domain.width};
-	var appearance = {strokeWidth: layoutControl.domain.strokeWidth, strokeColour: 'black', fillColour: 'none'};
+	var appearance = {strokeWidth: state.strokeWidth, strokeColour: 'black', fillColour: 'none'};
+	var dimensions = {width: state.width};
 	return A2(
 		_elm_lang$core$List$map,
 		function (_p0) {
@@ -12412,12 +12140,6 @@ var _user$project$Main_UI_Controller$update = F2(
 	function (message, state) {
 		var _p6 = message;
 		switch (_p6.ctor) {
-			case 'LayoutControl':
-				return A3(
-					_user$project$Component$update,
-					_user$project$Main_UI_Message$LayoutControl,
-					_user$project$LayoutControl_UI$update(_p6._0),
-					state);
 			case 'Canvas':
 				return function (_p7) {
 					var _p8 = _p7;
@@ -12447,9 +12169,8 @@ var _user$project$Main_UI_Controller$update = F2(
 								_elm_lang$core$List$indexedMap,
 								F2(
 									function (index, model) {
-										var layoutControl = _p15.layoutControl;
-										var dimensions = {width: layoutControl.domain.width};
-										var appearance = {strokeWidth: layoutControl.domain.strokeWidth, strokeColour: 'black', fillColour: 'none'};
+										var appearance = {strokeWidth: _p15.strokeWidth, strokeColour: 'black', fillColour: 'none'};
+										var dimensions = {width: _p15.width};
 										var shape = A3(_user$project$UI_Gate$toShape, dimensions, appearance, model.gate);
 										var canvas = _p15.canvas;
 										var transform = A2(
@@ -12458,7 +12179,7 @@ var _user$project$Main_UI_Controller$update = F2(
 											A2(
 												_benansell$elm_geometric_transformation$Transformer2D$combine,
 												model.transform,
-												A6(_user$project$UI_Gate$transform, model.column, model.row, layoutControl.domain.horizontalSpacing, layoutControl.domain.verticalSpacing, canvas.windowSize, dimensions)));
+												A6(_user$project$UI_Gate$transform, model.column, model.row, _p15.horizontalSpacing, _p15.verticalSpacing, canvas.windowSize, dimensions)));
 										return {ctor: '_Tuple3', _0: index, _1: transform, _2: shape};
 									}),
 								_p15.gates));
@@ -12562,38 +12283,40 @@ var _user$project$Main_UI_Controller$update = F2(
 				};
 		}
 	});
-var _user$project$Main_UI_Controller$init = function (_p18) {
-	var _p19 = _p18;
-	var _p20 = _p19._0;
-	return {
-		ctor: '_Tuple2',
-		_0: _elm_lang$core$Native_Utils.update(
-			_p20,
-			{
-				gates: _user$project$Main_UI$initGates(_p20)
-			}),
-		_1: _p19._1
-	};
-}(
-	A3(
-		_user$project$Component$init,
-		_user$project$Main_UI_Message$Canvas,
-		_user$project$Canvas$init,
+var _user$project$Main_UI_Controller$init = function () {
+	var width = 100;
+	return function (_p18) {
+		var _p19 = _p18;
+		var _p20 = _p19._0;
+		return {
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Native_Utils.update(
+				_p20,
+				{
+					gates: _user$project$Main_UI$initGates(_p20)
+				}),
+			_1: _p19._1
+		};
+	}(
 		A3(
 			_user$project$Component$init,
-			_user$project$Main_UI_Message$LayoutControl,
-			_user$project$LayoutControl_UI$init,
+			_user$project$Main_UI_Message$Canvas,
+			_user$project$Canvas$init,
 			{
 				ctor: '_Tuple2',
 				_0: {
-					layoutControl: _elm_lang$core$Maybe$Nothing,
+					width: width,
+					strokeWidth: width / 25,
+					horizontalSpacing: width * 2,
+					verticalSpacing: width * 1.5,
 					canvas: _elm_lang$core$Maybe$Nothing,
 					gates: _elm_lang$core$Maybe$Nothing,
 					drag: _zaboco$elm_draggable$Draggable$init,
 					selected: {ctor: '[]'}
 				},
 				_1: _elm_lang$core$Platform_Cmd$none
-			})));
+			}));
+}();
 var _user$project$Main_UI_Controller$Selection = F4(
 	function (a, b, c, d) {
 		return {left: a, top: b, right: c, bottom: d};
