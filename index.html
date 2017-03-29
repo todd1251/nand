@@ -12090,6 +12090,81 @@ var _user$project$Main_UI$initGates = function (state) {
 			}
 		});
 };
+var _user$project$Main_UI_Selection$toRectangle = function (_p0) {
+	var _p1 = _p0;
+	var _p5 = _p1.top;
+	var _p4 = _p1.right;
+	var _p3 = _p1.left;
+	var _p2 = _p1.bottom;
+	return {
+		left: A2(_elm_lang$core$Basics$min, _p3, _p4),
+		top: A2(_elm_lang$core$Basics$min, _p5, _p2),
+		width: _elm_lang$core$Basics$abs(_p3 - _p4),
+		height: _elm_lang$core$Basics$abs(_p5 - _p2)
+	};
+};
+var _user$project$Main_UI_Selection$update = function (_p6) {
+	var _p7 = _p6;
+	var _p14 = _p7._0;
+	var _p13 = _p7._1;
+	var _p8 = _p14.canvas.dragChain.shiftDragToSelect.selection;
+	if (_p8.ctor === 'Just') {
+		var selection = _user$project$Main_UI_Selection$toRectangle(_p8._0);
+		var gates = A2(
+			_elm_lang$core$List$map,
+			function (_p9) {
+				var _p10 = _p9;
+				var _p12 = _p10._1;
+				var _p11 = _p10._2;
+				var bottomRight = A2(
+					_benansell$elm_geometric_transformation$Transformer2D$apply,
+					_p12,
+					{x: _p11.left + _p11.width, y: _p11.top + _p11.height});
+				var topLeft = A2(
+					_benansell$elm_geometric_transformation$Transformer2D$apply,
+					_p12,
+					{x: _p11.left, y: _p11.top});
+				var selected = (_elm_lang$core$Native_Utils.cmp(topLeft.x, selection.left) > -1) && ((_elm_lang$core$Native_Utils.cmp(topLeft.x, selection.left + selection.width) < 1) && ((_elm_lang$core$Native_Utils.cmp(topLeft.y, selection.top) > -1) && ((_elm_lang$core$Native_Utils.cmp(topLeft.y, selection.top + selection.height) < 1) && ((_elm_lang$core$Native_Utils.cmp(bottomRight.x, selection.left) > -1) && ((_elm_lang$core$Native_Utils.cmp(bottomRight.x, selection.left + selection.width) < 1) && ((_elm_lang$core$Native_Utils.cmp(bottomRight.y, selection.top) > -1) && (_elm_lang$core$Native_Utils.cmp(bottomRight.y, selection.top + selection.height) < 1)))))));
+				return _elm_lang$core$Native_Utils.update(
+					_p10._0,
+					{selected: selected});
+			},
+			A2(
+				_elm_lang$core$List$map,
+				function (model) {
+					var appearance = {strokeWidth: _p14.strokeWidth, strokeColour: 'black', fillColour: 'none'};
+					var dimensions = {width: _p14.width};
+					var shape = A3(_user$project$UI_Gate$toShape, dimensions, appearance, model.gate);
+					var canvas = _p14.canvas;
+					var transform = A2(
+						_benansell$elm_geometric_transformation$Transformer2D$combine,
+						canvas.transform,
+						A2(
+							_benansell$elm_geometric_transformation$Transformer2D$combine,
+							model.transform,
+							A6(_user$project$UI_Gate$transform, model.column, model.row, _p14.horizontalSpacing, _p14.verticalSpacing, canvas.windowSize, dimensions)));
+					return {ctor: '_Tuple3', _0: model, _1: transform, _2: shape};
+				},
+				_p14.gates));
+		return {
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Native_Utils.update(
+				_p14,
+				{gates: gates}),
+			_1: _p13
+		};
+	} else {
+		return {ctor: '_Tuple2', _0: _p14, _1: _p13};
+	}
+};
+var _user$project$Main_UI_Selection$Selection = F4(
+	function (a, b, c, d) {
+		return {left: a, top: b, right: c, bottom: d};
+	});
+var _user$project$Main_UI_Selection$Rectangle = F4(
+	function (a, b, c, d) {
+		return {left: a, top: b, width: c, height: d};
+	});
 var _user$project$Main_UI_Controller$subscriptions = function (state) {
 	return _elm_lang$core$Platform_Sub$batch(
 		{
@@ -12105,19 +12180,6 @@ var _user$project$Main_UI_Controller$subscriptions = function (state) {
 				_1: {ctor: '[]'}
 			}
 		});
-};
-var _user$project$Main_UI_Controller$toRectangle = function (_p0) {
-	var _p1 = _p0;
-	var _p5 = _p1.top;
-	var _p4 = _p1.right;
-	var _p3 = _p1.left;
-	var _p2 = _p1.bottom;
-	return {
-		left: A2(_elm_lang$core$Basics$min, _p3, _p4),
-		top: A2(_elm_lang$core$Basics$min, _p5, _p2),
-		width: _elm_lang$core$Basics$abs(_p3 - _p4),
-		height: _elm_lang$core$Basics$abs(_p5 - _p2)
-	};
 };
 var _user$project$Main_UI_Controller$dragConfig = _zaboco$elm_draggable$Draggable$customConfig(
 	{
@@ -12135,70 +12197,17 @@ var _user$project$Main_UI_Controller$dragConfig = _zaboco$elm_draggable$Draggabl
 	});
 var _user$project$Main_UI_Controller$update = F2(
 	function (message, state) {
-		var _p6 = message;
-		switch (_p6.ctor) {
+		var _p0 = message;
+		switch (_p0.ctor) {
 			case 'Canvas':
-				return function (_p7) {
-					var _p8 = _p7;
-					var _p15 = _p8._0;
-					var _p14 = _p8._1;
-					var _p9 = _p15.canvas.dragChain.shiftDragToSelect.selection;
-					if (_p9.ctor === 'Just') {
-						var selection = _user$project$Main_UI_Controller$toRectangle(_p9._0);
-						var gates = A2(
-							_elm_lang$core$List$map,
-							function (_p10) {
-								var _p11 = _p10;
-								var _p13 = _p11._1;
-								var _p12 = _p11._2;
-								var bottomRight = A2(
-									_benansell$elm_geometric_transformation$Transformer2D$apply,
-									_p13,
-									{x: _p12.left + _p12.width, y: _p12.top + _p12.height});
-								var topLeft = A2(
-									_benansell$elm_geometric_transformation$Transformer2D$apply,
-									_p13,
-									{x: _p12.left, y: _p12.top});
-								var selected = (_elm_lang$core$Native_Utils.cmp(topLeft.x, selection.left) > -1) && ((_elm_lang$core$Native_Utils.cmp(topLeft.x, selection.left + selection.width) < 1) && ((_elm_lang$core$Native_Utils.cmp(topLeft.y, selection.top) > -1) && ((_elm_lang$core$Native_Utils.cmp(topLeft.y, selection.top + selection.height) < 1) && ((_elm_lang$core$Native_Utils.cmp(bottomRight.x, selection.left) > -1) && ((_elm_lang$core$Native_Utils.cmp(bottomRight.x, selection.left + selection.width) < 1) && ((_elm_lang$core$Native_Utils.cmp(bottomRight.y, selection.top) > -1) && (_elm_lang$core$Native_Utils.cmp(bottomRight.y, selection.top + selection.height) < 1)))))));
-								return _elm_lang$core$Native_Utils.update(
-									_p11._0,
-									{selected: selected});
-							},
-							A2(
-								_elm_lang$core$List$map,
-								function (model) {
-									var appearance = {strokeWidth: _p15.strokeWidth, strokeColour: 'black', fillColour: 'none'};
-									var dimensions = {width: _p15.width};
-									var shape = A3(_user$project$UI_Gate$toShape, dimensions, appearance, model.gate);
-									var canvas = _p15.canvas;
-									var transform = A2(
-										_benansell$elm_geometric_transformation$Transformer2D$combine,
-										canvas.transform,
-										A2(
-											_benansell$elm_geometric_transformation$Transformer2D$combine,
-											model.transform,
-											A6(_user$project$UI_Gate$transform, model.column, model.row, _p15.horizontalSpacing, _p15.verticalSpacing, canvas.windowSize, dimensions)));
-									return {ctor: '_Tuple3', _0: model, _1: transform, _2: shape};
-								},
-								_p15.gates));
-						return {
-							ctor: '_Tuple2',
-							_0: _elm_lang$core$Native_Utils.update(
-								_p15,
-								{gates: gates}),
-							_1: _p14
-						};
-					} else {
-						return {ctor: '_Tuple2', _0: _p15, _1: _p14};
-					}
-				}(
+				return _user$project$Main_UI_Selection$update(
 					A3(
 						_user$project$Component$update,
 						_user$project$Main_UI_Message$Canvas,
-						_user$project$Canvas$update(_p6._0),
+						_user$project$Canvas$update(_p0._0),
 						state));
 			case 'Drag':
-				return A3(_zaboco$elm_draggable$Draggable$update, _user$project$Main_UI_Controller$dragConfig, _p6._0, state);
+				return A3(_zaboco$elm_draggable$Draggable$update, _user$project$Main_UI_Controller$dragConfig, _p0._0, state);
 			case 'OnDragStart':
 				return {
 					ctor: '_Tuple2',
@@ -12209,7 +12218,7 @@ var _user$project$Main_UI_Controller$update = F2(
 								_elm_lang$core$List$indexedMap,
 								F2(
 									function (gateIndex, gate) {
-										return (gate.selected || _elm_lang$core$Native_Utils.eq(gateIndex, _p6._0)) ? _elm_lang$core$Native_Utils.update(
+										return (gate.selected || _elm_lang$core$Native_Utils.eq(gateIndex, _p0._0)) ? _elm_lang$core$Native_Utils.update(
 											gate,
 											{
 												move: _elm_lang$core$Maybe$Just(gate.transform),
@@ -12231,8 +12240,8 @@ var _user$project$Main_UI_Controller$update = F2(
 							gates: A2(
 								_elm_lang$core$List$map,
 								function (gate) {
-									var _p16 = gate.move;
-									if (_p16.ctor === 'Just') {
+									var _p1 = gate.move;
+									if (_p1.ctor === 'Just') {
 										return _elm_lang$core$Native_Utils.update(
 											gate,
 											{
@@ -12240,8 +12249,8 @@ var _user$project$Main_UI_Controller$update = F2(
 													A2(
 														_benansell$elm_geometric_transformation$Transformer2D$combine,
 														_benansell$elm_geometric_transformation$Transformer2D$translate(
-															{ctor: '_Tuple2', _0: _p6._0._0 / state.canvas.transform.a, _1: _p6._0._1 / state.canvas.transform.d}),
-														_p16._0)),
+															{ctor: '_Tuple2', _0: _p0._0._0 / state.canvas.transform.a, _1: _p0._0._1 / state.canvas.transform.d}),
+														_p1._0)),
 												selected: true
 											});
 									} else {
@@ -12263,11 +12272,11 @@ var _user$project$Main_UI_Controller$update = F2(
 							gates: A2(
 								_elm_lang$core$List$map,
 								function (gate) {
-									var _p17 = gate.move;
-									if (_p17.ctor === 'Just') {
+									var _p2 = gate.move;
+									if (_p2.ctor === 'Just') {
 										return _elm_lang$core$Native_Utils.update(
 											gate,
-											{move: _elm_lang$core$Maybe$Nothing, transform: _p17._0, selected: false});
+											{move: _elm_lang$core$Maybe$Nothing, transform: _p2._0, selected: false});
 									} else {
 										return _elm_lang$core$Native_Utils.update(
 											gate,
@@ -12282,17 +12291,17 @@ var _user$project$Main_UI_Controller$update = F2(
 	});
 var _user$project$Main_UI_Controller$init = function () {
 	var width = 100;
-	return function (_p18) {
-		var _p19 = _p18;
-		var _p20 = _p19._0;
+	return function (_p3) {
+		var _p4 = _p3;
+		var _p5 = _p4._0;
 		return {
 			ctor: '_Tuple2',
 			_0: _elm_lang$core$Native_Utils.update(
-				_p20,
+				_p5,
 				{
-					gates: _user$project$Main_UI$initGates(_p20)
+					gates: _user$project$Main_UI$initGates(_p5)
 				}),
-			_1: _p19._1
+			_1: _p4._1
 		};
 	}(
 		A3(
@@ -12305,14 +12314,6 @@ var _user$project$Main_UI_Controller$init = function () {
 				_1: _elm_lang$core$Platform_Cmd$none
 			}));
 }();
-var _user$project$Main_UI_Controller$Selection = F4(
-	function (a, b, c, d) {
-		return {left: a, top: b, right: c, bottom: d};
-	});
-var _user$project$Main_UI_Controller$Rectangle = F4(
-	function (a, b, c, d) {
-		return {left: a, top: b, width: c, height: d};
-	});
 var _user$project$Main$view = _user$project$Main_UI$view;
 var _user$project$Main$subscriptions = _user$project$Main_UI_Controller$subscriptions;
 var _user$project$Main$update = _user$project$Main_UI_Controller$update;
