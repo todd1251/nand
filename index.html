@@ -12047,49 +12047,6 @@ var _user$project$Main_UI$view = function (state) {
 	var shapes = A2(_elm_lang$core$List$indexedMap, gate, state.gates);
 	return A4(_user$project$Canvas_UI$view, canvas, _user$project$Main_UI_Message$Canvas, view, shapes);
 };
-var _user$project$Main_UI$initGates = function (state) {
-	var appearance = {strokeWidth: state.strokeWidth, strokeColour: 'black', fillColour: 'none'};
-	var dimensions = {width: state.width};
-	return A2(
-		_elm_lang$core$List$map,
-		function (_p0) {
-			var _p1 = _p0;
-			return {column: _p1._0, row: _p1._1, gate: _p1._2, selected: false, transform: _user$project$Transform$identity, move: _elm_lang$core$Maybe$Nothing};
-		},
-		{
-			ctor: '::',
-			_0: {ctor: '_Tuple3', _0: 1, _1: 1, _2: _user$project$UI_Gate$Buffer},
-			_1: {
-				ctor: '::',
-				_0: {ctor: '_Tuple3', _0: 1, _1: 2, _2: _user$project$UI_Gate$Not},
-				_1: {
-					ctor: '::',
-					_0: {ctor: '_Tuple3', _0: 2, _1: 1, _2: _user$project$UI_Gate$Or},
-					_1: {
-						ctor: '::',
-						_0: {ctor: '_Tuple3', _0: 2, _1: 2, _2: _user$project$UI_Gate$Nor},
-						_1: {
-							ctor: '::',
-							_0: {ctor: '_Tuple3', _0: 1, _1: 3, _2: _user$project$UI_Gate$And},
-							_1: {
-								ctor: '::',
-								_0: {ctor: '_Tuple3', _0: 1, _1: 4, _2: _user$project$UI_Gate$Nand},
-								_1: {
-									ctor: '::',
-									_0: {ctor: '_Tuple3', _0: 2, _1: 3, _2: _user$project$UI_Gate$Xor},
-									_1: {
-										ctor: '::',
-										_0: {ctor: '_Tuple3', _0: 2, _1: 4, _2: _user$project$UI_Gate$Xnor},
-										_1: {ctor: '[]'}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		});
-};
 var _user$project$Main_UI_Selection$toRectangle = function (_p0) {
 	var _p1 = _p0;
 	var _p5 = _p1.top;
@@ -12289,30 +12246,56 @@ var _user$project$Main_UI_Controller$update = F2(
 				};
 		}
 	});
+var _user$project$Main_UI_Controller$gates = A2(
+	_elm_lang$core$List$map,
+	function (_p3) {
+		var _p4 = _p3;
+		return {column: _p4._0, row: _p4._1, gate: _p4._2, selected: false, transform: _user$project$Transform$identity, move: _elm_lang$core$Maybe$Nothing};
+	},
+	{
+		ctor: '::',
+		_0: {ctor: '_Tuple3', _0: 1, _1: 1, _2: _user$project$UI_Gate$Buffer},
+		_1: {
+			ctor: '::',
+			_0: {ctor: '_Tuple3', _0: 1, _1: 2, _2: _user$project$UI_Gate$Not},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple3', _0: 2, _1: 1, _2: _user$project$UI_Gate$Or},
+				_1: {
+					ctor: '::',
+					_0: {ctor: '_Tuple3', _0: 2, _1: 2, _2: _user$project$UI_Gate$Nor},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple3', _0: 1, _1: 3, _2: _user$project$UI_Gate$And},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple3', _0: 1, _1: 4, _2: _user$project$UI_Gate$Nand},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple3', _0: 2, _1: 3, _2: _user$project$UI_Gate$Xor},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple3', _0: 2, _1: 4, _2: _user$project$UI_Gate$Xnor},
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	});
 var _user$project$Main_UI_Controller$init = function () {
 	var width = 100;
-	return function (_p3) {
-		var _p4 = _p3;
-		var _p5 = _p4._0;
-		return {
+	return A3(
+		_user$project$Component$init,
+		_user$project$Main_UI_Message$Canvas,
+		_user$project$Canvas$init,
+		{
 			ctor: '_Tuple2',
-			_0: _elm_lang$core$Native_Utils.update(
-				_p5,
-				{
-					gates: _user$project$Main_UI$initGates(_p5)
-				}),
-			_1: _p4._1
-		};
-	}(
-		A3(
-			_user$project$Component$init,
-			_user$project$Main_UI_Message$Canvas,
-			_user$project$Canvas$init,
-			{
-				ctor: '_Tuple2',
-				_0: {width: width, strokeWidth: width / 25, horizontalSpacing: width * 2, verticalSpacing: width * 1.5, canvas: _elm_lang$core$Maybe$Nothing, gates: _elm_lang$core$Maybe$Nothing, drag: _zaboco$elm_draggable$Draggable$init},
-				_1: _elm_lang$core$Platform_Cmd$none
-			}));
+			_0: {width: width, strokeWidth: width / 25, horizontalSpacing: width * 2, verticalSpacing: width * 1.5, canvas: _elm_lang$core$Maybe$Nothing, gates: _user$project$Main_UI_Controller$gates, drag: _zaboco$elm_draggable$Draggable$init},
+			_1: _elm_lang$core$Platform_Cmd$none
+		});
 }();
 var _user$project$Main$view = _user$project$Main_UI$view;
 var _user$project$Main$subscriptions = _user$project$Main_UI_Controller$subscriptions;
