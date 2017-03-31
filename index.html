@@ -12138,6 +12138,59 @@ var _user$project$Main_UI_Controller$subscriptions = function (state) {
 			}
 		});
 };
+var _user$project$Main_UI_Controller$onDragEnd = _elm_lang$core$List$map(
+	function (gate) {
+		var _p0 = gate.move;
+		if (_p0.ctor === 'Just') {
+			return _elm_lang$core$Native_Utils.update(
+				gate,
+				{move: _elm_lang$core$Maybe$Nothing, transform: _p0._0, selected: false});
+		} else {
+			return _elm_lang$core$Native_Utils.update(
+				gate,
+				{selected: false});
+		}
+	});
+var _user$project$Main_UI_Controller$onDragBy = F2(
+	function (_p1, transform) {
+		var _p2 = _p1;
+		return _elm_lang$core$List$map(
+			function (gate) {
+				var _p3 = gate.move;
+				if (_p3.ctor === 'Just') {
+					var _p4 = _p3._0;
+					return _elm_lang$core$Native_Utils.update(
+						gate,
+						{
+							move: _elm_lang$core$Maybe$Just(
+								A2(
+									_benansell$elm_geometric_transformation$Transformer2D$combine,
+									_benansell$elm_geometric_transformation$Transformer2D$translate(
+										{ctor: '_Tuple2', _0: _p2._0 / _p4.a, _1: _p2._1 / _p4.d}),
+									_p4)),
+							selected: true
+						});
+				} else {
+					return _elm_lang$core$Native_Utils.update(
+						gate,
+						{selected: false});
+				}
+			});
+	});
+var _user$project$Main_UI_Controller$onDragStart = function (index) {
+	return _elm_lang$core$List$indexedMap(
+		F2(
+			function (gateIndex, gate) {
+				return (gate.selected || _elm_lang$core$Native_Utils.eq(gateIndex, index)) ? _elm_lang$core$Native_Utils.update(
+					gate,
+					{
+						move: _elm_lang$core$Maybe$Just(gate.transform),
+						selected: true
+					}) : _elm_lang$core$Native_Utils.update(
+					gate,
+					{selected: false});
+			}));
+};
 var _user$project$Main_UI_Controller$dragConfig = _zaboco$elm_draggable$Draggable$customConfig(
 	{
 		ctor: '::',
@@ -12154,37 +12207,24 @@ var _user$project$Main_UI_Controller$dragConfig = _zaboco$elm_draggable$Draggabl
 	});
 var _user$project$Main_UI_Controller$update = F2(
 	function (message, state) {
-		var _p0 = message;
-		switch (_p0.ctor) {
+		var _p5 = message;
+		switch (_p5.ctor) {
 			case 'Canvas':
 				return _user$project$Main_UI_Selection$update(
 					A3(
 						_user$project$Component$update,
 						_user$project$Main_UI_Message$Canvas,
-						_user$project$Canvas$update(_p0._0),
+						_user$project$Canvas$update(_p5._0),
 						state));
 			case 'Drag':
-				return A3(_zaboco$elm_draggable$Draggable$update, _user$project$Main_UI_Controller$dragConfig, _p0._0, state);
+				return A3(_zaboco$elm_draggable$Draggable$update, _user$project$Main_UI_Controller$dragConfig, _p5._0, state);
 			case 'OnDragStart':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						state,
 						{
-							gates: A2(
-								_elm_lang$core$List$indexedMap,
-								F2(
-									function (gateIndex, gate) {
-										return (gate.selected || _elm_lang$core$Native_Utils.eq(gateIndex, _p0._0)) ? _elm_lang$core$Native_Utils.update(
-											gate,
-											{
-												move: _elm_lang$core$Maybe$Just(gate.transform),
-												selected: true
-											}) : _elm_lang$core$Native_Utils.update(
-											gate,
-											{selected: false});
-									}),
-								state.gates)
+							gates: A2(_user$project$Main_UI_Controller$onDragStart, _p5._0, state.gates)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -12194,29 +12234,7 @@ var _user$project$Main_UI_Controller$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						state,
 						{
-							gates: A2(
-								_elm_lang$core$List$map,
-								function (gate) {
-									var _p1 = gate.move;
-									if (_p1.ctor === 'Just') {
-										return _elm_lang$core$Native_Utils.update(
-											gate,
-											{
-												move: _elm_lang$core$Maybe$Just(
-													A2(
-														_benansell$elm_geometric_transformation$Transformer2D$combine,
-														_benansell$elm_geometric_transformation$Transformer2D$translate(
-															{ctor: '_Tuple2', _0: _p0._0._0 / state.canvas.transform.a, _1: _p0._0._1 / state.canvas.transform.d}),
-														_p1._0)),
-												selected: true
-											});
-									} else {
-										return _elm_lang$core$Native_Utils.update(
-											gate,
-											{selected: false});
-									}
-								},
-								state.gates)
+							gates: A3(_user$project$Main_UI_Controller$onDragBy, _p5._0, state.canvas.transform, state.gates)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -12226,21 +12244,7 @@ var _user$project$Main_UI_Controller$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						state,
 						{
-							gates: A2(
-								_elm_lang$core$List$map,
-								function (gate) {
-									var _p2 = gate.move;
-									if (_p2.ctor === 'Just') {
-										return _elm_lang$core$Native_Utils.update(
-											gate,
-											{move: _elm_lang$core$Maybe$Nothing, transform: _p2._0, selected: false});
-									} else {
-										return _elm_lang$core$Native_Utils.update(
-											gate,
-											{selected: false});
-									}
-								},
-								state.gates)
+							gates: _user$project$Main_UI_Controller$onDragEnd(state.gates)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -12248,9 +12252,9 @@ var _user$project$Main_UI_Controller$update = F2(
 	});
 var _user$project$Main_UI_Controller$gates = A2(
 	_elm_lang$core$List$map,
-	function (_p3) {
-		var _p4 = _p3;
-		return {column: _p4._0, row: _p4._1, gate: _p4._2, selected: false, transform: _user$project$Transform$identity, move: _elm_lang$core$Maybe$Nothing};
+	function (_p6) {
+		var _p7 = _p6;
+		return {column: _p7._0, row: _p7._1, gate: _p7._2, selected: false, transform: _user$project$Transform$identity, move: _elm_lang$core$Maybe$Nothing};
 	},
 	{
 		ctor: '::',
