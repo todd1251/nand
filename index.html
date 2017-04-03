@@ -12078,19 +12078,20 @@ var _user$project$Main_UI_DragToMoveSelection$onDragBy = F2(
 				}
 			});
 	});
+var _user$project$Main_UI_DragToMoveSelection$gateSelected = F3(
+	function (index, gateIndex, gate) {
+		return (gate.selected || _elm_lang$core$Native_Utils.eq(gateIndex, index)) ? _elm_lang$core$Native_Utils.update(
+			gate,
+			{
+				move: _elm_lang$core$Maybe$Just(gate.transform),
+				selected: true
+			}) : _elm_lang$core$Native_Utils.update(
+			gate,
+			{selected: false});
+	});
 var _user$project$Main_UI_DragToMoveSelection$onDragStart = function (index) {
 	return _elm_lang$core$List$indexedMap(
-		F2(
-			function (gateIndex, gate) {
-				return (gate.selected || _elm_lang$core$Native_Utils.eq(gateIndex, index)) ? _elm_lang$core$Native_Utils.update(
-					gate,
-					{
-						move: _elm_lang$core$Maybe$Just(gate.transform),
-						selected: true
-					}) : _elm_lang$core$Native_Utils.update(
-					gate,
-					{selected: false});
-			}));
+		_user$project$Main_UI_DragToMoveSelection$gateSelected(index));
 };
 var _user$project$Main_UI_DragToMoveSelection$envelope = F2(
 	function (state, dragToMoveSelection) {
