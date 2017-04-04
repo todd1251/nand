@@ -12040,44 +12040,34 @@ var _user$project$Main_UI_DragToMoveSelection$updateSelection = function (_p6) {
 		return {ctor: '_Tuple2', _0: _p14, _1: _p13};
 	}
 };
-var _user$project$Main_UI_DragToMoveSelection$onDragEnd = _elm_lang$core$List$map(
-	function (gate) {
-		var _p15 = gate.move;
-		if (_p15.ctor === 'Just') {
-			return _elm_lang$core$Native_Utils.update(
-				gate,
-				{move: _elm_lang$core$Maybe$Nothing, transform: _p15._0, selected: false});
-		} else {
-			return _elm_lang$core$Native_Utils.update(
-				gate,
-				{selected: false});
-		}
+var _user$project$Main_UI_DragToMoveSelection$gateMoved = F2(
+	function (gate, transform) {
+		return _elm_lang$core$Native_Utils.update(
+			gate,
+			{move: _elm_lang$core$Maybe$Nothing, transform: transform, selected: false});
 	});
-var _user$project$Main_UI_DragToMoveSelection$onDragBy = F2(
-	function (_p16, transform) {
-		var _p17 = _p16;
-		return _elm_lang$core$List$map(
-			function (gate) {
-				var _p18 = gate.move;
-				if (_p18.ctor === 'Just') {
-					return _elm_lang$core$Native_Utils.update(
-						gate,
-						{
-							move: _elm_lang$core$Maybe$Just(
-								A2(
-									_benansell$elm_geometric_transformation$Transformer2D$combine,
-									_benansell$elm_geometric_transformation$Transformer2D$translate(
-										{ctor: '_Tuple2', _0: _p17._0 / transform.a, _1: _p17._1 / transform.d}),
-									_p18._0)),
-							selected: true
-						});
-				} else {
-					return _elm_lang$core$Native_Utils.update(
-						gate,
-						{selected: false});
-				}
+var _user$project$Main_UI_DragToMoveSelection$translateBeforeScale = F2(
+	function (_p15, transform) {
+		var _p16 = _p15;
+		return _benansell$elm_geometric_transformation$Transformer2D$combine(
+			_benansell$elm_geometric_transformation$Transformer2D$translate(
+				{ctor: '_Tuple2', _0: _p16._0 / transform.a, _1: _p16._1 / transform.d}));
+	});
+var _user$project$Main_UI_DragToMoveSelection$gateMoving = F4(
+	function (delta, gate, move, transform) {
+		return _elm_lang$core$Native_Utils.update(
+			gate,
+			{
+				move: _elm_lang$core$Maybe$Just(
+					A3(_user$project$Main_UI_DragToMoveSelection$translateBeforeScale, delta, transform, move)),
+				selected: true
 			});
 	});
+var _user$project$Main_UI_DragToMoveSelection$notSelected = function (gate) {
+	return _elm_lang$core$Native_Utils.update(
+		gate,
+		{selected: false});
+};
 var _user$project$Main_UI_DragToMoveSelection$gateSelected = F3(
 	function (index, gateIndex, gate) {
 		return (gate.selected || _elm_lang$core$Native_Utils.eq(gateIndex, index)) ? _elm_lang$core$Native_Utils.update(
@@ -12085,14 +12075,35 @@ var _user$project$Main_UI_DragToMoveSelection$gateSelected = F3(
 			{
 				move: _elm_lang$core$Maybe$Just(gate.transform),
 				selected: true
-			}) : _elm_lang$core$Native_Utils.update(
-			gate,
-			{selected: false});
+			}) : _user$project$Main_UI_DragToMoveSelection$notSelected(gate);
 	});
 var _user$project$Main_UI_DragToMoveSelection$onDragStart = function (index) {
 	return _elm_lang$core$List$indexedMap(
 		_user$project$Main_UI_DragToMoveSelection$gateSelected(index));
 };
+var _user$project$Main_UI_DragToMoveSelection$maybeGateMoving = F3(
+	function (delta, transform, gate) {
+		var _p17 = gate.move;
+		if (_p17.ctor === 'Just') {
+			return A4(_user$project$Main_UI_DragToMoveSelection$gateMoving, delta, gate, _p17._0, transform);
+		} else {
+			return _user$project$Main_UI_DragToMoveSelection$notSelected(gate);
+		}
+	});
+var _user$project$Main_UI_DragToMoveSelection$onDragBy = F2(
+	function (delta, transform) {
+		return _elm_lang$core$List$map(
+			A2(_user$project$Main_UI_DragToMoveSelection$maybeGateMoving, delta, transform));
+	});
+var _user$project$Main_UI_DragToMoveSelection$maybeGateMoved = function (gate) {
+	var _p18 = gate.move;
+	if (_p18.ctor === 'Just') {
+		return A2(_user$project$Main_UI_DragToMoveSelection$gateMoved, gate, _p18._0);
+	} else {
+		return _user$project$Main_UI_DragToMoveSelection$notSelected(gate);
+	}
+};
+var _user$project$Main_UI_DragToMoveSelection$onDragEnd = _elm_lang$core$List$map(_user$project$Main_UI_DragToMoveSelection$maybeGateMoved);
 var _user$project$Main_UI_DragToMoveSelection$envelope = F2(
 	function (state, dragToMoveSelection) {
 		return _elm_lang$core$Native_Utils.update(
