@@ -11973,61 +11973,65 @@ var _user$project$UI_Gate$Nand = {ctor: 'Nand'};
 var _user$project$UI_Gate$And = {ctor: 'And'};
 var _user$project$UI_Gate$Not = {ctor: 'Not'};
 var _user$project$UI_Gate$Buffer = {ctor: 'Buffer'};
-var _user$project$Main_UI_DragToMoveSelection$toRectangle = function (_p0) {
-	var _p1 = _p0;
-	var _p5 = _p1.top;
-	var _p4 = _p1.right;
-	var _p3 = _p1.left;
-	var _p2 = _p1.bottom;
+var _user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection = F2(
+	function (selection, _p0) {
+		var _p1 = _p0;
+		var _p3 = _p1._1;
+		var _p2 = _p1._2;
+		var bottomRight = A2(
+			_benansell$elm_geometric_transformation$Transformer2D$apply,
+			_p3,
+			{x: _p2.left + _p2.width, y: _p2.top + _p2.height});
+		var topLeft = A2(
+			_benansell$elm_geometric_transformation$Transformer2D$apply,
+			_p3,
+			{x: _p2.left, y: _p2.top});
+		var selected = (_elm_lang$core$Native_Utils.cmp(topLeft.x, selection.left) > -1) && ((_elm_lang$core$Native_Utils.cmp(topLeft.x, selection.left + selection.width) < 1) && ((_elm_lang$core$Native_Utils.cmp(topLeft.y, selection.top) > -1) && ((_elm_lang$core$Native_Utils.cmp(topLeft.y, selection.top + selection.height) < 1) && ((_elm_lang$core$Native_Utils.cmp(bottomRight.x, selection.left) > -1) && ((_elm_lang$core$Native_Utils.cmp(bottomRight.x, selection.left + selection.width) < 1) && ((_elm_lang$core$Native_Utils.cmp(bottomRight.y, selection.top) > -1) && (_elm_lang$core$Native_Utils.cmp(bottomRight.y, selection.top + selection.height) < 1)))))));
+		return _elm_lang$core$Native_Utils.update(
+			_p1._0,
+			{selected: selected});
+	});
+var _user$project$Main_UI_DragToMoveSelection$shapeAndTransform = F2(
+	function (state, model) {
+		var appearance = {strokeWidth: state.strokeWidth, strokeColour: 'black', fillColour: 'none'};
+		var dimensions = {width: state.width};
+		var shape = A3(_user$project$UI_Gate$toShape, dimensions, appearance, model.gate);
+		var canvas = state.canvas;
+		var transform = A2(
+			_benansell$elm_geometric_transformation$Transformer2D$combine,
+			canvas.transform,
+			A2(
+				_benansell$elm_geometric_transformation$Transformer2D$combine,
+				model.transform,
+				A6(_user$project$UI_Gate$transform, model.column, model.row, state.horizontalSpacing, state.verticalSpacing, canvas.windowSize, dimensions)));
+		return {ctor: '_Tuple3', _0: model, _1: transform, _2: shape};
+	});
+var _user$project$Main_UI_DragToMoveSelection$toRectangle = function (_p4) {
+	var _p5 = _p4;
+	var _p9 = _p5.top;
+	var _p8 = _p5.right;
+	var _p7 = _p5.left;
+	var _p6 = _p5.bottom;
 	return {
-		left: A2(_elm_lang$core$Basics$min, _p3, _p4),
-		top: A2(_elm_lang$core$Basics$min, _p5, _p2),
-		width: _elm_lang$core$Basics$abs(_p3 - _p4),
-		height: _elm_lang$core$Basics$abs(_p5 - _p2)
+		left: A2(_elm_lang$core$Basics$min, _p7, _p8),
+		top: A2(_elm_lang$core$Basics$min, _p9, _p6),
+		width: _elm_lang$core$Basics$abs(_p7 - _p8),
+		height: _elm_lang$core$Basics$abs(_p9 - _p6)
 	};
 };
-var _user$project$Main_UI_DragToMoveSelection$updateSelection = function (_p6) {
-	var _p7 = _p6;
-	var _p14 = _p7._0;
-	var _p13 = _p7._1;
-	var _p8 = _p14.canvas.dragChain.shiftDragToSelect.selection;
-	if (_p8.ctor === 'Just') {
-		var selection = _user$project$Main_UI_DragToMoveSelection$toRectangle(_p8._0);
+var _user$project$Main_UI_DragToMoveSelection$updateSelection = function (_p10) {
+	var _p11 = _p10;
+	var _p14 = _p11._0;
+	var _p13 = _p11._1;
+	var _p12 = _p14.canvas.dragChain.shiftDragToSelect.selection;
+	if (_p12.ctor === 'Just') {
+		var selection = _user$project$Main_UI_DragToMoveSelection$toRectangle(_p12._0);
 		var gates = A2(
 			_elm_lang$core$List$map,
-			function (_p9) {
-				var _p10 = _p9;
-				var _p12 = _p10._1;
-				var _p11 = _p10._2;
-				var bottomRight = A2(
-					_benansell$elm_geometric_transformation$Transformer2D$apply,
-					_p12,
-					{x: _p11.left + _p11.width, y: _p11.top + _p11.height});
-				var topLeft = A2(
-					_benansell$elm_geometric_transformation$Transformer2D$apply,
-					_p12,
-					{x: _p11.left, y: _p11.top});
-				var selected = (_elm_lang$core$Native_Utils.cmp(topLeft.x, selection.left) > -1) && ((_elm_lang$core$Native_Utils.cmp(topLeft.x, selection.left + selection.width) < 1) && ((_elm_lang$core$Native_Utils.cmp(topLeft.y, selection.top) > -1) && ((_elm_lang$core$Native_Utils.cmp(topLeft.y, selection.top + selection.height) < 1) && ((_elm_lang$core$Native_Utils.cmp(bottomRight.x, selection.left) > -1) && ((_elm_lang$core$Native_Utils.cmp(bottomRight.x, selection.left + selection.width) < 1) && ((_elm_lang$core$Native_Utils.cmp(bottomRight.y, selection.top) > -1) && (_elm_lang$core$Native_Utils.cmp(bottomRight.y, selection.top + selection.height) < 1)))))));
-				return _elm_lang$core$Native_Utils.update(
-					_p10._0,
-					{selected: selected});
-			},
+			_user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection(selection),
 			A2(
 				_elm_lang$core$List$map,
-				function (model) {
-					var appearance = {strokeWidth: _p14.strokeWidth, strokeColour: 'black', fillColour: 'none'};
-					var dimensions = {width: _p14.width};
-					var shape = A3(_user$project$UI_Gate$toShape, dimensions, appearance, model.gate);
-					var canvas = _p14.canvas;
-					var transform = A2(
-						_benansell$elm_geometric_transformation$Transformer2D$combine,
-						canvas.transform,
-						A2(
-							_benansell$elm_geometric_transformation$Transformer2D$combine,
-							model.transform,
-							A6(_user$project$UI_Gate$transform, model.column, model.row, _p14.horizontalSpacing, _p14.verticalSpacing, canvas.windowSize, dimensions)));
-					return {ctor: '_Tuple3', _0: model, _1: transform, _2: shape};
-				},
+				_user$project$Main_UI_DragToMoveSelection$shapeAndTransform(_p14),
 				_p14.gates));
 		return {
 			ctor: '_Tuple2',
