@@ -11973,6 +11973,12 @@ var _user$project$UI_Gate$Nand = {ctor: 'Nand'};
 var _user$project$UI_Gate$And = {ctor: 'And'};
 var _user$project$UI_Gate$Not = {ctor: 'Not'};
 var _user$project$UI_Gate$Buffer = {ctor: 'Buffer'};
+var _user$project$Main_UI_DragToMoveSelection$bottomRight = function (shape) {
+	return {x: shape.left + shape.width, y: shape.top + shape.height};
+};
+var _user$project$Main_UI_DragToMoveSelection$topLeft = function (shape) {
+	return {x: shape.left, y: shape.top};
+};
 var _user$project$Main_UI_DragToMoveSelection$containedBy = F2(
 	function (rectangle, _p0) {
 		var _p1 = _p0;
@@ -11985,18 +11991,18 @@ var _user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection = F
 		var _p5 = _p4;
 		var _p7 = _p5._1;
 		var _p6 = _p5._2;
-		var bottomRight = A2(
+		var bottomRight_ = A2(
 			_benansell$elm_geometric_transformation$Transformer2D$apply,
 			_p7,
-			{x: _p6.left + _p6.width, y: _p6.top + _p6.height});
-		var topLeft = A2(
+			_user$project$Main_UI_DragToMoveSelection$bottomRight(_p6));
+		var topLeft_ = A2(
 			_benansell$elm_geometric_transformation$Transformer2D$apply,
 			_p7,
-			{x: _p6.left, y: _p6.top});
+			_user$project$Main_UI_DragToMoveSelection$topLeft(_p6));
 		var selected = A2(
 			_user$project$Main_UI_DragToMoveSelection$containedBy,
 			selection,
-			{ctor: '_Tuple2', _0: topLeft, _1: bottomRight});
+			{ctor: '_Tuple2', _0: topLeft_, _1: bottomRight_});
 		return _elm_lang$core$Native_Utils.update(
 			_p5._0,
 			{selected: selected});
