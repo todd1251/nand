@@ -12035,25 +12035,30 @@ var _user$project$Main_UI_DragToMoveSelection$toRectangle = function (_p8) {
 		height: _elm_lang$core$Basics$abs(_p13 - _p10)
 	};
 };
+var _user$project$Main_UI_DragToMoveSelection$gatesWithSelectionUpdated = F2(
+	function (state, selection) {
+		var selection_ = _user$project$Main_UI_DragToMoveSelection$toRectangle(selection);
+		return A2(
+			_elm_lang$core$List$map,
+			_user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection(selection_),
+			A2(
+				_elm_lang$core$List$map,
+				_user$project$Main_UI_DragToMoveSelection$shapeAndTransform(state),
+				state.gates));
+	});
 var _user$project$Main_UI_DragToMoveSelection$updateSelection = function (_p14) {
 	var _p15 = _p14;
 	var _p18 = _p15._0;
 	var _p17 = _p15._1;
 	var _p16 = _p18.canvas.dragChain.shiftDragToSelect.selection;
 	if (_p16.ctor === 'Just') {
-		var selection = _user$project$Main_UI_DragToMoveSelection$toRectangle(_p16._0);
-		var gates = A2(
-			_elm_lang$core$List$map,
-			_user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection(selection),
-			A2(
-				_elm_lang$core$List$map,
-				_user$project$Main_UI_DragToMoveSelection$shapeAndTransform(_p18),
-				_p18.gates));
 		return {
 			ctor: '_Tuple2',
 			_0: _elm_lang$core$Native_Utils.update(
 				_p18,
-				{gates: gates}),
+				{
+					gates: A2(_user$project$Main_UI_DragToMoveSelection$gatesWithSelectionUpdated, _p18, _p16._0)
+				}),
 			_1: _p17
 		};
 	} else {
