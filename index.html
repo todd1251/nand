@@ -11979,12 +11979,26 @@ var _user$project$Main_UI_DragToMoveSelection$bottomRight = function (shape) {
 var _user$project$Main_UI_DragToMoveSelection$topLeft = function (shape) {
 	return {x: shape.left, y: shape.top};
 };
+var _user$project$Main_UI_DragToMoveSelection$bottom = function (rectangle) {
+	return rectangle.top + rectangle.height;
+};
+var _user$project$Main_UI_DragToMoveSelection$right = function (rectangle) {
+	return rectangle.left + rectangle.width;
+};
 var _user$project$Main_UI_DragToMoveSelection$containedBy = F2(
 	function (rectangle, _p0) {
 		var _p1 = _p0;
 		var _p3 = _p1._0;
 		var _p2 = _p1._1;
-		return (_elm_lang$core$Native_Utils.cmp(_p3.x, rectangle.left) > -1) && ((_elm_lang$core$Native_Utils.cmp(_p3.x, rectangle.left + rectangle.width) < 1) && ((_elm_lang$core$Native_Utils.cmp(_p3.y, rectangle.top) > -1) && ((_elm_lang$core$Native_Utils.cmp(_p3.y, rectangle.top + rectangle.height) < 1) && ((_elm_lang$core$Native_Utils.cmp(_p2.x, rectangle.left) > -1) && ((_elm_lang$core$Native_Utils.cmp(_p2.x, rectangle.left + rectangle.width) < 1) && ((_elm_lang$core$Native_Utils.cmp(_p2.y, rectangle.top) > -1) && (_elm_lang$core$Native_Utils.cmp(_p2.y, rectangle.top + rectangle.height) < 1)))))));
+		return (_elm_lang$core$Native_Utils.cmp(_p3.x, rectangle.left) > -1) && ((_elm_lang$core$Native_Utils.cmp(
+			_p3.x,
+			_user$project$Main_UI_DragToMoveSelection$right(rectangle)) < 1) && ((_elm_lang$core$Native_Utils.cmp(_p3.y, rectangle.top) > -1) && ((_elm_lang$core$Native_Utils.cmp(
+			_p3.y,
+			_user$project$Main_UI_DragToMoveSelection$bottom(rectangle)) < 1) && ((_elm_lang$core$Native_Utils.cmp(_p2.x, rectangle.left) > -1) && ((_elm_lang$core$Native_Utils.cmp(
+			_p2.x,
+			_user$project$Main_UI_DragToMoveSelection$right(rectangle)) < 1) && ((_elm_lang$core$Native_Utils.cmp(_p2.y, rectangle.top) > -1) && (_elm_lang$core$Native_Utils.cmp(
+			_p2.y,
+			_user$project$Main_UI_DragToMoveSelection$bottom(rectangle)) < 1)))))));
 	});
 var _user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection = F2(
 	function (selection, _p4) {
