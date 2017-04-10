@@ -10522,7 +10522,7 @@ var _user$project$Canvas$update = F2(
 						_p5));
 		}
 	});
-var _user$project$Canvas_UI$toRectangle = function (_p0) {
+var _user$project$Main_UI_Rectangle$fromSelection = function (_p0) {
 	var _p1 = _p0;
 	var _p5 = _p1.top;
 	var _p4 = _p1.right;
@@ -10535,6 +10535,31 @@ var _user$project$Canvas_UI$toRectangle = function (_p0) {
 		height: _elm_lang$core$Basics$abs(_p5 - _p2)
 	};
 };
+var _user$project$Main_UI_Rectangle$bottom = function (rectangle) {
+	return rectangle.top + rectangle.height;
+};
+var _user$project$Main_UI_Rectangle$right = function (rectangle) {
+	return rectangle.left + rectangle.width;
+};
+var _user$project$Main_UI_Rectangle$containedBy = F2(
+	function (rectangle, _p6) {
+		var _p7 = _p6;
+		var _p9 = _p7._0;
+		var _p8 = _p7._1;
+		return (_elm_lang$core$Native_Utils.cmp(_p9.x, rectangle.left) > -1) && ((_elm_lang$core$Native_Utils.cmp(
+			_p9.x,
+			_user$project$Main_UI_Rectangle$right(rectangle)) < 1) && ((_elm_lang$core$Native_Utils.cmp(_p9.y, rectangle.top) > -1) && ((_elm_lang$core$Native_Utils.cmp(
+			_p9.y,
+			_user$project$Main_UI_Rectangle$bottom(rectangle)) < 1) && ((_elm_lang$core$Native_Utils.cmp(_p8.x, rectangle.left) > -1) && ((_elm_lang$core$Native_Utils.cmp(
+			_p8.x,
+			_user$project$Main_UI_Rectangle$right(rectangle)) < 1) && ((_elm_lang$core$Native_Utils.cmp(_p8.y, rectangle.top) > -1) && (_elm_lang$core$Native_Utils.cmp(
+			_p8.y,
+			_user$project$Main_UI_Rectangle$bottom(rectangle)) < 1)))))));
+	});
+var _user$project$Main_UI_Rectangle$Rectangle = F4(
+	function (a, b, c, d) {
+		return {left: a, top: b, width: c, height: d};
+	});
 var _user$project$Canvas_UI$transform = function (state) {
 	return _user$project$Transform$toSvgTransform(state.transform);
 };
@@ -10579,9 +10604,9 @@ var _user$project$Canvas_UI$view = F4(
 								_1: {ctor: '[]'}
 							},
 							function () {
-								var _p6 = state.dragChain.shiftDragToSelect.selection;
-								if (_p6.ctor === 'Just') {
-									var rectangle = _user$project$Canvas_UI$toRectangle(_p6._0);
+								var _p0 = state.dragChain.shiftDragToSelect.selection;
+								if (_p0.ctor === 'Just') {
+									var rectangle = _user$project$Main_UI_Rectangle$fromSelection(_p0._0);
 									return {
 										ctor: '::',
 										_0: A2(
@@ -10632,10 +10657,6 @@ var _user$project$Canvas_UI$view = F4(
 							}())),
 					_1: {ctor: '[]'}
 				}));
-	});
-var _user$project$Canvas_UI$Rectangle = F4(
-	function (a, b, c, d) {
-		return {left: a, top: b, width: c, height: d};
 	});
 var _user$project$UI_Shape$spaceSeparated = F2(
 	function (command, elements) {
@@ -11979,46 +12000,25 @@ var _user$project$Main_UI_DragToMoveSelection$bottomRight = function (shape) {
 var _user$project$Main_UI_DragToMoveSelection$topLeft = function (shape) {
 	return {x: shape.left, y: shape.top};
 };
-var _user$project$Main_UI_DragToMoveSelection$bottom = function (rectangle) {
-	return rectangle.top + rectangle.height;
-};
-var _user$project$Main_UI_DragToMoveSelection$right = function (rectangle) {
-	return rectangle.left + rectangle.width;
-};
-var _user$project$Main_UI_DragToMoveSelection$containedBy = F2(
-	function (rectangle, _p0) {
-		var _p1 = _p0;
-		var _p3 = _p1._0;
-		var _p2 = _p1._1;
-		return (_elm_lang$core$Native_Utils.cmp(_p3.x, rectangle.left) > -1) && ((_elm_lang$core$Native_Utils.cmp(
-			_p3.x,
-			_user$project$Main_UI_DragToMoveSelection$right(rectangle)) < 1) && ((_elm_lang$core$Native_Utils.cmp(_p3.y, rectangle.top) > -1) && ((_elm_lang$core$Native_Utils.cmp(
-			_p3.y,
-			_user$project$Main_UI_DragToMoveSelection$bottom(rectangle)) < 1) && ((_elm_lang$core$Native_Utils.cmp(_p2.x, rectangle.left) > -1) && ((_elm_lang$core$Native_Utils.cmp(
-			_p2.x,
-			_user$project$Main_UI_DragToMoveSelection$right(rectangle)) < 1) && ((_elm_lang$core$Native_Utils.cmp(_p2.y, rectangle.top) > -1) && (_elm_lang$core$Native_Utils.cmp(
-			_p2.y,
-			_user$project$Main_UI_DragToMoveSelection$bottom(rectangle)) < 1)))))));
-	});
 var _user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection = F2(
-	function (selection, _p4) {
-		var _p5 = _p4;
-		var _p7 = _p5._1;
-		var _p6 = _p5._2;
+	function (selection, _p0) {
+		var _p1 = _p0;
+		var _p3 = _p1._1;
+		var _p2 = _p1._2;
 		var bottomRight_ = A2(
 			_benansell$elm_geometric_transformation$Transformer2D$apply,
-			_p7,
-			_user$project$Main_UI_DragToMoveSelection$bottomRight(_p6));
+			_p3,
+			_user$project$Main_UI_DragToMoveSelection$bottomRight(_p2));
 		var topLeft_ = A2(
 			_benansell$elm_geometric_transformation$Transformer2D$apply,
-			_p7,
-			_user$project$Main_UI_DragToMoveSelection$topLeft(_p6));
+			_p3,
+			_user$project$Main_UI_DragToMoveSelection$topLeft(_p2));
 		var selected = A2(
-			_user$project$Main_UI_DragToMoveSelection$containedBy,
+			_user$project$Main_UI_Rectangle$containedBy,
 			selection,
 			{ctor: '_Tuple2', _0: topLeft_, _1: bottomRight_});
 		return _elm_lang$core$Native_Utils.update(
-			_p5._0,
+			_p1._0,
 			{selected: selected});
 	});
 var _user$project$Main_UI_DragToMoveSelection$shapeAndTransform = F2(
@@ -12036,22 +12036,9 @@ var _user$project$Main_UI_DragToMoveSelection$shapeAndTransform = F2(
 				A6(_user$project$UI_Gate$transform, model.column, model.row, state.horizontalSpacing, state.verticalSpacing, canvas.windowSize, dimensions)));
 		return {ctor: '_Tuple3', _0: model, _1: transform, _2: shape};
 	});
-var _user$project$Main_UI_DragToMoveSelection$toRectangle = function (_p8) {
-	var _p9 = _p8;
-	var _p13 = _p9.top;
-	var _p12 = _p9.right;
-	var _p11 = _p9.left;
-	var _p10 = _p9.bottom;
-	return {
-		left: A2(_elm_lang$core$Basics$min, _p11, _p12),
-		top: A2(_elm_lang$core$Basics$min, _p13, _p10),
-		width: _elm_lang$core$Basics$abs(_p11 - _p12),
-		height: _elm_lang$core$Basics$abs(_p13 - _p10)
-	};
-};
 var _user$project$Main_UI_DragToMoveSelection$gatesWithSelectionUpdated = F2(
 	function (state, selection) {
-		var selection_ = _user$project$Main_UI_DragToMoveSelection$toRectangle(selection);
+		var selection_ = _user$project$Main_UI_Rectangle$fromSelection(selection);
 		return A2(
 			_elm_lang$core$List$map,
 			_user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection(selection_),
@@ -12060,22 +12047,22 @@ var _user$project$Main_UI_DragToMoveSelection$gatesWithSelectionUpdated = F2(
 				_user$project$Main_UI_DragToMoveSelection$shapeAndTransform(state),
 				state.gates));
 	});
-var _user$project$Main_UI_DragToMoveSelection$updateSelection = function (_p14) {
-	var _p15 = _p14;
-	var _p16 = _p15._0;
+var _user$project$Main_UI_DragToMoveSelection$updateSelection = function (_p4) {
+	var _p5 = _p4;
+	var _p6 = _p5._0;
 	var gates = A2(
 		_elm_lang$core$Maybe$withDefault,
-		_p16.gates,
+		_p6.gates,
 		A2(
 			_elm_lang$core$Maybe$map,
-			_user$project$Main_UI_DragToMoveSelection$gatesWithSelectionUpdated(_p16),
-			_p16.canvas.dragChain.shiftDragToSelect.selection));
+			_user$project$Main_UI_DragToMoveSelection$gatesWithSelectionUpdated(_p6),
+			_p6.canvas.dragChain.shiftDragToSelect.selection));
 	return {
 		ctor: '_Tuple2',
 		_0: _elm_lang$core$Native_Utils.update(
-			_p16,
+			_p6,
 			{gates: gates}),
-		_1: _p15._1
+		_1: _p5._1
 	};
 };
 var _user$project$Main_UI_DragToMoveSelection$gateMoved = F2(
@@ -12085,11 +12072,11 @@ var _user$project$Main_UI_DragToMoveSelection$gateMoved = F2(
 			{move: _elm_lang$core$Maybe$Nothing, transform: transform, selected: false});
 	});
 var _user$project$Main_UI_DragToMoveSelection$translateBeforeScale = F2(
-	function (_p17, transform) {
-		var _p18 = _p17;
+	function (_p7, transform) {
+		var _p8 = _p7;
 		return _benansell$elm_geometric_transformation$Transformer2D$combine(
 			_benansell$elm_geometric_transformation$Transformer2D$translate(
-				{ctor: '_Tuple2', _0: _p18._0 / transform.a, _1: _p18._1 / transform.d}));
+				{ctor: '_Tuple2', _0: _p8._0 / transform.a, _1: _p8._1 / transform.d}));
 	});
 var _user$project$Main_UI_DragToMoveSelection$gateMoving = F4(
 	function (delta, gate, move, transform) {
@@ -12121,9 +12108,9 @@ var _user$project$Main_UI_DragToMoveSelection$onDragStart = function (index) {
 };
 var _user$project$Main_UI_DragToMoveSelection$maybeGateMoving = F3(
 	function (delta, transform, gate) {
-		var _p19 = gate.move;
-		if (_p19.ctor === 'Just') {
-			return A4(_user$project$Main_UI_DragToMoveSelection$gateMoving, delta, gate, _p19._0, transform);
+		var _p9 = gate.move;
+		if (_p9.ctor === 'Just') {
+			return A4(_user$project$Main_UI_DragToMoveSelection$gateMoving, delta, gate, _p9._0, transform);
 		} else {
 			return _user$project$Main_UI_DragToMoveSelection$notSelected(gate);
 		}
@@ -12134,9 +12121,9 @@ var _user$project$Main_UI_DragToMoveSelection$onDragBy = F2(
 			A2(_user$project$Main_UI_DragToMoveSelection$maybeGateMoving, delta, transform));
 	});
 var _user$project$Main_UI_DragToMoveSelection$maybeGateMoved = function (gate) {
-	var _p20 = gate.move;
-	if (_p20.ctor === 'Just') {
-		return A2(_user$project$Main_UI_DragToMoveSelection$gateMoved, gate, _p20._0);
+	var _p10 = gate.move;
+	if (_p10.ctor === 'Just') {
+		return A2(_user$project$Main_UI_DragToMoveSelection$gateMoved, gate, _p10._0);
 	} else {
 		return _user$project$Main_UI_DragToMoveSelection$notSelected(gate);
 	}
@@ -12154,14 +12141,6 @@ var _user$project$Main_UI_DragToMoveSelection$ViewModel = function (a) {
 var _user$project$Main_UI_DragToMoveSelection$GateViewModel = F6(
 	function (a, b, c, d, e, f) {
 		return {column: a, row: b, gate: c, selected: d, transform: e, move: f};
-	});
-var _user$project$Main_UI_DragToMoveSelection$Selection = F4(
-	function (a, b, c, d) {
-		return {left: a, top: b, right: c, bottom: d};
-	});
-var _user$project$Main_UI_DragToMoveSelection$Rectangle = F4(
-	function (a, b, c, d) {
-		return {left: a, top: b, width: c, height: d};
 	});
 var _user$project$Main_UI_DragToMoveSelection$OnDragEnd = {ctor: 'OnDragEnd'};
 var _user$project$Main_UI_DragToMoveSelection$OnDragBy = function (a) {
@@ -12186,20 +12165,20 @@ var _user$project$Main_UI_DragToMoveSelection$dragConfig = _zaboco$elm_draggable
 	});
 var _user$project$Main_UI_DragToMoveSelection$update = F2(
 	function (message, state) {
-		var _p21 = message;
-		switch (_p21.ctor) {
+		var _p11 = message;
+		switch (_p11.ctor) {
 			case 'Drag':
 				return A2(
 					_elm_lang$core$Tuple$mapFirst,
 					_user$project$Main_UI_DragToMoveSelection$envelope(state),
-					A3(_zaboco$elm_draggable$Draggable$update, _user$project$Main_UI_DragToMoveSelection$dragConfig, _p21._0, state.dragToMoveSelection));
+					A3(_zaboco$elm_draggable$Draggable$update, _user$project$Main_UI_DragToMoveSelection$dragConfig, _p11._0, state.dragToMoveSelection));
 			case 'OnDragStart':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						state,
 						{
-							gates: A2(_user$project$Main_UI_DragToMoveSelection$onDragStart, _p21._0, state.gates)
+							gates: A2(_user$project$Main_UI_DragToMoveSelection$onDragStart, _p11._0, state.gates)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -12209,7 +12188,7 @@ var _user$project$Main_UI_DragToMoveSelection$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						state,
 						{
-							gates: A3(_user$project$Main_UI_DragToMoveSelection$onDragBy, _p21._0, state.canvas.transform, state.gates)
+							gates: A3(_user$project$Main_UI_DragToMoveSelection$onDragBy, _p11._0, state.canvas.transform, state.gates)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
