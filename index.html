@@ -9924,6 +9924,48 @@ var _user$project$Canvas_Controller_DragToPan$OnDragEnd = {ctor: 'OnDragEnd'};
 var _user$project$Canvas_Controller_DragToPan$OnDragBy = function (a) {
 	return {ctor: 'OnDragBy', _0: a};
 };
+var _user$project$Rectangle$bottom = function (rectangle) {
+	return rectangle.top + rectangle.height;
+};
+var _user$project$Rectangle$right = function (rectangle) {
+	return rectangle.left + rectangle.width;
+};
+var _user$project$Rectangle$containedBy = F2(
+	function (rectangle, _p0) {
+		var _p1 = _p0;
+		var _p3 = _p1._0;
+		var _p2 = _p1._1;
+		return (_elm_lang$core$Native_Utils.cmp(_p3.x, rectangle.left) > -1) && ((_elm_lang$core$Native_Utils.cmp(
+			_p3.x,
+			_user$project$Rectangle$right(rectangle)) < 1) && ((_elm_lang$core$Native_Utils.cmp(_p3.y, rectangle.top) > -1) && ((_elm_lang$core$Native_Utils.cmp(
+			_p3.y,
+			_user$project$Rectangle$bottom(rectangle)) < 1) && ((_elm_lang$core$Native_Utils.cmp(_p2.x, rectangle.left) > -1) && ((_elm_lang$core$Native_Utils.cmp(
+			_p2.x,
+			_user$project$Rectangle$right(rectangle)) < 1) && ((_elm_lang$core$Native_Utils.cmp(_p2.y, rectangle.top) > -1) && (_elm_lang$core$Native_Utils.cmp(
+			_p2.y,
+			_user$project$Rectangle$bottom(rectangle)) < 1)))))));
+	});
+var _user$project$Rectangle$Rectangle = F4(
+	function (a, b, c, d) {
+		return {left: a, top: b, width: c, height: d};
+	});
+var _user$project$Canvas_Selection$toRectangle = function (_p0) {
+	var _p1 = _p0;
+	var _p5 = _p1.top;
+	var _p4 = _p1.right;
+	var _p3 = _p1.left;
+	var _p2 = _p1.bottom;
+	return {
+		left: A2(_elm_lang$core$Basics$min, _p3, _p4),
+		top: A2(_elm_lang$core$Basics$min, _p5, _p2),
+		width: _elm_lang$core$Basics$abs(_p3 - _p4),
+		height: _elm_lang$core$Basics$abs(_p5 - _p2)
+	};
+};
+var _user$project$Canvas_Selection$Selection = F4(
+	function (a, b, c, d) {
+		return {left: a, top: b, right: c, bottom: d};
+	});
 var _user$project$Canvas_Controller_ShiftDragToSelect$update = F2(
 	function (message, _p0) {
 		var _p1 = _p0;
@@ -10010,10 +10052,6 @@ var _user$project$Canvas_Controller_ShiftDragToSelect$init = function (state) {
 var _user$project$Canvas_Controller_ShiftDragToSelect$MouseEvent = F3(
 	function (a, b, c) {
 		return {shiftKey: a, offsetX: b, offsetY: c};
-	});
-var _user$project$Canvas_Controller_ShiftDragToSelect$Selection = F4(
-	function (a, b, c, d) {
-		return {left: a, top: b, right: c, bottom: d};
 	});
 var _user$project$Canvas_Controller_ShiftDragToSelect$ViewModel = function (a) {
 	return {selection: a};
@@ -10522,44 +10560,6 @@ var _user$project$Canvas$update = F2(
 						_p5));
 		}
 	});
-var _user$project$Main_UI_Rectangle$fromSelection = function (_p0) {
-	var _p1 = _p0;
-	var _p5 = _p1.top;
-	var _p4 = _p1.right;
-	var _p3 = _p1.left;
-	var _p2 = _p1.bottom;
-	return {
-		left: A2(_elm_lang$core$Basics$min, _p3, _p4),
-		top: A2(_elm_lang$core$Basics$min, _p5, _p2),
-		width: _elm_lang$core$Basics$abs(_p3 - _p4),
-		height: _elm_lang$core$Basics$abs(_p5 - _p2)
-	};
-};
-var _user$project$Main_UI_Rectangle$bottom = function (rectangle) {
-	return rectangle.top + rectangle.height;
-};
-var _user$project$Main_UI_Rectangle$right = function (rectangle) {
-	return rectangle.left + rectangle.width;
-};
-var _user$project$Main_UI_Rectangle$containedBy = F2(
-	function (rectangle, _p6) {
-		var _p7 = _p6;
-		var _p9 = _p7._0;
-		var _p8 = _p7._1;
-		return (_elm_lang$core$Native_Utils.cmp(_p9.x, rectangle.left) > -1) && ((_elm_lang$core$Native_Utils.cmp(
-			_p9.x,
-			_user$project$Main_UI_Rectangle$right(rectangle)) < 1) && ((_elm_lang$core$Native_Utils.cmp(_p9.y, rectangle.top) > -1) && ((_elm_lang$core$Native_Utils.cmp(
-			_p9.y,
-			_user$project$Main_UI_Rectangle$bottom(rectangle)) < 1) && ((_elm_lang$core$Native_Utils.cmp(_p8.x, rectangle.left) > -1) && ((_elm_lang$core$Native_Utils.cmp(
-			_p8.x,
-			_user$project$Main_UI_Rectangle$right(rectangle)) < 1) && ((_elm_lang$core$Native_Utils.cmp(_p8.y, rectangle.top) > -1) && (_elm_lang$core$Native_Utils.cmp(
-			_p8.y,
-			_user$project$Main_UI_Rectangle$bottom(rectangle)) < 1)))))));
-	});
-var _user$project$Main_UI_Rectangle$Rectangle = F4(
-	function (a, b, c, d) {
-		return {left: a, top: b, width: c, height: d};
-	});
 var _user$project$Canvas_UI$transform = function (state) {
 	return _user$project$Transform$toSvgTransform(state.transform);
 };
@@ -10606,7 +10606,7 @@ var _user$project$Canvas_UI$view = F4(
 							function () {
 								var _p0 = state.dragChain.shiftDragToSelect.selection;
 								if (_p0.ctor === 'Just') {
-									var rectangle = _user$project$Main_UI_Rectangle$fromSelection(_p0._0);
+									var rectangle = _user$project$Canvas_Selection$toRectangle(_p0._0);
 									return {
 										ctor: '::',
 										_0: A2(
@@ -12014,7 +12014,7 @@ var _user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection = F
 			_p3,
 			_user$project$Main_UI_DragToMoveSelection$topLeft(_p2));
 		var selected = A2(
-			_user$project$Main_UI_Rectangle$containedBy,
+			_user$project$Rectangle$containedBy,
 			selection,
 			{ctor: '_Tuple2', _0: topLeft_, _1: bottomRight_});
 		return _elm_lang$core$Native_Utils.update(
@@ -12038,7 +12038,7 @@ var _user$project$Main_UI_DragToMoveSelection$shapeAndTransform = F2(
 	});
 var _user$project$Main_UI_DragToMoveSelection$gatesWithSelectionUpdated = F2(
 	function (state, selection) {
-		var selection_ = _user$project$Main_UI_Rectangle$fromSelection(selection);
+		var selection_ = _user$project$Canvas_Selection$toRectangle(selection);
 		return A2(
 			_elm_lang$core$List$map,
 			_user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection(selection_),
