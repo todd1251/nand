@@ -11994,6 +11994,10 @@ var _user$project$UI_Gate$Nand = {ctor: 'Nand'};
 var _user$project$UI_Gate$And = {ctor: 'And'};
 var _user$project$UI_Gate$Not = {ctor: 'Not'};
 var _user$project$UI_Gate$Buffer = {ctor: 'Buffer'};
+var _user$project$Main_UI_GateViewModel$GateViewModel = F6(
+	function (a, b, c, d, e, f) {
+		return {column: a, row: b, gate: c, selected: d, transform: e, move: f};
+	});
 var _user$project$Main_UI_DragToMoveSelection$bottomRight = function (shape) {
 	return {x: shape.left + shape.width, y: shape.top + shape.height};
 };
@@ -12138,10 +12142,6 @@ var _user$project$Main_UI_DragToMoveSelection$envelope = F2(
 var _user$project$Main_UI_DragToMoveSelection$ViewModel = function (a) {
 	return {drag: a};
 };
-var _user$project$Main_UI_DragToMoveSelection$GateViewModel = F6(
-	function (a, b, c, d, e, f) {
-		return {column: a, row: b, gate: c, selected: d, transform: e, move: f};
-	});
 var _user$project$Main_UI_DragToMoveSelection$OnDragEnd = {ctor: 'OnDragEnd'};
 var _user$project$Main_UI_DragToMoveSelection$OnDragBy = function (a) {
 	return {ctor: 'OnDragBy', _0: a};
