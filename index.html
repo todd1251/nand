@@ -9869,6 +9869,13 @@ var _user$project$Transform$scale = F2(
 			transform,
 			_benansell$elm_geometric_transformation$Transformer2D$scaleUniform(scale));
 	});
+var _user$project$Transform$translatePointBeforeScale = F2(
+	function (_p0, transform) {
+		var _p1 = _p0;
+		return _benansell$elm_geometric_transformation$Transformer2D$combine(
+			_benansell$elm_geometric_transformation$Transformer2D$translate(
+				{ctor: '_Tuple2', _0: _p1._0 / transform.a, _1: _p1._1 / transform.d}));
+	});
 var _user$project$Transform$translate = F3(
 	function (transform, dx, dy) {
 		return A2(
@@ -11994,9 +12001,78 @@ var _user$project$UI_Gate$Nand = {ctor: 'Nand'};
 var _user$project$UI_Gate$And = {ctor: 'And'};
 var _user$project$UI_Gate$Not = {ctor: 'Not'};
 var _user$project$UI_Gate$Buffer = {ctor: 'Buffer'};
-var _user$project$Main_UI_GateViewModel$GateViewModel = F6(
+var _user$project$Main_UI_GateViewModel$row = function (_p0) {
+	var _p1 = _p0;
+	return _p1._0.row;
+};
+var _user$project$Main_UI_GateViewModel$column = function (_p2) {
+	var _p3 = _p2;
+	return _p3._0.column;
+};
+var _user$project$Main_UI_GateViewModel$transform = function (_p4) {
+	var _p5 = _p4;
+	return _p5._0.transform;
+};
+var _user$project$Main_UI_GateViewModel$gate = function (_p6) {
+	var _p7 = _p6;
+	return _p7._0.gate;
+};
+var _user$project$Main_UI_GateViewModel$move = function (_p8) {
+	var _p9 = _p8;
+	return _p9._0.move;
+};
+var _user$project$Main_UI_GateViewModel$isSelected = function (_p10) {
+	var _p11 = _p10;
+	return _p11._0.selected;
+};
+var _user$project$Main_UI_GateViewModel$Model = F6(
 	function (a, b, c, d, e, f) {
 		return {column: a, row: b, gate: c, selected: d, transform: e, move: f};
+	});
+var _user$project$Main_UI_GateViewModel$GateViewModel = function (a) {
+	return {ctor: 'GateViewModel', _0: a};
+};
+var _user$project$Main_UI_GateViewModel$from = function (model) {
+	return _user$project$Main_UI_GateViewModel$GateViewModel(model);
+};
+var _user$project$Main_UI_GateViewModel$selected = F2(
+	function (_p12, selected) {
+		var _p13 = _p12;
+		return _user$project$Main_UI_GateViewModel$GateViewModel(
+			_elm_lang$core$Native_Utils.update(
+				_p13._0,
+				{selected: selected}));
+	});
+var _user$project$Main_UI_GateViewModel$willMove = function (_p14) {
+	var _p15 = _p14;
+	var _p16 = _p15._0;
+	return _user$project$Main_UI_GateViewModel$GateViewModel(
+		_elm_lang$core$Native_Utils.update(
+			_p16,
+			{
+				move: _elm_lang$core$Maybe$Just(_p16.transform),
+				selected: true
+			}));
+};
+var _user$project$Main_UI_GateViewModel$moving = F4(
+	function (delta, _p17, move, transform) {
+		var _p18 = _p17;
+		return _user$project$Main_UI_GateViewModel$GateViewModel(
+			_elm_lang$core$Native_Utils.update(
+				_p18._0,
+				{
+					move: _elm_lang$core$Maybe$Just(
+						A3(_user$project$Transform$translatePointBeforeScale, delta, transform, move)),
+					selected: true
+				}));
+	});
+var _user$project$Main_UI_GateViewModel$moved = F2(
+	function (_p19, transform) {
+		var _p20 = _p19;
+		return _user$project$Main_UI_GateViewModel$GateViewModel(
+			_elm_lang$core$Native_Utils.update(
+				_p20._0,
+				{move: _elm_lang$core$Maybe$Nothing, transform: transform, selected: false}));
 	});
 var _user$project$Main_UI_DragToMoveSelection$bottomRight = function (shape) {
 	return {x: shape.left + shape.width, y: shape.top + shape.height};
@@ -12021,23 +12097,32 @@ var _user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection = F
 			_user$project$Rectangle$containedBy,
 			selection,
 			{ctor: '_Tuple2', _0: topLeft_, _1: bottomRight_});
-		return _elm_lang$core$Native_Utils.update(
-			_p1._0,
-			{selected: selected});
+		return A2(_user$project$Main_UI_GateViewModel$selected, _p1._0, selected);
 	});
 var _user$project$Main_UI_DragToMoveSelection$shapeAndTransform = F2(
 	function (state, model) {
 		var appearance = {strokeWidth: state.strokeWidth, strokeColour: 'black', fillColour: 'none'};
 		var dimensions = {width: state.width};
-		var shape = A3(_user$project$UI_Gate$toShape, dimensions, appearance, model.gate);
+		var shape = A3(
+			_user$project$UI_Gate$toShape,
+			dimensions,
+			appearance,
+			_user$project$Main_UI_GateViewModel$gate(model));
 		var canvas = state.canvas;
 		var transform = A2(
 			_benansell$elm_geometric_transformation$Transformer2D$combine,
 			canvas.transform,
 			A2(
 				_benansell$elm_geometric_transformation$Transformer2D$combine,
-				model.transform,
-				A6(_user$project$UI_Gate$transform, model.column, model.row, state.horizontalSpacing, state.verticalSpacing, canvas.windowSize, dimensions)));
+				_user$project$Main_UI_GateViewModel$transform(model),
+				A6(
+					_user$project$UI_Gate$transform,
+					_user$project$Main_UI_GateViewModel$column(model),
+					_user$project$Main_UI_GateViewModel$row(model),
+					state.horizontalSpacing,
+					state.verticalSpacing,
+					canvas.windowSize,
+					dimensions)));
 		return {ctor: '_Tuple3', _0: model, _1: transform, _2: shape};
 	});
 var _user$project$Main_UI_DragToMoveSelection$gatesWithSelectionUpdated = F2(
@@ -12069,52 +12154,22 @@ var _user$project$Main_UI_DragToMoveSelection$updateSelection = function (_p4) {
 		_1: _p5._1
 	};
 };
-var _user$project$Main_UI_DragToMoveSelection$gateMoved = F2(
-	function (gate, transform) {
-		return _elm_lang$core$Native_Utils.update(
-			gate,
-			{move: _elm_lang$core$Maybe$Nothing, transform: transform, selected: false});
-	});
-var _user$project$Main_UI_DragToMoveSelection$translateBeforeScale = F2(
-	function (_p7, transform) {
-		var _p8 = _p7;
-		return _benansell$elm_geometric_transformation$Transformer2D$combine(
-			_benansell$elm_geometric_transformation$Transformer2D$translate(
-				{ctor: '_Tuple2', _0: _p8._0 / transform.a, _1: _p8._1 / transform.d}));
-	});
-var _user$project$Main_UI_DragToMoveSelection$gateMoving = F4(
-	function (delta, gate, move, transform) {
-		return _elm_lang$core$Native_Utils.update(
-			gate,
-			{
-				move: _elm_lang$core$Maybe$Just(
-					A3(_user$project$Main_UI_DragToMoveSelection$translateBeforeScale, delta, transform, move)),
-				selected: true
-			});
-	});
 var _user$project$Main_UI_DragToMoveSelection$notSelected = function (gate) {
-	return _elm_lang$core$Native_Utils.update(
-		gate,
-		{selected: false});
+	return A2(_user$project$Main_UI_GateViewModel$selected, gate, false);
 };
-var _user$project$Main_UI_DragToMoveSelection$gateSelected = F3(
+var _user$project$Main_UI_DragToMoveSelection$gateWillMove = F3(
 	function (index, gateIndex, gate) {
-		return (gate.selected || _elm_lang$core$Native_Utils.eq(gateIndex, index)) ? _elm_lang$core$Native_Utils.update(
-			gate,
-			{
-				move: _elm_lang$core$Maybe$Just(gate.transform),
-				selected: true
-			}) : _user$project$Main_UI_DragToMoveSelection$notSelected(gate);
+		return (_user$project$Main_UI_GateViewModel$isSelected(gate) || _elm_lang$core$Native_Utils.eq(gateIndex, index)) ? _user$project$Main_UI_GateViewModel$willMove(gate) : _user$project$Main_UI_DragToMoveSelection$notSelected(gate);
 	});
 var _user$project$Main_UI_DragToMoveSelection$onDragStart = function (index) {
 	return _elm_lang$core$List$indexedMap(
-		_user$project$Main_UI_DragToMoveSelection$gateSelected(index));
+		_user$project$Main_UI_DragToMoveSelection$gateWillMove(index));
 };
 var _user$project$Main_UI_DragToMoveSelection$maybeGateMoving = F3(
 	function (delta, transform, gate) {
-		var _p9 = gate.move;
-		if (_p9.ctor === 'Just') {
-			return A4(_user$project$Main_UI_DragToMoveSelection$gateMoving, delta, gate, _p9._0, transform);
+		var _p7 = _user$project$Main_UI_GateViewModel$move(gate);
+		if (_p7.ctor === 'Just') {
+			return A4(_user$project$Main_UI_GateViewModel$moving, delta, gate, _p7._0, transform);
 		} else {
 			return _user$project$Main_UI_DragToMoveSelection$notSelected(gate);
 		}
@@ -12125,9 +12180,9 @@ var _user$project$Main_UI_DragToMoveSelection$onDragBy = F2(
 			A2(_user$project$Main_UI_DragToMoveSelection$maybeGateMoving, delta, transform));
 	});
 var _user$project$Main_UI_DragToMoveSelection$maybeGateMoved = function (gate) {
-	var _p10 = gate.move;
-	if (_p10.ctor === 'Just') {
-		return A2(_user$project$Main_UI_DragToMoveSelection$gateMoved, gate, _p10._0);
+	var _p8 = _user$project$Main_UI_GateViewModel$move(gate);
+	if (_p8.ctor === 'Just') {
+		return A2(_user$project$Main_UI_GateViewModel$moved, gate, _p8._0);
 	} else {
 		return _user$project$Main_UI_DragToMoveSelection$notSelected(gate);
 	}
@@ -12165,20 +12220,20 @@ var _user$project$Main_UI_DragToMoveSelection$dragConfig = _zaboco$elm_draggable
 	});
 var _user$project$Main_UI_DragToMoveSelection$update = F2(
 	function (message, state) {
-		var _p11 = message;
-		switch (_p11.ctor) {
+		var _p9 = message;
+		switch (_p9.ctor) {
 			case 'Drag':
 				return A2(
 					_elm_lang$core$Tuple$mapFirst,
 					_user$project$Main_UI_DragToMoveSelection$envelope(state),
-					A3(_zaboco$elm_draggable$Draggable$update, _user$project$Main_UI_DragToMoveSelection$dragConfig, _p11._0, state.dragToMoveSelection));
+					A3(_zaboco$elm_draggable$Draggable$update, _user$project$Main_UI_DragToMoveSelection$dragConfig, _p9._0, state.dragToMoveSelection));
 			case 'OnDragStart':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						state,
 						{
-							gates: A2(_user$project$Main_UI_DragToMoveSelection$onDragStart, _p11._0, state.gates)
+							gates: A2(_user$project$Main_UI_DragToMoveSelection$onDragStart, _p9._0, state.gates)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -12188,7 +12243,7 @@ var _user$project$Main_UI_DragToMoveSelection$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						state,
 						{
-							gates: A3(_user$project$Main_UI_DragToMoveSelection$onDragBy, _p11._0, state.canvas.transform, state.gates)
+							gates: A3(_user$project$Main_UI_DragToMoveSelection$onDragBy, _p9._0, state.canvas.transform, state.gates)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -12284,7 +12339,8 @@ var _user$project$Main_UI_Controller$gates = A2(
 	_elm_lang$core$List$map,
 	function (_p1) {
 		var _p2 = _p1;
-		return {column: _p2._0, row: _p2._1, gate: _p2._2, selected: false, transform: _user$project$Transform$identity, move: _elm_lang$core$Maybe$Nothing};
+		return _user$project$Main_UI_GateViewModel$from(
+			{column: _p2._0, row: _p2._1, gate: _p2._2, selected: false, transform: _user$project$Transform$identity, move: _elm_lang$core$Maybe$Nothing});
 	},
 	{
 		ctor: '::',
@@ -12363,8 +12419,18 @@ var _user$project$Main_UI$view = function (state) {
 		function (index, model) {
 			var transform = A2(
 				_benansell$elm_geometric_transformation$Transformer2D$combine,
-				A6(_user$project$UI_Gate$transform, model.column, model.row, horizontalSpacing, verticalSpacing, canvas.windowSize, dimensions),
-				A2(_elm_lang$core$Maybe$withDefault, model.transform, model.move));
+				A6(
+					_user$project$UI_Gate$transform,
+					_user$project$Main_UI_GateViewModel$column(model),
+					_user$project$Main_UI_GateViewModel$row(model),
+					horizontalSpacing,
+					verticalSpacing,
+					canvas.windowSize,
+					dimensions),
+				A2(
+					_elm_lang$core$Maybe$withDefault,
+					_user$project$Main_UI_GateViewModel$transform(model),
+					_user$project$Main_UI_GateViewModel$move(model)));
 			return A2(
 				_user$project$UI_Shape$toSvgWithEvents,
 				{
@@ -12384,8 +12450,8 @@ var _user$project$Main_UI$view = function (state) {
 						_0: A3(
 							_user$project$UI_Gate$toShape,
 							dimensions,
-							model.selected ? highlightedAppearance : appearance,
-							model.gate).shape,
+							_user$project$Main_UI_GateViewModel$isSelected(model) ? highlightedAppearance : appearance,
+							_user$project$Main_UI_GateViewModel$gate(model)).shape,
 						_1: {ctor: '[]'}
 					}));
 		});
