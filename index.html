@@ -12074,10 +12074,10 @@ var _user$project$Main_UI_GateViewModel$moved = function (_p16) {
 		return _p17;
 	}
 };
-var _user$project$Main_UI_DragToMoveSelection$bottomRight = function (shape) {
+var _user$project$Main_UI_DragToMoveSelection$bottomRightOf = function (shape) {
 	return {x: shape.left + shape.width, y: shape.top + shape.height};
 };
-var _user$project$Main_UI_DragToMoveSelection$topLeft = function (shape) {
+var _user$project$Main_UI_DragToMoveSelection$topLeftOf = function (shape) {
 	return {x: shape.left, y: shape.top};
 };
 var _user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection = F2(
@@ -12085,18 +12085,18 @@ var _user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection = F
 		var _p1 = _p0;
 		var _p3 = _p1._1;
 		var _p2 = _p1._2;
-		var bottomRight_ = A2(
+		var bottomRight = A2(
 			_benansell$elm_geometric_transformation$Transformer2D$apply,
 			_p3,
-			_user$project$Main_UI_DragToMoveSelection$bottomRight(_p2));
-		var topLeft_ = A2(
+			_user$project$Main_UI_DragToMoveSelection$bottomRightOf(_p2));
+		var topLeft = A2(
 			_benansell$elm_geometric_transformation$Transformer2D$apply,
 			_p3,
-			_user$project$Main_UI_DragToMoveSelection$topLeft(_p2));
+			_user$project$Main_UI_DragToMoveSelection$topLeftOf(_p2));
 		var selected = A2(
 			_user$project$Rectangle$containedBy,
 			selection,
-			{ctor: '_Tuple2', _0: topLeft_, _1: bottomRight_});
+			{ctor: '_Tuple2', _0: topLeft, _1: bottomRight});
 		return A2(_user$project$Main_UI_GateViewModel$selected, _p1._0, selected);
 	});
 var _user$project$Main_UI_DragToMoveSelection$shapeAndTransform = F2(
