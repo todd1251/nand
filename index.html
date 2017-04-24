@@ -12277,41 +12277,34 @@ var _user$project$Main_UI_Controller$subscriptions = function (state) {
 			_user$project$Canvas$subscriptions(state.canvas),
 			_elm_lang$core$Platform_Sub$none));
 };
-var _user$project$Main_UI_Controller$init = function () {
-	var width = 100;
-	var horizontalSpacing = width * 2;
-	var verticalSpacing = width * 1.5;
-	return A3(
-		_user$project$Component$init,
-		_user$project$Main_UI_Message$DragToMoveSelection,
-		_user$project$Main_UI_DragToMoveSelection$init,
-		A3(
-			_user$project$Component$init,
-			_user$project$Main_UI_Message$Canvas,
-			_user$project$Canvas$init,
-			{
-				ctor: '_Tuple2',
-				_0: {
-					canvas: _elm_lang$core$Maybe$Nothing,
-					dragToMoveSelection: _elm_lang$core$Maybe$Nothing,
-					width: width,
-					strokeWidth: width / 25,
-					horizontalSpacing: horizontalSpacing,
-					verticalSpacing: verticalSpacing,
-					gates: {ctor: '[]'}
-				},
-				_1: _elm_lang$core$Platform_Cmd$none
-			}));
-}();
-var _user$project$Main_UI_Controller$gateTransform = F6(
-	function (column, row, horizontalSpacing, verticalSpacing, windowSize, dimensions) {
+var _user$project$Main_UI_Controller$update = F2(
+	function (message, state) {
+		var _p0 = message;
+		if (_p0.ctor === 'Canvas') {
+			var windowSize = state.canvas.windowSize;
+			return _user$project$Main_UI_DragToMoveSelection$updateSelection(
+				A3(
+					_user$project$Component$update,
+					_user$project$Main_UI_Message$Canvas,
+					_user$project$Canvas$update(_p0._0),
+					state));
+		} else {
+			return A3(
+				_user$project$Component$update,
+				_user$project$Main_UI_Message$DragToMoveSelection,
+				_user$project$Main_UI_DragToMoveSelection$update(_p0._0),
+				state);
+		}
+	});
+var _user$project$Main_UI_Controller$gateTransform = F5(
+	function (column, row, horizontalSpacing, verticalSpacing, dimensions) {
 		var row_ = _elm_lang$core$Basics$toFloat(row);
 		var column_ = _elm_lang$core$Basics$toFloat(column);
 		var fullHeight = (3 * verticalSpacing) + _user$project$UI_Gate$height(dimensions);
-		var offsetTop = (_elm_lang$core$Basics$toFloat(windowSize.height) / 2) - (fullHeight / 2);
+		var offsetTop = 0 - (fullHeight / 2);
 		var y = offsetTop + ((row_ - 1) * verticalSpacing);
 		var fullWidth = (1 * horizontalSpacing) + _user$project$UI_Gate$width(dimensions);
-		var offsetLeft = (_elm_lang$core$Basics$toFloat(windowSize.width) / 2) - (fullWidth / 2);
+		var offsetLeft = 0 - (fullWidth / 2);
 		var x = offsetLeft + ((column_ - 1) * horizontalSpacing);
 		return _benansell$elm_geometric_transformation$Transformer2D$translate(
 			{ctor: '_Tuple2', _0: x, _1: y});
@@ -12319,12 +12312,12 @@ var _user$project$Main_UI_Controller$gateTransform = F6(
 var _user$project$Main_UI_Controller$gates = function (state) {
 	return A2(
 		_elm_lang$core$List$map,
-		function (_p0) {
-			var _p1 = _p0;
+		function (_p1) {
+			var _p2 = _p1;
 			var dimensions = {width: state.width};
-			var transform = A6(_user$project$Main_UI_Controller$gateTransform, _p1._0, _p1._1, state.horizontalSpacing, state.verticalSpacing, state.canvas.windowSize, dimensions);
+			var transform = A5(_user$project$Main_UI_Controller$gateTransform, _p2._0, _p2._1, state.horizontalSpacing, state.verticalSpacing, dimensions);
 			return _user$project$Main_UI_GateViewModel$from(
-				{gate: _p1._2, selected: false, transform: transform, move: _elm_lang$core$Maybe$Nothing});
+				{gate: _p2._2, selected: false, transform: transform, move: _elm_lang$core$Maybe$Nothing});
 		},
 		{
 			ctor: '::',
@@ -12360,41 +12353,57 @@ var _user$project$Main_UI_Controller$gates = function (state) {
 			}
 		});
 };
-var _user$project$Main_UI_Controller$addGatesIfNotPresent = F2(
-	function (windowSize, _p2) {
-		var _p3 = _p2;
-		var _p4 = _p3._0;
+var _user$project$Main_UI_Controller$init = function () {
+	var width = 100;
+	var horizontalSpacing = width * 2;
+	var verticalSpacing = width * 1.5;
+	return function (_p3) {
+		var _p4 = _p3;
+		var _p5 = _p4._0;
 		return {
 			ctor: '_Tuple2',
-			_0: _elm_lang$core$List$isEmpty(_p4.gates) ? _elm_lang$core$Native_Utils.update(
-				_p4,
+			_0: _elm_lang$core$Native_Utils.update(
+				_p5,
 				{
-					gates: _user$project$Main_UI_Controller$gates(_p4)
-				}) : ((!_elm_lang$core$Native_Utils.eq(windowSize, _p4.canvas.windowSize)) ? _p4 : _p4),
-			_1: _p3._1
+					gates: _user$project$Main_UI_Controller$gates(_p5)
+				}),
+			_1: _p4._1
 		};
-	});
-var _user$project$Main_UI_Controller$update = F2(
-	function (message, state) {
-		var _p5 = message;
-		if (_p5.ctor === 'Canvas') {
-			var windowSize = state.canvas.windowSize;
-			return _user$project$Main_UI_DragToMoveSelection$updateSelection(
-				A2(
-					_user$project$Main_UI_Controller$addGatesIfNotPresent,
-					windowSize,
-					A3(
-						_user$project$Component$update,
-						_user$project$Main_UI_Message$Canvas,
-						_user$project$Canvas$update(_p5._0),
-						state)));
-		} else {
-			return A3(
-				_user$project$Component$update,
-				_user$project$Main_UI_Message$DragToMoveSelection,
-				_user$project$Main_UI_DragToMoveSelection$update(_p5._0),
-				state);
-		}
+	}(
+		A3(
+			_user$project$Component$init,
+			_user$project$Main_UI_Message$DragToMoveSelection,
+			_user$project$Main_UI_DragToMoveSelection$init,
+			A3(
+				_user$project$Component$init,
+				_user$project$Main_UI_Message$Canvas,
+				_user$project$Canvas$init,
+				{
+					ctor: '_Tuple2',
+					_0: {
+						canvas: _elm_lang$core$Maybe$Nothing,
+						dragToMoveSelection: _elm_lang$core$Maybe$Nothing,
+						width: width,
+						strokeWidth: width / 25,
+						horizontalSpacing: horizontalSpacing,
+						verticalSpacing: verticalSpacing,
+						gates: {ctor: '[]'}
+					},
+					_1: _elm_lang$core$Platform_Cmd$none
+				})));
+}();
+var _user$project$Main_UI_Controller$origin = function (windowSize) {
+	var y = _elm_lang$core$Basics$toFloat(windowSize.height) / 2;
+	var x = _elm_lang$core$Basics$toFloat(windowSize.width) / 2;
+	return _benansell$elm_geometric_transformation$Transformer2D$translate(
+		{ctor: '_Tuple2', _0: x, _1: y});
+};
+var _user$project$Main_UI_Controller$transform = F2(
+	function (state, model) {
+		return A2(
+			_benansell$elm_geometric_transformation$Transformer2D$combine,
+			_user$project$Main_UI_Controller$origin(state.canvas.windowSize),
+			_user$project$Main_UI_GateViewModel$transform(model));
 	});
 var _user$project$UI_Styles$css = '\n    html, body {\n        xheight: 100%;\n        margin: 0;\n        xoverflow: hidden;\n        padding: 0;\n        xwidth: 100%;\n    }\n\n    * {\n        user-select: none;\n    }\n\n    .controls {\n        background: #eee;\n        border: 1px solid #ccc;\n        border-radius: 5px;\n        margin: 1.5em 0 0 1.5em;\n        padding: 0 0.5em 1em 0.5em;\n        position: fixed;\n        user-select: none;\n        width: 150px;\n        z-index: 1;\n    }\n\n    .controls label, .controls input {\n        display: block;\n        margin: 0.25em auto;\n    }\n\n    .controls label {\n        margin: 1.5em 0 0 0.5em;\n    }\n\n    .canvas {\n        background: white;\n        height: 100%;\n        position: fixed;\n        user-select: none;\n        width: 100%;\n    }\n    ';
 var _user$project$UI_Styles$stylesheet = A3(
@@ -12414,8 +12423,8 @@ var _user$project$Main_UI$view = function (state) {
 		appearance,
 		{strokeWidth: appearance.strokeWidth * 1.5});
 	var dimensions = {width: state.width};
-	var gate = F2(
-		function (index, model) {
+	var gate = F3(
+		function (state, index, model) {
 			return A2(
 				_user$project$UI_Shape$toSvgWithEvents,
 				{
@@ -12428,7 +12437,7 @@ var _user$project$Main_UI$view = function (state) {
 					{
 						ctor: '::',
 						_0: _user$project$UI_Shape$Transform(
-							_user$project$Main_UI_GateViewModel$transform(model)),
+							A2(_user$project$Main_UI_Controller$transform, state, model)),
 						_1: {ctor: '[]'}
 					},
 					{
@@ -12441,7 +12450,10 @@ var _user$project$Main_UI$view = function (state) {
 						_1: {ctor: '[]'}
 					}));
 		});
-	var shapes = A2(_elm_lang$core$List$indexedMap, gate, state.gates);
+	var shapes = A2(
+		_elm_lang$core$List$indexedMap,
+		gate(state),
+		state.gates);
 	var view = {
 		ctor: '::',
 		_0: _user$project$UI_Styles$stylesheet,
