@@ -11988,11 +11988,21 @@ var _user$project$UI_Gate$Nand = {ctor: 'Nand'};
 var _user$project$UI_Gate$And = {ctor: 'And'};
 var _user$project$UI_Gate$Not = {ctor: 'Not'};
 var _user$project$UI_Gate$Buffer = {ctor: 'Buffer'};
-var _user$project$Main_UI_GateViewModel$transform = function (_p0) {
-	var _p1 = _p0;
-	var _p2 = _p1._0;
-	return A2(_elm_lang$core$Maybe$withDefault, _p2.transform, _p2.move);
+var _user$project$Main_UI_GateViewModel$origin = function (windowSize) {
+	var y = _elm_lang$core$Basics$toFloat(windowSize.height) / 2;
+	var x = _elm_lang$core$Basics$toFloat(windowSize.width) / 2;
+	return _benansell$elm_geometric_transformation$Transformer2D$translate(
+		{ctor: '_Tuple2', _0: x, _1: y});
 };
+var _user$project$Main_UI_GateViewModel$transform = F2(
+	function (windowSize, _p0) {
+		var _p1 = _p0;
+		var _p2 = _p1._0;
+		return A2(
+			_benansell$elm_geometric_transformation$Transformer2D$combine,
+			_user$project$Main_UI_GateViewModel$origin(windowSize),
+			A2(_elm_lang$core$Maybe$withDefault, _p2.transform, _p2.move));
+	});
 var _user$project$Main_UI_GateViewModel$gate = function (_p3) {
 	var _p4 = _p3;
 	return _p4._0.gate;
@@ -12061,12 +12071,6 @@ var _user$project$Main_UI_GateViewModel$moved = function (_p16) {
 		return _p17;
 	}
 };
-var _user$project$Main_UI_DragToMoveSelection$origin = function (windowSize) {
-	var y = _elm_lang$core$Basics$toFloat(windowSize.height) / 2;
-	var x = _elm_lang$core$Basics$toFloat(windowSize.width) / 2;
-	return _benansell$elm_geometric_transformation$Transformer2D$translate(
-		{ctor: '_Tuple2', _0: x, _1: y});
-};
 var _user$project$Main_UI_DragToMoveSelection$bottomRightOf = function (shape) {
 	return {x: shape.left + shape.width, y: shape.top + shape.height};
 };
@@ -12076,24 +12080,22 @@ var _user$project$Main_UI_DragToMoveSelection$topLeftOf = function (shape) {
 var _user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection = F3(
 	function (windowSize, selection, _p0) {
 		var _p1 = _p0;
-		var _p2 = _p1._2;
-		var transform_ = A2(
-			_benansell$elm_geometric_transformation$Transformer2D$combine,
-			_user$project$Main_UI_DragToMoveSelection$origin(windowSize),
-			_p1._1);
+		var _p3 = _p1._2;
+		var _p2 = _p1._0;
+		var transform_ = A2(_user$project$Main_UI_GateViewModel$transform, windowSize, _p2);
 		var topLeft = A2(
 			_benansell$elm_geometric_transformation$Transformer2D$apply,
 			transform_,
-			_user$project$Main_UI_DragToMoveSelection$topLeftOf(_p2));
+			_user$project$Main_UI_DragToMoveSelection$topLeftOf(_p3));
 		var bottomRight = A2(
 			_benansell$elm_geometric_transformation$Transformer2D$apply,
 			transform_,
-			_user$project$Main_UI_DragToMoveSelection$bottomRightOf(_p2));
+			_user$project$Main_UI_DragToMoveSelection$bottomRightOf(_p3));
 		var selected = A2(
 			_user$project$Rectangle$containedBy,
 			selection,
 			{ctor: '_Tuple2', _0: topLeft, _1: bottomRight});
-		return A2(_user$project$Main_UI_GateViewModel$selected, _p1._0, selected);
+		return A2(_user$project$Main_UI_GateViewModel$selected, _p2, selected);
 	});
 var _user$project$Main_UI_DragToMoveSelection$shapeAndTransform = F2(
 	function (state, model) {
@@ -12108,7 +12110,7 @@ var _user$project$Main_UI_DragToMoveSelection$shapeAndTransform = F2(
 		var transform = A2(
 			_benansell$elm_geometric_transformation$Transformer2D$combine,
 			canvas.transform,
-			_user$project$Main_UI_GateViewModel$transform(model));
+			A2(_user$project$Main_UI_GateViewModel$transform, canvas.windowSize, model));
 		return {ctor: '_Tuple3', _0: model, _1: transform, _2: shape};
 	});
 var _user$project$Main_UI_DragToMoveSelection$gatesWithSelectionUpdated = F2(
@@ -12122,22 +12124,22 @@ var _user$project$Main_UI_DragToMoveSelection$gatesWithSelectionUpdated = F2(
 				_user$project$Main_UI_DragToMoveSelection$shapeAndTransform(state),
 				state.gates));
 	});
-var _user$project$Main_UI_DragToMoveSelection$updateSelection = function (_p3) {
-	var _p4 = _p3;
-	var _p5 = _p4._0;
+var _user$project$Main_UI_DragToMoveSelection$updateSelection = function (_p4) {
+	var _p5 = _p4;
+	var _p6 = _p5._0;
 	var gates = A2(
 		_elm_lang$core$Maybe$withDefault,
-		_p5.gates,
+		_p6.gates,
 		A2(
 			_elm_lang$core$Maybe$map,
-			_user$project$Main_UI_DragToMoveSelection$gatesWithSelectionUpdated(_p5),
-			_p5.canvas.dragChain.shiftDragToSelect.selection));
+			_user$project$Main_UI_DragToMoveSelection$gatesWithSelectionUpdated(_p6),
+			_p6.canvas.dragChain.shiftDragToSelect.selection));
 	return {
 		ctor: '_Tuple2',
 		_0: _elm_lang$core$Native_Utils.update(
-			_p5,
+			_p6,
 			{gates: gates}),
-		_1: _p4._1
+		_1: _p5._1
 	};
 };
 var _user$project$Main_UI_DragToMoveSelection$onDragEnd = _elm_lang$core$List$map(_user$project$Main_UI_GateViewModel$moved);
@@ -12189,20 +12191,20 @@ var _user$project$Main_UI_DragToMoveSelection$dragConfig = _zaboco$elm_draggable
 	});
 var _user$project$Main_UI_DragToMoveSelection$update = F2(
 	function (message, state) {
-		var _p6 = message;
-		switch (_p6.ctor) {
+		var _p7 = message;
+		switch (_p7.ctor) {
 			case 'Drag':
 				return A2(
 					_elm_lang$core$Tuple$mapFirst,
 					_user$project$Main_UI_DragToMoveSelection$envelope(state),
-					A3(_zaboco$elm_draggable$Draggable$update, _user$project$Main_UI_DragToMoveSelection$dragConfig, _p6._0, state.dragToMoveSelection));
+					A3(_zaboco$elm_draggable$Draggable$update, _user$project$Main_UI_DragToMoveSelection$dragConfig, _p7._0, state.dragToMoveSelection));
 			case 'OnDragStart':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						state,
 						{
-							gates: A2(_user$project$Main_UI_DragToMoveSelection$onDragStart, _p6._0, state.gates)
+							gates: A2(_user$project$Main_UI_DragToMoveSelection$onDragStart, _p7._0, state.gates)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -12212,7 +12214,7 @@ var _user$project$Main_UI_DragToMoveSelection$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						state,
 						{
-							gates: A3(_user$project$Main_UI_DragToMoveSelection$onDragBy, _p6._0, state.canvas.transform, state.gates)
+							gates: A3(_user$project$Main_UI_DragToMoveSelection$onDragBy, _p7._0, state.canvas.transform, state.gates)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -12401,19 +12403,6 @@ var _user$project$Main_UI_Controller$init = function () {
 					_1: _elm_lang$core$Platform_Cmd$none
 				})));
 }();
-var _user$project$Main_UI_Controller$origin = function (windowSize) {
-	var y = _elm_lang$core$Basics$toFloat(windowSize.height) / 2;
-	var x = _elm_lang$core$Basics$toFloat(windowSize.width) / 2;
-	return _benansell$elm_geometric_transformation$Transformer2D$translate(
-		{ctor: '_Tuple2', _0: x, _1: y});
-};
-var _user$project$Main_UI_Controller$transform = F2(
-	function (state, model) {
-		return A2(
-			_benansell$elm_geometric_transformation$Transformer2D$combine,
-			_user$project$Main_UI_Controller$origin(state.canvas.windowSize),
-			_user$project$Main_UI_GateViewModel$transform(model));
-	});
 var _user$project$UI_Styles$css = '\n    html, body {\n        xheight: 100%;\n        margin: 0;\n        xoverflow: hidden;\n        padding: 0;\n        xwidth: 100%;\n    }\n\n    * {\n        user-select: none;\n    }\n\n    .controls {\n        background: #eee;\n        border: 1px solid #ccc;\n        border-radius: 5px;\n        margin: 1.5em 0 0 1.5em;\n        padding: 0 0.5em 1em 0.5em;\n        position: fixed;\n        user-select: none;\n        width: 150px;\n        z-index: 1;\n    }\n\n    .controls label, .controls input {\n        display: block;\n        margin: 0.25em auto;\n    }\n\n    .controls label {\n        margin: 1.5em 0 0 0.5em;\n    }\n\n    .canvas {\n        background: white;\n        height: 100%;\n        position: fixed;\n        user-select: none;\n        width: 100%;\n    }\n    ';
 var _user$project$UI_Styles$stylesheet = A3(
 	_elm_lang$html$Html$node,
@@ -12446,7 +12435,7 @@ var _user$project$Main_UI$view = function (state) {
 					{
 						ctor: '::',
 						_0: _user$project$UI_Shape$Transform(
-							A2(_user$project$Main_UI_Controller$transform, state, model)),
+							A2(_user$project$Main_UI_GateViewModel$transform, state.canvas.windowSize, model)),
 						_1: {ctor: '[]'}
 					},
 					{
