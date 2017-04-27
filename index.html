@@ -12077,25 +12077,24 @@ var _user$project$Main_UI_DragToMoveSelection$bottomRightOf = function (shape) {
 var _user$project$Main_UI_DragToMoveSelection$topLeftOf = function (shape) {
 	return {x: shape.left, y: shape.top};
 };
-var _user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection = F3(
-	function (windowSize, selection, _p0) {
+var _user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection = F2(
+	function (selection, _p0) {
 		var _p1 = _p0;
-		var _p3 = _p1._2;
-		var _p2 = _p1._0;
-		var transform_ = A2(_user$project$Main_UI_GateViewModel$transform, windowSize, _p2);
-		var topLeft = A2(
-			_benansell$elm_geometric_transformation$Transformer2D$apply,
-			transform_,
-			_user$project$Main_UI_DragToMoveSelection$topLeftOf(_p3));
+		var _p3 = _p1._1;
+		var _p2 = _p1._2;
 		var bottomRight = A2(
 			_benansell$elm_geometric_transformation$Transformer2D$apply,
-			transform_,
-			_user$project$Main_UI_DragToMoveSelection$bottomRightOf(_p3));
+			_p3,
+			_user$project$Main_UI_DragToMoveSelection$bottomRightOf(_p2));
+		var topLeft = A2(
+			_benansell$elm_geometric_transformation$Transformer2D$apply,
+			_p3,
+			_user$project$Main_UI_DragToMoveSelection$topLeftOf(_p2));
 		var selected = A2(
 			_user$project$Rectangle$containedBy,
 			selection,
 			{ctor: '_Tuple2', _0: topLeft, _1: bottomRight});
-		return A2(_user$project$Main_UI_GateViewModel$selected, _p2, selected);
+		return A2(_user$project$Main_UI_GateViewModel$selected, _p1._0, selected);
 	});
 var _user$project$Main_UI_DragToMoveSelection$shapeAndTransform = F2(
 	function (state, model) {
@@ -12118,7 +12117,7 @@ var _user$project$Main_UI_DragToMoveSelection$gatesWithSelectionUpdated = F2(
 		var rectangle = _user$project$Canvas_Selection$toRectangle(selection);
 		return A2(
 			_elm_lang$core$List$map,
-			A2(_user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection, state.canvas.windowSize, rectangle),
+			_user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection(rectangle),
 			A2(
 				_elm_lang$core$List$map,
 				_user$project$Main_UI_DragToMoveSelection$shapeAndTransform(state),
