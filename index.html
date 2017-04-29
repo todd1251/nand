@@ -12260,15 +12260,14 @@ var _user$project$Main_UI_DragChain$Drag = function (a) {
 var _user$project$Main_UI_DragChain$subscriptions = function (state) {
 	return A2(
 		_zaboco$elm_draggable$Draggable$subscriptions,
-		function (_p0) {
+		function (message) {
 			return _user$project$Main_UI_DragChain$Drag(
-				A2(
-					F2(
-						function (v0, v1) {
-							return {ctor: '_Tuple2', _0: v0, _1: v1};
-						}),
-					{metaKey: false, offsetX: 0, offsetY: 0},
-					_p0));
+				{
+					ctor: '_Tuple3',
+					_0: 0,
+					_1: {metaKey: false, offsetX: 0, offsetY: 0},
+					_2: message
+				});
 		},
 		state.drag);
 };
@@ -12284,11 +12283,13 @@ var _user$project$Main_UI_DragChain$dragChain = function (index) {
 		F2(
 			function (message, event) {
 				return _user$project$Main_UI_DragChain$Drag(
-					{ctor: '_Tuple2', _0: event, _1: message});
+					{ctor: '_Tuple3', _0: index, _1: event, _2: message});
 			}));
 };
 var _user$project$Main_UI_DragChain$Connecting = {ctor: 'Connecting'};
-var _user$project$Main_UI_DragChain$Moving = {ctor: 'Moving'};
+var _user$project$Main_UI_DragChain$Moving = function (a) {
+	return {ctor: 'Moving', _0: a};
+};
 var _user$project$Main_UI_DragChain$None = {ctor: 'None'};
 var _user$project$Main_UI_DragChain$init = function (state) {
 	return A2(
@@ -12308,7 +12309,7 @@ var _user$project$Main_UI_DragChain$init = function (state) {
 			},
 			A2(
 				_elm_lang$core$Tuple$mapSecond,
-				function (_p1) {
+				function (_p0) {
 					return _elm_lang$core$Platform_Cmd$none;
 				},
 				A3(
@@ -12322,61 +12323,79 @@ var _user$project$Main_UI_DragChain$init = function (state) {
 					}))));
 };
 var _user$project$Main_UI_DragChain$update = F2(
-	function (message, _p2) {
-		var _p3 = _p2;
-		var _p11 = _p3;
-		var _p10 = _p3.dragChain;
-		var _p4 = message;
-		switch (_p4.ctor) {
+	function (message, _p1) {
+		var _p2 = _p1;
+		var _p12 = _p2;
+		var _p11 = _p2.dragChain;
+		var _p3 = message;
+		switch (_p3.ctor) {
 			case 'Drag':
 				var dragChain_ = function () {
-					var _p5 = _p10.operation;
-					if (_p5.ctor === 'None') {
-						var operation = _p4._0._0.metaKey ? _user$project$Main_UI_DragChain$Connecting : _user$project$Main_UI_DragChain$Moving;
+					var _p4 = _p11.operation;
+					if (_p4.ctor === 'None') {
+						var operation = _p3._0._1.metaKey ? _user$project$Main_UI_DragChain$Connecting : _user$project$Main_UI_DragChain$Moving(_p3._0._0);
 						return _elm_lang$core$Native_Utils.update(
-							_p10,
+							_p11,
 							{operation: operation});
 					} else {
-						return _p10;
+						return _p11;
 					}
 				}();
 				return A2(
 					_elm_lang$core$Tuple$mapFirst,
-					_user$project$Main_UI_DragChain$envelope(_p11),
-					A3(_zaboco$elm_draggable$Draggable$update, _user$project$Main_UI_DragChain$dragConfig, _p4._0._1, dragChain_));
+					_user$project$Main_UI_DragChain$envelope(_p12),
+					A3(_zaboco$elm_draggable$Draggable$update, _user$project$Main_UI_DragChain$dragConfig, _p3._0._2, dragChain_));
 			case 'OnDragStart':
-				return {ctor: '_Tuple2', _0: _p11, _1: _elm_lang$core$Platform_Cmd$none};
-			case 'OnDragBy':
-				var _p6 = _p10.operation;
-				switch (_p6.ctor) {
+				var _p5 = _p11.operation;
+				switch (_p5.ctor) {
 					case 'None':
-						return {ctor: '_Tuple2', _0: _p11, _1: _elm_lang$core$Platform_Cmd$none};
+						return {ctor: '_Tuple2', _0: _p12, _1: _elm_lang$core$Platform_Cmd$none};
 					case 'Moving':
 						return A2(
 							_elm_lang$core$Tuple$mapSecond,
-							function (_p7) {
+							function (_p6) {
 								return _elm_lang$core$Platform_Cmd$none;
 							},
 							A3(
 								_user$project$Component$update,
 								_elm_lang$core$Basics$identity,
 								_user$project$Main_UI_DragToMoveSelection$update(
-									_user$project$Main_UI_DragToMoveSelection$OnDragBy(_p4._0)),
-								_p11));
+									_user$project$Main_UI_DragToMoveSelection$OnDragStart(_p5._0)),
+								_p12));
 					default:
-						return {ctor: '_Tuple2', _0: _p11, _1: _elm_lang$core$Platform_Cmd$none};
+						return {ctor: '_Tuple2', _0: _p12, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			case 'OnDragBy':
+				var _p7 = _p11.operation;
+				switch (_p7.ctor) {
+					case 'None':
+						return {ctor: '_Tuple2', _0: _p12, _1: _elm_lang$core$Platform_Cmd$none};
+					case 'Moving':
+						return A2(
+							_elm_lang$core$Tuple$mapSecond,
+							function (_p8) {
+								return _elm_lang$core$Platform_Cmd$none;
+							},
+							A3(
+								_user$project$Component$update,
+								_elm_lang$core$Basics$identity,
+								_user$project$Main_UI_DragToMoveSelection$update(
+									_user$project$Main_UI_DragToMoveSelection$OnDragBy(_p3._0)),
+								_p12));
+					default:
+						return {ctor: '_Tuple2', _0: _p12, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			default:
-				var _p8 = _p10.operation;
-				switch (_p8.ctor) {
+				var _p9 = _p11.operation;
+				switch (_p9.ctor) {
 					case 'None':
 						return {
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
-								_p11,
+								_p12,
 								{
 									dragChain: _elm_lang$core$Native_Utils.update(
-										_p10,
+										_p11,
 										{operation: _user$project$Main_UI_DragChain$None})
 								}),
 							_1: _elm_lang$core$Platform_Cmd$none
@@ -12384,22 +12403,28 @@ var _user$project$Main_UI_DragChain$update = F2(
 					case 'Moving':
 						return A2(
 							_elm_lang$core$Tuple$mapSecond,
-							function (_p9) {
+							function (_p10) {
 								return _elm_lang$core$Platform_Cmd$none;
 							},
 							A3(
 								_user$project$Component$update,
 								_elm_lang$core$Basics$identity,
 								_user$project$Main_UI_DragToMoveSelection$update(_user$project$Main_UI_DragToMoveSelection$OnDragEnd),
-								_p11));
+								_elm_lang$core$Native_Utils.update(
+									_p12,
+									{
+										dragChain: _elm_lang$core$Native_Utils.update(
+											_p11,
+											{operation: _user$project$Main_UI_DragChain$None})
+									})));
 					default:
 						return {
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
-								_p11,
+								_p12,
 								{
 									dragChain: _elm_lang$core$Native_Utils.update(
-										_p10,
+										_p11,
 										{operation: _user$project$Main_UI_DragChain$None})
 								}),
 							_1: _elm_lang$core$Platform_Cmd$none
