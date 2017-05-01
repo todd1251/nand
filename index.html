@@ -12022,7 +12022,7 @@ var _user$project$Main_UI_GateViewModel$from = function (model) {
 	return _user$project$Main_UI_GateViewModel$GateViewModel(model);
 };
 var _user$project$Main_UI_GateViewModel$selected = F2(
-	function (_p7, selected) {
+	function (selected, _p7) {
 		var _p8 = _p7;
 		return _user$project$Main_UI_GateViewModel$GateViewModel(
 			_elm_lang$core$Native_Utils.update(
@@ -12094,7 +12094,7 @@ var _user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection = F
 			_user$project$Rectangle$containedBy,
 			selection,
 			{ctor: '_Tuple2', _0: topLeft, _1: bottomRight});
-		return A2(_user$project$Main_UI_GateViewModel$selected, _p1._0, selected);
+		return A2(_user$project$Main_UI_GateViewModel$selected, selected, _p1._0);
 	});
 var _user$project$Main_UI_DragToMoveSelection$shapeAndTransform = F2(
 	function (state, model) {
@@ -12148,7 +12148,7 @@ var _user$project$Main_UI_DragToMoveSelection$onDragBy = F2(
 			A2(_user$project$Main_UI_GateViewModel$moving, delta, transform));
 	});
 var _user$project$Main_UI_DragToMoveSelection$notSelected = function (gate) {
-	return A2(_user$project$Main_UI_GateViewModel$selected, gate, false);
+	return A2(_user$project$Main_UI_GateViewModel$selected, false, gate);
 };
 var _user$project$Main_UI_DragToMoveSelection$gateWillMove = F3(
 	function (index, gateIndex, gate) {
@@ -12218,16 +12218,157 @@ var _user$project$Main_UI_DragToMoveSelection$OnDragBy = function (a) {
 var _user$project$Main_UI_DragToMoveSelection$OnDragStart = function (a) {
 	return {ctor: 'OnDragStart', _0: a};
 };
+var _user$project$Main_UI_MetaDragToConnect$pointContainedBy = F2(
+	function (_p0, point) {
+		var _p1 = _p0;
+		var _p5 = _p1._0;
+		var _p4 = _p1._1;
+		var connected = A2(
+			_elm_lang$core$Debug$log,
+			'connected',
+			(_elm_lang$core$Native_Utils.cmp(point.x, _p5.x) > -1) && ((_elm_lang$core$Native_Utils.cmp(point.x, _p4.x) < 1) && ((_elm_lang$core$Native_Utils.cmp(point.y, _p5.y) > -1) && (_elm_lang$core$Native_Utils.cmp(point.y, _p4.y) < 1))));
+		var _p2 = A2(_elm_lang$core$Debug$log, 'point', point);
+		var _p3 = A2(
+			_elm_lang$core$Debug$log,
+			'gate',
+			{ctor: '_Tuple2', _0: _p5, _1: _p4});
+		return connected;
+	});
+var _user$project$Main_UI_MetaDragToConnect$bottomRightOf = function (shape) {
+	return {x: shape.left + shape.width, y: shape.top + shape.height};
+};
+var _user$project$Main_UI_MetaDragToConnect$topLeftOf = function (shape) {
+	return {x: shape.left, y: shape.top};
+};
+var _user$project$Main_UI_MetaDragToConnect$connectedIfContainsPoint = F4(
+	function (point, index, gateIndex, _p6) {
+		var _p7 = _p6;
+		var _p9 = _p7._1;
+		var _p8 = _p7._2;
+		var bottomRight = A2(
+			_benansell$elm_geometric_transformation$Transformer2D$apply,
+			_p9,
+			_user$project$Main_UI_MetaDragToConnect$bottomRightOf(_p8));
+		var topLeft = A2(
+			_benansell$elm_geometric_transformation$Transformer2D$apply,
+			_p9,
+			_user$project$Main_UI_MetaDragToConnect$topLeftOf(_p8));
+		var connected = _elm_lang$core$Native_Utils.eq(index, gateIndex) || A2(
+			_user$project$Main_UI_MetaDragToConnect$pointContainedBy,
+			{ctor: '_Tuple2', _0: topLeft, _1: bottomRight},
+			point);
+		return A2(_user$project$Main_UI_GateViewModel$selected, connected, _p7._0);
+	});
+var _user$project$Main_UI_MetaDragToConnect$shapeAndTransform = F2(
+	function (state, model) {
+		var appearance = {strokeWidth: state.strokeWidth, strokeColour: 'black', fillColour: 'none'};
+		var dimensions = {width: state.width};
+		var shape = A3(
+			_user$project$UI_Gate$toShape,
+			dimensions,
+			appearance,
+			_user$project$Main_UI_GateViewModel$gate(model));
+		var canvas = state.canvas;
+		var transform = A2(
+			_benansell$elm_geometric_transformation$Transformer2D$combine,
+			canvas.transform,
+			A2(_user$project$Main_UI_GateViewModel$transform, canvas.windowSize, model));
+		return {ctor: '_Tuple3', _0: model, _1: transform, _2: shape};
+	});
+var _user$project$Main_UI_MetaDragToConnect$gatesWithConnectionUpdated = function (state) {
+	var _p10 = state.dragChain.metaDragToConnect.to;
+	if (_p10.ctor === 'Just') {
+		return A2(
+			_elm_lang$core$List$indexedMap,
+			A2(_user$project$Main_UI_MetaDragToConnect$connectedIfContainsPoint, _p10._0, state.dragChain.metaDragToConnect.index),
+			A2(
+				_elm_lang$core$List$map,
+				_user$project$Main_UI_MetaDragToConnect$shapeAndTransform(state),
+				state.gates));
+	} else {
+		return state.gates;
+	}
+};
 var _user$project$Main_UI_MetaDragToConnect$update = F2(
 	function (message, state) {
-		var _p0 = A2(_elm_lang$core$Debug$log, 'meta drag to connect', message);
-		switch (_p0.ctor) {
+		var dragChain = state.dragChain;
+		var metaDragToConnect = dragChain.metaDragToConnect;
+		var _p11 = message;
+		switch (_p11.ctor) {
 			case 'OnDragStart':
-				return {ctor: '_Tuple2', _0: state, _1: _elm_lang$core$Platform_Cmd$none};
+				var _p12 = _p11._0;
+				return {
+					ctor: '_Tuple2',
+					_0: _p12.metaKey ? _elm_lang$core$Native_Utils.update(
+						state,
+						{
+							dragChain: _elm_lang$core$Native_Utils.update(
+								dragChain,
+								{
+									metaDragToConnect: _elm_lang$core$Native_Utils.update(
+										metaDragToConnect,
+										{
+											index: _p11._1,
+											from: _elm_lang$core$Maybe$Just(
+												{
+													x: _elm_lang$core$Basics$toFloat(_p12.offsetX),
+													y: _elm_lang$core$Basics$toFloat(_p12.offsetY)
+												}),
+											to: _elm_lang$core$Maybe$Just(
+												{
+													x: _elm_lang$core$Basics$toFloat(_p12.offsetX),
+													y: _elm_lang$core$Basics$toFloat(_p12.offsetY)
+												})
+										})
+								})
+						}) : state,
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 			case 'OnDragBy':
-				return {ctor: '_Tuple2', _0: state, _1: _elm_lang$core$Platform_Cmd$none};
+				return {
+					ctor: '_Tuple2',
+					_0: function () {
+						var _p13 = metaDragToConnect.to;
+						if (_p13.ctor === 'Just') {
+							var _p14 = _p13._0;
+							var state_ = _elm_lang$core$Native_Utils.update(
+								state,
+								{
+									dragChain: _elm_lang$core$Native_Utils.update(
+										dragChain,
+										{
+											metaDragToConnect: _elm_lang$core$Native_Utils.update(
+												metaDragToConnect,
+												{
+													to: _elm_lang$core$Maybe$Just(
+														{x: _p14.x + _p11._0._0, y: _p14.y + _p11._0._1})
+												})
+										})
+								});
+							return _elm_lang$core$Native_Utils.update(
+								state_,
+								{
+									gates: _user$project$Main_UI_MetaDragToConnect$gatesWithConnectionUpdated(state_)
+								});
+						} else {
+							return state;
+						}
+					}(),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 			default:
-				return {ctor: '_Tuple2', _0: state, _1: _elm_lang$core$Platform_Cmd$none};
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						state,
+						{
+							gates: A2(
+								_elm_lang$core$List$map,
+								_user$project$Main_UI_GateViewModel$selected(false),
+								state.gates)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 		}
 	});
 var _user$project$Main_UI_MetaDragToConnect$envelope = F2(
@@ -12242,18 +12383,26 @@ var _user$project$Main_UI_MetaDragToConnect$init = function (state) {
 		_user$project$Main_UI_MetaDragToConnect$envelope(state),
 		{
 			ctor: '_Tuple2',
-			_0: {},
+			_0: {index: -1, from: _elm_lang$core$Maybe$Nothing, to: _elm_lang$core$Maybe$Nothing},
 			_1: _elm_lang$core$Platform_Cmd$none
 		});
 };
-var _user$project$Main_UI_MetaDragToConnect$ViewModel = {};
+var _user$project$Main_UI_MetaDragToConnect$MouseEvent = F3(
+	function (a, b, c) {
+		return {metaKey: a, offsetX: b, offsetY: c};
+	});
+var _user$project$Main_UI_MetaDragToConnect$ViewModel = F3(
+	function (a, b, c) {
+		return {index: a, from: b, to: c};
+	});
 var _user$project$Main_UI_MetaDragToConnect$OnDragEnd = {ctor: 'OnDragEnd'};
 var _user$project$Main_UI_MetaDragToConnect$OnDragBy = function (a) {
 	return {ctor: 'OnDragBy', _0: a};
 };
-var _user$project$Main_UI_MetaDragToConnect$OnDragStart = function (a) {
-	return {ctor: 'OnDragStart', _0: a};
-};
+var _user$project$Main_UI_MetaDragToConnect$OnDragStart = F2(
+	function (a, b) {
+		return {ctor: 'OnDragStart', _0: a, _1: b};
+	});
 var _user$project$Main_UI_DragChain$updateSelection = _user$project$Main_UI_DragToMoveSelection$updateSelection;
 var _user$project$Main_UI_DragChain$envelope = F2(
 	function (state, dragChain) {
@@ -12372,45 +12521,44 @@ var _user$project$Main_UI_DragChain$init = function (state) {
 var _user$project$Main_UI_DragChain$update = F2(
 	function (message, _p2) {
 		var _p3 = _p2;
-		var _p15 = _p3;
-		var _p14 = _p3.dragChain;
+		var _p18 = _p3;
+		var _p17 = _p3.dragChain;
 		var _p4 = message;
 		switch (_p4.ctor) {
 			case 'Drag':
-				var _p6 = _p4._0._0;
-				var dragChain_ = function () {
-					var _p5 = _p14.operation;
+				var _p7 = _p4._0._0;
+				var _p6 = _p4._0._1;
+				var state_ = function () {
+					var _p5 = _p17.operation;
 					if (_p5.ctor === 'None') {
-						var operation = _p4._0._1.metaKey ? _user$project$Main_UI_DragChain$Connecting(_p6) : _user$project$Main_UI_DragChain$Moving(_p6);
-						return _elm_lang$core$Native_Utils.update(
-							_p14,
-							{operation: operation});
+						var operation = _p6.metaKey ? _user$project$Main_UI_DragChain$Connecting(_p7) : _user$project$Main_UI_DragChain$Moving(_p7);
+						return _elm_lang$core$Tuple$first(
+							A3(
+								_user$project$Component$update,
+								_elm_lang$core$Basics$identity,
+								_user$project$Main_UI_MetaDragToConnect$update(
+									A2(_user$project$Main_UI_MetaDragToConnect$OnDragStart, _p6, _p7)),
+								_elm_lang$core$Native_Utils.update(
+									_p18,
+									{
+										dragChain: _elm_lang$core$Native_Utils.update(
+											_p17,
+											{operation: operation})
+									})));
 					} else {
-						return _p14;
+						return _p18;
 					}
 				}();
 				return A2(
 					_elm_lang$core$Tuple$mapFirst,
-					_user$project$Main_UI_DragChain$envelope(_p15),
-					A3(_zaboco$elm_draggable$Draggable$update, _user$project$Main_UI_DragChain$dragConfig, _p4._0._2, dragChain_));
+					_user$project$Main_UI_DragChain$envelope(state_),
+					A3(_zaboco$elm_draggable$Draggable$update, _user$project$Main_UI_DragChain$dragConfig, _p4._0._2, state_.dragChain));
 			case 'OnDragStart':
-				var _p7 = _p14.operation;
-				switch (_p7.ctor) {
+				var _p8 = _p17.operation;
+				switch (_p8.ctor) {
 					case 'None':
-						return {ctor: '_Tuple2', _0: _p15, _1: _elm_lang$core$Platform_Cmd$none};
+						return {ctor: '_Tuple2', _0: _p18, _1: _elm_lang$core$Platform_Cmd$none};
 					case 'Moving':
-						return A2(
-							_elm_lang$core$Tuple$mapSecond,
-							function (_p8) {
-								return _elm_lang$core$Platform_Cmd$none;
-							},
-							A3(
-								_user$project$Component$update,
-								_elm_lang$core$Basics$identity,
-								_user$project$Main_UI_DragToMoveSelection$update(
-									_user$project$Main_UI_DragToMoveSelection$OnDragStart(_p7._0)),
-								_p15));
-					default:
 						return A2(
 							_elm_lang$core$Tuple$mapSecond,
 							function (_p9) {
@@ -12419,15 +12567,18 @@ var _user$project$Main_UI_DragChain$update = F2(
 							A3(
 								_user$project$Component$update,
 								_elm_lang$core$Basics$identity,
-								_user$project$Main_UI_MetaDragToConnect$update(
-									_user$project$Main_UI_MetaDragToConnect$OnDragStart(_p7._0)),
-								_p15));
+								_user$project$Main_UI_DragToMoveSelection$update(
+									_user$project$Main_UI_DragToMoveSelection$OnDragStart(_p8._0)),
+								_p18));
+					default:
+						return {ctor: '_Tuple2', _0: _p18, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			case 'OnDragBy':
-				var _p10 = _p14.operation;
+				var _p13 = _p4._0;
+				var _p10 = _p17.operation;
 				switch (_p10.ctor) {
 					case 'None':
-						return {ctor: '_Tuple2', _0: _p15, _1: _elm_lang$core$Platform_Cmd$none};
+						return {ctor: '_Tuple2', _0: _p18, _1: _elm_lang$core$Platform_Cmd$none};
 					case 'Moving':
 						return A2(
 							_elm_lang$core$Tuple$mapSecond,
@@ -12438,22 +12589,32 @@ var _user$project$Main_UI_DragChain$update = F2(
 								_user$project$Component$update,
 								_elm_lang$core$Basics$identity,
 								_user$project$Main_UI_DragToMoveSelection$update(
-									_user$project$Main_UI_DragToMoveSelection$OnDragBy(_p4._0)),
-								_p15));
+									_user$project$Main_UI_DragToMoveSelection$OnDragBy(_p13)),
+								_p18));
 					default:
-						return {ctor: '_Tuple2', _0: _p15, _1: _elm_lang$core$Platform_Cmd$none};
+						return A2(
+							_elm_lang$core$Tuple$mapSecond,
+							function (_p12) {
+								return _elm_lang$core$Platform_Cmd$none;
+							},
+							A3(
+								_user$project$Component$update,
+								_elm_lang$core$Basics$identity,
+								_user$project$Main_UI_MetaDragToConnect$update(
+									_user$project$Main_UI_MetaDragToConnect$OnDragBy(_p13)),
+								_p18));
 				}
 			default:
-				var _p12 = _p14.operation;
-				switch (_p12.ctor) {
+				var _p14 = _p17.operation;
+				switch (_p14.ctor) {
 					case 'None':
 						return {
 							ctor: '_Tuple2',
 							_0: _elm_lang$core$Native_Utils.update(
-								_p15,
+								_p18,
 								{
 									dragChain: _elm_lang$core$Native_Utils.update(
-										_p14,
+										_p17,
 										{operation: _user$project$Main_UI_DragChain$None})
 								}),
 							_1: _elm_lang$core$Platform_Cmd$none
@@ -12461,7 +12622,7 @@ var _user$project$Main_UI_DragChain$update = F2(
 					case 'Moving':
 						return A2(
 							_elm_lang$core$Tuple$mapSecond,
-							function (_p13) {
+							function (_p15) {
 								return _elm_lang$core$Platform_Cmd$none;
 							},
 							A3(
@@ -12469,24 +12630,29 @@ var _user$project$Main_UI_DragChain$update = F2(
 								_elm_lang$core$Basics$identity,
 								_user$project$Main_UI_DragToMoveSelection$update(_user$project$Main_UI_DragToMoveSelection$OnDragEnd),
 								_elm_lang$core$Native_Utils.update(
-									_p15,
+									_p18,
 									{
 										dragChain: _elm_lang$core$Native_Utils.update(
-											_p14,
+											_p17,
 											{operation: _user$project$Main_UI_DragChain$None})
 									})));
 					default:
-						return {
-							ctor: '_Tuple2',
-							_0: _elm_lang$core$Native_Utils.update(
-								_p15,
-								{
-									dragChain: _elm_lang$core$Native_Utils.update(
-										_p14,
-										{operation: _user$project$Main_UI_DragChain$None})
-								}),
-							_1: _elm_lang$core$Platform_Cmd$none
-						};
+						return A2(
+							_elm_lang$core$Tuple$mapSecond,
+							function (_p16) {
+								return _elm_lang$core$Platform_Cmd$none;
+							},
+							A3(
+								_user$project$Component$update,
+								_elm_lang$core$Basics$identity,
+								_user$project$Main_UI_MetaDragToConnect$update(_user$project$Main_UI_MetaDragToConnect$OnDragEnd),
+								_elm_lang$core$Native_Utils.update(
+									_p18,
+									{
+										dragChain: _elm_lang$core$Native_Utils.update(
+											_p17,
+											{operation: _user$project$Main_UI_DragChain$None})
+									})));
 				}
 		}
 	});
