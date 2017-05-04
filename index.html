@@ -10983,41 +10983,43 @@ var _user$project$UI_Shape$Line = F5(
 	function (a, b, c, d, e) {
 		return {ctor: 'Line', _0: a, _1: b, _2: c, _3: d, _4: e};
 	});
-var _user$project$UI_Gate$group = function (shapes) {
-	return {
-		left: 0,
-		top: 0,
-		width: A2(
-			_elm_lang$core$Maybe$withDefault,
-			0,
-			_elm_lang$core$List$maximum(
+var _user$project$UI_Gate$group = F3(
+	function (shapes, inputs, outputs) {
+		return {
+			left: 0,
+			top: 0,
+			width: A2(
+				_elm_lang$core$Maybe$withDefault,
+				0,
+				_elm_lang$core$List$maximum(
+					A2(
+						_elm_lang$core$List$map,
+						function (_) {
+							return _.width;
+						},
+						shapes))),
+			height: A2(
+				_elm_lang$core$Maybe$withDefault,
+				0,
+				_elm_lang$core$List$maximum(
+					A2(
+						_elm_lang$core$List$map,
+						function (_) {
+							return _.height;
+						},
+						shapes))),
+			shape: A2(
+				_user$project$UI_Shape$Group,
+				{ctor: '[]'},
 				A2(
 					_elm_lang$core$List$map,
 					function (_) {
-						return _.width;
+						return _.shape;
 					},
-					shapes))),
-		height: A2(
-			_elm_lang$core$Maybe$withDefault,
-			0,
-			_elm_lang$core$List$maximum(
-				A2(
-					_elm_lang$core$List$map,
-					function (_) {
-						return _.height;
-					},
-					shapes))),
-		shape: A2(
-			_user$project$UI_Shape$Group,
-			{ctor: '[]'},
-			A2(
-				_elm_lang$core$List$map,
-				function (_) {
-					return _.shape;
-				},
-				shapes))
-	};
-};
+					shapes)),
+			outputs: outputs
+		};
+	});
 var _user$project$UI_Gate$transformation = F2(
 	function (shape, transform) {
 		return A2(
@@ -11396,8 +11398,8 @@ var _user$project$UI_Gate$inputWires = F4(
 				_user$project$UI_Gate$wireAttributes(appearance))
 		};
 	});
-var _user$project$UI_Gate$outputWires = F4(
-	function (count, intersectionWithTipAt, dimensions, appearance) {
+var _user$project$UI_Gate$outputWirePoints = F3(
+	function (count, intersectionWithTipAt, dimensions) {
 		var height_ = _user$project$UI_Gate$height(dimensions);
 		var quarterHeight = height_ / 4;
 		var halfHeight = _user$project$UI_Gate$half(height_);
@@ -11443,6 +11445,30 @@ var _user$project$UI_Gate$outputWires = F4(
 					}
 				}
 			});
+		return A2(
+			_elm_lang$core$List$map,
+			function (i) {
+				var stops_ = A2(
+					_elm_lang$core$Maybe$withDefault,
+					_elm_lang$core$Array$fromList(
+						{
+							ctor: '::',
+							_0: halfHeight,
+							_1: {ctor: '[]'}
+						}),
+					A2(_elm_lang$core$Array$get, count - 1, stops));
+				var y = A2(
+					_elm_lang$core$Maybe$withDefault,
+					halfHeight,
+					A2(_elm_lang$core$Array$get, i, stops_));
+				var x = intersectionWithTipAt(y);
+				return {ctor: '_Tuple2', _0: x, _1: y};
+			},
+			A2(_elm_lang$core$List$range, 0, count - 1));
+	});
+var _user$project$UI_Gate$outputWires = F4(
+	function (count, intersectionWithTipAt, dimensions, appearance) {
+		var points = A3(_user$project$UI_Gate$outputWirePoints, count, intersectionWithTipAt, dimensions);
 		return {
 			left: 0,
 			top: 0,
@@ -11453,35 +11479,22 @@ var _user$project$UI_Gate$outputWires = F4(
 				_elm_lang$core$List$concat(
 					A2(
 						_elm_lang$core$List$map,
-						function (i) {
-							var stops_ = A2(
-								_elm_lang$core$Maybe$withDefault,
-								_elm_lang$core$Array$fromList(
-									{
-										ctor: '::',
-										_0: halfHeight,
-										_1: {ctor: '[]'}
-									}),
-								A2(_elm_lang$core$Array$get, count - 1, stops));
-							var y = A2(
-								_elm_lang$core$Maybe$withDefault,
-								halfHeight,
-								A2(_elm_lang$core$Array$get, i, stops_));
-							var x = intersectionWithTipAt(y);
+						function (_p3) {
+							var _p4 = _p3;
 							return {
 								ctor: '::',
 								_0: A2(
 									_user$project$UI_Shape$MoveTo,
 									(_user$project$UI_Gate$gateWidth(dimensions) + (2 * _user$project$UI_Gate$inverterRadius(dimensions))) + _user$project$UI_Gate$wireWidth(dimensions),
-									y),
+									_p4._1),
 								_1: {
 									ctor: '::',
-									_0: _user$project$UI_Shape$HorizontalLineTo(x),
+									_0: _user$project$UI_Shape$HorizontalLineTo(_p4._0),
 									_1: {ctor: '[]'}
 								}
 							};
 						},
-						A2(_elm_lang$core$List$range, 0, count - 1))),
+						points)),
 				_user$project$UI_Gate$wireAttributes(appearance))
 		};
 	});
@@ -11670,7 +11683,11 @@ var _user$project$UI_Gate$buffer8 = F2(
 			_elm_lang$core$Native_Utils.update(
 				gate_,
 				{width: gate_.width + offset}));
-		return _user$project$UI_Gate$group(
+		var outputY = function (y) {
+			return (buffer.left + buffer.width) - offset;
+		};
+		return A3(
+			_user$project$UI_Gate$group,
 			{
 				ctor: '::',
 				_0: buffer,
@@ -11686,18 +11703,13 @@ var _user$project$UI_Gate$buffer8 = F2(
 						appearance),
 					_1: {
 						ctor: '::',
-						_0: A4(
-							_user$project$UI_Gate$outputWires,
-							1,
-							function (y) {
-								return (buffer.left + buffer.width) - offset;
-							},
-							dimensions,
-							appearance),
+						_0: A4(_user$project$UI_Gate$outputWires, 1, outputY, dimensions, appearance),
 						_1: {ctor: '[]'}
 					}
 				}
-			});
+			},
+			{ctor: '[]'},
+			A3(_user$project$UI_Gate$outputWirePoints, 1, outputY, dimensions));
 	});
 var _user$project$UI_Gate$not8 = F2(
 	function (dimensions, appearance) {
@@ -11710,7 +11722,11 @@ var _user$project$UI_Gate$not8 = F2(
 				dimensions,
 				appearance,
 				A5(_user$project$UI_Gate$gate, dimensions, appearance, _user$project$UI_Gate$flatBase, _user$project$UI_Gate$noBody, _user$project$UI_Gate$arrowTip)));
-		return _user$project$UI_Gate$group(
+		var outputY = function (y) {
+			return not.left + not.width;
+		};
+		return A3(
+			_user$project$UI_Gate$group,
 			{
 				ctor: '::',
 				_0: not,
@@ -11726,23 +11742,22 @@ var _user$project$UI_Gate$not8 = F2(
 						appearance),
 					_1: {
 						ctor: '::',
-						_0: A4(
-							_user$project$UI_Gate$outputWires,
-							1,
-							function (y) {
-								return not.left + not.width;
-							},
-							dimensions,
-							appearance),
+						_0: A4(_user$project$UI_Gate$outputWires, 1, outputY, dimensions, appearance),
 						_1: {ctor: '[]'}
 					}
 				}
-			});
+			},
+			{ctor: '[]'},
+			A3(_user$project$UI_Gate$outputWirePoints, 1, outputY, dimensions));
 	});
 var _user$project$UI_Gate$and8 = F2(
 	function (dimensions, appearance) {
 		var and = A5(_user$project$UI_Gate$gate, dimensions, appearance, _user$project$UI_Gate$flatBase, _user$project$UI_Gate$wideBody, _user$project$UI_Gate$roundTip);
-		return _user$project$UI_Gate$group(
+		var outputY = function (y) {
+			return and.left + and.width;
+		};
+		return A3(
+			_user$project$UI_Gate$group,
 			{
 				ctor: '::',
 				_0: and,
@@ -11758,18 +11773,13 @@ var _user$project$UI_Gate$and8 = F2(
 						appearance),
 					_1: {
 						ctor: '::',
-						_0: A4(
-							_user$project$UI_Gate$outputWires,
-							1,
-							function (y) {
-								return and.left + and.width;
-							},
-							dimensions,
-							appearance),
+						_0: A4(_user$project$UI_Gate$outputWires, 1, outputY, dimensions, appearance),
 						_1: {ctor: '[]'}
 					}
 				}
-			});
+			},
+			{ctor: '[]'},
+			A3(_user$project$UI_Gate$outputWirePoints, 1, outputY, dimensions));
 	});
 var _user$project$UI_Gate$nand8 = F2(
 	function (dimensions, appearance) {
@@ -11778,7 +11788,11 @@ var _user$project$UI_Gate$nand8 = F2(
 			dimensions,
 			appearance,
 			A5(_user$project$UI_Gate$gate, dimensions, appearance, _user$project$UI_Gate$flatBase, _user$project$UI_Gate$wideBody, _user$project$UI_Gate$roundTip));
-		return _user$project$UI_Gate$group(
+		var outputY = function (y) {
+			return nand.left + nand.width;
+		};
+		return A3(
+			_user$project$UI_Gate$group,
 			{
 				ctor: '::',
 				_0: nand,
@@ -11794,23 +11808,22 @@ var _user$project$UI_Gate$nand8 = F2(
 						appearance),
 					_1: {
 						ctor: '::',
-						_0: A4(
-							_user$project$UI_Gate$outputWires,
-							1,
-							function (y) {
-								return nand.left + nand.width;
-							},
-							dimensions,
-							appearance),
+						_0: A4(_user$project$UI_Gate$outputWires, 1, outputY, dimensions, appearance),
 						_1: {ctor: '[]'}
 					}
 				}
-			});
+			},
+			{ctor: '[]'},
+			A3(_user$project$UI_Gate$outputWirePoints, 1, outputY, dimensions));
 	});
 var _user$project$UI_Gate$or8 = F2(
 	function (dimensions, appearance) {
 		var or = A5(_user$project$UI_Gate$gate, dimensions, appearance, _user$project$UI_Gate$curvedBase, _user$project$UI_Gate$narrowBody, _user$project$UI_Gate$spearTip);
-		return _user$project$UI_Gate$group(
+		var outputY = function (y) {
+			return or.left + or.width;
+		};
+		return A3(
+			_user$project$UI_Gate$group,
 			{
 				ctor: '::',
 				_0: or,
@@ -11825,18 +11838,13 @@ var _user$project$UI_Gate$or8 = F2(
 						appearance),
 					_1: {
 						ctor: '::',
-						_0: A4(
-							_user$project$UI_Gate$outputWires,
-							1,
-							function (y) {
-								return or.left + or.width;
-							},
-							dimensions,
-							appearance),
+						_0: A4(_user$project$UI_Gate$outputWires, 1, outputY, dimensions, appearance),
 						_1: {ctor: '[]'}
 					}
 				}
-			});
+			},
+			{ctor: '[]'},
+			A3(_user$project$UI_Gate$outputWirePoints, 1, outputY, dimensions));
 	});
 var _user$project$UI_Gate$nor8 = F2(
 	function (dimensions, appearance) {
@@ -11845,7 +11853,11 @@ var _user$project$UI_Gate$nor8 = F2(
 			dimensions,
 			appearance,
 			A5(_user$project$UI_Gate$gate, dimensions, appearance, _user$project$UI_Gate$curvedBase, _user$project$UI_Gate$narrowBody, _user$project$UI_Gate$spearTip));
-		return _user$project$UI_Gate$group(
+		var outputY = function (y) {
+			return nor.left + nor.width;
+		};
+		return A3(
+			_user$project$UI_Gate$group,
 			{
 				ctor: '::',
 				_0: nor,
@@ -11860,23 +11872,22 @@ var _user$project$UI_Gate$nor8 = F2(
 						appearance),
 					_1: {
 						ctor: '::',
-						_0: A4(
-							_user$project$UI_Gate$outputWires,
-							1,
-							function (y) {
-								return nor.left + nor.width;
-							},
-							dimensions,
-							appearance),
+						_0: A4(_user$project$UI_Gate$outputWires, 1, outputY, dimensions, appearance),
 						_1: {ctor: '[]'}
 					}
 				}
-			});
+			},
+			{ctor: '[]'},
+			A3(_user$project$UI_Gate$outputWirePoints, 1, outputY, dimensions));
 	});
 var _user$project$UI_Gate$xor8 = F2(
 	function (dimensions, appearance) {
 		var xor = A5(_user$project$UI_Gate$gate, dimensions, appearance, _user$project$UI_Gate$curvedBase, _user$project$UI_Gate$narrowBody, _user$project$UI_Gate$spearTip);
-		return _user$project$UI_Gate$group(
+		var outputY = function (y) {
+			return xor.left + xor.width;
+		};
+		return A3(
+			_user$project$UI_Gate$group,
 			{
 				ctor: '::',
 				_0: A3(_user$project$UI_Gate$twinCurvedBase, dimensions, appearance, xor),
@@ -11891,24 +11902,23 @@ var _user$project$UI_Gate$xor8 = F2(
 						appearance),
 					_1: {
 						ctor: '::',
-						_0: A4(
-							_user$project$UI_Gate$outputWires,
-							1,
-							function (y) {
-								return xor.left + xor.width;
-							},
-							dimensions,
-							appearance),
+						_0: A4(_user$project$UI_Gate$outputWires, 1, outputY, dimensions, appearance),
 						_1: {ctor: '[]'}
 					}
 				}
-			});
+			},
+			{ctor: '[]'},
+			A3(_user$project$UI_Gate$outputWirePoints, 1, outputY, dimensions));
 	});
 var _user$project$UI_Gate$xnor8 = F2(
 	function (dimensions, appearance) {
 		var xor = A5(_user$project$UI_Gate$gate, dimensions, appearance, _user$project$UI_Gate$curvedBase, _user$project$UI_Gate$narrowBody, _user$project$UI_Gate$spearTip);
 		var xnor = A3(_user$project$UI_Gate$inverted, dimensions, appearance, xor);
-		return _user$project$UI_Gate$group(
+		var outputY = function (y) {
+			return xnor.left + xnor.width;
+		};
+		return A3(
+			_user$project$UI_Gate$group,
 			{
 				ctor: '::',
 				_0: xnor,
@@ -11926,25 +11936,20 @@ var _user$project$UI_Gate$xnor8 = F2(
 							appearance),
 						_1: {
 							ctor: '::',
-							_0: A4(
-								_user$project$UI_Gate$outputWires,
-								1,
-								function (y) {
-									return xnor.left + xnor.width;
-								},
-								dimensions,
-								appearance),
+							_0: A4(_user$project$UI_Gate$outputWires, 1, outputY, dimensions, appearance),
 							_1: {ctor: '[]'}
 						}
 					}
 				}
-			});
+			},
+			{ctor: '[]'},
+			A3(_user$project$UI_Gate$outputWirePoints, 1, outputY, dimensions));
 	});
 var _user$project$UI_Gate$toShape = F3(
 	function (dimensions, appearance, gate) {
 		var shape = function () {
-			var _p3 = gate;
-			switch (_p3.ctor) {
+			var _p5 = gate;
+			switch (_p5.ctor) {
 				case 'Buffer':
 					return _user$project$UI_Gate$buffer8;
 				case 'Not':
@@ -11972,9 +11977,9 @@ var _user$project$UI_Gate$Appearance = F3(
 	function (a, b, c) {
 		return {strokeWidth: a, strokeColour: b, fillColour: c};
 	});
-var _user$project$UI_Gate$GateShape = F5(
-	function (a, b, c, d, e) {
-		return {left: a, top: b, width: c, height: d, shape: e};
+var _user$project$UI_Gate$GateShape = F6(
+	function (a, b, c, d, e, f) {
+		return {left: a, top: b, width: c, height: d, shape: e, outputs: f};
 	});
 var _user$project$UI_Gate$Segment = F3(
 	function (a, b, c) {
@@ -12230,6 +12235,9 @@ var _user$project$Main_UI_DragToMoveSelection$OnDragBy = function (a) {
 var _user$project$Main_UI_DragToMoveSelection$OnDragStart = function (a) {
 	return {ctor: 'OnDragStart', _0: a};
 };
+var _user$project$Main_UI_MetaDragToConnect$findToIndex = function (gates) {
+	return _elm_lang$core$Maybe$Nothing;
+};
 var _user$project$Main_UI_MetaDragToConnect$pointContainedBy = F2(
 	function (_p0, point) {
 		var _p1 = _p0;
@@ -12283,7 +12291,10 @@ var _user$project$Main_UI_MetaDragToConnect$gatesWithConnectionUpdated = functio
 	if (_p8.ctor === 'Just') {
 		return A2(
 			_elm_lang$core$List$indexedMap,
-			A2(_user$project$Main_UI_MetaDragToConnect$connectedIfContainsPoint, _p8._0, state.dragChain.metaDragToConnect.index),
+			A2(
+				_user$project$Main_UI_MetaDragToConnect$connectedIfContainsPoint,
+				_p8._0,
+				A2(_elm_lang$core$Maybe$withDefault, -1, state.dragChain.metaDragToConnect.fromIndex)),
 			A2(
 				_elm_lang$core$List$map,
 				_user$project$Main_UI_MetaDragToConnect$shapeAndTransform(state),
@@ -12311,12 +12322,13 @@ var _user$project$Main_UI_MetaDragToConnect$update = F2(
 									metaDragToConnect: _elm_lang$core$Native_Utils.update(
 										metaDragToConnect,
 										{
-											index: _p9._1,
+											fromIndex: _elm_lang$core$Maybe$Just(_p9._1),
 											from: _elm_lang$core$Maybe$Just(
 												{
 													x: _elm_lang$core$Basics$toFloat(_p10.offsetX),
 													y: _elm_lang$core$Basics$toFloat(_p10.offsetY)
 												}),
+											toIndex: _elm_lang$core$Maybe$Nothing,
 											to: _elm_lang$core$Maybe$Just(
 												{
 													x: _elm_lang$core$Basics$toFloat(_p10.offsetX),
@@ -12343,6 +12355,7 @@ var _user$project$Main_UI_MetaDragToConnect$update = F2(
 											metaDragToConnect: _elm_lang$core$Native_Utils.update(
 												metaDragToConnect,
 												{
+													toIndex: _user$project$Main_UI_MetaDragToConnect$findToIndex(state.gates),
 													to: _elm_lang$core$Maybe$Just(
 														{x: _p12.x + _p9._0._0, y: _p12.y + _p9._0._1})
 												})
@@ -12370,7 +12383,7 @@ var _user$project$Main_UI_MetaDragToConnect$update = F2(
 								{
 									metaDragToConnect: _elm_lang$core$Native_Utils.update(
 										metaDragToConnect,
-										{from: _elm_lang$core$Maybe$Nothing, to: _elm_lang$core$Maybe$Nothing})
+										{fromIndex: _elm_lang$core$Maybe$Nothing, from: _elm_lang$core$Maybe$Nothing, toIndex: _elm_lang$core$Maybe$Nothing, to: _elm_lang$core$Maybe$Nothing})
 								}),
 							gates: A2(
 								_elm_lang$core$List$map,
@@ -12393,7 +12406,7 @@ var _user$project$Main_UI_MetaDragToConnect$init = function (state) {
 		_user$project$Main_UI_MetaDragToConnect$envelope(state),
 		{
 			ctor: '_Tuple2',
-			_0: {index: -1, from: _elm_lang$core$Maybe$Nothing, to: _elm_lang$core$Maybe$Nothing},
+			_0: {fromIndex: _elm_lang$core$Maybe$Nothing, from: _elm_lang$core$Maybe$Nothing, toIndex: _elm_lang$core$Maybe$Nothing, to: _elm_lang$core$Maybe$Nothing},
 			_1: _elm_lang$core$Platform_Cmd$none
 		});
 };
@@ -12401,9 +12414,9 @@ var _user$project$Main_UI_MetaDragToConnect$MouseEvent = F3(
 	function (a, b, c) {
 		return {metaKey: a, offsetX: b, offsetY: c};
 	});
-var _user$project$Main_UI_MetaDragToConnect$ViewModel = F3(
-	function (a, b, c) {
-		return {index: a, from: b, to: c};
+var _user$project$Main_UI_MetaDragToConnect$ViewModel = F4(
+	function (a, b, c, d) {
+		return {fromIndex: a, from: b, toIndex: c, to: d};
 	});
 var _user$project$Main_UI_MetaDragToConnect$OnDragEnd = {ctor: 'OnDragEnd'};
 var _user$project$Main_UI_MetaDragToConnect$OnDragBy = function (a) {
@@ -12828,6 +12841,12 @@ var _user$project$Main_UI$view = function (state) {
 	var dimensions = {width: state.width};
 	var gate = F3(
 		function (state, index, model) {
+			var transform = A2(_user$project$Main_UI_GateViewModel$transform, state.canvas.windowSize, model);
+			var gate_ = A3(
+				_user$project$UI_Gate$toShape,
+				dimensions,
+				_user$project$Main_UI_GateViewModel$isSelected(model) ? highlightedAppearance : (_user$project$Main_UI_GateViewModel$isConnected(model) ? highlightedAppearance : appearance),
+				_user$project$Main_UI_GateViewModel$gate(model));
 			return A2(
 				_elm_lang$svg$Svg$g,
 				{ctor: '[]'},
@@ -12846,26 +12865,61 @@ var _user$project$Main_UI$view = function (state) {
 								_user$project$UI_Shape$Group,
 								{
 									ctor: '::',
-									_0: _user$project$UI_Shape$Transform(
-										A2(_user$project$Main_UI_GateViewModel$transform, state.canvas.windowSize, model)),
+									_0: _user$project$UI_Shape$Transform(transform),
 									_1: {ctor: '[]'}
 								},
 								{
 									ctor: '::',
-									_0: A3(
-										_user$project$UI_Gate$toShape,
-										dimensions,
-										_user$project$Main_UI_GateViewModel$isSelected(model) ? highlightedAppearance : (_user$project$Main_UI_GateViewModel$isConnected(model) ? highlightedAppearance : appearance),
-										_user$project$Main_UI_GateViewModel$gate(model)).shape,
+									_0: gate_.shape,
 									_1: {ctor: '[]'}
 								})),
 						_1: {ctor: '[]'}
 					},
 					function () {
-						var _p0 = {ctor: '_Tuple2', _0: state.dragChain.metaDragToConnect.from, _1: state.dragChain.metaDragToConnect.to};
-						if (((_p0.ctor === '_Tuple2') && (_p0._0.ctor === 'Just')) && (_p0._1.ctor === 'Just')) {
-							var _p2 = _p0._1._0;
-							var _p1 = _p0._0._0;
+						var _p0 = {ctor: '_Tuple3', _0: state.dragChain.metaDragToConnect.fromIndex, _1: state.dragChain.metaDragToConnect.from, _2: state.dragChain.metaDragToConnect.to};
+						if ((((_p0.ctor === '_Tuple3') && (_p0._0.ctor === 'Just')) && (_p0._1.ctor === 'Just')) && (_p0._2.ctor === 'Just')) {
+							var _p12 = _p0._2._0;
+							var _p1 = function () {
+								var _p2 = state.dragChain.metaDragToConnect.toIndex;
+								if (_p2.ctor === 'Just') {
+									return function (_p3) {
+										var _p4 = _p3;
+										return {ctor: '_Tuple2', _0: _p4.x, _1: _p4.y};
+									}(
+										A2(
+											_benansell$elm_geometric_transformation$Transformer2D$apply,
+											transform,
+											function (_p5) {
+												var _p6 = _p5;
+												return {x: _p6._0, y: _p6._1};
+											}(
+												A2(
+													_elm_lang$core$Maybe$withDefault,
+													{ctor: '_Tuple2', _0: -1, _1: -1},
+													_elm_lang$core$List$head(gate_.outputs)))));
+								} else {
+									return {ctor: '_Tuple2', _0: _p12.x, _1: _p12.y};
+								}
+							}();
+							var toX = _p1._0;
+							var toY = _p1._1;
+							var _p7 = function (_p8) {
+								var _p9 = _p8;
+								return {ctor: '_Tuple2', _0: _p9.x, _1: _p9.y};
+							}(
+								A2(
+									_benansell$elm_geometric_transformation$Transformer2D$apply,
+									transform,
+									function (_p10) {
+										var _p11 = _p10;
+										return {x: _p11._0, y: _p11._1};
+									}(
+										A2(
+											_elm_lang$core$Maybe$withDefault,
+											{ctor: '_Tuple2', _0: -1, _1: -1},
+											_elm_lang$core$List$head(gate_.outputs)))));
+							var fromX = _p7._0;
+							var fromY = _p7._1;
 							return {
 								ctor: '::',
 								_0: A2(
@@ -12873,19 +12927,19 @@ var _user$project$Main_UI$view = function (state) {
 									{
 										ctor: '::',
 										_0: _elm_lang$svg$Svg_Attributes$x1(
-											_elm_lang$core$Basics$toString(_p1.x)),
+											_elm_lang$core$Basics$toString(fromX)),
 										_1: {
 											ctor: '::',
 											_0: _elm_lang$svg$Svg_Attributes$y1(
-												_elm_lang$core$Basics$toString(_p1.y)),
+												_elm_lang$core$Basics$toString(fromY)),
 											_1: {
 												ctor: '::',
 												_0: _elm_lang$svg$Svg_Attributes$x2(
-													_elm_lang$core$Basics$toString(_p2.x)),
+													_elm_lang$core$Basics$toString(toX)),
 												_1: {
 													ctor: '::',
 													_0: _elm_lang$svg$Svg_Attributes$y2(
-														_elm_lang$core$Basics$toString(_p2.y)),
+														_elm_lang$core$Basics$toString(toY)),
 													_1: {
 														ctor: '::',
 														_0: _elm_lang$svg$Svg_Attributes$strokeWidth('1'),
