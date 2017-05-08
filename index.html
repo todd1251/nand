@@ -12299,29 +12299,6 @@ var _user$project$Main_UI_DragToMoveSelection$OnDragBy = function (a) {
 var _user$project$Main_UI_DragToMoveSelection$OnDragStart = function (a) {
 	return {ctor: 'OnDragStart', _0: a};
 };
-var _user$project$Unsafe$nth = F2(
-	function (index, xs) {
-		return function (x) {
-			var _p0 = x;
-			if (_p0.ctor === 'Just') {
-				return _p0._0;
-			} else {
-				return _elm_lang$core$Native_Utils.crashCase(
-					'Unsafe',
-					{
-						start: {line: 11, column: 17},
-						end: {line: 16, column: 87}
-					},
-					_p0)(
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						'No item found with index: ',
-						_elm_lang$core$Basics$toString(index)));
-			}
-		}(
-			_elm_lang$core$List$head(
-				A2(_elm_lang$core$List$drop, index, xs)));
-	});
 var _user$project$Main_UI_MetaDragToConnect$pointContainedBy = F2(
 	function (_p0, point) {
 		var _p1 = _p0;
@@ -12516,14 +12493,8 @@ var _user$project$Main_UI_MetaDragToConnect$update = F2(
 											ctor: '::',
 											_0: _user$project$Main_UI_ConnectionViewModel$from(
 												{
-													output: {
-														gate: A2(_user$project$Unsafe$nth, _p17._0._0, state.gates),
-														index: 0
-													},
-													input: {
-														gate: A2(_user$project$Unsafe$nth, _p17._1._0, state.gates),
-														index: 0
-													}
+													output: {gate: _p17._0._0, index: 0},
+													input: {gate: _p17._1._0, index: 0}
 												}),
 											_1: {ctor: '[]'}
 										};
@@ -12831,6 +12802,29 @@ var _user$project$Main_UI_Message$DragChain = function (a) {
 var _user$project$Main_UI_Message$Canvas = function (a) {
 	return {ctor: 'Canvas', _0: a};
 };
+var _user$project$Unsafe$nth = F2(
+	function (index, xs) {
+		return function (x) {
+			var _p0 = x;
+			if (_p0.ctor === 'Just') {
+				return _p0._0;
+			} else {
+				return _elm_lang$core$Native_Utils.crashCase(
+					'Unsafe',
+					{
+						start: {line: 11, column: 17},
+						end: {line: 16, column: 87}
+					},
+					_p0)(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'No item found with index: ',
+						_elm_lang$core$Basics$toString(index)));
+			}
+		}(
+			_elm_lang$core$List$head(
+				A2(_elm_lang$core$List$drop, index, xs)));
+	});
 var _user$project$Main_UI_Controller$dragChain = function (index) {
 	return A2(
 		_elm_lang$html$Html_Attributes$map,
@@ -12868,14 +12862,12 @@ var _user$project$Main_UI_Controller$update = F2(
 		}
 	});
 var _user$project$Main_UI_Controller$connections = function (gates) {
-	var or = A2(_user$project$Unsafe$nth, 2, gates);
-	var buffer = A2(_user$project$Unsafe$nth, 0, gates);
 	return {
 		ctor: '::',
 		_0: _user$project$Main_UI_ConnectionViewModel$from(
 			{
-				output: {gate: buffer, index: 0},
-				input: {gate: or, index: 1}
+				output: {gate: 0, index: 0},
+				input: {gate: 2, index: 1}
 			}),
 		_1: {ctor: '[]'}
 	};
@@ -13109,7 +13101,8 @@ var _user$project$Main_UI$view = function (state) {
 		});
 	var position = F2(
 		function (connections, connection) {
-			var _p5 = shapeAndTransform(connection.gate);
+			var _p5 = shapeAndTransform(
+				A2(_user$project$Unsafe$nth, connection.gate, state.gates));
 			var gate = _p5._0;
 			var transform = _p5._1;
 			return A2(
@@ -13145,8 +13138,6 @@ var _user$project$Main_UI$view = function (state) {
 		do {
 			if ((_p8.ctor === '_Tuple3') && (_p8._0.ctor === 'Just')) {
 				if (_p8._1.ctor === 'Just') {
-					var to = A2(_user$project$Unsafe$nth, _p8._1._0, state.gates);
-					var from = A2(_user$project$Unsafe$nth, _p8._0._0, state.gates);
 					return {
 						ctor: '::',
 						_0: A2(
@@ -13155,8 +13146,8 @@ var _user$project$Main_UI$view = function (state) {
 							connection(
 								_user$project$Main_UI_ConnectionViewModel$from(
 									{
-										output: {gate: from, index: 0},
-										input: {gate: to, index: 0}
+										output: {gate: _p8._0._0, index: 0},
+										input: {gate: _p8._1._0, index: 0}
 									}))),
 						_1: {ctor: '[]'}
 					};
@@ -13167,10 +13158,7 @@ var _user$project$Main_UI$view = function (state) {
 							function (_) {
 								return _.outputs;
 							},
-							{
-								gate: A2(_user$project$Unsafe$nth, _p8._0._0, state.gates),
-								index: 0
-							});
+							{gate: _p8._0._0, index: 0});
 						return {
 							ctor: '::',
 							_0: A2(
