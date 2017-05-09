@@ -12299,6 +12299,29 @@ var _user$project$Main_UI_DragToMoveSelection$OnDragBy = function (a) {
 var _user$project$Main_UI_DragToMoveSelection$OnDragStart = function (a) {
 	return {ctor: 'OnDragStart', _0: a};
 };
+var _user$project$Unsafe$nth = F2(
+	function (index, xs) {
+		return function (x) {
+			var _p0 = x;
+			if (_p0.ctor === 'Just') {
+				return _p0._0;
+			} else {
+				return _elm_lang$core$Native_Utils.crashCase(
+					'Unsafe',
+					{
+						start: {line: 11, column: 17},
+						end: {line: 16, column: 87}
+					},
+					_p0)(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'No item found with index: ',
+						_elm_lang$core$Basics$toString(index)));
+			}
+		}(
+			_elm_lang$core$List$head(
+				A2(_elm_lang$core$List$drop, index, xs)));
+	});
 var _user$project$Main_UI_MetaDragToConnect$pointContainedBy = F2(
 	function (_p0, point) {
 		var _p1 = _p0;
@@ -12489,15 +12512,54 @@ var _user$project$Main_UI_MetaDragToConnect$update = F2(
 								function () {
 									var _p17 = {ctor: '_Tuple2', _0: metaDragToConnect.fromIndex, _1: metaDragToConnect.toIndex};
 									if (((_p17.ctor === '_Tuple2') && (_p17._0.ctor === 'Just')) && (_p17._1.ctor === 'Just')) {
-										return {
-											ctor: '::',
-											_0: _user$project$Main_UI_ConnectionViewModel$from(
-												{
-													output: {gate: _p17._0._0, index: 0},
-													input: {gate: _p17._1._0, index: 0}
-												}),
-											_1: {ctor: '[]'}
-										};
+										var _p21 = _p17._1._0;
+										var _p20 = _p17._0._0;
+										return A2(
+											_elm_lang$core$Maybe$withDefault,
+											{
+												ctor: '::',
+												_0: _user$project$Main_UI_ConnectionViewModel$from(
+													{
+														output: {gate: _p20, index: 0},
+														input: {gate: _p21, index: 0}
+													}),
+												_1: {ctor: '[]'}
+											},
+											A2(
+												_elm_lang$core$Maybe$map,
+												function (connection) {
+													var shape = function (_p18) {
+														var _p19 = _p18;
+														return _p19._2;
+													}(
+														A2(
+															_user$project$Main_UI_MetaDragToConnect$shapeAndTransform,
+															state,
+															A2(_user$project$Unsafe$nth, _p21, state.gates)));
+													var input = _user$project$Main_UI_ConnectionViewModel$input(connection);
+													var output = _user$project$Main_UI_ConnectionViewModel$output(connection);
+													return (_elm_lang$core$Native_Utils.cmp(
+														input.index,
+														_elm_lang$core$List$length(shape.inputs) - 1) < 0) ? {
+														ctor: '::',
+														_0: _user$project$Main_UI_ConnectionViewModel$from(
+															{
+																output: {gate: _p20, index: 0},
+																input: {gate: _p21, index: input.index + 1}
+															}),
+														_1: {ctor: '[]'}
+													} : {ctor: '[]'};
+												},
+												_elm_lang$core$List$head(
+													_elm_lang$core$List$reverse(
+														A2(
+															_elm_lang$core$List$filter,
+															function (connection) {
+																var input = _user$project$Main_UI_ConnectionViewModel$input(connection);
+																var output = _user$project$Main_UI_ConnectionViewModel$output(connection);
+																return _elm_lang$core$Native_Utils.eq(output.gate, _p20) && _elm_lang$core$Native_Utils.eq(input.gate, _p21);
+															},
+															state.connections)))));
 									} else {
 										return {ctor: '[]'};
 									}
@@ -12802,29 +12864,6 @@ var _user$project$Main_UI_Message$DragChain = function (a) {
 var _user$project$Main_UI_Message$Canvas = function (a) {
 	return {ctor: 'Canvas', _0: a};
 };
-var _user$project$Unsafe$nth = F2(
-	function (index, xs) {
-		return function (x) {
-			var _p0 = x;
-			if (_p0.ctor === 'Just') {
-				return _p0._0;
-			} else {
-				return _elm_lang$core$Native_Utils.crashCase(
-					'Unsafe',
-					{
-						start: {line: 11, column: 17},
-						end: {line: 16, column: 87}
-					},
-					_p0)(
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						'No item found with index: ',
-						_elm_lang$core$Basics$toString(index)));
-			}
-		}(
-			_elm_lang$core$List$head(
-				A2(_elm_lang$core$List$drop, index, xs)));
-	});
 var _user$project$Main_UI_Controller$dragChain = function (index) {
 	return A2(
 		_elm_lang$html$Html_Attributes$map,
@@ -12862,15 +12901,7 @@ var _user$project$Main_UI_Controller$update = F2(
 		}
 	});
 var _user$project$Main_UI_Controller$connections = function (gates) {
-	return {
-		ctor: '::',
-		_0: _user$project$Main_UI_ConnectionViewModel$from(
-			{
-				output: {gate: 0, index: 0},
-				input: {gate: 2, index: 1}
-			}),
-		_1: {ctor: '[]'}
-	};
+	return {ctor: '[]'};
 };
 var _user$project$Main_UI_Controller$gateTransform = F5(
 	function (column, row, horizontalSpacing, verticalSpacing, dimensions) {
