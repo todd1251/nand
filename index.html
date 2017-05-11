@@ -12420,17 +12420,67 @@ var _user$project$Main_UI_MetaDragToConnect$findToIndex = F3(
 						_user$project$Main_UI_MetaDragToConnect$shapeAndTransform(state),
 						gates))));
 	});
+var _user$project$Main_UI_MetaDragToConnect$nextConnection = F3(
+	function (state, fromIndex, toIndex) {
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			{
+				ctor: '::',
+				_0: _user$project$Main_UI_ConnectionViewModel$from(
+					{
+						output: {gate: fromIndex, index: 0},
+						input: {gate: toIndex, index: 0}
+					}),
+				_1: {ctor: '[]'}
+			},
+			A2(
+				_elm_lang$core$Maybe$map,
+				function (connection) {
+					var shape = function (_p13) {
+						var _p14 = _p13;
+						return _p14._2;
+					}(
+						A2(
+							_user$project$Main_UI_MetaDragToConnect$shapeAndTransform,
+							state,
+							A2(_user$project$Unsafe$nth, toIndex, state.gates)));
+					var input = _user$project$Main_UI_ConnectionViewModel$input(connection);
+					var output = _user$project$Main_UI_ConnectionViewModel$output(connection);
+					return ((_elm_lang$core$Native_Utils.cmp(
+						output.index,
+						_elm_lang$core$List$length(shape.outputs) - 1) < 0) && (_elm_lang$core$Native_Utils.cmp(
+						input.index,
+						_elm_lang$core$List$length(shape.inputs) - 1) < 0)) ? {
+						ctor: '::',
+						_0: _user$project$Main_UI_ConnectionViewModel$from(
+							{
+								output: {gate: fromIndex, index: output.index + 1},
+								input: {gate: toIndex, index: input.index + 1}
+							}),
+						_1: {ctor: '[]'}
+					} : {ctor: '[]'};
+				},
+				_elm_lang$core$List$head(
+					_elm_lang$core$List$reverse(
+						A2(
+							_elm_lang$core$List$filter,
+							function (connection) {
+								var input = _user$project$Main_UI_ConnectionViewModel$input(connection);
+								return _elm_lang$core$Native_Utils.eq(input.gate, toIndex);
+							},
+							state.connections)))));
+	});
 var _user$project$Main_UI_MetaDragToConnect$update = F2(
 	function (message, state) {
 		var dragChain = state.dragChain;
 		var metaDragToConnect = dragChain.metaDragToConnect;
-		var _p13 = message;
-		switch (_p13.ctor) {
+		var _p15 = message;
+		switch (_p15.ctor) {
 			case 'OnDragStart':
-				var _p14 = _p13._0;
+				var _p16 = _p15._0;
 				return {
 					ctor: '_Tuple2',
-					_0: _p14.metaKey ? _elm_lang$core$Native_Utils.update(
+					_0: _p16.metaKey ? _elm_lang$core$Native_Utils.update(
 						state,
 						{
 							dragChain: _elm_lang$core$Native_Utils.update(
@@ -12439,17 +12489,17 @@ var _user$project$Main_UI_MetaDragToConnect$update = F2(
 									metaDragToConnect: _elm_lang$core$Native_Utils.update(
 										metaDragToConnect,
 										{
-											fromIndex: _elm_lang$core$Maybe$Just(_p13._1),
+											fromIndex: _elm_lang$core$Maybe$Just(_p15._1),
 											from: _elm_lang$core$Maybe$Just(
 												{
-													x: _elm_lang$core$Basics$toFloat(_p14.offsetX),
-													y: _elm_lang$core$Basics$toFloat(_p14.offsetY)
+													x: _elm_lang$core$Basics$toFloat(_p16.offsetX),
+													y: _elm_lang$core$Basics$toFloat(_p16.offsetY)
 												}),
 											toIndex: _elm_lang$core$Maybe$Nothing,
 											to: _elm_lang$core$Maybe$Just(
 												{
-													x: _elm_lang$core$Basics$toFloat(_p14.offsetX),
-													y: _elm_lang$core$Basics$toFloat(_p14.offsetY)
+													x: _elm_lang$core$Basics$toFloat(_p16.offsetX),
+													y: _elm_lang$core$Basics$toFloat(_p16.offsetY)
 												})
 										})
 								})
@@ -12460,10 +12510,10 @@ var _user$project$Main_UI_MetaDragToConnect$update = F2(
 				return {
 					ctor: '_Tuple2',
 					_0: function () {
-						var _p15 = metaDragToConnect.to;
-						if (_p15.ctor === 'Just') {
-							var _p16 = _p15._0;
-							var position = {x: _p16.x + _p13._0._0, y: _p16.y + _p13._0._1};
+						var _p17 = metaDragToConnect.to;
+						if (_p17.ctor === 'Just') {
+							var _p18 = _p17._0;
+							var position = {x: _p18.x + _p15._0._0, y: _p18.y + _p15._0._1};
 							var state_ = _elm_lang$core$Native_Utils.update(
 								state,
 								{
@@ -12510,55 +12560,9 @@ var _user$project$Main_UI_MetaDragToConnect$update = F2(
 								_elm_lang$core$Basics_ops['++'],
 								state.connections,
 								function () {
-									var _p17 = {ctor: '_Tuple2', _0: metaDragToConnect.fromIndex, _1: metaDragToConnect.toIndex};
-									if (((_p17.ctor === '_Tuple2') && (_p17._0.ctor === 'Just')) && (_p17._1.ctor === 'Just')) {
-										var _p21 = _p17._1._0;
-										var _p20 = _p17._0._0;
-										return A2(
-											_elm_lang$core$Maybe$withDefault,
-											{
-												ctor: '::',
-												_0: _user$project$Main_UI_ConnectionViewModel$from(
-													{
-														output: {gate: _p20, index: 0},
-														input: {gate: _p21, index: 0}
-													}),
-												_1: {ctor: '[]'}
-											},
-											A2(
-												_elm_lang$core$Maybe$map,
-												function (connection) {
-													var shape = function (_p18) {
-														var _p19 = _p18;
-														return _p19._2;
-													}(
-														A2(
-															_user$project$Main_UI_MetaDragToConnect$shapeAndTransform,
-															state,
-															A2(_user$project$Unsafe$nth, _p21, state.gates)));
-													var input = _user$project$Main_UI_ConnectionViewModel$input(connection);
-													var output = _user$project$Main_UI_ConnectionViewModel$output(connection);
-													return (_elm_lang$core$Native_Utils.cmp(
-														input.index,
-														_elm_lang$core$List$length(shape.inputs) - 1) < 0) ? {
-														ctor: '::',
-														_0: _user$project$Main_UI_ConnectionViewModel$from(
-															{
-																output: {gate: _p20, index: 0},
-																input: {gate: _p21, index: input.index + 1}
-															}),
-														_1: {ctor: '[]'}
-													} : {ctor: '[]'};
-												},
-												_elm_lang$core$List$head(
-													_elm_lang$core$List$reverse(
-														A2(
-															_elm_lang$core$List$filter,
-															function (connection) {
-																var input = _user$project$Main_UI_ConnectionViewModel$input(connection);
-																return _elm_lang$core$Native_Utils.eq(input.gate, _p21);
-															},
-															state.connections)))));
+									var _p19 = {ctor: '_Tuple2', _0: metaDragToConnect.fromIndex, _1: metaDragToConnect.toIndex};
+									if (((_p19.ctor === '_Tuple2') && (_p19._0.ctor === 'Just')) && (_p19._1.ctor === 'Just')) {
+										return A3(_user$project$Main_UI_MetaDragToConnect$nextConnection, state, _p19._0._0, _p19._1._0);
 									} else {
 										return {ctor: '[]'};
 									}
@@ -13168,19 +13172,15 @@ var _user$project$Main_UI$view = function (state) {
 		do {
 			if ((_p8.ctor === '_Tuple3') && (_p8._0.ctor === 'Just')) {
 				if (_p8._1.ctor === 'Just') {
-					return {
-						ctor: '::',
-						_0: A2(
-							connectionLine,
-							true,
-							connection(
-								_user$project$Main_UI_ConnectionViewModel$from(
-									{
-										output: {gate: _p8._0._0, index: 0},
-										input: {gate: _p8._1._0, index: 0}
-									}))),
-						_1: {ctor: '[]'}
-					};
+					return A2(
+						_elm_lang$core$List$map,
+						function (_p9) {
+							return A2(
+								connectionLine,
+								true,
+								connection(_p9));
+						},
+						A3(_user$project$Main_UI_MetaDragToConnect$nextConnection, state, _p8._0._0, _p8._1._0));
 				} else {
 					if (_p8._2.ctor === 'Just') {
 						var from = A2(
@@ -13215,11 +13215,11 @@ var _user$project$Main_UI$view = function (state) {
 				ctor: '::',
 				_0: A2(
 					_elm_lang$core$List$map,
-					function (_p9) {
+					function (_p10) {
 						return A2(
 							connectionLine,
 							false,
-							connection(_p9));
+							connection(_p10));
 					},
 					state.connections),
 				_1: {
