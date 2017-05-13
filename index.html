@@ -13053,12 +13053,15 @@ var _user$project$UI_Styles$stylesheet = A3(
 		_0: _elm_lang$html$Html$text(_user$project$UI_Styles$css),
 		_1: {ctor: '[]'}
 	});
+var _user$project$Main_UI$Invalid = {ctor: 'Invalid'};
+var _user$project$Main_UI$Dashed = {ctor: 'Dashed'};
+var _user$project$Main_UI$Solid = {ctor: 'Solid'};
 var _user$project$Main_UI$view = function (state) {
 	var connectionLine = F2(
-		function (dashed, _p0) {
+		function (style, _p0) {
 			var _p1 = _p0;
-			var _p3 = _p1._1;
-			var _p2 = _p1._0;
+			var _p4 = _p1._1;
+			var _p3 = _p1._0;
 			return A2(
 				_elm_lang$svg$Svg$g,
 				{ctor: '[]'},
@@ -13071,19 +13074,19 @@ var _user$project$Main_UI$view = function (state) {
 							{
 								ctor: '::',
 								_0: _elm_lang$svg$Svg_Attributes$x1(
-									_elm_lang$core$Basics$toString(_p2.x)),
+									_elm_lang$core$Basics$toString(_p3.x)),
 								_1: {
 									ctor: '::',
 									_0: _elm_lang$svg$Svg_Attributes$y1(
-										_elm_lang$core$Basics$toString(_p2.y)),
+										_elm_lang$core$Basics$toString(_p3.y)),
 									_1: {
 										ctor: '::',
 										_0: _elm_lang$svg$Svg_Attributes$x2(
-											_elm_lang$core$Basics$toString(_p3.x)),
+											_elm_lang$core$Basics$toString(_p4.x)),
 										_1: {
 											ctor: '::',
 											_0: _elm_lang$svg$Svg_Attributes$y2(
-												_elm_lang$core$Basics$toString(_p3.y)),
+												_elm_lang$core$Basics$toString(_p4.y)),
 											_1: {
 												ctor: '::',
 												_0: _elm_lang$svg$Svg_Attributes$strokeWidth(
@@ -13091,23 +13094,45 @@ var _user$project$Main_UI$view = function (state) {
 														_user$project$UI_Gate$wireStrokeWidth(state))),
 												_1: {
 													ctor: '::',
-													_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
-													_1: {
-														ctor: '::',
-														_0: _elm_lang$svg$Svg_Attributes$fill('none'),
-														_1: {ctor: '[]'}
-													}
+													_0: _elm_lang$svg$Svg_Attributes$fill('none'),
+													_1: {ctor: '[]'}
 												}
 											}
 										}
 									}
 								}
 							},
-							dashed ? {
-								ctor: '::',
-								_0: _elm_lang$svg$Svg_Attributes$strokeDasharray('5,5'),
-								_1: {ctor: '[]'}
-							} : {ctor: '[]'}),
+							function () {
+								var _p2 = style;
+								switch (_p2.ctor) {
+									case 'Solid':
+										return {
+											ctor: '::',
+											_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
+											_1: {ctor: '[]'}
+										};
+									case 'Dashed':
+										return {
+											ctor: '::',
+											_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$svg$Svg_Attributes$strokeDasharray('5,5'),
+												_1: {ctor: '[]'}
+											}
+										};
+									default:
+										return {
+											ctor: '::',
+											_0: _elm_lang$svg$Svg_Attributes$stroke('red'),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$svg$Svg_Attributes$strokeDasharray('5,5'),
+												_1: {ctor: '[]'}
+											}
+										};
+								}
+							}()),
 						{ctor: '[]'}),
 					_1: {ctor: '[]'}
 				});
@@ -13130,9 +13155,9 @@ var _user$project$Main_UI$view = function (state) {
 	};
 	var gate = F2(
 		function (index, model) {
-			var _p4 = shapeAndTransform(model);
-			var gate = _p4._0;
-			var transform = _p4._1;
+			var _p5 = shapeAndTransform(model);
+			var gate = _p5._0;
+			var transform = _p5._1;
 			return A2(
 				_elm_lang$svg$Svg$g,
 				{ctor: '[]'},
@@ -13162,16 +13187,16 @@ var _user$project$Main_UI$view = function (state) {
 		});
 	var position = F2(
 		function (connections, connection) {
-			var _p5 = shapeAndTransform(
+			var _p6 = shapeAndTransform(
 				A2(_user$project$Unsafe$nth, connection.gate, state.gates));
-			var gate = _p5._0;
-			var transform = _p5._1;
+			var gate = _p6._0;
+			var transform = _p6._1;
 			return A2(
 				_benansell$elm_geometric_transformation$Transformer2D$apply,
 				transform,
-				function (_p6) {
-					var _p7 = _p6;
-					return {x: _p7._0, y: _p7._1};
+				function (_p7) {
+					var _p8 = _p7;
+					return {x: _p8._0, y: _p8._1};
 				}(
 					A2(
 						_user$project$Unsafe$nth,
@@ -13194,22 +13219,22 @@ var _user$project$Main_UI$view = function (state) {
 		return {ctor: '_Tuple2', _0: from, _1: to};
 	};
 	var currentConnection = function () {
-		var _p8 = {ctor: '_Tuple3', _0: state.dragChain.metaDragToConnect.fromIndex, _1: state.dragChain.metaDragToConnect.toIndex, _2: state.dragChain.metaDragToConnect.to};
-		_v2_2:
+		var _p9 = {ctor: '_Tuple3', _0: state.dragChain.metaDragToConnect.fromIndex, _1: state.dragChain.metaDragToConnect.toIndex, _2: state.dragChain.metaDragToConnect.to};
+		_v3_2:
 		do {
-			if ((_p8.ctor === '_Tuple3') && (_p8._0.ctor === 'Just')) {
-				if (_p8._1.ctor === 'Just') {
-					if (_p8._2.ctor === 'Just') {
-						var _p10 = _p8._0._0;
+			if ((_p9.ctor === '_Tuple3') && (_p9._0.ctor === 'Just')) {
+				if (_p9._1.ctor === 'Just') {
+					if (_p9._2.ctor === 'Just') {
+						var _p11 = _p9._0._0;
 						return function (nextConnection) {
-							var _p9 = nextConnection;
-							if (_p9.ctor === 'Just') {
+							var _p10 = nextConnection;
+							if (_p10.ctor === 'Just') {
 								return {
 									ctor: '::',
 									_0: A2(
 										connectionLine,
-										false,
-										connection(_p9._0)),
+										_user$project$Main_UI$Dashed,
+										connection(_p10._0)),
 									_1: {ctor: '[]'}
 								};
 							} else {
@@ -13218,44 +13243,44 @@ var _user$project$Main_UI$view = function (state) {
 									function (_) {
 										return _.outputs;
 									},
-									{gate: _p10, index: 0});
+									{gate: _p11, index: 0});
 								return {
 									ctor: '::',
 									_0: A2(
 										connectionLine,
-										true,
-										{ctor: '_Tuple2', _0: from, _1: _p8._2._0}),
+										_user$project$Main_UI$Invalid,
+										{ctor: '_Tuple2', _0: from, _1: _p9._2._0}),
 									_1: {ctor: '[]'}
 								};
 							}
 						}(
 							_elm_lang$core$List$head(
-								A3(_user$project$Main_UI_MetaDragToConnect$nextConnection, state, _p10, _p8._1._0)));
+								A3(_user$project$Main_UI_MetaDragToConnect$nextConnection, state, _p11, _p9._1._0)));
 					} else {
-						break _v2_2;
+						break _v3_2;
 					}
 				} else {
-					if (_p8._2.ctor === 'Just') {
+					if (_p9._2.ctor === 'Just') {
 						var from = A2(
 							position,
 							function (_) {
 								return _.outputs;
 							},
-							{gate: _p8._0._0, index: 0});
+							{gate: _p9._0._0, index: 0});
 						return {
 							ctor: '::',
 							_0: A2(
 								connectionLine,
-								true,
-								{ctor: '_Tuple2', _0: from, _1: _p8._2._0}),
+								_user$project$Main_UI$Dashed,
+								{ctor: '_Tuple2', _0: from, _1: _p9._2._0}),
 							_1: {ctor: '[]'}
 						};
 					} else {
-						break _v2_2;
+						break _v3_2;
 					}
 				}
 			} else {
-				break _v2_2;
+				break _v3_2;
 			}
 		} while(false);
 		return {ctor: '[]'};
@@ -13268,11 +13293,11 @@ var _user$project$Main_UI$view = function (state) {
 				ctor: '::',
 				_0: A2(
 					_elm_lang$core$List$map,
-					function (_p11) {
+					function (_p12) {
 						return A2(
 							connectionLine,
-							false,
-							connection(_p11));
+							_user$project$Main_UI$Solid,
+							connection(_p12));
 					},
 					state.connections),
 				_1: {
