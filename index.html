@@ -10665,6 +10665,28 @@ var _user$project$Canvas_UI$view = F4(
 					_1: {ctor: '[]'}
 				}));
 	});
+var _user$project$Main_UI_ConnectionViewModel$input = function (_p0) {
+	var _p1 = _p0;
+	return _p1._0.input;
+};
+var _user$project$Main_UI_ConnectionViewModel$output = function (_p2) {
+	var _p3 = _p2;
+	return _p3._0.output;
+};
+var _user$project$Main_UI_ConnectionViewModel$Connection = F2(
+	function (a, b) {
+		return {gate: a, index: b};
+	});
+var _user$project$Main_UI_ConnectionViewModel$Model = F2(
+	function (a, b) {
+		return {output: a, input: b};
+	});
+var _user$project$Main_UI_ConnectionViewModel$ConnectionViewModel = function (a) {
+	return {ctor: 'ConnectionViewModel', _0: a};
+};
+var _user$project$Main_UI_ConnectionViewModel$from = function (model) {
+	return _user$project$Main_UI_ConnectionViewModel$ConnectionViewModel(model);
+};
 var _user$project$UI_Shape$spaceSeparated = F2(
 	function (command, elements) {
 		return A2(
@@ -12130,28 +12152,6 @@ var _user$project$Main_UI_GateViewModel$moved = function (_p20) {
 		return _p21;
 	}
 };
-var _user$project$Main_UI_ConnectionViewModel$input = function (_p0) {
-	var _p1 = _p0;
-	return _p1._0.input;
-};
-var _user$project$Main_UI_ConnectionViewModel$output = function (_p2) {
-	var _p3 = _p2;
-	return _p3._0.output;
-};
-var _user$project$Main_UI_ConnectionViewModel$Connection = F2(
-	function (a, b) {
-		return {gate: a, index: b};
-	});
-var _user$project$Main_UI_ConnectionViewModel$Model = F2(
-	function (a, b) {
-		return {output: a, input: b};
-	});
-var _user$project$Main_UI_ConnectionViewModel$ConnectionViewModel = function (a) {
-	return {ctor: 'ConnectionViewModel', _0: a};
-};
-var _user$project$Main_UI_ConnectionViewModel$from = function (model) {
-	return _user$project$Main_UI_ConnectionViewModel$ConnectionViewModel(model);
-};
 var _user$project$Main_UI_DragToMoveSelection$bottomRightOf = function (shape) {
 	return {x: shape.left + shape.width, y: shape.top + shape.height};
 };
@@ -13068,31 +13068,28 @@ var _user$project$Main_UI$view = function (state) {
 			var _p1 = _p0;
 			var _p4 = _p1._1;
 			var _p3 = _p1._0;
-			return A2(
-				_elm_lang$svg$Svg$g,
-				{ctor: '[]'},
-				{
-					ctor: '::',
-					_0: A2(
+			var line = F2(
+				function (from, to) {
+					return A2(
 						_elm_lang$svg$Svg$line,
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							{
 								ctor: '::',
 								_0: _elm_lang$svg$Svg_Attributes$x1(
-									_elm_lang$core$Basics$toString(_p3.x)),
+									_elm_lang$core$Basics$toString(from.x)),
 								_1: {
 									ctor: '::',
 									_0: _elm_lang$svg$Svg_Attributes$y1(
-										_elm_lang$core$Basics$toString(_p3.y)),
+										_elm_lang$core$Basics$toString(from.y)),
 									_1: {
 										ctor: '::',
 										_0: _elm_lang$svg$Svg_Attributes$x2(
-											_elm_lang$core$Basics$toString(_p4.x)),
+											_elm_lang$core$Basics$toString(to.x)),
 										_1: {
 											ctor: '::',
 											_0: _elm_lang$svg$Svg_Attributes$y2(
-												_elm_lang$core$Basics$toString(_p4.y)),
+												_elm_lang$core$Basics$toString(to.y)),
 											_1: {
 												ctor: '::',
 												_0: _elm_lang$svg$Svg_Attributes$strokeWidth(
@@ -13139,8 +13136,26 @@ var _user$project$Main_UI$view = function (state) {
 										};
 								}
 							}()),
-						{ctor: '[]'}),
-					_1: {ctor: '[]'}
+						{ctor: '[]'});
+				});
+			var midpoint = _p3.x + ((_p4.x - _p3.x) / 2);
+			var upper = {x: midpoint, y: _p3.y};
+			var lower = {x: midpoint, y: _p4.y};
+			return A2(
+				_elm_lang$svg$Svg$g,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: A2(line, _p3, upper),
+					_1: {
+						ctor: '::',
+						_0: A2(line, upper, lower),
+						_1: {
+							ctor: '::',
+							_0: A2(line, lower, _p4),
+							_1: {ctor: '[]'}
+						}
+					}
 				});
 		});
 	var verticalSpacing = state.verticalSpacing;
