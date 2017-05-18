@@ -13068,95 +13068,98 @@ var _user$project$Main_UI$view = function (state) {
 			var _p1 = _p0;
 			var _p4 = _p1._1;
 			var _p3 = _p1._0;
-			var line = F2(
-				function (from, to) {
-					return A2(
-						_elm_lang$svg$Svg$line,
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							{
-								ctor: '::',
-								_0: _elm_lang$svg$Svg_Attributes$x1(
-									_elm_lang$core$Basics$toString(from.x)),
-								_1: {
+			var midpoint = _p3.x + ((_p4.x - _p3.x) / 2);
+			return A2(
+				_elm_lang$svg$Svg$path,
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					{
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$d(
+							A2(
+								_elm_lang$core$String$join,
+								' ',
+								{
 									ctor: '::',
-									_0: _elm_lang$svg$Svg_Attributes$y1(
-										_elm_lang$core$Basics$toString(from.y)),
+									_0: 'M',
 									_1: {
 										ctor: '::',
-										_0: _elm_lang$svg$Svg_Attributes$x2(
-											_elm_lang$core$Basics$toString(to.x)),
+										_0: _elm_lang$core$Basics$toString(_p3.x),
 										_1: {
 											ctor: '::',
-											_0: _elm_lang$svg$Svg_Attributes$y2(
-												_elm_lang$core$Basics$toString(to.y)),
+											_0: _elm_lang$core$Basics$toString(_p3.y),
 											_1: {
 												ctor: '::',
-												_0: _elm_lang$svg$Svg_Attributes$strokeWidth(
-													_elm_lang$core$Basics$toString(
-														_user$project$UI_Gate$wireStrokeWidth(state))),
+												_0: 'H',
 												_1: {
 													ctor: '::',
-													_0: _elm_lang$svg$Svg_Attributes$fill('none'),
-													_1: {ctor: '[]'}
+													_0: _elm_lang$core$Basics$toString(midpoint),
+													_1: {
+														ctor: '::',
+														_0: 'V',
+														_1: {
+															ctor: '::',
+															_0: _elm_lang$core$Basics$toString(_p4.y),
+															_1: {
+																ctor: '::',
+																_0: 'H',
+																_1: {
+																	ctor: '::',
+																	_0: _elm_lang$core$Basics$toString(_p4.x),
+																	_1: {ctor: '[]'}
+																}
+															}
+														}
+													}
 												}
 											}
 										}
 									}
-								}
-							},
-							function () {
-								var _p2 = style;
-								switch (_p2.ctor) {
-									case 'Solid':
-										return {
-											ctor: '::',
-											_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
-											_1: {ctor: '[]'}
-										};
-									case 'Dashed':
-										return {
-											ctor: '::',
-											_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
-											_1: {
-												ctor: '::',
-												_0: _elm_lang$svg$Svg_Attributes$strokeDasharray('5,5'),
-												_1: {ctor: '[]'}
-											}
-										};
-									default:
-										return {
-											ctor: '::',
-											_0: _elm_lang$svg$Svg_Attributes$stroke('red'),
-											_1: {
-												ctor: '::',
-												_0: _elm_lang$svg$Svg_Attributes$strokeDasharray('5,5'),
-												_1: {ctor: '[]'}
-											}
-										};
-								}
-							}()),
-						{ctor: '[]'});
-				});
-			var midpoint = _p3.x + ((_p4.x - _p3.x) / 2);
-			var upper = {x: midpoint, y: _p3.y};
-			var lower = {x: midpoint, y: _p4.y};
-			return A2(
-				_elm_lang$svg$Svg$g,
-				{ctor: '[]'},
-				{
-					ctor: '::',
-					_0: A2(line, _p3, upper),
-					_1: {
-						ctor: '::',
-						_0: A2(line, upper, lower),
+								})),
 						_1: {
 							ctor: '::',
-							_0: A2(line, lower, _p4),
-							_1: {ctor: '[]'}
+							_0: _elm_lang$svg$Svg_Attributes$strokeWidth(
+								_elm_lang$core$Basics$toString(
+									_user$project$UI_Gate$wireStrokeWidth(state))),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$svg$Svg_Attributes$fill('none'),
+								_1: {ctor: '[]'}
+							}
 						}
-					}
-				});
+					},
+					function () {
+						var _p2 = style;
+						switch (_p2.ctor) {
+							case 'Solid':
+								return {
+									ctor: '::',
+									_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
+									_1: {ctor: '[]'}
+								};
+							case 'Dashed':
+								return {
+									ctor: '::',
+									_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$svg$Svg_Attributes$strokeDasharray('5,5'),
+										_1: {ctor: '[]'}
+									}
+								};
+							default:
+								return {
+									ctor: '::',
+									_0: _elm_lang$svg$Svg_Attributes$stroke('red'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$svg$Svg_Attributes$strokeDasharray('5,5'),
+										_1: {ctor: '[]'}
+									}
+								};
+						}
+					}()),
+				{ctor: '[]'});
 		});
 	var verticalSpacing = state.verticalSpacing;
 	var horizontalSpacing = state.horizontalSpacing;
