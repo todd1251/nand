@@ -12057,6 +12057,10 @@ var _user$project$UI_Gate$Nand = {ctor: 'Nand'};
 var _user$project$UI_Gate$And = {ctor: 'And'};
 var _user$project$UI_Gate$Not = {ctor: 'Not'};
 var _user$project$UI_Gate$Buffer = {ctor: 'Buffer'};
+var _user$project$Main_UI_GateViewModel$isAllowed = function (_p0) {
+	var _p1 = _p0;
+	return _p1._0.allowed;
+};
 var _user$project$Main_UI_GateViewModel$origin = function (windowSize) {
 	var y = _elm_lang$core$Basics$toFloat(windowSize.height) / 2;
 	var x = _elm_lang$core$Basics$toFloat(windowSize.width) / 2;
@@ -12064,29 +12068,29 @@ var _user$project$Main_UI_GateViewModel$origin = function (windowSize) {
 		{ctor: '_Tuple2', _0: x, _1: y});
 };
 var _user$project$Main_UI_GateViewModel$transform = F2(
-	function (windowSize, _p0) {
-		var _p1 = _p0;
-		var _p2 = _p1._0;
+	function (windowSize, _p2) {
+		var _p3 = _p2;
+		var _p4 = _p3._0;
 		return A2(
 			_benansell$elm_geometric_transformation$Transformer2D$combine,
 			_user$project$Main_UI_GateViewModel$origin(windowSize),
-			A2(_elm_lang$core$Maybe$withDefault, _p2.transform, _p2.move));
+			A2(_elm_lang$core$Maybe$withDefault, _p4.transform, _p4.move));
 	});
-var _user$project$Main_UI_GateViewModel$gate = function (_p3) {
-	var _p4 = _p3;
-	return _p4._0.gate;
-};
-var _user$project$Main_UI_GateViewModel$isConnected = function (_p5) {
+var _user$project$Main_UI_GateViewModel$gate = function (_p5) {
 	var _p6 = _p5;
-	return _p6._0.connected;
+	return _p6._0.gate;
 };
-var _user$project$Main_UI_GateViewModel$isSelected = function (_p7) {
+var _user$project$Main_UI_GateViewModel$isConnected = function (_p7) {
 	var _p8 = _p7;
-	return _p8._0.selected;
+	return _p8._0.connected;
 };
-var _user$project$Main_UI_GateViewModel$Model = F5(
-	function (a, b, c, d, e) {
-		return {gate: a, selected: b, connected: c, transform: d, move: e};
+var _user$project$Main_UI_GateViewModel$isSelected = function (_p9) {
+	var _p10 = _p9;
+	return _p10._0.selected;
+};
+var _user$project$Main_UI_GateViewModel$Model = F6(
+	function (a, b, c, d, e, f) {
+		return {gate: a, selected: b, connected: c, transform: d, move: e, allowed: f};
 	});
 var _user$project$Main_UI_GateViewModel$GateViewModel = function (a) {
 	return {ctor: 'GateViewModel', _0: a};
@@ -12095,63 +12099,71 @@ var _user$project$Main_UI_GateViewModel$from = function (model) {
 	return _user$project$Main_UI_GateViewModel$GateViewModel(model);
 };
 var _user$project$Main_UI_GateViewModel$selected = F2(
-	function (selected, _p9) {
-		var _p10 = _p9;
-		return _user$project$Main_UI_GateViewModel$GateViewModel(
-			_elm_lang$core$Native_Utils.update(
-				_p10._0,
-				{selected: selected}));
-	});
-var _user$project$Main_UI_GateViewModel$connected = F2(
-	function (connected, _p11) {
+	function (selected, _p11) {
 		var _p12 = _p11;
 		return _user$project$Main_UI_GateViewModel$GateViewModel(
 			_elm_lang$core$Native_Utils.update(
 				_p12._0,
+				{selected: selected}));
+	});
+var _user$project$Main_UI_GateViewModel$connected = F2(
+	function (connected, _p13) {
+		var _p14 = _p13;
+		return _user$project$Main_UI_GateViewModel$GateViewModel(
+			_elm_lang$core$Native_Utils.update(
+				_p14._0,
 				{connected: connected}));
 	});
-var _user$project$Main_UI_GateViewModel$willMove = function (_p13) {
-	var _p14 = _p13;
-	var _p15 = _p14._0;
+var _user$project$Main_UI_GateViewModel$willMove = function (_p15) {
+	var _p16 = _p15;
+	var _p17 = _p16._0;
 	return _user$project$Main_UI_GateViewModel$GateViewModel(
 		_elm_lang$core$Native_Utils.update(
-			_p15,
+			_p17,
 			{
-				move: _elm_lang$core$Maybe$Just(_p15.transform),
+				move: _elm_lang$core$Maybe$Just(_p17.transform),
 				selected: true
 			}));
 };
 var _user$project$Main_UI_GateViewModel$moving = F3(
-	function (delta, transform, _p16) {
-		var _p17 = _p16;
-		var _p19 = _p17._0;
-		var _p18 = _p19.move;
-		if (_p18.ctor === 'Just') {
+	function (delta, transform, _p18) {
+		var _p19 = _p18;
+		var _p21 = _p19._0;
+		var _p20 = _p21.move;
+		if (_p20.ctor === 'Just') {
 			return _user$project$Main_UI_GateViewModel$GateViewModel(
 				_elm_lang$core$Native_Utils.update(
-					_p19,
+					_p21,
 					{
 						move: _elm_lang$core$Maybe$Just(
-							A3(_user$project$Transform$translatePointBeforeScale, delta, transform, _p18._0)),
+							A3(_user$project$Transform$translatePointBeforeScale, delta, transform, _p20._0)),
 						selected: true
 					}));
 		} else {
-			return _p17;
+			return _p19;
 		}
 	});
-var _user$project$Main_UI_GateViewModel$moved = function (_p20) {
-	var _p21 = _p20;
-	var _p23 = _p21._0;
-	var _p22 = _p23.move;
-	if (_p22.ctor === 'Just') {
+var _user$project$Main_UI_GateViewModel$moved = function (_p22) {
+	var _p23 = _p22;
+	var _p25 = _p23._0;
+	var _p24 = _p25.move;
+	if (_p24.ctor === 'Just') {
 		return _user$project$Main_UI_GateViewModel$GateViewModel(
 			_elm_lang$core$Native_Utils.update(
-				_p23,
-				{move: _elm_lang$core$Maybe$Nothing, transform: _p22._0, selected: false}));
+				_p25,
+				{move: _elm_lang$core$Maybe$Nothing, transform: _p24._0, selected: false}));
 	} else {
-		return _p21;
+		return _p23;
 	}
 };
+var _user$project$Main_UI_GateViewModel$allowed = F2(
+	function (allowed, _p26) {
+		var _p27 = _p26;
+		return _user$project$Main_UI_GateViewModel$GateViewModel(
+			_elm_lang$core$Native_Utils.update(
+				_p27._0,
+				{allowed: allowed}));
+	});
 var _user$project$Main_UI_DragToMoveSelection$bottomRightOf = function (shape) {
 	return {x: shape.left + shape.width, y: shape.top + shape.height};
 };
@@ -12510,10 +12522,23 @@ var _user$project$Main_UI_MetaDragToConnect$update = F2(
 		var _p20 = message;
 		switch (_p20.ctor) {
 			case 'OnDragStart':
+				var _p22 = _p20._1;
 				var _p21 = _p20._0;
 				return {
 					ctor: '_Tuple2',
-					_0: _p21.metaKey ? _elm_lang$core$Native_Utils.update(
+					_0: _p21.metaKey ? (_elm_lang$core$Native_Utils.eq(
+						A2(_user$project$Main_UI_MetaDragToConnect$nextOutput, state, _p22),
+						_elm_lang$core$Maybe$Nothing) ? _elm_lang$core$Native_Utils.update(
+						state,
+						{
+							gates: A2(
+								_elm_lang$core$List$indexedMap,
+								F2(
+									function (gateIndex, gate) {
+										return _elm_lang$core$Native_Utils.eq(gateIndex, _p22) ? A2(_user$project$Main_UI_GateViewModel$allowed, false, gate) : gate;
+									}),
+								state.gates)
+						}) : _elm_lang$core$Native_Utils.update(
 						state,
 						{
 							dragChain: _elm_lang$core$Native_Utils.update(
@@ -12522,7 +12547,7 @@ var _user$project$Main_UI_MetaDragToConnect$update = F2(
 									metaDragToConnect: _elm_lang$core$Native_Utils.update(
 										metaDragToConnect,
 										{
-											fromIndex: _elm_lang$core$Maybe$Just(_p20._1),
+											fromIndex: _elm_lang$core$Maybe$Just(_p22),
 											from: _elm_lang$core$Maybe$Just(
 												{
 													x: _elm_lang$core$Basics$toFloat(_p21.offsetX),
@@ -12536,17 +12561,17 @@ var _user$project$Main_UI_MetaDragToConnect$update = F2(
 												})
 										})
 								})
-						}) : state,
+						})) : state,
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'OnDragBy':
 				return {
 					ctor: '_Tuple2',
 					_0: function () {
-						var _p22 = metaDragToConnect.to;
-						if (_p22.ctor === 'Just') {
-							var _p23 = _p22._0;
-							var position = {x: _p23.x + _p20._0._0, y: _p23.y + _p20._0._1};
+						var _p23 = metaDragToConnect.to;
+						if (_p23.ctor === 'Just') {
+							var _p24 = _p23._0;
+							var position = {x: _p24.x + _p20._0._0, y: _p24.y + _p20._0._1};
 							var state_ = _elm_lang$core$Native_Utils.update(
 								state,
 								{
@@ -12593,9 +12618,9 @@ var _user$project$Main_UI_MetaDragToConnect$update = F2(
 								_elm_lang$core$Basics_ops['++'],
 								state.connections,
 								function () {
-									var _p24 = {ctor: '_Tuple2', _0: metaDragToConnect.fromIndex, _1: metaDragToConnect.toIndex};
-									if (((_p24.ctor === '_Tuple2') && (_p24._0.ctor === 'Just')) && (_p24._1.ctor === 'Just')) {
-										return A3(_user$project$Main_UI_MetaDragToConnect$nextConnection, state, _p24._0._0, _p24._1._0);
+									var _p25 = {ctor: '_Tuple2', _0: metaDragToConnect.fromIndex, _1: metaDragToConnect.toIndex};
+									if (((_p25.ctor === '_Tuple2') && (_p25._0.ctor === 'Just')) && (_p25._1.ctor === 'Just')) {
+										return A3(_user$project$Main_UI_MetaDragToConnect$nextConnection, state, _p25._0._0, _p25._1._0);
 									} else {
 										return {ctor: '[]'};
 									}
@@ -12960,7 +12985,7 @@ var _user$project$Main_UI_Controller$gates = function (state) {
 			var dimensions = {width: state.width};
 			var transform = A5(_user$project$Main_UI_Controller$gateTransform, _p2._0, _p2._1, state.horizontalSpacing, state.verticalSpacing, dimensions);
 			return _user$project$Main_UI_GateViewModel$from(
-				{gate: _p2._2, selected: false, connected: false, transform: transform, move: _elm_lang$core$Maybe$Nothing});
+				{gate: _p2._2, selected: false, connected: false, transform: transform, move: _elm_lang$core$Maybe$Nothing, allowed: true});
 		},
 		{
 			ctor: '::',
@@ -13049,7 +13074,7 @@ var _user$project$Main_UI_Controller$init = function () {
 						_1: _elm_lang$core$Platform_Cmd$none
 					}))));
 }();
-var _user$project$UI_Styles$css = '\n    html, body {\n        xheight: 100%;\n        margin: 0;\n        xoverflow: hidden;\n        padding: 0;\n        xwidth: 100%;\n    }\n\n    * {\n        user-select: none;\n    }\n\n    .controls {\n        background: #eee;\n        border: 1px solid #ccc;\n        border-radius: 5px;\n        margin: 1.5em 0 0 1.5em;\n        padding: 0 0.5em 1em 0.5em;\n        position: fixed;\n        user-select: none;\n        width: 150px;\n        z-index: 1;\n    }\n\n    .controls label, .controls input {\n        display: block;\n        margin: 0.25em auto;\n    }\n\n    .controls label {\n        margin: 1.5em 0 0 0.5em;\n    }\n\n    .canvas {\n        background: white;\n        height: 100%;\n        position: fixed;\n        user-select: none;\n        width: 100%;\n    }\n    ';
+var _user$project$UI_Styles$css = '\n    html, body {\n        margin: 0;\n        padding: 0;\n    }\n\n    * {\n        user-select: none;\n    }\n\n    .controls {\n        background: #eee;\n        border: 1px solid #ccc;\n        border-radius: 5px;\n        margin: 1.5em 0 0 1.5em;\n        padding: 0 0.5em 1em 0.5em;\n        position: fixed;\n        user-select: none;\n        width: 150px;\n        z-index: 1;\n    }\n\n    .controls label, .controls input {\n        display: block;\n        margin: 0.25em auto;\n    }\n\n    .controls label {\n        margin: 1.5em 0 0 0.5em;\n    }\n\n    .canvas {\n        background: white;\n        height: 100%;\n        position: fixed;\n        user-select: none;\n        width: 100%;\n    }\n\n    .not-allowed {\n        cursor: not-allowed;\n    }\n    ';
 var _user$project$UI_Styles$stylesheet = A3(
 	_elm_lang$html$Html$node,
 	'style',
@@ -13189,11 +13214,18 @@ var _user$project$Main_UI$view = function (state) {
 					ctor: '::',
 					_0: A2(
 						_user$project$UI_Shape$toSvgWithEvents,
-						{
-							ctor: '::',
-							_0: _user$project$Main_UI_Controller$dragChain(index),
-							_1: {ctor: '[]'}
-						},
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							{
+								ctor: '::',
+								_0: _user$project$Main_UI_Controller$dragChain(index),
+								_1: {ctor: '[]'}
+							},
+							_user$project$Main_UI_GateViewModel$isAllowed(model) ? {ctor: '[]'} : {
+								ctor: '::',
+								_0: _elm_lang$svg$Svg_Attributes$class('not-allowed'),
+								_1: {ctor: '[]'}
+							}),
 						A2(
 							_user$project$UI_Shape$Group,
 							{
