@@ -11002,6 +11002,24 @@ var _user$project$UI_Shape$fromDescription = function (description) {
 								_0: _p0._0,
 								_1: {ctor: '[]'}
 							});
+					case 'VerticalLineTo':
+						return A2(
+							_user$project$UI_Shape$spaceSeparated,
+							'V',
+							{
+								ctor: '::',
+								_0: _p0._0,
+								_1: {ctor: '[]'}
+							});
+					case 'VerticalLineBy':
+						return A2(
+							_user$project$UI_Shape$spaceSeparated,
+							'v',
+							{
+								ctor: '::',
+								_0: _p0._0,
+								_1: {ctor: '[]'}
+							});
 					case 'ArcTo':
 						return A8(arc, 'A', _p0._0, _p0._1, _p0._2, _p0._3, _p0._4, _p0._5, _p0._6);
 					case 'ArcBy':
@@ -11138,6 +11156,12 @@ var _user$project$UI_Shape$ArcTo = F7(
 	function (a, b, c, d, e, f, g) {
 		return {ctor: 'ArcTo', _0: a, _1: b, _2: c, _3: d, _4: e, _5: f, _6: g};
 	});
+var _user$project$UI_Shape$VerticalLineBy = function (a) {
+	return {ctor: 'VerticalLineBy', _0: a};
+};
+var _user$project$UI_Shape$VerticalLineTo = function (a) {
+	return {ctor: 'VerticalLineTo', _0: a};
+};
 var _user$project$UI_Shape$HorizontalLineBy = function (a) {
 	return {ctor: 'HorizontalLineBy', _0: a};
 };
@@ -11228,6 +11252,14 @@ var _user$project$UI_Gate$transformation = F2(
 				ctor: '::',
 				_0: shape,
 				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$UI_Gate$transformed = F4(
+	function (transform, dimensions, appearance, gate) {
+		return _elm_lang$core$Native_Utils.update(
+			gate,
+			{
+				shape: A2(_user$project$UI_Gate$transformation, gate.shape, transform)
 			});
 	});
 var _user$project$UI_Gate$centred = F3(
@@ -12181,11 +12213,118 @@ var _user$project$UI_Gate$xnor8 = F2(
 			A2(_user$project$UI_Gate$inputWirePoints, 2, dimensions),
 			A2(_user$project$UI_Gate$outputWirePoints, 1, dimensions));
 	});
+var _user$project$UI_Gate$grouping = F3(
+	function (_p9, dimensions, appearance) {
+		var _p10 = _p9;
+		var _p13 = _p10._1;
+		var gate__ = function () {
+			var _p11 = _p10._0;
+			if (_p11.ctor === 'Buffer') {
+				return A5(_user$project$UI_Gate$gate, dimensions, appearance, _user$project$UI_Gate$flatBase, _user$project$UI_Gate$noBody, _user$project$UI_Gate$arrowTip);
+			} else {
+				return _elm_lang$core$Native_Utils.crashCase(
+					'UI.Gate',
+					{
+						start: {line: 769, column: 13},
+						end: {line: 774, column: 39}
+					},
+					_p11)('TODO');
+			}
+		}();
+		var offset = 2 * _user$project$UI_Gate$inverterRadius(dimensions);
+		var grouping = A3(
+			_user$project$UI_Gate$centred,
+			dimensions,
+			appearance,
+			A4(
+				_user$project$UI_Gate$transformed,
+				_p13,
+				dimensions,
+				appearance,
+				_elm_lang$core$Native_Utils.update(
+					gate__,
+					{width: gate__.width + offset})));
+		var bounds = {
+			left: 0,
+			top: 0,
+			width: 0,
+			height: 0,
+			shape: A2(
+				_user$project$UI_Shape$Path,
+				{
+					ctor: '::',
+					_0: A2(_user$project$UI_Shape$MoveTo, _user$project$UI_Gate$origin, _user$project$UI_Gate$origin),
+					_1: {
+						ctor: '::',
+						_0: _user$project$UI_Shape$HorizontalLineTo(grouping.width),
+						_1: {
+							ctor: '::',
+							_0: _user$project$UI_Shape$VerticalLineTo(grouping.height),
+							_1: {
+								ctor: '::',
+								_0: _user$project$UI_Shape$HorizontalLineTo(_user$project$UI_Gate$origin),
+								_1: {
+									ctor: '::',
+									_0: _user$project$UI_Shape$Close,
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				},
+				_user$project$UI_Gate$attributes(appearance))
+		};
+		return A3(
+			_user$project$UI_Gate$group,
+			{
+				ctor: '::',
+				_0: bounds,
+				_1: {
+					ctor: '::',
+					_0: grouping,
+					_1: {
+						ctor: '::',
+						_0: A4(
+							_user$project$UI_Gate$transformed,
+							_p13,
+							dimensions,
+							appearance,
+							A4(
+								_user$project$UI_Gate$inputWires,
+								1,
+								function (y) {
+									return grouping.left;
+								},
+								dimensions,
+								appearance)),
+						_1: {
+							ctor: '::',
+							_0: A4(
+								_user$project$UI_Gate$transformed,
+								_p13,
+								dimensions,
+								appearance,
+								A4(
+									_user$project$UI_Gate$outputWires,
+									1,
+									function (y) {
+										return (grouping.left + grouping.width) - offset;
+									},
+									dimensions,
+									appearance)),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			},
+			A2(_user$project$UI_Gate$inputWirePoints, 1, dimensions),
+			A2(_user$project$UI_Gate$outputWirePoints, 1, dimensions));
+	});
 var _user$project$UI_Gate$toShape = F3(
 	function (dimensions, appearance, gate) {
 		var shape = function () {
-			var _p9 = gate;
-			switch (_p9.ctor) {
+			var _p14 = gate;
+			switch (_p14.ctor) {
 				case 'Buffer':
 					return _user$project$UI_Gate$buffer8;
 				case 'Not':
@@ -12200,8 +12339,10 @@ var _user$project$UI_Gate$toShape = F3(
 					return _user$project$UI_Gate$nor8;
 				case 'Xor':
 					return _user$project$UI_Gate$xor8;
-				default:
+				case 'Xnor':
 					return _user$project$UI_Gate$xnor8;
+				default:
+					return _user$project$UI_Gate$grouping(_p14._0);
 			}
 		}();
 		return A2(shape, dimensions, appearance);
@@ -12221,6 +12362,9 @@ var _user$project$UI_Gate$Segment = F3(
 	function (a, b, c) {
 		return {width: a, height: b, segment: c};
 	});
+var _user$project$UI_Gate$Grouping = function (a) {
+	return {ctor: 'Grouping', _0: a};
+};
 var _user$project$UI_Gate$Xnor = {ctor: 'Xnor'};
 var _user$project$UI_Gate$Xor = {ctor: 'Xor'};
 var _user$project$UI_Gate$Nor = {ctor: 'Nor'};
@@ -13257,7 +13401,21 @@ var _user$project$Main_UI_Controller$gates = function (state) {
 									_1: {
 										ctor: '::',
 										_0: {ctor: '_Tuple3', _0: 2, _1: 4, _2: _user$project$UI_Gate$Xnor},
-										_1: {ctor: '[]'}
+										_1: {
+											ctor: '::',
+											_0: {
+												ctor: '_Tuple3',
+												_0: 0,
+												_1: 0,
+												_2: _user$project$UI_Gate$Grouping(
+													{
+														ctor: '_Tuple2',
+														_0: _user$project$UI_Gate$Buffer,
+														_1: A3(_user$project$Transform$translate, _user$project$Transform$identity, 50, 50)
+													})
+											},
+											_1: {ctor: '[]'}
+										}
 									}
 								}
 							}
