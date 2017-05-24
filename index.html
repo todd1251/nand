@@ -11920,13 +11920,17 @@ var _user$project$UI_Gate$gate = F5(
 			outputs: {ctor: '[]'}
 		};
 	});
-var _user$project$UI_Gate$bufferShape = F2(
+var _user$project$UI_Gate$buffer8 = F2(
 	function (dimensions, appearance) {
 		var gate_ = A5(_user$project$UI_Gate$gate, dimensions, appearance, _user$project$UI_Gate$flatBase, _user$project$UI_Gate$noBody, _user$project$UI_Gate$arrowTip);
 		var offset = 2 * _user$project$UI_Gate$inverterRadius(dimensions);
-		var buffer = _elm_lang$core$Native_Utils.update(
-			gate_,
-			{width: gate_.width + offset});
+		var buffer = A3(
+			_user$project$UI_Gate$centred,
+			dimensions,
+			appearance,
+			_elm_lang$core$Native_Utils.update(
+				gate_,
+				{width: gate_.width + offset}));
 		return A3(
 			_user$project$UI_Gate$group,
 			{
@@ -11958,14 +11962,6 @@ var _user$project$UI_Gate$bufferShape = F2(
 			},
 			A2(_user$project$UI_Gate$inputWirePoints, 1, dimensions),
 			A2(_user$project$UI_Gate$outputWirePoints, 1, dimensions));
-	});
-var _user$project$UI_Gate$buffer8 = F2(
-	function (dimensions, appearance) {
-		return A3(
-			_user$project$UI_Gate$centred,
-			dimensions,
-			appearance,
-			A2(_user$project$UI_Gate$bufferShape, dimensions, appearance));
 	});
 var _user$project$UI_Gate$not8 = F2(
 	function (dimensions, appearance) {
@@ -12229,37 +12225,50 @@ var _user$project$UI_Gate$xnor8 = F2(
 			A2(_user$project$UI_Gate$inputWirePoints, 2, dimensions),
 			A2(_user$project$UI_Gate$outputWirePoints, 1, dimensions));
 	});
-var _user$project$UI_Gate$grouping = F3(
-	function (_p9, dimensions, appearance) {
-		var _p10 = _p9;
-		var _p13 = _p10._1;
-		var gate__ = function () {
-			var _p11 = _p10._0;
-			if (_p11.ctor === 'Buffer') {
-				return A5(_user$project$UI_Gate$gate, dimensions, appearance, _user$project$UI_Gate$flatBase, _user$project$UI_Gate$noBody, _user$project$UI_Gate$arrowTip);
-			} else {
-				return _elm_lang$core$Native_Utils.crashCase(
-					'UI.Gate',
-					{
-						start: {line: 788, column: 13},
-						end: {line: 793, column: 39}
-					},
-					_p11)('TODO');
+var _user$project$UI_Gate$toShape = F3(
+	function (dimensions, appearance, gate) {
+		var shape = function () {
+			var _p9 = gate;
+			switch (_p9.ctor) {
+				case 'Buffer':
+					return _user$project$UI_Gate$buffer8;
+				case 'Not':
+					return _user$project$UI_Gate$not8;
+				case 'And':
+					return _user$project$UI_Gate$and8;
+				case 'Nand':
+					return _user$project$UI_Gate$nand8;
+				case 'Or':
+					return _user$project$UI_Gate$or8;
+				case 'Nor':
+					return _user$project$UI_Gate$nor8;
+				case 'Xor':
+					return _user$project$UI_Gate$xor8;
+				case 'Xnor':
+					return _user$project$UI_Gate$xnor8;
+				default:
+					return _user$project$UI_Gate$grouping(_p9._0);
 			}
 		}();
-		var offset = 2 * _user$project$UI_Gate$inverterRadius(dimensions);
-		var grouping = A3(
-			_user$project$UI_Gate$centred,
-			dimensions,
-			appearance,
-			A4(
-				_user$project$UI_Gate$transformed,
-				_p13,
-				dimensions,
-				appearance,
-				_elm_lang$core$Native_Utils.update(
-					gate__,
-					{width: gate__.width + offset})));
+		return A2(shape, dimensions, appearance);
+	});
+var _user$project$UI_Gate$grouping = F3(
+	function (_p10, dimensions, appearance) {
+		var _p11 = _p10;
+		var _p13 = _p11._1;
+		var gate_ = A3(_user$project$UI_Gate$toShape, dimensions, appearance, _p11._0);
+		var maxWidth = gate_.width;
+		var maxHeight = gate_.height;
+		var _p12 = A2(
+			_benansell$elm_geometric_transformation$Transformer2D$apply,
+			_p13,
+			{x: maxWidth, y: maxHeight});
+		var x = _p12.x;
+		var y = _p12.y;
+		var grouping = A4(_user$project$UI_Gate$transformed, _p13, dimensions, appearance, gate_);
+		var grouping_ = _elm_lang$core$Native_Utils.update(
+			grouping,
+			{width: x, height: y});
 		var bounds = {
 			left: 0,
 			top: 0,
@@ -12272,10 +12281,10 @@ var _user$project$UI_Gate$grouping = F3(
 					_0: A2(_user$project$UI_Shape$MoveTo, _user$project$UI_Gate$origin, _user$project$UI_Gate$origin),
 					_1: {
 						ctor: '::',
-						_0: _user$project$UI_Shape$HorizontalLineTo(grouping.width),
+						_0: _user$project$UI_Shape$HorizontalLineTo(grouping_.width),
 						_1: {
 							ctor: '::',
-							_0: _user$project$UI_Shape$VerticalLineTo(grouping.height),
+							_0: _user$project$UI_Shape$VerticalLineTo(grouping_.height),
 							_1: {
 								ctor: '::',
 								_0: _user$project$UI_Shape$HorizontalLineTo(_user$project$UI_Gate$origin),
@@ -12299,37 +12308,27 @@ var _user$project$UI_Gate$grouping = F3(
 				_0: bounds,
 				_1: {
 					ctor: '::',
-					_0: grouping,
+					_0: grouping_,
 					_1: {
 						ctor: '::',
 						_0: A4(
-							_user$project$UI_Gate$transformed,
-							_p13,
+							_user$project$UI_Gate$inputWires,
+							1,
+							function (y) {
+								return grouping_.left;
+							},
 							dimensions,
-							appearance,
-							A4(
-								_user$project$UI_Gate$inputWires,
-								1,
-								function (y) {
-									return grouping.left;
-								},
-								dimensions,
-								appearance)),
+							appearance),
 						_1: {
 							ctor: '::',
 							_0: A4(
-								_user$project$UI_Gate$transformed,
-								_p13,
+								_user$project$UI_Gate$outputWires,
+								1,
+								function (y) {
+									return grouping_.left + grouping_.width;
+								},
 								dimensions,
-								appearance,
-								A4(
-									_user$project$UI_Gate$outputWires,
-									1,
-									function (y) {
-										return (grouping.left + grouping.width) - offset;
-									},
-									dimensions,
-									appearance)),
+								appearance),
 							_1: {ctor: '[]'}
 						}
 					}
@@ -12337,33 +12336,6 @@ var _user$project$UI_Gate$grouping = F3(
 			},
 			A2(_user$project$UI_Gate$inputWirePoints, 1, dimensions),
 			A2(_user$project$UI_Gate$outputWirePoints, 1, dimensions));
-	});
-var _user$project$UI_Gate$toShape = F3(
-	function (dimensions, appearance, gate) {
-		var shape = function () {
-			var _p14 = gate;
-			switch (_p14.ctor) {
-				case 'Buffer':
-					return _user$project$UI_Gate$buffer8;
-				case 'Not':
-					return _user$project$UI_Gate$not8;
-				case 'And':
-					return _user$project$UI_Gate$and8;
-				case 'Nand':
-					return _user$project$UI_Gate$nand8;
-				case 'Or':
-					return _user$project$UI_Gate$or8;
-				case 'Nor':
-					return _user$project$UI_Gate$nor8;
-				case 'Xor':
-					return _user$project$UI_Gate$xor8;
-				case 'Xnor':
-					return _user$project$UI_Gate$xnor8;
-				default:
-					return _user$project$UI_Gate$grouping(_p14._0);
-			}
-		}();
-		return A2(shape, dimensions, appearance);
 	});
 var _user$project$UI_Gate$Dimensions = function (a) {
 	return {width: a};
