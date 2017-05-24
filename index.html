@@ -11274,7 +11274,9 @@ var _user$project$UI_Gate$centred = F3(
 			shape: A2(
 				_user$project$UI_Gate$transformation,
 				gate.shape,
-				A3(_user$project$Transform$translate, _user$project$Transform$identity, left, top))
+				A3(_user$project$Transform$translate, _user$project$Transform$identity, left, top)),
+			inputs: gate.inputs,
+			outputs: gate.outputs
 		};
 	});
 var _user$project$UI_Gate$noBody = function (dimensions) {
@@ -11483,7 +11485,9 @@ var _user$project$UI_Gate$inverted = F3(
 							_user$project$UI_Gate$attributes(appearance)),
 						_1: {ctor: '[]'}
 					}
-				})
+				}),
+			inputs: gate.inputs,
+			outputs: gate.outputs
 		};
 	});
 var _user$project$UI_Gate$height = function (dimensions) {
@@ -11632,7 +11636,9 @@ var _user$project$UI_Gate$inputWires = F4(
 							};
 						},
 						points)),
-				_user$project$UI_Gate$wireAttributes(appearance))
+				_user$project$UI_Gate$wireAttributes(appearance)),
+			inputs: {ctor: '[]'},
+			outputs: {ctor: '[]'}
 		};
 	});
 var _user$project$UI_Gate$outputWirePoints = F2(
@@ -11731,7 +11737,9 @@ var _user$project$UI_Gate$outputWires = F4(
 							};
 						},
 						points)),
-				_user$project$UI_Gate$wireAttributes(appearance))
+				_user$project$UI_Gate$wireAttributes(appearance)),
+			inputs: {ctor: '[]'},
+			outputs: {ctor: '[]'}
 		};
 	});
 var _user$project$UI_Gate$origin = 0;
@@ -11822,7 +11830,9 @@ var _user$project$UI_Gate$twinCurvedBase = F3(
 							_1: {ctor: '[]'}
 						}
 					});
-			}()
+			}(),
+			inputs: {ctor: '[]'},
+			outputs: {ctor: '[]'}
 		};
 	});
 var _user$project$UI_Gate$moveToOrigin = _user$project$UI_Shape$MoveToOrigin;
@@ -11905,20 +11915,18 @@ var _user$project$UI_Gate$gate = F5(
 							}
 						}
 					}),
-				_user$project$UI_Gate$attributes(appearance))
+				_user$project$UI_Gate$attributes(appearance)),
+			inputs: {ctor: '[]'},
+			outputs: {ctor: '[]'}
 		};
 	});
-var _user$project$UI_Gate$buffer8 = F2(
+var _user$project$UI_Gate$bufferShape = F2(
 	function (dimensions, appearance) {
 		var gate_ = A5(_user$project$UI_Gate$gate, dimensions, appearance, _user$project$UI_Gate$flatBase, _user$project$UI_Gate$noBody, _user$project$UI_Gate$arrowTip);
 		var offset = 2 * _user$project$UI_Gate$inverterRadius(dimensions);
-		var buffer = A3(
-			_user$project$UI_Gate$centred,
-			dimensions,
-			appearance,
-			_elm_lang$core$Native_Utils.update(
-				gate_,
-				{width: gate_.width + offset}));
+		var buffer = _elm_lang$core$Native_Utils.update(
+			gate_,
+			{width: gate_.width + offset});
 		return A3(
 			_user$project$UI_Gate$group,
 			{
@@ -11950,6 +11958,14 @@ var _user$project$UI_Gate$buffer8 = F2(
 			},
 			A2(_user$project$UI_Gate$inputWirePoints, 1, dimensions),
 			A2(_user$project$UI_Gate$outputWirePoints, 1, dimensions));
+	});
+var _user$project$UI_Gate$buffer8 = F2(
+	function (dimensions, appearance) {
+		return A3(
+			_user$project$UI_Gate$centred,
+			dimensions,
+			appearance,
+			A2(_user$project$UI_Gate$bufferShape, dimensions, appearance));
 	});
 var _user$project$UI_Gate$not8 = F2(
 	function (dimensions, appearance) {
@@ -12225,8 +12241,8 @@ var _user$project$UI_Gate$grouping = F3(
 				return _elm_lang$core$Native_Utils.crashCase(
 					'UI.Gate',
 					{
-						start: {line: 769, column: 13},
-						end: {line: 774, column: 39}
+						start: {line: 788, column: 13},
+						end: {line: 793, column: 39}
 					},
 					_p11)('TODO');
 			}
@@ -12272,7 +12288,9 @@ var _user$project$UI_Gate$grouping = F3(
 						}
 					}
 				},
-				_user$project$UI_Gate$attributes(appearance))
+				_user$project$UI_Gate$attributes(appearance)),
+			inputs: {ctor: '[]'},
+			outputs: {ctor: '[]'}
 		};
 		return A3(
 			_user$project$UI_Gate$group,
