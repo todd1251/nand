@@ -11437,6 +11437,114 @@ var _user$project$UI_Gate$width = function (dimensions) {
 var _user$project$UI_Gate$wireWidth = function (dimensions) {
 	return _user$project$UI_Gate$width(dimensions) / 5;
 };
+var _user$project$UI_Gate$inputWirePoints = F3(
+	function (count, height_, dimensions) {
+		var threeQuarterHeight = (height_ * 3) / 4;
+		var halfHeight = _user$project$UI_Gate$half(height_);
+		var quarterHeight = height_ / 4;
+		var stops = _elm_lang$core$Array$fromList(
+			{
+				ctor: '::',
+				_0: _elm_lang$core$Array$fromList(
+					{
+						ctor: '::',
+						_0: halfHeight,
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$core$Array$fromList(
+						{
+							ctor: '::',
+							_0: quarterHeight,
+							_1: {
+								ctor: '::',
+								_0: threeQuarterHeight,
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$core$Array$fromList(
+							{
+								ctor: '::',
+								_0: quarterHeight,
+								_1: {
+									ctor: '::',
+									_0: halfHeight,
+									_1: {
+										ctor: '::',
+										_0: threeQuarterHeight,
+										_1: {ctor: '[]'}
+									}
+								}
+							}),
+						_1: {ctor: '[]'}
+					}
+				}
+			});
+		return A2(
+			_elm_lang$core$List$map,
+			function (i) {
+				var x = 0 - _user$project$UI_Gate$wireWidth(dimensions);
+				var stops_ = A2(
+					_elm_lang$core$Maybe$withDefault,
+					_elm_lang$core$Array$fromList(
+						{
+							ctor: '::',
+							_0: halfHeight,
+							_1: {ctor: '[]'}
+						}),
+					A2(_elm_lang$core$Array$get, count - 1, stops));
+				var y = A2(
+					_elm_lang$core$Maybe$withDefault,
+					halfHeight,
+					A2(_elm_lang$core$Array$get, i, stops_));
+				return {ctor: '_Tuple2', _0: x, _1: y};
+			},
+			A2(_elm_lang$core$List$range, 0, count - 1));
+	});
+var _user$project$UI_Gate$inputWires = F5(
+	function (count, height_, intersectionWithBaseAt, dimensions, appearance) {
+		var points = A3(_user$project$UI_Gate$inputWirePoints, count, height_, dimensions);
+		return {
+			left: A2(
+				_elm_lang$core$Maybe$withDefault,
+				0,
+				_elm_lang$core$List$minimum(
+					A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$first, points))),
+			top: A2(
+				_elm_lang$core$Maybe$withDefault,
+				0,
+				_elm_lang$core$List$minimum(
+					A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$second, points))),
+			width: _user$project$UI_Gate$wireWidth(dimensions),
+			height: _user$project$UI_Gate$wireStrokeWidth(appearance),
+			shape: A2(
+				_user$project$UI_Gate$path,
+				_elm_lang$core$List$concat(
+					A2(
+						_elm_lang$core$List$map,
+						function (_p3) {
+							var _p4 = _p3;
+							var _p5 = _p4._1;
+							return {
+								ctor: '::',
+								_0: A2(_user$project$UI_Shape$MoveTo, _p4._0, _p5),
+								_1: {
+									ctor: '::',
+									_0: _user$project$UI_Shape$HorizontalLineTo(
+										intersectionWithBaseAt(_p5)),
+									_1: {ctor: '[]'}
+								}
+							};
+						},
+						points)),
+				_user$project$UI_Gate$wireAttributes(appearance)),
+			inputs: {ctor: '[]'},
+			outputs: {ctor: '[]'}
+		};
+	});
 var _user$project$UI_Gate$gateWidth = function (dimensions) {
 	return _user$project$UI_Gate$width(dimensions) - (_user$project$UI_Gate$wireWidth(dimensions) / 2);
 };
@@ -11558,121 +11666,11 @@ var _user$project$UI_Gate$spearTip = function (dimensions) {
 					_user$project$UI_Gate$height(dimensions))))
 	};
 };
-var _user$project$UI_Gate$inputWirePoints = F2(
-	function (count, dimensions) {
-		var height_ = _user$project$UI_Gate$height(dimensions);
-		var quarterHeight = height_ / 4;
-		var halfHeight = _user$project$UI_Gate$half(height_);
+var _user$project$UI_Gate$outputWirePoints = F3(
+	function (count, height_, dimensions) {
 		var threeQuarterHeight = (height_ * 3) / 4;
-		var stops = _elm_lang$core$Array$fromList(
-			{
-				ctor: '::',
-				_0: _elm_lang$core$Array$fromList(
-					{
-						ctor: '::',
-						_0: halfHeight,
-						_1: {ctor: '[]'}
-					}),
-				_1: {
-					ctor: '::',
-					_0: _elm_lang$core$Array$fromList(
-						{
-							ctor: '::',
-							_0: quarterHeight,
-							_1: {
-								ctor: '::',
-								_0: threeQuarterHeight,
-								_1: {ctor: '[]'}
-							}
-						}),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$core$Array$fromList(
-							{
-								ctor: '::',
-								_0: quarterHeight,
-								_1: {
-									ctor: '::',
-									_0: halfHeight,
-									_1: {
-										ctor: '::',
-										_0: threeQuarterHeight,
-										_1: {ctor: '[]'}
-									}
-								}
-							}),
-						_1: {ctor: '[]'}
-					}
-				}
-			});
-		return A2(
-			_elm_lang$core$List$map,
-			function (i) {
-				var x = 0 - _user$project$UI_Gate$wireWidth(dimensions);
-				var stops_ = A2(
-					_elm_lang$core$Maybe$withDefault,
-					_elm_lang$core$Array$fromList(
-						{
-							ctor: '::',
-							_0: halfHeight,
-							_1: {ctor: '[]'}
-						}),
-					A2(_elm_lang$core$Array$get, count - 1, stops));
-				var y = A2(
-					_elm_lang$core$Maybe$withDefault,
-					halfHeight,
-					A2(_elm_lang$core$Array$get, i, stops_));
-				return {ctor: '_Tuple2', _0: x, _1: y};
-			},
-			A2(_elm_lang$core$List$range, 0, count - 1));
-	});
-var _user$project$UI_Gate$inputWires = F4(
-	function (count, intersectionWithBaseAt, dimensions, appearance) {
-		var points = A2(_user$project$UI_Gate$inputWirePoints, count, dimensions);
-		return {
-			left: A2(
-				_elm_lang$core$Maybe$withDefault,
-				0,
-				_elm_lang$core$List$minimum(
-					A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$first, points))),
-			top: A2(
-				_elm_lang$core$Maybe$withDefault,
-				0,
-				_elm_lang$core$List$minimum(
-					A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$second, points))),
-			width: _user$project$UI_Gate$wireWidth(dimensions),
-			height: _user$project$UI_Gate$wireStrokeWidth(appearance),
-			shape: A2(
-				_user$project$UI_Gate$path,
-				_elm_lang$core$List$concat(
-					A2(
-						_elm_lang$core$List$map,
-						function (_p3) {
-							var _p4 = _p3;
-							var _p5 = _p4._1;
-							return {
-								ctor: '::',
-								_0: A2(_user$project$UI_Shape$MoveTo, _p4._0, _p5),
-								_1: {
-									ctor: '::',
-									_0: _user$project$UI_Shape$HorizontalLineTo(
-										intersectionWithBaseAt(_p5)),
-									_1: {ctor: '[]'}
-								}
-							};
-						},
-						points)),
-				_user$project$UI_Gate$wireAttributes(appearance)),
-			inputs: {ctor: '[]'},
-			outputs: {ctor: '[]'}
-		};
-	});
-var _user$project$UI_Gate$outputWirePoints = F2(
-	function (count, dimensions) {
-		var height_ = _user$project$UI_Gate$height(dimensions);
-		var quarterHeight = height_ / 4;
 		var halfHeight = _user$project$UI_Gate$half(height_);
-		var threeQuarterHeight = (height_ * 3) / 4;
+		var quarterHeight = height_ / 4;
 		var stops = _elm_lang$core$Array$fromList(
 			{
 				ctor: '::',
@@ -11735,9 +11733,9 @@ var _user$project$UI_Gate$outputWirePoints = F2(
 			},
 			A2(_elm_lang$core$List$range, 0, count - 1));
 	});
-var _user$project$UI_Gate$outputWires = F4(
-	function (count, intersectionWithTipAt, dimensions, appearance) {
-		var points = A2(_user$project$UI_Gate$outputWirePoints, count, dimensions);
+var _user$project$UI_Gate$outputWires = F5(
+	function (count, height_, intersectionWithTipAt, dimensions, appearance) {
+		var points = A3(_user$project$UI_Gate$outputWirePoints, count, height_, dimensions);
 		return {
 			left: A2(
 				_elm_lang$core$Maybe$withDefault,
@@ -11972,9 +11970,10 @@ var _user$project$UI_Gate$buffer8 = F2(
 				_0: buffer,
 				_1: {
 					ctor: '::',
-					_0: A4(
+					_0: A5(
 						_user$project$UI_Gate$inputWires,
 						1,
+						buffer.height,
 						function (y) {
 							return buffer.left;
 						},
@@ -11982,9 +11981,10 @@ var _user$project$UI_Gate$buffer8 = F2(
 						appearance),
 					_1: {
 						ctor: '::',
-						_0: A4(
+						_0: A5(
 							_user$project$UI_Gate$outputWires,
 							1,
+							buffer.height,
 							function (y) {
 								return (buffer.left + buffer.width) - offset;
 							},
@@ -11994,8 +11994,8 @@ var _user$project$UI_Gate$buffer8 = F2(
 					}
 				}
 			},
-			A2(_user$project$UI_Gate$inputWirePoints, 1, dimensions),
-			A2(_user$project$UI_Gate$outputWirePoints, 1, dimensions));
+			A3(_user$project$UI_Gate$inputWirePoints, 1, buffer.height, dimensions),
+			A3(_user$project$UI_Gate$outputWirePoints, 1, buffer.height, dimensions));
 	});
 var _user$project$UI_Gate$not8 = F2(
 	function (dimensions, appearance) {
@@ -12015,9 +12015,10 @@ var _user$project$UI_Gate$not8 = F2(
 				_0: not,
 				_1: {
 					ctor: '::',
-					_0: A4(
+					_0: A5(
 						_user$project$UI_Gate$inputWires,
 						1,
+						not.height,
 						function (y) {
 							return not.left;
 						},
@@ -12025,9 +12026,10 @@ var _user$project$UI_Gate$not8 = F2(
 						appearance),
 					_1: {
 						ctor: '::',
-						_0: A4(
+						_0: A5(
 							_user$project$UI_Gate$outputWires,
 							1,
+							not.height,
 							function (y) {
 								return not.left + not.width;
 							},
@@ -12037,8 +12039,8 @@ var _user$project$UI_Gate$not8 = F2(
 					}
 				}
 			},
-			A2(_user$project$UI_Gate$inputWirePoints, 1, dimensions),
-			A2(_user$project$UI_Gate$outputWirePoints, 1, dimensions));
+			A3(_user$project$UI_Gate$inputWirePoints, 1, not.height, dimensions),
+			A3(_user$project$UI_Gate$outputWirePoints, 1, not.height, dimensions));
 	});
 var _user$project$UI_Gate$and8 = F2(
 	function (dimensions, appearance) {
@@ -12050,9 +12052,10 @@ var _user$project$UI_Gate$and8 = F2(
 				_0: and,
 				_1: {
 					ctor: '::',
-					_0: A4(
+					_0: A5(
 						_user$project$UI_Gate$inputWires,
 						2,
+						and.height,
 						function (y) {
 							return and.left;
 						},
@@ -12060,9 +12063,10 @@ var _user$project$UI_Gate$and8 = F2(
 						appearance),
 					_1: {
 						ctor: '::',
-						_0: A4(
+						_0: A5(
 							_user$project$UI_Gate$outputWires,
 							1,
+							and.height,
 							function (y) {
 								return and.left + and.width;
 							},
@@ -12072,8 +12076,8 @@ var _user$project$UI_Gate$and8 = F2(
 					}
 				}
 			},
-			A2(_user$project$UI_Gate$inputWirePoints, 2, dimensions),
-			A2(_user$project$UI_Gate$outputWirePoints, 1, dimensions));
+			A3(_user$project$UI_Gate$inputWirePoints, 2, and.height, dimensions),
+			A3(_user$project$UI_Gate$outputWirePoints, 1, and.height, dimensions));
 	});
 var _user$project$UI_Gate$nand8 = F2(
 	function (dimensions, appearance) {
@@ -12089,9 +12093,10 @@ var _user$project$UI_Gate$nand8 = F2(
 				_0: nand,
 				_1: {
 					ctor: '::',
-					_0: A4(
+					_0: A5(
 						_user$project$UI_Gate$inputWires,
 						2,
+						nand.height,
 						function (y) {
 							return nand.left;
 						},
@@ -12099,9 +12104,10 @@ var _user$project$UI_Gate$nand8 = F2(
 						appearance),
 					_1: {
 						ctor: '::',
-						_0: A4(
+						_0: A5(
 							_user$project$UI_Gate$outputWires,
 							1,
+							nand.height,
 							function (y) {
 								return nand.left + nand.width;
 							},
@@ -12111,8 +12117,8 @@ var _user$project$UI_Gate$nand8 = F2(
 					}
 				}
 			},
-			A2(_user$project$UI_Gate$inputWirePoints, 2, dimensions),
-			A2(_user$project$UI_Gate$outputWirePoints, 1, dimensions));
+			A3(_user$project$UI_Gate$inputWirePoints, 2, nand.height, dimensions),
+			A3(_user$project$UI_Gate$outputWirePoints, 1, nand.height, dimensions));
 	});
 var _user$project$UI_Gate$or8 = F2(
 	function (dimensions, appearance) {
@@ -12124,18 +12130,20 @@ var _user$project$UI_Gate$or8 = F2(
 				_0: or,
 				_1: {
 					ctor: '::',
-					_0: A4(
+					_0: A5(
 						_user$project$UI_Gate$inputWires,
 						2,
+						or.height,
 						_user$project$UI_Gate$intersectionWithBaseAt(
 							_user$project$UI_Gate$height(dimensions)),
 						dimensions,
 						appearance),
 					_1: {
 						ctor: '::',
-						_0: A4(
+						_0: A5(
 							_user$project$UI_Gate$outputWires,
 							1,
+							or.height,
 							function (y) {
 								return or.left + or.width;
 							},
@@ -12145,8 +12153,8 @@ var _user$project$UI_Gate$or8 = F2(
 					}
 				}
 			},
-			A2(_user$project$UI_Gate$inputWirePoints, 2, dimensions),
-			A2(_user$project$UI_Gate$outputWirePoints, 1, dimensions));
+			A3(_user$project$UI_Gate$inputWirePoints, 2, or.height, dimensions),
+			A3(_user$project$UI_Gate$outputWirePoints, 1, or.height, dimensions));
 	});
 var _user$project$UI_Gate$nor8 = F2(
 	function (dimensions, appearance) {
@@ -12162,18 +12170,20 @@ var _user$project$UI_Gate$nor8 = F2(
 				_0: nor,
 				_1: {
 					ctor: '::',
-					_0: A4(
+					_0: A5(
 						_user$project$UI_Gate$inputWires,
 						2,
+						nor.height,
 						_user$project$UI_Gate$intersectionWithBaseAt(
 							_user$project$UI_Gate$height(dimensions)),
 						dimensions,
 						appearance),
 					_1: {
 						ctor: '::',
-						_0: A4(
+						_0: A5(
 							_user$project$UI_Gate$outputWires,
 							1,
+							nor.height,
 							function (y) {
 								return nor.left + nor.width;
 							},
@@ -12183,8 +12193,8 @@ var _user$project$UI_Gate$nor8 = F2(
 					}
 				}
 			},
-			A2(_user$project$UI_Gate$inputWirePoints, 2, dimensions),
-			A2(_user$project$UI_Gate$outputWirePoints, 1, dimensions));
+			A3(_user$project$UI_Gate$inputWirePoints, 2, nor.height, dimensions),
+			A3(_user$project$UI_Gate$outputWirePoints, 1, nor.height, dimensions));
 	});
 var _user$project$UI_Gate$xor8 = F2(
 	function (dimensions, appearance) {
@@ -12196,18 +12206,20 @@ var _user$project$UI_Gate$xor8 = F2(
 				_0: A3(_user$project$UI_Gate$twinCurvedBase, dimensions, appearance, xor),
 				_1: {
 					ctor: '::',
-					_0: A4(
+					_0: A5(
 						_user$project$UI_Gate$inputWires,
 						2,
+						xor.height,
 						_user$project$UI_Gate$intersectionWithBaseAt(
 							_user$project$UI_Gate$height(dimensions)),
 						dimensions,
 						appearance),
 					_1: {
 						ctor: '::',
-						_0: A4(
+						_0: A5(
 							_user$project$UI_Gate$outputWires,
 							1,
+							xor.height,
 							function (y) {
 								return xor.left + xor.width;
 							},
@@ -12217,8 +12229,8 @@ var _user$project$UI_Gate$xor8 = F2(
 					}
 				}
 			},
-			A2(_user$project$UI_Gate$inputWirePoints, 2, dimensions),
-			A2(_user$project$UI_Gate$outputWirePoints, 1, dimensions));
+			A3(_user$project$UI_Gate$inputWirePoints, 2, xor.height, dimensions),
+			A3(_user$project$UI_Gate$outputWirePoints, 1, xor.height, dimensions));
 	});
 var _user$project$UI_Gate$xnor8 = F2(
 	function (dimensions, appearance) {
@@ -12234,18 +12246,20 @@ var _user$project$UI_Gate$xnor8 = F2(
 					_0: A3(_user$project$UI_Gate$twinCurvedBase, dimensions, appearance, xor),
 					_1: {
 						ctor: '::',
-						_0: A4(
+						_0: A5(
 							_user$project$UI_Gate$inputWires,
 							2,
+							xnor.height,
 							_user$project$UI_Gate$intersectionWithBaseAt(
 								_user$project$UI_Gate$height(dimensions)),
 							dimensions,
 							appearance),
 						_1: {
 							ctor: '::',
-							_0: A4(
+							_0: A5(
 								_user$project$UI_Gate$outputWires,
 								1,
+								xnor.height,
 								function (y) {
 									return xnor.left + xnor.width;
 								},
@@ -12256,8 +12270,8 @@ var _user$project$UI_Gate$xnor8 = F2(
 					}
 				}
 			},
-			A2(_user$project$UI_Gate$inputWirePoints, 2, dimensions),
-			A2(_user$project$UI_Gate$outputWirePoints, 1, dimensions));
+			A3(_user$project$UI_Gate$inputWirePoints, 2, xnor.height, dimensions),
+			A3(_user$project$UI_Gate$outputWirePoints, 1, xnor.height, dimensions));
 	});
 var _user$project$UI_Gate$toShape = F3(
 	function (dimensions, appearance, gate) {
@@ -12291,6 +12305,8 @@ var _user$project$UI_Gate$grouping = F3(
 		var _p11 = _p10;
 		var _p13 = _p11._1;
 		var gate_ = A3(_user$project$UI_Gate$toShape, dimensions, appearance, _p11._0);
+		var minLeft = gate_.left;
+		var minTop = gate_.top;
 		var maxWidth = gate_.width;
 		var maxHeight = gate_.height;
 		var _p12 = A2(
@@ -12312,16 +12328,16 @@ var _user$project$UI_Gate$grouping = F3(
 				_user$project$UI_Shape$Path,
 				{
 					ctor: '::',
-					_0: A2(_user$project$UI_Shape$MoveTo, _user$project$UI_Gate$origin, _user$project$UI_Gate$origin),
+					_0: A2(_user$project$UI_Shape$MoveTo, minLeft, minTop),
 					_1: {
 						ctor: '::',
-						_0: _user$project$UI_Shape$HorizontalLineTo(grouping_.width),
+						_0: _user$project$UI_Shape$HorizontalLineBy(grouping_.width),
 						_1: {
 							ctor: '::',
-							_0: _user$project$UI_Shape$VerticalLineTo(grouping_.height),
+							_0: _user$project$UI_Shape$VerticalLineBy(grouping_.height),
 							_1: {
 								ctor: '::',
-								_0: _user$project$UI_Shape$HorizontalLineTo(_user$project$UI_Gate$origin),
+								_0: _user$project$UI_Shape$HorizontalLineTo(minLeft),
 								_1: {
 									ctor: '::',
 									_0: _user$project$UI_Shape$Close,
@@ -12345,9 +12361,10 @@ var _user$project$UI_Gate$grouping = F3(
 					_0: grouping_,
 					_1: {
 						ctor: '::',
-						_0: A4(
+						_0: A5(
 							_user$project$UI_Gate$inputWires,
 							1,
+							grouping_.height,
 							function (y) {
 								return grouping_.left;
 							},
@@ -12355,9 +12372,10 @@ var _user$project$UI_Gate$grouping = F3(
 							appearance),
 						_1: {
 							ctor: '::',
-							_0: A4(
+							_0: A5(
 								_user$project$UI_Gate$outputWires,
 								1,
+								grouping_.height,
 								function (y) {
 									return grouping_.left + grouping_.width;
 								},
@@ -12368,8 +12386,8 @@ var _user$project$UI_Gate$grouping = F3(
 					}
 				}
 			},
-			A2(_user$project$UI_Gate$inputWirePoints, 1, dimensions),
-			A2(_user$project$UI_Gate$outputWirePoints, 1, dimensions));
+			A3(_user$project$UI_Gate$inputWirePoints, 1, grouping_.height, dimensions),
+			A3(_user$project$UI_Gate$outputWirePoints, 1, grouping.height, dimensions));
 	});
 var _user$project$UI_Gate$Dimensions = function (a) {
 	return {width: a};
@@ -13435,7 +13453,7 @@ var _user$project$Main_UI_Controller$gates = function (state) {
 													{
 														ctor: '_Tuple2',
 														_0: _user$project$UI_Gate$Buffer,
-														_1: A3(_user$project$Transform$translate, _user$project$Transform$identity, 50, 50)
+														_1: A3(_user$project$Transform$translate, _user$project$Transform$identity, 0, 0)
 													})
 											},
 											_1: {ctor: '[]'}
