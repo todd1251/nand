@@ -11204,16 +11204,34 @@ var _user$project$UI_Shape$Line = F5(
 var _user$project$UI_Gate$group = F3(
 	function (shapes, inputs, outputs) {
 		return {
-			left: 0,
-			top: 0,
+			left: A2(
+				_elm_lang$core$Maybe$withDefault,
+				0,
+				_elm_lang$core$List$minimum(
+					A2(
+						_elm_lang$core$List$map,
+						function (_) {
+							return _.left;
+						},
+						shapes))),
+			top: A2(
+				_elm_lang$core$Maybe$withDefault,
+				0,
+				_elm_lang$core$List$minimum(
+					A2(
+						_elm_lang$core$List$map,
+						function (_) {
+							return _.top;
+						},
+						shapes))),
 			width: A2(
 				_elm_lang$core$Maybe$withDefault,
 				0,
 				_elm_lang$core$List$maximum(
 					A2(
 						_elm_lang$core$List$map,
-						function (_) {
-							return _.width;
+						function (shape) {
+							return shape.left + shape.width;
 						},
 						shapes))),
 			height: A2(
@@ -11222,8 +11240,8 @@ var _user$project$UI_Gate$group = F3(
 				_elm_lang$core$List$maximum(
 					A2(
 						_elm_lang$core$List$map,
-						function (_) {
-							return _.height;
+						function (shape) {
+							return shape.top + shape.height;
 						},
 						shapes))),
 			shape: A2(
@@ -11612,8 +11630,16 @@ var _user$project$UI_Gate$inputWires = F4(
 	function (count, intersectionWithBaseAt, dimensions, appearance) {
 		var points = A2(_user$project$UI_Gate$inputWirePoints, count, dimensions);
 		return {
-			left: 0,
-			top: 0,
+			left: A2(
+				_elm_lang$core$Maybe$withDefault,
+				0,
+				_elm_lang$core$List$minimum(
+					A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$first, points))),
+			top: A2(
+				_elm_lang$core$Maybe$withDefault,
+				0,
+				_elm_lang$core$List$minimum(
+					A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$second, points))),
 			width: _user$project$UI_Gate$wireWidth(dimensions),
 			height: _user$project$UI_Gate$wireStrokeWidth(appearance),
 			shape: A2(
@@ -11713,8 +11739,16 @@ var _user$project$UI_Gate$outputWires = F4(
 	function (count, intersectionWithTipAt, dimensions, appearance) {
 		var points = A2(_user$project$UI_Gate$outputWirePoints, count, dimensions);
 		return {
-			left: 0,
-			top: 0,
+			left: A2(
+				_elm_lang$core$Maybe$withDefault,
+				0,
+				_elm_lang$core$List$maximum(
+					A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$first, points))),
+			top: A2(
+				_elm_lang$core$Maybe$withDefault,
+				0,
+				_elm_lang$core$List$maximum(
+					A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$second, points))),
 			width: _user$project$UI_Gate$wireWidth(dimensions),
 			height: _user$project$UI_Gate$wireStrokeWidth(appearance),
 			shape: A2(
