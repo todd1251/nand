@@ -11203,47 +11203,51 @@ var _user$project$UI_Shape$Line = F5(
 	});
 var _user$project$UI_Gate$group = F3(
 	function (shapes, inputs, outputs) {
+		var height = A2(
+			_elm_lang$core$Maybe$withDefault,
+			0,
+			_elm_lang$core$List$maximum(
+				A2(
+					_elm_lang$core$List$map,
+					function (shape) {
+						return shape.top + shape.height;
+					},
+					shapes)));
+		var width = A2(
+			_elm_lang$core$Maybe$withDefault,
+			0,
+			_elm_lang$core$List$maximum(
+				A2(
+					_elm_lang$core$List$map,
+					function (shape) {
+						return shape.left + shape.width;
+					},
+					shapes)));
+		var top = A2(
+			_elm_lang$core$Maybe$withDefault,
+			0,
+			_elm_lang$core$List$minimum(
+				A2(
+					_elm_lang$core$List$map,
+					function (_) {
+						return _.top;
+					},
+					shapes)));
+		var left = A2(
+			_elm_lang$core$Maybe$withDefault,
+			0,
+			_elm_lang$core$List$minimum(
+				A2(
+					_elm_lang$core$List$map,
+					function (_) {
+						return _.left;
+					},
+					shapes)));
 		return {
-			left: A2(
-				_elm_lang$core$Maybe$withDefault,
-				0,
-				_elm_lang$core$List$minimum(
-					A2(
-						_elm_lang$core$List$map,
-						function (_) {
-							return _.left;
-						},
-						shapes))),
-			top: A2(
-				_elm_lang$core$Maybe$withDefault,
-				0,
-				_elm_lang$core$List$minimum(
-					A2(
-						_elm_lang$core$List$map,
-						function (_) {
-							return _.top;
-						},
-						shapes))),
-			width: A2(
-				_elm_lang$core$Maybe$withDefault,
-				0,
-				_elm_lang$core$List$maximum(
-					A2(
-						_elm_lang$core$List$map,
-						function (shape) {
-							return shape.left + shape.width;
-						},
-						shapes))),
-			height: A2(
-				_elm_lang$core$Maybe$withDefault,
-				0,
-				_elm_lang$core$List$maximum(
-					A2(
-						_elm_lang$core$List$map,
-						function (shape) {
-							return shape.top + shape.height;
-						},
-						shapes))),
+			left: (_elm_lang$core$Native_Utils.cmp(left, 0) < 0) ? 0 : left,
+			top: (_elm_lang$core$Native_Utils.cmp(top, 0) < 0) ? top : top,
+			width: (_elm_lang$core$Native_Utils.cmp(left, 0) < 0) ? (width - left) : (width + left),
+			height: (_elm_lang$core$Native_Utils.cmp(top, 0) < 0) ? (width - top) : (height + top),
 			shape: A2(
 				_user$project$UI_Shape$Group,
 				{ctor: '[]'},
@@ -12364,7 +12368,7 @@ var _user$project$UI_Gate$grouping = F3(
 						_0: A5(
 							_user$project$UI_Gate$inputWires,
 							1,
-							grouping_.height,
+							grouping_.height + 10,
 							function (y) {
 								return grouping_.left;
 							},
@@ -12375,7 +12379,7 @@ var _user$project$UI_Gate$grouping = F3(
 							_0: A5(
 								_user$project$UI_Gate$outputWires,
 								1,
-								grouping_.height,
+								grouping_.height + 10,
 								function (y) {
 									return grouping_.left + grouping_.width;
 								},
@@ -12386,8 +12390,8 @@ var _user$project$UI_Gate$grouping = F3(
 					}
 				}
 			},
-			A3(_user$project$UI_Gate$inputWirePoints, 1, grouping_.height, dimensions),
-			A3(_user$project$UI_Gate$outputWirePoints, 1, grouping.height, dimensions));
+			A3(_user$project$UI_Gate$inputWirePoints, 1, grouping_.height + 10, dimensions),
+			A3(_user$project$UI_Gate$outputWirePoints, 1, grouping_.height + 10, dimensions));
 	});
 var _user$project$UI_Gate$Dimensions = function (a) {
 	return {width: a};
