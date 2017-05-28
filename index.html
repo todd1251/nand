@@ -12316,13 +12316,22 @@ var _user$project$UI_Gate$grouping = F3(
 		var _p12 = A2(
 			_benansell$elm_geometric_transformation$Transformer2D$apply,
 			_p13,
-			{x: maxWidth, y: maxHeight});
+			{x: maxWidth - minLeft, y: maxHeight - minTop});
 		var x = _p12.x;
 		var y = _p12.y;
-		var grouping = A4(_user$project$UI_Gate$transformed, _p13, dimensions, appearance, gate_);
+		var grouping = A4(
+			_user$project$UI_Gate$transformed,
+			A2(
+				_benansell$elm_geometric_transformation$Transformer2D$combine,
+				_p13,
+				_benansell$elm_geometric_transformation$Transformer2D$translate(
+					{ctor: '_Tuple2', _0: 0 - minLeft, _1: 0 - minTop})),
+			dimensions,
+			appearance,
+			gate_);
 		var grouping_ = _elm_lang$core$Native_Utils.update(
 			grouping,
-			{width: x, height: y});
+			{left: 0, top: 0, width: x, height: y});
 		var bounds = {
 			left: 0,
 			top: 0,
@@ -12332,7 +12341,7 @@ var _user$project$UI_Gate$grouping = F3(
 				_user$project$UI_Shape$Path,
 				{
 					ctor: '::',
-					_0: A2(_user$project$UI_Shape$MoveTo, minLeft, minTop),
+					_0: A2(_user$project$UI_Shape$MoveTo, grouping_.left, grouping_.top),
 					_1: {
 						ctor: '::',
 						_0: _user$project$UI_Shape$HorizontalLineBy(grouping_.width),
@@ -12341,7 +12350,7 @@ var _user$project$UI_Gate$grouping = F3(
 							_0: _user$project$UI_Shape$VerticalLineBy(grouping_.height),
 							_1: {
 								ctor: '::',
-								_0: _user$project$UI_Shape$HorizontalLineTo(minLeft),
+								_0: _user$project$UI_Shape$HorizontalLineTo(grouping_.left),
 								_1: {
 									ctor: '::',
 									_0: _user$project$UI_Shape$Close,
