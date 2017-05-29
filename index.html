@@ -12316,7 +12316,7 @@ var _user$project$UI_Gate$grouping = F3(
 		var _p12 = A2(
 			_benansell$elm_geometric_transformation$Transformer2D$apply,
 			_p13,
-			{x: maxWidth - minLeft, y: maxHeight - minTop});
+			{x: maxWidth, y: maxHeight});
 		var x = _p12.x;
 		var y = _p12.y;
 		var grouping = A4(
@@ -12325,13 +12325,17 @@ var _user$project$UI_Gate$grouping = F3(
 				_benansell$elm_geometric_transformation$Transformer2D$combine,
 				_p13,
 				_benansell$elm_geometric_transformation$Transformer2D$translate(
-					{ctor: '_Tuple2', _0: 0 - minLeft, _1: 0 - minTop})),
+					{
+						ctor: '_Tuple2',
+						_0: _user$project$UI_Gate$wireWidth(dimensions),
+						_1: 0
+					})),
 			dimensions,
 			appearance,
 			gate_);
 		var grouping_ = _elm_lang$core$Native_Utils.update(
 			grouping,
-			{left: 0, top: 0, width: x, height: y});
+			{left: minLeft, top: minTop, width: x, height: y});
 		var bounds = {
 			left: 0,
 			top: 0,
@@ -13469,7 +13473,21 @@ var _user$project$Main_UI_Controller$gates = function (state) {
 														_1: A3(_user$project$Transform$translate, _user$project$Transform$identity, 0, 0)
 													})
 											},
-											_1: {ctor: '[]'}
+											_1: {
+												ctor: '::',
+												_0: {
+													ctor: '_Tuple3',
+													_0: 0,
+													_1: 1,
+													_2: _user$project$UI_Gate$Grouping(
+														{
+															ctor: '_Tuple2',
+															_0: _user$project$UI_Gate$Or,
+															_1: A3(_user$project$Transform$translate, _user$project$Transform$identity, 0, 0)
+														})
+												},
+												_1: {ctor: '[]'}
+											}
 										}
 									}
 								}
@@ -13554,9 +13572,10 @@ var _user$project$Main_UI$view = function (state) {
 	var connectionLine = F2(
 		function (style, _p0) {
 			var _p1 = _p0;
-			var _p4 = _p1._1;
-			var _p3 = _p1._0;
-			var midpoint = _p3.x + ((_p4.x - _p3.x) / 2);
+			var _p2 = {ctor: '_Tuple2', _0: _p1._0, _1: _p1._1};
+			var from = _p2._0;
+			var to = _p2._1;
+			var midpoint = from.x + ((to.x - from.x) / 2);
 			return A2(
 				_elm_lang$svg$Svg$path,
 				A2(
@@ -13572,10 +13591,10 @@ var _user$project$Main_UI$view = function (state) {
 									_0: 'M',
 									_1: {
 										ctor: '::',
-										_0: _elm_lang$core$Basics$toString(_p3.x),
+										_0: _elm_lang$core$Basics$toString(from.x),
 										_1: {
 											ctor: '::',
-											_0: _elm_lang$core$Basics$toString(_p3.y),
+											_0: _elm_lang$core$Basics$toString(from.y),
 											_1: {
 												ctor: '::',
 												_0: 'H',
@@ -13587,13 +13606,13 @@ var _user$project$Main_UI$view = function (state) {
 														_0: 'V',
 														_1: {
 															ctor: '::',
-															_0: _elm_lang$core$Basics$toString(_p4.y),
+															_0: _elm_lang$core$Basics$toString(to.y),
 															_1: {
 																ctor: '::',
 																_0: 'H',
 																_1: {
 																	ctor: '::',
-																	_0: _elm_lang$core$Basics$toString(_p4.x),
+																	_0: _elm_lang$core$Basics$toString(to.x),
 																	_1: {ctor: '[]'}
 																}
 															}
@@ -13617,8 +13636,8 @@ var _user$project$Main_UI$view = function (state) {
 						}
 					},
 					function () {
-						var _p2 = style;
-						switch (_p2.ctor) {
+						var _p3 = style;
+						switch (_p3.ctor) {
 							case 'Solid':
 								return {
 									ctor: '::',
@@ -13667,9 +13686,9 @@ var _user$project$Main_UI$view = function (state) {
 	};
 	var gate = F2(
 		function (index, model) {
-			var _p5 = shapeAndTransform(model);
-			var gate = _p5._0;
-			var transform = _p5._1;
+			var _p4 = shapeAndTransform(model);
+			var gate = _p4._0;
+			var transform = _p4._1;
 			return A2(
 				_elm_lang$svg$Svg$g,
 				{ctor: '[]'},
@@ -13699,16 +13718,16 @@ var _user$project$Main_UI$view = function (state) {
 		});
 	var position = F2(
 		function (connections, connection) {
-			var _p6 = shapeAndTransform(
+			var _p5 = shapeAndTransform(
 				A2(_user$project$Unsafe$nth, connection.gate, state.gates));
-			var gate = _p6._0;
-			var transform = _p6._1;
+			var gate = _p5._0;
+			var transform = _p5._1;
 			return A2(
 				_benansell$elm_geometric_transformation$Transformer2D$apply,
 				transform,
-				function (_p7) {
-					var _p8 = _p7;
-					return {x: _p8._0, y: _p8._1};
+				function (_p6) {
+					var _p7 = _p6;
+					return {x: _p7._0, y: _p7._1};
 				}(
 					A2(
 						_user$project$Unsafe$nth,
@@ -13731,33 +13750,33 @@ var _user$project$Main_UI$view = function (state) {
 		return {ctor: '_Tuple2', _0: from, _1: to};
 	};
 	var currentConnection = function () {
-		var _p9 = {ctor: '_Tuple3', _0: state.dragChain.metaDragToConnect.fromIndex, _1: state.dragChain.metaDragToConnect.toIndex, _2: state.dragChain.metaDragToConnect.to};
+		var _p8 = {ctor: '_Tuple3', _0: state.dragChain.metaDragToConnect.fromIndex, _1: state.dragChain.metaDragToConnect.toIndex, _2: state.dragChain.metaDragToConnect.to};
 		_v3_2:
 		do {
-			if ((_p9.ctor === '_Tuple3') && (_p9._0.ctor === 'Just')) {
-				if (_p9._1.ctor === 'Just') {
-					if (_p9._2.ctor === 'Just') {
-						var _p11 = _p9._0._0;
+			if ((_p8.ctor === '_Tuple3') && (_p8._0.ctor === 'Just')) {
+				if (_p8._1.ctor === 'Just') {
+					if (_p8._2.ctor === 'Just') {
+						var _p10 = _p8._0._0;
 						return function (nextConnection) {
-							var _p10 = nextConnection;
-							if (_p10.ctor === 'Just') {
+							var _p9 = nextConnection;
+							if (_p9.ctor === 'Just') {
 								return {
 									ctor: '::',
 									_0: A2(
 										connectionLine,
 										_user$project$Main_UI$Dashed,
-										connection(_p10._0)),
+										connection(_p9._0)),
 									_1: {ctor: '[]'}
 								};
 							} else {
-								var nextOutput = A2(_user$project$Main_UI_MetaDragToConnect$nextOutput, state, _p11);
+								var nextOutput = A2(_user$project$Main_UI_MetaDragToConnect$nextOutput, state, _p10);
 								var from = A2(
 									position,
 									function (_) {
 										return _.outputs;
 									},
 									{
-										gate: _p11,
+										gate: _p10,
 										index: A2(_elm_lang$core$Maybe$withDefault, 0, nextOutput)
 									});
 								return {
@@ -13765,27 +13784,27 @@ var _user$project$Main_UI$view = function (state) {
 									_0: A2(
 										connectionLine,
 										_user$project$Main_UI$Invalid,
-										{ctor: '_Tuple2', _0: from, _1: _p9._2._0}),
+										{ctor: '_Tuple2', _0: from, _1: _p8._2._0}),
 									_1: {ctor: '[]'}
 								};
 							}
 						}(
 							_elm_lang$core$List$head(
-								A3(_user$project$Main_UI_MetaDragToConnect$nextConnection, state, _p11, _p9._1._0)));
+								A3(_user$project$Main_UI_MetaDragToConnect$nextConnection, state, _p10, _p8._1._0)));
 					} else {
 						break _v3_2;
 					}
 				} else {
-					if (_p9._2.ctor === 'Just') {
-						var _p12 = _p9._0._0;
-						var nextOutput = A2(_user$project$Main_UI_MetaDragToConnect$nextOutput, state, _p12);
+					if (_p8._2.ctor === 'Just') {
+						var _p11 = _p8._0._0;
+						var nextOutput = A2(_user$project$Main_UI_MetaDragToConnect$nextOutput, state, _p11);
 						var from = A2(
 							position,
 							function (_) {
 								return _.outputs;
 							},
 							{
-								gate: _p12,
+								gate: _p11,
 								index: A2(_elm_lang$core$Maybe$withDefault, 0, nextOutput)
 							});
 						return {
@@ -13793,7 +13812,7 @@ var _user$project$Main_UI$view = function (state) {
 							_0: A2(
 								connectionLine,
 								_elm_lang$core$Native_Utils.eq(nextOutput, _elm_lang$core$Maybe$Nothing) ? _user$project$Main_UI$Invalid : _user$project$Main_UI$Dashed,
-								{ctor: '_Tuple2', _0: from, _1: _p9._2._0}),
+								{ctor: '_Tuple2', _0: from, _1: _p8._2._0}),
 							_1: {ctor: '[]'}
 						};
 					} else {
@@ -13814,11 +13833,11 @@ var _user$project$Main_UI$view = function (state) {
 				ctor: '::',
 				_0: A2(
 					_elm_lang$core$List$map,
-					function (_p13) {
+					function (_p12) {
 						return A2(
 							connectionLine,
 							_user$project$Main_UI$Solid,
-							connection(_p13));
+							connection(_p12));
 					},
 					state.connections),
 				_1: {
