@@ -12335,7 +12335,12 @@ var _user$project$UI_Gate$grouping = F3(
 			gate_);
 		var grouping_ = _elm_lang$core$Native_Utils.update(
 			grouping,
-			{left: minLeft, top: minTop, width: x, height: y});
+			{
+				left: minLeft,
+				top: minTop,
+				width: x - _user$project$UI_Gate$wireWidth(dimensions),
+				height: y
+			});
 		var bounds = {
 			left: 0,
 			top: 0,
@@ -13470,7 +13475,7 @@ var _user$project$Main_UI_Controller$gates = function (state) {
 													{
 														ctor: '_Tuple2',
 														_0: _user$project$UI_Gate$Buffer,
-														_1: A3(_user$project$Transform$translate, _user$project$Transform$identity, 0, 0)
+														_1: A3(_user$project$Transform$translate, _user$project$Transform$identity, 10, 10)
 													})
 											},
 											_1: {
@@ -13483,7 +13488,7 @@ var _user$project$Main_UI_Controller$gates = function (state) {
 														{
 															ctor: '_Tuple2',
 															_0: _user$project$UI_Gate$Or,
-															_1: A3(_user$project$Transform$translate, _user$project$Transform$identity, 0, 0)
+															_1: A3(_user$project$Transform$translate, _user$project$Transform$identity, 20, 20)
 														})
 												},
 												_1: {ctor: '[]'}
