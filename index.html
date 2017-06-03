@@ -13808,7 +13808,7 @@ var _user$project$Main_UI$view = function (state) {
 									_1: {ctor: '[]'}
 								};
 							} else {
-								var to_ = {x: _p12.x / canvas.transform.a, y: _p12.y / canvas.transform.d};
+								var to_ = {x: (_p12.x - canvas.transform.tx) / canvas.transform.a, y: (_p12.y - canvas.transform.ty) / canvas.transform.d};
 								var nextOutput = A2(_user$project$Main_UI_MetaDragToConnect$nextOutput, state, _p11);
 								var from = A2(
 									position,
@@ -13823,7 +13823,7 @@ var _user$project$Main_UI$view = function (state) {
 									ctor: '::',
 									_0: A2(
 										connectionLine,
-										_user$project$Main_UI$Debug,
+										_user$project$Main_UI$Invalid,
 										{ctor: '_Tuple2', _0: from, _1: to_}),
 									_1: {ctor: '[]'}
 								};
@@ -13836,8 +13836,9 @@ var _user$project$Main_UI$view = function (state) {
 					}
 				} else {
 					if (_p9._2.ctor === 'Just') {
+						var _p14 = _p9._2._0;
 						var _p13 = _p9._0._0;
-						var to_ = A2(_benansell$elm_geometric_transformation$Transformer2D$apply, canvas.transform, _p9._2._0);
+						var to_ = {x: (_p14.x - canvas.transform.tx) / canvas.transform.a, y: (_p14.y - canvas.transform.ty) / canvas.transform.d};
 						var nextOutput = A2(_user$project$Main_UI_MetaDragToConnect$nextOutput, state, _p13);
 						var from = A2(
 							position,
@@ -13874,11 +13875,11 @@ var _user$project$Main_UI$view = function (state) {
 				ctor: '::',
 				_0: A2(
 					_elm_lang$core$List$map,
-					function (_p14) {
+					function (_p15) {
 						return A2(
 							connectionLine,
 							_user$project$Main_UI$Solid,
-							connection(_p14));
+							connection(_p15));
 					},
 					state.connections),
 				_1: {
