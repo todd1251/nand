@@ -11437,9 +11437,13 @@ var _user$project$UI_Gate$half = function (n) {
 };
 var _user$project$UI_Gate$outputWirePoints = F4(
 	function (count, width, height_, dimensions) {
-		var threeQuarterHeight = (height_ * 3) / 4;
-		var halfHeight = _user$project$UI_Gate$half(height_);
-		var quarterHeight = height_ / 4;
+		var threeQuarterHeight = _elm_lang$core$Basics$toFloat(
+			_elm_lang$core$Basics$round((height_ * 3) / 4));
+		var halfHeight = _elm_lang$core$Basics$toFloat(
+			_elm_lang$core$Basics$round(
+				_user$project$UI_Gate$half(height_)));
+		var quarterHeight = _elm_lang$core$Basics$toFloat(
+			_elm_lang$core$Basics$round(height_ / 4));
 		var stops = _elm_lang$core$Array$fromList(
 			{
 				ctor: '::',
@@ -11533,9 +11537,13 @@ var _user$project$UI_Gate$wireWidth = function (dimensions) {
 };
 var _user$project$UI_Gate$inputWirePoints = F3(
 	function (count, height_, dimensions) {
-		var threeQuarterHeight = (height_ * 3) / 4;
-		var halfHeight = _user$project$UI_Gate$half(height_);
-		var quarterHeight = height_ / 4;
+		var threeQuarterHeight = _elm_lang$core$Basics$toFloat(
+			_elm_lang$core$Basics$round((height_ * 3) / 4));
+		var halfHeight = _elm_lang$core$Basics$toFloat(
+			_elm_lang$core$Basics$round(
+				_user$project$UI_Gate$half(height_)));
+		var quarterHeight = _elm_lang$core$Basics$toFloat(
+			_elm_lang$core$Basics$round(height_ / 4));
 		var stops = _elm_lang$core$Array$fromList(
 			{
 				ctor: '::',
@@ -12338,15 +12346,15 @@ var _user$project$UI_Gate$toShape = F3(
 				case 'Xnor':
 					return _user$project$UI_Gate$xnor8;
 				default:
-					return _user$project$UI_Gate$grouping(_p9._0);
+					return A2(_user$project$UI_Gate$grouping, _p9._0, _p9._1);
 			}
 		}();
 		return A2(shape, dimensions, appearance);
 	});
-var _user$project$UI_Gate$grouping = F3(
-	function (_p10, dimensions, appearance) {
+var _user$project$UI_Gate$grouping = F4(
+	function (margin, _p10, dimensions, appearance) {
 		var _p11 = _p10;
-		var _p27 = _p11._1;
+		var _p29 = _p11._1;
 		var gate_ = A3(_user$project$UI_Gate$toShape, dimensions, appearance, _p11._0);
 		var minLeft = gate_.left;
 		var minTop = gate_.top;
@@ -12354,7 +12362,7 @@ var _user$project$UI_Gate$grouping = F3(
 		var maxHeight = gate_.height;
 		var _p12 = A2(
 			_benansell$elm_geometric_transformation$Transformer2D$apply,
-			_p27,
+			_p29,
 			{x: maxWidth, y: maxHeight});
 		var x = _p12.x;
 		var y = _p12.y;
@@ -12362,7 +12370,7 @@ var _user$project$UI_Gate$grouping = F3(
 			_user$project$UI_Gate$transformed,
 			A2(
 				_benansell$elm_geometric_transformation$Transformer2D$combine,
-				_p27,
+				_p29,
 				_benansell$elm_geometric_transformation$Transformer2D$translate(
 					{
 						ctor: '_Tuple2',
@@ -12377,8 +12385,8 @@ var _user$project$UI_Gate$grouping = F3(
 			{
 				left: minLeft,
 				top: minTop,
-				width: x - _user$project$UI_Gate$wireWidth(dimensions),
-				height: y
+				width: (x + margin) - _user$project$UI_Gate$wireWidth(dimensions),
+				height: y + margin
 			});
 		var inputs = _elm_lang$core$List$length(gate_.inputs);
 		var inputWirePoints_ = A3(_user$project$UI_Gate$inputWirePoints, inputs, grouping_.height, dimensions);
@@ -12429,6 +12437,7 @@ var _user$project$UI_Gate$grouping = F3(
 					F2(
 						function (index, _p13) {
 							var _p14 = _p13;
+							var _p20 = _p14._0;
 							var _p15 = function (_p16) {
 								var _p17 = _p16;
 								return {ctor: '_Tuple2', _0: _p17.x, _1: _p17.y};
@@ -12437,12 +12446,13 @@ var _user$project$UI_Gate$grouping = F3(
 									var _p19 = _p18;
 									return A2(
 										_benansell$elm_geometric_transformation$Transformer2D$apply,
-										_p27,
+										_p29,
 										{x: _p19._0, y: _p19._1});
 								}(
 									A2(_user$project$Unsafe$nth, index, gate_.inputs)));
 							var x2 = _p15._0;
 							var y2 = _p15._1;
+							var midpoint = (_p20 + _user$project$UI_Gate$wireWidth(dimensions)) + ((x2 - _p20) / 2);
 							return {
 								left: 0,
 								top: 0,
@@ -12454,15 +12464,21 @@ var _user$project$UI_Gate$grouping = F3(
 										ctor: '::',
 										_0: A2(
 											_user$project$UI_Shape$MoveTo,
-											_p14._0 + _user$project$UI_Gate$wireWidth(dimensions),
+											_p20 + _user$project$UI_Gate$wireWidth(dimensions),
 											_p14._1),
 										_1: {
 											ctor: '::',
-											_0: A2(
-												_user$project$UI_Shape$LineTo,
-												x2 + _user$project$UI_Gate$wireWidth(dimensions),
-												y2),
-											_1: {ctor: '[]'}
+											_0: _user$project$UI_Shape$HorizontalLineTo(midpoint),
+											_1: {
+												ctor: '::',
+												_0: _user$project$UI_Shape$VerticalLineTo(y2),
+												_1: {
+													ctor: '::',
+													_0: _user$project$UI_Shape$HorizontalLineTo(
+														x2 + _user$project$UI_Gate$wireWidth(dimensions)),
+													_1: {ctor: '[]'}
+												}
+											}
 										}
 									},
 									_user$project$UI_Gate$wireAttributes(appearance)),
@@ -12474,22 +12490,24 @@ var _user$project$UI_Gate$grouping = F3(
 				A2(
 					_elm_lang$core$List$indexedMap,
 					F2(
-						function (index, _p20) {
-							var _p21 = _p20;
-							var _p22 = function (_p23) {
-								var _p24 = _p23;
-								return {ctor: '_Tuple2', _0: _p24.x, _1: _p24.y};
+						function (index, _p21) {
+							var _p22 = _p21;
+							var _p28 = _p22._0;
+							var _p23 = function (_p24) {
+								var _p25 = _p24;
+								return {ctor: '_Tuple2', _0: _p25.x, _1: _p25.y};
 							}(
-								function (_p25) {
-									var _p26 = _p25;
+								function (_p26) {
+									var _p27 = _p26;
 									return A2(
 										_benansell$elm_geometric_transformation$Transformer2D$apply,
-										_p27,
-										{x: _p26._0, y: _p26._1});
+										_p29,
+										{x: _p27._0, y: _p27._1});
 								}(
 									A2(_user$project$Unsafe$nth, index, gate_.outputs)));
-							var x2 = _p22._0;
-							var y2 = _p22._1;
+							var x2 = _p23._0;
+							var y2 = _p23._1;
+							var midpoint = _p28 + ((x2 - _p28) / 2);
 							return {
 								left: 0,
 								top: 0,
@@ -12499,14 +12517,22 @@ var _user$project$UI_Gate$grouping = F3(
 									_user$project$UI_Shape$Path,
 									{
 										ctor: '::',
-										_0: A2(_user$project$UI_Shape$MoveTo, _p21._0, _p21._1),
+										_0: A2(_user$project$UI_Shape$MoveTo, _p28, _p22._1),
 										_1: {
 											ctor: '::',
-											_0: A2(
-												_user$project$UI_Shape$LineTo,
-												x2 + _user$project$UI_Gate$wireWidth(dimensions),
-												y2),
-											_1: {ctor: '[]'}
+											_0: _user$project$UI_Shape$HorizontalLineTo(midpoint),
+											_1: {
+												ctor: '::',
+												_0: _user$project$UI_Shape$VerticalLineTo(y2),
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_user$project$UI_Shape$LineTo,
+														x2 + _user$project$UI_Gate$wireWidth(dimensions),
+														y2),
+													_1: {ctor: '[]'}
+												}
+											}
 										}
 									},
 									_user$project$UI_Gate$wireAttributes(appearance)),
@@ -12568,9 +12594,10 @@ var _user$project$UI_Gate$Segment = F3(
 	function (a, b, c) {
 		return {width: a, height: b, segment: c};
 	});
-var _user$project$UI_Gate$Grouping = function (a) {
-	return {ctor: 'Grouping', _0: a};
-};
+var _user$project$UI_Gate$Grouping = F2(
+	function (a, b) {
+		return {ctor: 'Grouping', _0: a, _1: b};
+	});
 var _user$project$UI_Gate$Xnor = {ctor: 'Xnor'};
 var _user$project$UI_Gate$Xor = {ctor: 'Xor'};
 var _user$project$UI_Gate$Nor = {ctor: 'Nor'};
@@ -13590,12 +13617,10 @@ var _user$project$Main_UI_Controller$gates = function (state) {
 												ctor: '_Tuple3',
 												_0: 0,
 												_1: 0,
-												_2: _user$project$UI_Gate$Grouping(
-													{
-														ctor: '_Tuple2',
-														_0: _user$project$UI_Gate$Buffer,
-														_1: A3(_user$project$Transform$translate, _user$project$Transform$identity, 10, 10)
-													})
+												_2: A2(
+													_user$project$UI_Gate$Grouping,
+													0,
+													{ctor: '_Tuple2', _0: _user$project$UI_Gate$Buffer, _1: _user$project$Transform$identity})
 											},
 											_1: {
 												ctor: '::',
@@ -13603,11 +13628,13 @@ var _user$project$Main_UI_Controller$gates = function (state) {
 													ctor: '_Tuple3',
 													_0: 0,
 													_1: 1,
-													_2: _user$project$UI_Gate$Grouping(
+													_2: A2(
+														_user$project$UI_Gate$Grouping,
+														20,
 														{
 															ctor: '_Tuple2',
 															_0: _user$project$UI_Gate$Or,
-															_1: A3(_user$project$Transform$translate, _user$project$Transform$identity, 20, 20)
+															_1: A3(_user$project$Transform$translate, _user$project$Transform$identity, 30, 30)
 														})
 												},
 												_1: {ctor: '[]'}
