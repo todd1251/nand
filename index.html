@@ -11201,29 +11201,6 @@ var _user$project$UI_Shape$Line = F5(
 	function (a, b, c, d, e) {
 		return {ctor: 'Line', _0: a, _1: b, _2: c, _3: d, _4: e};
 	});
-var _user$project$Unsafe$nth = F2(
-	function (index, xs) {
-		return function (x) {
-			var _p0 = x;
-			if (_p0.ctor === 'Just') {
-				return _p0._0;
-			} else {
-				return _elm_lang$core$Native_Utils.crashCase(
-					'Unsafe',
-					{
-						start: {line: 11, column: 17},
-						end: {line: 16, column: 87}
-					},
-					_p0)(
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						'No item found with index: ',
-						_elm_lang$core$Basics$toString(index)));
-			}
-		}(
-			_elm_lang$core$List$head(
-				A2(_elm_lang$core$List$drop, index, xs)));
-	});
 var _user$project$UI_Gate$group = F3(
 	function (shapes, inputs, outputs) {
 		var height = A2(
@@ -12343,284 +12320,11 @@ var _user$project$UI_Gate$toShape = F3(
 					return _user$project$UI_Gate$nor8;
 				case 'Xor':
 					return _user$project$UI_Gate$xor8;
-				case 'Xnor':
-					return _user$project$UI_Gate$xnor8;
 				default:
-					return A2(_user$project$UI_Gate$grouping, _p9._0, _p9._1);
+					return _user$project$UI_Gate$xnor8;
 			}
 		}();
 		return A2(shape, dimensions, appearance);
-	});
-var _user$project$UI_Gate$grouping = F4(
-	function (margin, children, dimensions, appearance) {
-		var children_ = A2(
-			_elm_lang$core$List$map,
-			function (_p10) {
-				var _p11 = _p10;
-				var _p21 = _p11._2;
-				var gate_ = A3(_user$project$UI_Gate$toShape, dimensions, appearance, _p11._1);
-				var _p12 = A2(
-					_benansell$elm_geometric_transformation$Transformer2D$apply,
-					_p21,
-					{x: gate_.width, y: gate_.height});
-				var x = _p12.x;
-				var y = _p12.y;
-				var child = A4(
-					_user$project$UI_Gate$transformed,
-					A2(
-						_benansell$elm_geometric_transformation$Transformer2D$combine,
-						_p21,
-						_benansell$elm_geometric_transformation$Transformer2D$translate(
-							{
-								ctor: '_Tuple2',
-								_0: _user$project$UI_Gate$wireWidth(dimensions),
-								_1: 0
-							})),
-					dimensions,
-					appearance,
-					gate_);
-				return _elm_lang$core$Native_Utils.update(
-					child,
-					{
-						left: gate_.left,
-						top: gate_.top,
-						width: x,
-						height: y,
-						inputs: A2(
-							_elm_lang$core$List$map,
-							function (input) {
-								return function (_p13) {
-									var _p14 = _p13;
-									return {ctor: '_Tuple2', _0: _p14.x, _1: _p14.y};
-								}(
-									function (_p15) {
-										var _p16 = _p15;
-										return A2(
-											_benansell$elm_geometric_transformation$Transformer2D$apply,
-											_p21,
-											{x: _p16._0, y: _p16._1});
-									}(input));
-							},
-							child.inputs),
-						outputs: A2(
-							_elm_lang$core$List$map,
-							function (output) {
-								return function (_p17) {
-									var _p18 = _p17;
-									return {ctor: '_Tuple2', _0: _p18.x, _1: _p18.y};
-								}(
-									function (_p19) {
-										var _p20 = _p19;
-										return A2(
-											_benansell$elm_geometric_transformation$Transformer2D$apply,
-											_p21,
-											{x: _p20._0, y: _p20._1});
-									}(output));
-							},
-							child.outputs)
-					});
-			},
-			children);
-		var grouped = function () {
-			var g = A3(
-				_user$project$UI_Gate$group,
-				children_,
-				{ctor: '[]'},
-				{ctor: '[]'});
-			return _elm_lang$core$Native_Utils.update(
-				g,
-				{
-					width: (g.width + margin) - _user$project$UI_Gate$wireWidth(dimensions),
-					height: g.height + margin
-				});
-		}();
-		var inputs = _elm_lang$core$List$concat(
-			A2(
-				_elm_lang$core$List$map,
-				function (_) {
-					return _.inputs;
-				},
-				children_));
-		var inputWirePoints_ = A3(
-			_user$project$UI_Gate$inputWirePoints,
-			_elm_lang$core$List$length(inputs),
-			grouped.height,
-			dimensions);
-		var outputs = _elm_lang$core$List$concat(
-			A2(
-				_elm_lang$core$List$map,
-				function (_) {
-					return _.outputs;
-				},
-				children_));
-		var outputWirePoints_ = A4(
-			_user$project$UI_Gate$outputWirePoints,
-			_elm_lang$core$List$length(outputs),
-			grouped.width + _user$project$UI_Gate$wireWidth(dimensions),
-			grouped.height,
-			dimensions);
-		var shapes = A2(
-			_elm_lang$core$Basics_ops['++'],
-			A2(
-				_elm_lang$core$List$indexedMap,
-				F2(
-					function (index, _p22) {
-						var _p23 = _p22;
-						var _p25 = _p23._0;
-						var _p24 = A2(_user$project$Unsafe$nth, index, inputs);
-						var x2 = _p24._0;
-						var y2 = _p24._1;
-						var midpoint = (_p25 + _user$project$UI_Gate$wireWidth(dimensions)) + ((x2 - _p25) / 2);
-						return {
-							left: 0,
-							top: 0,
-							width: 0,
-							height: 0,
-							shape: A2(
-								_user$project$UI_Shape$Path,
-								{
-									ctor: '::',
-									_0: A2(
-										_user$project$UI_Shape$MoveTo,
-										_p25 + _user$project$UI_Gate$wireWidth(dimensions),
-										_p23._1),
-									_1: {
-										ctor: '::',
-										_0: _user$project$UI_Shape$HorizontalLineTo(midpoint),
-										_1: {
-											ctor: '::',
-											_0: _user$project$UI_Shape$VerticalLineTo(y2),
-											_1: {
-												ctor: '::',
-												_0: _user$project$UI_Shape$HorizontalLineTo(
-													x2 + _user$project$UI_Gate$wireWidth(dimensions)),
-												_1: {ctor: '[]'}
-											}
-										}
-									}
-								},
-								_user$project$UI_Gate$wireAttributes(appearance)),
-							inputs: {ctor: '[]'},
-							outputs: {ctor: '[]'}
-						};
-					}),
-				inputWirePoints_),
-			A2(
-				_elm_lang$core$List$indexedMap,
-				F2(
-					function (index, _p26) {
-						var _p27 = _p26;
-						var _p29 = _p27._0;
-						var _p28 = A2(_user$project$Unsafe$nth, index, outputs);
-						var x2 = _p28._0;
-						var y2 = _p28._1;
-						var midpoint = _p29 + ((x2 - _p29) / 2);
-						return {
-							left: 0,
-							top: 0,
-							width: 0,
-							height: 0,
-							shape: A2(
-								_user$project$UI_Shape$Path,
-								{
-									ctor: '::',
-									_0: A2(_user$project$UI_Shape$MoveTo, _p29, _p27._1),
-									_1: {
-										ctor: '::',
-										_0: _user$project$UI_Shape$HorizontalLineTo(midpoint),
-										_1: {
-											ctor: '::',
-											_0: _user$project$UI_Shape$VerticalLineTo(y2),
-											_1: {
-												ctor: '::',
-												_0: A2(
-													_user$project$UI_Shape$LineTo,
-													x2 + _user$project$UI_Gate$wireWidth(dimensions),
-													y2),
-												_1: {ctor: '[]'}
-											}
-										}
-									}
-								},
-								_user$project$UI_Gate$wireAttributes(appearance)),
-							inputs: {ctor: '[]'},
-							outputs: {ctor: '[]'}
-						};
-					}),
-				outputWirePoints_));
-		var grouped_ = A3(
-			_user$project$UI_Gate$group,
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				{
-					ctor: '::',
-					_0: grouped,
-					_1: {
-						ctor: '::',
-						_0: A5(
-							_user$project$UI_Gate$inputWires,
-							_elm_lang$core$List$length(inputs),
-							grouped.height,
-							function (y) {
-								return grouped.left;
-							},
-							dimensions,
-							appearance),
-						_1: {
-							ctor: '::',
-							_0: A6(
-								_user$project$UI_Gate$outputWires,
-								_elm_lang$core$List$length(outputs),
-								grouped.width,
-								grouped.height,
-								function (y) {
-									return (grouped.left + grouped.width) + _user$project$UI_Gate$wireWidth(dimensions);
-								},
-								dimensions,
-								appearance),
-							_1: {
-								ctor: '::',
-								_0: {
-									left: 0,
-									top: 0,
-									width: 0,
-									height: 0,
-									shape: A2(
-										_user$project$UI_Shape$Path,
-										{
-											ctor: '::',
-											_0: A2(_user$project$UI_Shape$MoveTo, grouped.left, grouped.top),
-											_1: {
-												ctor: '::',
-												_0: _user$project$UI_Shape$HorizontalLineBy(grouped.width),
-												_1: {
-													ctor: '::',
-													_0: _user$project$UI_Shape$VerticalLineBy(grouped.height),
-													_1: {
-														ctor: '::',
-														_0: _user$project$UI_Shape$HorizontalLineTo(grouped.left),
-														_1: {
-															ctor: '::',
-															_0: _user$project$UI_Shape$Close,
-															_1: {ctor: '[]'}
-														}
-													}
-												}
-											}
-										},
-										_user$project$UI_Gate$attributes(appearance)),
-									inputs: {ctor: '[]'},
-									outputs: {ctor: '[]'}
-								},
-								_1: {ctor: '[]'}
-							}
-						}
-					}
-				},
-				shapes),
-			inputWirePoints_,
-			outputWirePoints_);
-		return grouped_;
 	});
 var _user$project$UI_Gate$Dimensions = function (a) {
 	return {width: a};
@@ -12636,10 +12340,6 @@ var _user$project$UI_Gate$GateShape = F7(
 var _user$project$UI_Gate$Segment = F3(
 	function (a, b, c) {
 		return {width: a, height: b, segment: c};
-	});
-var _user$project$UI_Gate$Grouping = F2(
-	function (a, b) {
-		return {ctor: 'Grouping', _0: a, _1: b};
 	});
 var _user$project$UI_Gate$Xnor = {ctor: 'Xnor'};
 var _user$project$UI_Gate$Xor = {ctor: 'Xor'};
@@ -12684,6 +12384,13 @@ var _user$project$Main_UI_GateViewModel$Model = F6(
 	function (a, b, c, d, e, f) {
 		return {id: a, gate: b, selected: c, connected: d, transform: e, move: f};
 	});
+var _user$project$Main_UI_GateViewModel$Grouping = F2(
+	function (a, b) {
+		return {ctor: 'Grouping', _0: a, _1: b};
+	});
+var _user$project$Main_UI_GateViewModel$Gate = function (a) {
+	return {ctor: 'Gate', _0: a};
+};
 var _user$project$Main_UI_GateViewModel$GateViewModel = function (a) {
 	return {ctor: 'GateViewModel', _0: a};
 };
@@ -12748,153 +12455,29 @@ var _user$project$Main_UI_GateViewModel$moved = function (_p22) {
 		return _p23;
 	}
 };
-var _user$project$Main_UI_DragToMoveSelection$bottomRightOf = function (shape) {
-	return {x: shape.left + shape.width, y: shape.top + shape.height};
-};
-var _user$project$Main_UI_DragToMoveSelection$topLeftOf = function (shape) {
-	return {x: shape.left, y: shape.top};
-};
-var _user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection = F2(
-	function (selection, _p0) {
-		var _p1 = _p0;
-		var _p3 = _p1._1;
-		var _p2 = _p1._2;
-		var bottomRight = A2(
-			_benansell$elm_geometric_transformation$Transformer2D$apply,
-			_p3,
-			_user$project$Main_UI_DragToMoveSelection$bottomRightOf(_p2));
-		var topLeft = A2(
-			_benansell$elm_geometric_transformation$Transformer2D$apply,
-			_p3,
-			_user$project$Main_UI_DragToMoveSelection$topLeftOf(_p2));
-		var selected = A2(
-			_user$project$Rectangle$containedBy,
-			selection,
-			{ctor: '_Tuple2', _0: topLeft, _1: bottomRight});
-		return A2(_user$project$Main_UI_GateViewModel$selected, selected, _p1._0);
+var _user$project$Unsafe$nth = F2(
+	function (index, xs) {
+		return function (x) {
+			var _p0 = x;
+			if (_p0.ctor === 'Just') {
+				return _p0._0;
+			} else {
+				return _elm_lang$core$Native_Utils.crashCase(
+					'Unsafe',
+					{
+						start: {line: 11, column: 17},
+						end: {line: 16, column: 87}
+					},
+					_p0)(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'No item found with index: ',
+						_elm_lang$core$Basics$toString(index)));
+			}
+		}(
+			_elm_lang$core$List$head(
+				A2(_elm_lang$core$List$drop, index, xs)));
 	});
-var _user$project$Main_UI_DragToMoveSelection$shapeAndTransform = F2(
-	function (state, model) {
-		var appearance = {strokeWidth: state.strokeWidth, strokeColour: 'black', fillColour: 'none'};
-		var dimensions = {width: state.width};
-		var shape = A3(
-			_user$project$UI_Gate$toShape,
-			dimensions,
-			appearance,
-			_user$project$Main_UI_GateViewModel$gate(model));
-		var canvas = state.canvas;
-		var transform = A2(
-			_benansell$elm_geometric_transformation$Transformer2D$combine,
-			canvas.transform,
-			A2(_user$project$Main_UI_GateViewModel$transform, canvas.windowSize, model));
-		return {ctor: '_Tuple3', _0: model, _1: transform, _2: shape};
-	});
-var _user$project$Main_UI_DragToMoveSelection$gatesWithSelectionUpdated = F2(
-	function (state, selection) {
-		var rectangle = _user$project$Canvas_Selection$toRectangle(selection);
-		return A2(
-			_elm_lang$core$List$map,
-			_user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection(rectangle),
-			A2(
-				_elm_lang$core$List$map,
-				_user$project$Main_UI_DragToMoveSelection$shapeAndTransform(state),
-				state.gates));
-	});
-var _user$project$Main_UI_DragToMoveSelection$updateSelection = function (_p4) {
-	var _p5 = _p4;
-	var _p6 = _p5._0;
-	var gates = A2(
-		_elm_lang$core$Maybe$withDefault,
-		_p6.gates,
-		A2(
-			_elm_lang$core$Maybe$map,
-			_user$project$Main_UI_DragToMoveSelection$gatesWithSelectionUpdated(_p6),
-			_p6.canvas.dragChain.shiftDragToSelect.selection));
-	return {
-		ctor: '_Tuple2',
-		_0: _elm_lang$core$Native_Utils.update(
-			_p6,
-			{gates: gates}),
-		_1: _p5._1
-	};
-};
-var _user$project$Main_UI_DragToMoveSelection$onDragEnd = _elm_lang$core$List$map(_user$project$Main_UI_GateViewModel$moved);
-var _user$project$Main_UI_DragToMoveSelection$onDragBy = F2(
-	function (delta, transform) {
-		return _elm_lang$core$List$map(
-			A2(_user$project$Main_UI_GateViewModel$moving, delta, transform));
-	});
-var _user$project$Main_UI_DragToMoveSelection$notSelected = function (gate) {
-	return A2(_user$project$Main_UI_GateViewModel$selected, false, gate);
-};
-var _user$project$Main_UI_DragToMoveSelection$gateWillMove = F3(
-	function (index, gateIndex, gate) {
-		return (_user$project$Main_UI_GateViewModel$isSelected(gate) || _elm_lang$core$Native_Utils.eq(gateIndex, index)) ? _user$project$Main_UI_GateViewModel$willMove(gate) : _user$project$Main_UI_DragToMoveSelection$notSelected(gate);
-	});
-var _user$project$Main_UI_DragToMoveSelection$onDragStart = function (index) {
-	return _elm_lang$core$List$indexedMap(
-		_user$project$Main_UI_DragToMoveSelection$gateWillMove(index));
-};
-var _user$project$Main_UI_DragToMoveSelection$update = F2(
-	function (message, state) {
-		var _p7 = message;
-		switch (_p7.ctor) {
-			case 'OnDragStart':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						state,
-						{
-							gates: A2(_user$project$Main_UI_DragToMoveSelection$onDragStart, _p7._0, state.gates)
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'OnDragBy':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						state,
-						{
-							gates: A3(_user$project$Main_UI_DragToMoveSelection$onDragBy, _p7._0, state.canvas.transform, state.gates)
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			default:
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						state,
-						{
-							gates: _user$project$Main_UI_DragToMoveSelection$onDragEnd(state.gates)
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-		}
-	});
-var _user$project$Main_UI_DragToMoveSelection$envelope = F2(
-	function (state, dragToMoveSelection) {
-		return _elm_lang$core$Native_Utils.update(
-			state,
-			{dragToMoveSelection: dragToMoveSelection});
-	});
-var _user$project$Main_UI_DragToMoveSelection$init = function (state) {
-	return A2(
-		_elm_lang$core$Tuple$mapFirst,
-		_user$project$Main_UI_DragToMoveSelection$envelope(state),
-		{
-			ctor: '_Tuple2',
-			_0: {},
-			_1: _elm_lang$core$Platform_Cmd$none
-		});
-};
-var _user$project$Main_UI_DragToMoveSelection$ViewModel = {};
-var _user$project$Main_UI_DragToMoveSelection$OnDragEnd = {ctor: 'OnDragEnd'};
-var _user$project$Main_UI_DragToMoveSelection$OnDragBy = function (a) {
-	return {ctor: 'OnDragBy', _0: a};
-};
-var _user$project$Main_UI_DragToMoveSelection$OnDragStart = function (a) {
-	return {ctor: 'OnDragStart', _0: a};
-};
 var _user$project$Main_UI_MetaDragToConnect$gateById = F2(
 	function (gates, id) {
 		return function (gate) {
@@ -12910,8 +12493,8 @@ var _user$project$Main_UI_MetaDragToConnect$gateById = F2(
 						return _elm_lang$core$Native_Utils.crashCase(
 							'Main.UI.MetaDragToConnect',
 							{
-								start: {line: 279, column: 33},
-								end: {line: 284, column: 103}
+								start: {line: 310, column: 33},
+								end: {line: 315, column: 103}
 							},
 							_p1)(
 							A2(
@@ -12923,25 +12506,42 @@ var _user$project$Main_UI_MetaDragToConnect$gateById = F2(
 					_elm_lang$core$List$head(
 						A2(
 							_elm_lang$core$List$filterMap,
-							function (_p3) {
-								var _p4 = _p3;
-								var _p5 = _p4._0;
-								return _elm_lang$core$Native_Utils.eq(_p5, id) ? _elm_lang$core$Maybe$Just(
-									_user$project$Main_UI_GateViewModel$from(
-										{id: _p5, gate: _p4._1, selected: false, connected: false, transform: _p4._2, move: _elm_lang$core$Maybe$Nothing})) : _elm_lang$core$Maybe$Nothing;
+							function (gate) {
+								var _p3 = _user$project$Main_UI_GateViewModel$gate(gate);
+								if (_p3.ctor === 'Grouping') {
+									return _elm_lang$core$List$head(
+										A2(
+											_elm_lang$core$List$filterMap,
+											function (_p4) {
+												var _p5 = _p4;
+												var _p6 = _p5._0;
+												return _elm_lang$core$Native_Utils.eq(_p6, id) ? _elm_lang$core$Maybe$Just(
+													_user$project$Main_UI_GateViewModel$from(
+														{
+															id: _p6,
+															gate: _user$project$Main_UI_GateViewModel$Gate(_p5._1),
+															selected: false,
+															connected: false,
+															transform: A2(
+																_benansell$elm_geometric_transformation$Transformer2D$combine,
+																A2(
+																	_benansell$elm_geometric_transformation$Transformer2D$combine,
+																	_p5._2,
+																	_benansell$elm_geometric_transformation$Transformer2D$translate(
+																		{ctor: '_Tuple2', _0: _p3._0, _1: 0})),
+																A2(
+																	_user$project$Main_UI_GateViewModel$transform,
+																	{width: 0, height: 0},
+																	gate)),
+															move: _elm_lang$core$Maybe$Nothing
+														})) : _elm_lang$core$Maybe$Nothing;
+											},
+											_p3._1));
+								} else {
+									return _elm_lang$core$Maybe$Nothing;
+								}
 							},
-							_elm_lang$core$List$concat(
-								A2(
-									_elm_lang$core$List$filterMap,
-									function (gate) {
-										var _p6 = _user$project$Main_UI_GateViewModel$gate(gate);
-										if (_p6.ctor === 'Grouping') {
-											return _elm_lang$core$Maybe$Just(_p6._1);
-										} else {
-											return _elm_lang$core$Maybe$Nothing;
-										}
-									},
-									gates)))));
+							gates)));
 			}
 		}(
 			_elm_lang$core$List$head(
@@ -13010,11 +12610,14 @@ var _user$project$Main_UI_MetaDragToConnect$shapeAndTransform = F2(
 	function (state, model) {
 		var appearance = {strokeWidth: state.strokeWidth, strokeColour: 'black', fillColour: 'none'};
 		var dimensions = {width: state.width};
-		var shape = A3(
-			_user$project$UI_Gate$toShape,
-			dimensions,
-			appearance,
-			_user$project$Main_UI_GateViewModel$gate(model));
+		var shape = function () {
+			var _p19 = _user$project$Main_UI_GateViewModel$gate(model);
+			if (_p19.ctor === 'Gate') {
+				return A3(_user$project$UI_Gate$toShape, dimensions, appearance, _p19._0);
+			} else {
+				return A5(_user$project$Main_UI_MetaDragToConnect$grouping, state, _p19._0, _p19._1, dimensions, appearance);
+			}
+		}();
 		var canvas = state.canvas;
 		var transform = A2(
 			_benansell$elm_geometric_transformation$Transformer2D$combine,
@@ -13022,14 +12625,324 @@ var _user$project$Main_UI_MetaDragToConnect$shapeAndTransform = F2(
 			A2(_user$project$Main_UI_GateViewModel$transform, canvas.windowSize, model));
 		return {ctor: '_Tuple3', _0: model, _1: transform, _2: shape};
 	});
+var _user$project$Main_UI_MetaDragToConnect$grouping = F5(
+	function (state, margin, children, dimensions, appearance) {
+		var children_ = A2(
+			_elm_lang$core$List$map,
+			function (_p20) {
+				var _p21 = _p20;
+				var _p31 = _p21._2;
+				var gate_ = A3(_user$project$UI_Gate$toShape, dimensions, appearance, _p21._1);
+				var _p22 = A2(
+					_benansell$elm_geometric_transformation$Transformer2D$apply,
+					_p31,
+					{x: gate_.width, y: gate_.height});
+				var x = _p22.x;
+				var y = _p22.y;
+				var child = A4(
+					_user$project$UI_Gate$transformed,
+					A2(
+						_benansell$elm_geometric_transformation$Transformer2D$combine,
+						_p31,
+						_benansell$elm_geometric_transformation$Transformer2D$translate(
+							{
+								ctor: '_Tuple2',
+								_0: _user$project$UI_Gate$wireWidth(dimensions),
+								_1: 0
+							})),
+					dimensions,
+					appearance,
+					gate_);
+				return {
+					ctor: '_Tuple2',
+					_0: _p21._0,
+					_1: _elm_lang$core$Native_Utils.update(
+						child,
+						{
+							left: gate_.left,
+							top: gate_.top,
+							width: x,
+							height: y,
+							inputs: A2(
+								_elm_lang$core$List$map,
+								function (input) {
+									return function (_p23) {
+										var _p24 = _p23;
+										return {ctor: '_Tuple2', _0: _p24.x, _1: _p24.y};
+									}(
+										function (_p25) {
+											var _p26 = _p25;
+											return A2(
+												_benansell$elm_geometric_transformation$Transformer2D$apply,
+												_p31,
+												{x: _p26._0, y: _p26._1});
+										}(input));
+								},
+								child.inputs),
+							outputs: A2(
+								_elm_lang$core$List$map,
+								function (output) {
+									return function (_p27) {
+										var _p28 = _p27;
+										return {ctor: '_Tuple2', _0: _p28.x, _1: _p28.y};
+									}(
+										function (_p29) {
+											var _p30 = _p29;
+											return A2(
+												_benansell$elm_geometric_transformation$Transformer2D$apply,
+												_p31,
+												{x: _p30._0, y: _p30._1});
+										}(output));
+								},
+								child.outputs)
+						})
+				};
+			},
+			children);
+		var grouped = function () {
+			var g = A3(
+				_user$project$UI_Gate$group,
+				A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$second, children_),
+				{ctor: '[]'},
+				{ctor: '[]'});
+			return _elm_lang$core$Native_Utils.update(
+				g,
+				{
+					width: (g.width + margin) - _user$project$UI_Gate$wireWidth(dimensions),
+					height: g.height + margin
+				});
+		}();
+		var inputs = _elm_lang$core$List$concat(
+			A2(
+				_elm_lang$core$List$map,
+				function (_p32) {
+					var _p33 = _p32;
+					var _p34 = A2(_user$project$Main_UI_MetaDragToConnect$nextInput, state, _p33._0);
+					if (_p34.ctor === 'Just') {
+						return A2(_elm_lang$core$List$drop, _p34._0, _p33._1.inputs);
+					} else {
+						return {ctor: '[]'};
+					}
+				},
+				children_));
+		var inputWirePoints_ = A3(
+			_user$project$UI_Gate$inputWirePoints,
+			_elm_lang$core$List$length(inputs),
+			grouped.height,
+			dimensions);
+		var outputs = _elm_lang$core$List$concat(
+			A2(
+				_elm_lang$core$List$map,
+				function (_p35) {
+					var _p36 = _p35;
+					var _p37 = A2(_user$project$Main_UI_MetaDragToConnect$nextOutput, state, _p36._0);
+					if (_p37.ctor === 'Just') {
+						return A2(_elm_lang$core$List$drop, _p37._0, _p36._1.outputs);
+					} else {
+						return {ctor: '[]'};
+					}
+				},
+				children_));
+		var outputWirePoints_ = A4(
+			_user$project$UI_Gate$outputWirePoints,
+			_elm_lang$core$List$length(outputs),
+			grouped.width + _user$project$UI_Gate$wireWidth(dimensions),
+			grouped.height,
+			dimensions);
+		var shapes = A2(
+			_elm_lang$core$Basics_ops['++'],
+			A2(
+				_elm_lang$core$List$indexedMap,
+				F2(
+					function (index, _p38) {
+						var _p39 = _p38;
+						var _p41 = _p39._0;
+						var _p40 = A2(_user$project$Unsafe$nth, index, inputs);
+						var x2 = _p40._0;
+						var y2 = _p40._1;
+						var midpoint = (_p41 + _user$project$UI_Gate$wireWidth(dimensions)) + ((x2 - _p41) / 2);
+						return {
+							left: 0,
+							top: 0,
+							width: 0,
+							height: 0,
+							shape: A2(
+								_user$project$UI_Shape$Path,
+								{
+									ctor: '::',
+									_0: A2(
+										_user$project$UI_Shape$MoveTo,
+										_p41 + _user$project$UI_Gate$wireWidth(dimensions),
+										_p39._1),
+									_1: {
+										ctor: '::',
+										_0: _user$project$UI_Shape$HorizontalLineTo(midpoint),
+										_1: {
+											ctor: '::',
+											_0: _user$project$UI_Shape$VerticalLineTo(y2),
+											_1: {
+												ctor: '::',
+												_0: _user$project$UI_Shape$HorizontalLineTo(
+													x2 + _user$project$UI_Gate$wireWidth(dimensions)),
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								},
+								_user$project$UI_Gate$wireAttributes(appearance)),
+							inputs: {ctor: '[]'},
+							outputs: {ctor: '[]'}
+						};
+					}),
+				inputWirePoints_),
+			A2(
+				_elm_lang$core$List$indexedMap,
+				F2(
+					function (index, _p42) {
+						var _p43 = _p42;
+						var _p45 = _p43._0;
+						var _p44 = A2(_user$project$Unsafe$nth, index, outputs);
+						var x2 = _p44._0;
+						var y2 = _p44._1;
+						var midpoint = _p45 + ((x2 - _p45) / 2);
+						return {
+							left: 0,
+							top: 0,
+							width: 0,
+							height: 0,
+							shape: A2(
+								_user$project$UI_Shape$Path,
+								{
+									ctor: '::',
+									_0: A2(_user$project$UI_Shape$MoveTo, _p45, _p43._1),
+									_1: {
+										ctor: '::',
+										_0: _user$project$UI_Shape$HorizontalLineTo(midpoint),
+										_1: {
+											ctor: '::',
+											_0: _user$project$UI_Shape$VerticalLineTo(y2),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_user$project$UI_Shape$LineTo,
+													x2 + _user$project$UI_Gate$wireWidth(dimensions),
+													y2),
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								},
+								_user$project$UI_Gate$wireAttributes(appearance)),
+							inputs: {ctor: '[]'},
+							outputs: {ctor: '[]'}
+						};
+					}),
+				outputWirePoints_));
+		var grouped_ = A3(
+			_user$project$UI_Gate$group,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: grouped,
+					_1: {
+						ctor: '::',
+						_0: A5(
+							_user$project$UI_Gate$inputWires,
+							_elm_lang$core$List$length(inputs),
+							grouped.height,
+							function (y) {
+								return grouped.left;
+							},
+							dimensions,
+							appearance),
+						_1: {
+							ctor: '::',
+							_0: A6(
+								_user$project$UI_Gate$outputWires,
+								_elm_lang$core$List$length(outputs),
+								grouped.width,
+								grouped.height,
+								function (y) {
+									return (grouped.left + grouped.width) + _user$project$UI_Gate$wireWidth(dimensions);
+								},
+								dimensions,
+								appearance),
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				shapes),
+			inputWirePoints_,
+			outputWirePoints_);
+		return grouped_;
+	});
+var _user$project$Main_UI_MetaDragToConnect$nextInput = F2(
+	function (state, toId) {
+		var connection = _elm_lang$core$List$head(
+			_elm_lang$core$List$reverse(
+				A2(
+					_elm_lang$core$List$filter,
+					function (connection) {
+						var input = _user$project$Main_UI_ConnectionViewModel$input(connection);
+						return _elm_lang$core$Native_Utils.eq(input.gate, toId);
+					},
+					state.connections)));
+		var _p46 = connection;
+		if (_p46.ctor === 'Just') {
+			var shape = function (_p47) {
+				var _p48 = _p47;
+				return _p48._2;
+			}(
+				A2(
+					_user$project$Main_UI_MetaDragToConnect$shapeAndTransform,
+					state,
+					A2(_user$project$Main_UI_MetaDragToConnect$gateById, state.gates, toId)));
+			var input = _user$project$Main_UI_ConnectionViewModel$input(_p46._0);
+			return (_elm_lang$core$Native_Utils.cmp(
+				input.index,
+				_elm_lang$core$List$length(shape.inputs) - 1) < 0) ? _elm_lang$core$Maybe$Just(input.index + 1) : _elm_lang$core$Maybe$Nothing;
+		} else {
+			return _elm_lang$core$Maybe$Just(0);
+		}
+	});
+var _user$project$Main_UI_MetaDragToConnect$nextOutput = F2(
+	function (state, fromId) {
+		var connection = _elm_lang$core$List$head(
+			_elm_lang$core$List$reverse(
+				A2(
+					_elm_lang$core$List$filter,
+					function (connection) {
+						var output = _user$project$Main_UI_ConnectionViewModel$output(connection);
+						return _elm_lang$core$Native_Utils.eq(output.gate, fromId);
+					},
+					state.connections)));
+		var _p49 = connection;
+		if (_p49.ctor === 'Just') {
+			var shape = function (_p50) {
+				var _p51 = _p50;
+				return _p51._2;
+			}(
+				A2(
+					_user$project$Main_UI_MetaDragToConnect$shapeAndTransform,
+					state,
+					A2(_user$project$Main_UI_MetaDragToConnect$gateById, state.gates, fromId)));
+			var output = _user$project$Main_UI_ConnectionViewModel$output(_p49._0);
+			return (_elm_lang$core$Native_Utils.cmp(
+				output.index,
+				_elm_lang$core$List$length(shape.outputs) - 1) < 0) ? _elm_lang$core$Maybe$Just(output.index + 1) : _elm_lang$core$Maybe$Nothing;
+		} else {
+			return _elm_lang$core$Maybe$Just(0);
+		}
+	});
 var _user$project$Main_UI_MetaDragToConnect$gatesWithConnectionUpdated = function (state) {
-	var _p19 = state.dragChain.metaDragToConnect.to;
-	if (_p19.ctor === 'Just') {
+	var _p52 = state.dragChain.metaDragToConnect.to;
+	if (_p52.ctor === 'Just') {
 		return A2(
 			_elm_lang$core$List$indexedMap,
 			A2(
 				_user$project$Main_UI_MetaDragToConnect$connectedIfContainsPoint,
-				_p19._0,
+				_p52._0,
 				A2(_elm_lang$core$Maybe$withDefault, -1, state.dragChain.metaDragToConnect.fromId)),
 			A2(
 				_elm_lang$core$List$map,
@@ -13053,81 +12966,23 @@ var _user$project$Main_UI_MetaDragToConnect$findToId = F3(
 						_user$project$Main_UI_MetaDragToConnect$shapeAndTransform(state),
 						gates))));
 	});
-var _user$project$Main_UI_MetaDragToConnect$nextOutput = F2(
-	function (state, fromId) {
-		var connection = _elm_lang$core$List$head(
-			_elm_lang$core$List$reverse(
-				A2(
-					_elm_lang$core$List$filter,
-					function (connection) {
-						var output = _user$project$Main_UI_ConnectionViewModel$output(connection);
-						return _elm_lang$core$Native_Utils.eq(output.gate, fromId);
-					},
-					state.connections)));
-		var _p20 = connection;
-		if (_p20.ctor === 'Just') {
-			var shape = function (_p21) {
-				var _p22 = _p21;
-				return _p22._2;
-			}(
-				A2(
-					_user$project$Main_UI_MetaDragToConnect$shapeAndTransform,
-					state,
-					A2(_user$project$Main_UI_MetaDragToConnect$gateById, state.gates, fromId)));
-			var output = _user$project$Main_UI_ConnectionViewModel$output(_p20._0);
-			return (_elm_lang$core$Native_Utils.cmp(
-				output.index,
-				_elm_lang$core$List$length(shape.outputs) - 1) < 0) ? _elm_lang$core$Maybe$Just(output.index + 1) : _elm_lang$core$Maybe$Nothing;
-		} else {
-			return _elm_lang$core$Maybe$Just(0);
-		}
-	});
-var _user$project$Main_UI_MetaDragToConnect$nextInput = F2(
-	function (state, toId) {
-		var connection = _elm_lang$core$List$head(
-			_elm_lang$core$List$reverse(
-				A2(
-					_elm_lang$core$List$filter,
-					function (connection) {
-						var input = _user$project$Main_UI_ConnectionViewModel$input(connection);
-						return _elm_lang$core$Native_Utils.eq(input.gate, toId);
-					},
-					state.connections)));
-		var _p23 = connection;
-		if (_p23.ctor === 'Just') {
-			var shape = function (_p24) {
-				var _p25 = _p24;
-				return _p25._2;
-			}(
-				A2(
-					_user$project$Main_UI_MetaDragToConnect$shapeAndTransform,
-					state,
-					A2(_user$project$Main_UI_MetaDragToConnect$gateById, state.gates, toId)));
-			var input = _user$project$Main_UI_ConnectionViewModel$input(_p23._0);
-			return (_elm_lang$core$Native_Utils.cmp(
-				input.index,
-				_elm_lang$core$List$length(shape.inputs) - 1) < 0) ? _elm_lang$core$Maybe$Just(input.index + 1) : _elm_lang$core$Maybe$Nothing;
-		} else {
-			return _elm_lang$core$Maybe$Just(0);
-		}
-	});
 var _user$project$Main_UI_MetaDragToConnect$nextConnection = F3(
 	function (state, fromId, toId) {
 		if (_elm_lang$core$Native_Utils.eq(fromId, toId)) {
 			return {ctor: '[]'};
 		} else {
-			var _p26 = {
+			var _p53 = {
 				ctor: '_Tuple2',
 				_0: A2(_user$project$Main_UI_MetaDragToConnect$nextOutput, state, fromId),
 				_1: A2(_user$project$Main_UI_MetaDragToConnect$nextInput, state, toId)
 			};
-			if (((_p26.ctor === '_Tuple2') && (_p26._0.ctor === 'Just')) && (_p26._1.ctor === 'Just')) {
+			if (((_p53.ctor === '_Tuple2') && (_p53._0.ctor === 'Just')) && (_p53._1.ctor === 'Just')) {
 				return {
 					ctor: '::',
 					_0: _user$project$Main_UI_ConnectionViewModel$from(
 						{
-							output: {gate: fromId, index: _p26._0._0},
-							input: {gate: toId, index: _p26._1._0}
+							output: {gate: fromId, index: _p53._0._0},
+							input: {gate: toId, index: _p53._1._0}
 						}),
 					_1: {ctor: '[]'}
 				};
@@ -13140,15 +12995,15 @@ var _user$project$Main_UI_MetaDragToConnect$update = F2(
 	function (message, state) {
 		var dragChain = state.dragChain;
 		var metaDragToConnect = dragChain.metaDragToConnect;
-		var _p27 = message;
-		switch (_p27.ctor) {
+		var _p54 = message;
+		switch (_p54.ctor) {
 			case 'OnDragStart':
-				var _p29 = _p27._1;
-				var _p28 = _p27._0;
+				var _p56 = _p54._1;
+				var _p55 = _p54._0;
 				return {
 					ctor: '_Tuple2',
-					_0: _p28.metaKey ? (_elm_lang$core$Native_Utils.eq(
-						A2(_user$project$Main_UI_MetaDragToConnect$nextOutput, state, _p29),
+					_0: _p55.metaKey ? (_elm_lang$core$Native_Utils.eq(
+						A2(_user$project$Main_UI_MetaDragToConnect$nextOutput, state, _p56),
 						_elm_lang$core$Maybe$Nothing) ? _elm_lang$core$Native_Utils.update(
 						state,
 						{allowed: false}) : _elm_lang$core$Native_Utils.update(
@@ -13162,17 +13017,17 @@ var _user$project$Main_UI_MetaDragToConnect$update = F2(
 										{
 											fromId: _elm_lang$core$Maybe$Just(
 												_user$project$Main_UI_GateViewModel$id(
-													A2(_user$project$Unsafe$nth, _p29, state.gates))),
+													A2(_user$project$Unsafe$nth, _p56, state.gates))),
 											from: _elm_lang$core$Maybe$Just(
 												{
-													x: _elm_lang$core$Basics$toFloat(_p28.offsetX),
-													y: _elm_lang$core$Basics$toFloat(_p28.offsetY)
+													x: _elm_lang$core$Basics$toFloat(_p55.offsetX),
+													y: _elm_lang$core$Basics$toFloat(_p55.offsetY)
 												}),
 											toId: _elm_lang$core$Maybe$Nothing,
 											to: _elm_lang$core$Maybe$Just(
 												{
-													x: _elm_lang$core$Basics$toFloat(_p28.offsetX),
-													y: _elm_lang$core$Basics$toFloat(_p28.offsetY)
+													x: _elm_lang$core$Basics$toFloat(_p55.offsetX),
+													y: _elm_lang$core$Basics$toFloat(_p55.offsetY)
 												})
 										})
 								})
@@ -13183,10 +13038,10 @@ var _user$project$Main_UI_MetaDragToConnect$update = F2(
 				return {
 					ctor: '_Tuple2',
 					_0: function () {
-						var _p30 = metaDragToConnect.to;
-						if (_p30.ctor === 'Just') {
-							var _p31 = _p30._0;
-							var position = {x: _p31.x + _p27._0._0, y: _p31.y + _p27._0._1};
+						var _p57 = metaDragToConnect.to;
+						if (_p57.ctor === 'Just') {
+							var _p58 = _p57._0;
+							var position = {x: _p58.x + _p54._0._0, y: _p58.y + _p54._0._1};
 							var state_ = _elm_lang$core$Native_Utils.update(
 								state,
 								{
@@ -13233,9 +13088,9 @@ var _user$project$Main_UI_MetaDragToConnect$update = F2(
 								_elm_lang$core$Basics_ops['++'],
 								state.connections,
 								function () {
-									var _p32 = {ctor: '_Tuple2', _0: metaDragToConnect.fromId, _1: metaDragToConnect.toId};
-									if (((_p32.ctor === '_Tuple2') && (_p32._0.ctor === 'Just')) && (_p32._1.ctor === 'Just')) {
-										return A3(_user$project$Main_UI_MetaDragToConnect$nextConnection, state, _p32._0._0, _p32._1._0);
+									var _p59 = {ctor: '_Tuple2', _0: metaDragToConnect.fromId, _1: metaDragToConnect.toId};
+									if (((_p59.ctor === '_Tuple2') && (_p59._0.ctor === 'Just')) && (_p59._1.ctor === 'Just')) {
+										return A3(_user$project$Main_UI_MetaDragToConnect$nextConnection, state, _p59._0._0, _p59._1._0);
 									} else {
 										return {ctor: '[]'};
 									}
@@ -13277,6 +13132,156 @@ var _user$project$Main_UI_MetaDragToConnect$OnDragStart = F2(
 	function (a, b) {
 		return {ctor: 'OnDragStart', _0: a, _1: b};
 	});
+var _user$project$Main_UI_DragToMoveSelection$bottomRightOf = function (shape) {
+	return {x: shape.left + shape.width, y: shape.top + shape.height};
+};
+var _user$project$Main_UI_DragToMoveSelection$topLeftOf = function (shape) {
+	return {x: shape.left, y: shape.top};
+};
+var _user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection = F2(
+	function (selection, _p0) {
+		var _p1 = _p0;
+		var _p3 = _p1._1;
+		var _p2 = _p1._2;
+		var bottomRight = A2(
+			_benansell$elm_geometric_transformation$Transformer2D$apply,
+			_p3,
+			_user$project$Main_UI_DragToMoveSelection$bottomRightOf(_p2));
+		var topLeft = A2(
+			_benansell$elm_geometric_transformation$Transformer2D$apply,
+			_p3,
+			_user$project$Main_UI_DragToMoveSelection$topLeftOf(_p2));
+		var selected = A2(
+			_user$project$Rectangle$containedBy,
+			selection,
+			{ctor: '_Tuple2', _0: topLeft, _1: bottomRight});
+		return A2(_user$project$Main_UI_GateViewModel$selected, selected, _p1._0);
+	});
+var _user$project$Main_UI_DragToMoveSelection$shapeAndTransform = F2(
+	function (state, model) {
+		var appearance = {strokeWidth: state.strokeWidth, strokeColour: 'black', fillColour: 'none'};
+		var dimensions = {width: state.width};
+		var shape = function () {
+			var _p4 = _user$project$Main_UI_GateViewModel$gate(model);
+			if (_p4.ctor === 'Gate') {
+				return A3(_user$project$UI_Gate$toShape, dimensions, appearance, _p4._0);
+			} else {
+				return A5(_user$project$Main_UI_MetaDragToConnect$grouping, state, _p4._0, _p4._1, dimensions, appearance);
+			}
+		}();
+		var canvas = state.canvas;
+		var transform = A2(
+			_benansell$elm_geometric_transformation$Transformer2D$combine,
+			canvas.transform,
+			A2(_user$project$Main_UI_GateViewModel$transform, canvas.windowSize, model));
+		return {ctor: '_Tuple3', _0: model, _1: transform, _2: shape};
+	});
+var _user$project$Main_UI_DragToMoveSelection$gatesWithSelectionUpdated = F2(
+	function (state, selection) {
+		var rectangle = _user$project$Canvas_Selection$toRectangle(selection);
+		return A2(
+			_elm_lang$core$List$map,
+			_user$project$Main_UI_DragToMoveSelection$selectedIfContainedBySelection(rectangle),
+			A2(
+				_elm_lang$core$List$map,
+				_user$project$Main_UI_DragToMoveSelection$shapeAndTransform(state),
+				state.gates));
+	});
+var _user$project$Main_UI_DragToMoveSelection$updateSelection = function (_p5) {
+	var _p6 = _p5;
+	var _p7 = _p6._0;
+	var gates = A2(
+		_elm_lang$core$Maybe$withDefault,
+		_p7.gates,
+		A2(
+			_elm_lang$core$Maybe$map,
+			_user$project$Main_UI_DragToMoveSelection$gatesWithSelectionUpdated(_p7),
+			_p7.canvas.dragChain.shiftDragToSelect.selection));
+	return {
+		ctor: '_Tuple2',
+		_0: _elm_lang$core$Native_Utils.update(
+			_p7,
+			{gates: gates}),
+		_1: _p6._1
+	};
+};
+var _user$project$Main_UI_DragToMoveSelection$onDragEnd = _elm_lang$core$List$map(_user$project$Main_UI_GateViewModel$moved);
+var _user$project$Main_UI_DragToMoveSelection$onDragBy = F2(
+	function (delta, transform) {
+		return _elm_lang$core$List$map(
+			A2(_user$project$Main_UI_GateViewModel$moving, delta, transform));
+	});
+var _user$project$Main_UI_DragToMoveSelection$notSelected = function (gate) {
+	return A2(_user$project$Main_UI_GateViewModel$selected, false, gate);
+};
+var _user$project$Main_UI_DragToMoveSelection$gateWillMove = F3(
+	function (index, gateIndex, gate) {
+		return (_user$project$Main_UI_GateViewModel$isSelected(gate) || _elm_lang$core$Native_Utils.eq(gateIndex, index)) ? _user$project$Main_UI_GateViewModel$willMove(gate) : _user$project$Main_UI_DragToMoveSelection$notSelected(gate);
+	});
+var _user$project$Main_UI_DragToMoveSelection$onDragStart = function (index) {
+	return _elm_lang$core$List$indexedMap(
+		_user$project$Main_UI_DragToMoveSelection$gateWillMove(index));
+};
+var _user$project$Main_UI_DragToMoveSelection$update = F2(
+	function (message, state) {
+		var _p8 = message;
+		switch (_p8.ctor) {
+			case 'OnDragStart':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						state,
+						{
+							gates: A2(_user$project$Main_UI_DragToMoveSelection$onDragStart, _p8._0, state.gates)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'OnDragBy':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						state,
+						{
+							gates: A3(_user$project$Main_UI_DragToMoveSelection$onDragBy, _p8._0, state.canvas.transform, state.gates)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						state,
+						{
+							gates: _user$project$Main_UI_DragToMoveSelection$onDragEnd(state.gates)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+		}
+	});
+var _user$project$Main_UI_DragToMoveSelection$envelope = F2(
+	function (state, dragToMoveSelection) {
+		return _elm_lang$core$Native_Utils.update(
+			state,
+			{dragToMoveSelection: dragToMoveSelection});
+	});
+var _user$project$Main_UI_DragToMoveSelection$init = function (state) {
+	return A2(
+		_elm_lang$core$Tuple$mapFirst,
+		_user$project$Main_UI_DragToMoveSelection$envelope(state),
+		{
+			ctor: '_Tuple2',
+			_0: {},
+			_1: _elm_lang$core$Platform_Cmd$none
+		});
+};
+var _user$project$Main_UI_DragToMoveSelection$ViewModel = {};
+var _user$project$Main_UI_DragToMoveSelection$OnDragEnd = {ctor: 'OnDragEnd'};
+var _user$project$Main_UI_DragToMoveSelection$OnDragBy = function (a) {
+	return {ctor: 'OnDragBy', _0: a};
+};
+var _user$project$Main_UI_DragToMoveSelection$OnDragStart = function (a) {
+	return {ctor: 'OnDragStart', _0: a};
+};
 var _user$project$Main_UI_DragChain$updateSelection = _user$project$Main_UI_DragToMoveSelection$updateSelection;
 var _user$project$Main_UI_DragChain$envelope = F2(
 	function (state, dragChain) {
@@ -13706,28 +13711,76 @@ var _user$project$Main_UI_Controller$gates = function (state) {
 		},
 		{
 			ctor: '::',
-			_0: {ctor: '_Tuple4', _0: 10, _1: 1, _2: 1, _3: _user$project$UI_Gate$Buffer},
+			_0: {
+				ctor: '_Tuple4',
+				_0: 10,
+				_1: 1,
+				_2: 1,
+				_3: _user$project$Main_UI_GateViewModel$Gate(_user$project$UI_Gate$Buffer)
+			},
 			_1: {
 				ctor: '::',
-				_0: {ctor: '_Tuple4', _0: 11, _1: 1, _2: 2, _3: _user$project$UI_Gate$Not},
+				_0: {
+					ctor: '_Tuple4',
+					_0: 11,
+					_1: 1,
+					_2: 2,
+					_3: _user$project$Main_UI_GateViewModel$Gate(_user$project$UI_Gate$Not)
+				},
 				_1: {
 					ctor: '::',
-					_0: {ctor: '_Tuple4', _0: 12, _1: 2, _2: 1, _3: _user$project$UI_Gate$Or},
+					_0: {
+						ctor: '_Tuple4',
+						_0: 12,
+						_1: 2,
+						_2: 1,
+						_3: _user$project$Main_UI_GateViewModel$Gate(_user$project$UI_Gate$Or)
+					},
 					_1: {
 						ctor: '::',
-						_0: {ctor: '_Tuple4', _0: 13, _1: 2, _2: 2, _3: _user$project$UI_Gate$Nor},
+						_0: {
+							ctor: '_Tuple4',
+							_0: 13,
+							_1: 2,
+							_2: 2,
+							_3: _user$project$Main_UI_GateViewModel$Gate(_user$project$UI_Gate$Nor)
+						},
 						_1: {
 							ctor: '::',
-							_0: {ctor: '_Tuple4', _0: 14, _1: 1, _2: 3, _3: _user$project$UI_Gate$And},
+							_0: {
+								ctor: '_Tuple4',
+								_0: 14,
+								_1: 1,
+								_2: 3,
+								_3: _user$project$Main_UI_GateViewModel$Gate(_user$project$UI_Gate$And)
+							},
 							_1: {
 								ctor: '::',
-								_0: {ctor: '_Tuple4', _0: 15, _1: 1, _2: 4, _3: _user$project$UI_Gate$Nand},
+								_0: {
+									ctor: '_Tuple4',
+									_0: 15,
+									_1: 1,
+									_2: 4,
+									_3: _user$project$Main_UI_GateViewModel$Gate(_user$project$UI_Gate$Nand)
+								},
 								_1: {
 									ctor: '::',
-									_0: {ctor: '_Tuple4', _0: 16, _1: 2, _2: 3, _3: _user$project$UI_Gate$Xor},
+									_0: {
+										ctor: '_Tuple4',
+										_0: 16,
+										_1: 2,
+										_2: 3,
+										_3: _user$project$Main_UI_GateViewModel$Gate(_user$project$UI_Gate$Xor)
+									},
 									_1: {
 										ctor: '::',
-										_0: {ctor: '_Tuple4', _0: 17, _1: 2, _2: 4, _3: _user$project$UI_Gate$Xnor},
+										_0: {
+											ctor: '_Tuple4',
+											_0: 17,
+											_1: 2,
+											_2: 4,
+											_3: _user$project$Main_UI_GateViewModel$Gate(_user$project$UI_Gate$Xnor)
+										},
 										_1: {
 											ctor: '::',
 											_0: {
@@ -13736,7 +13789,7 @@ var _user$project$Main_UI_Controller$gates = function (state) {
 												_1: 0,
 												_2: 0,
 												_3: A2(
-													_user$project$UI_Gate$Grouping,
+													_user$project$Main_UI_GateViewModel$Grouping,
 													0,
 													{
 														ctor: '::',
@@ -13752,7 +13805,7 @@ var _user$project$Main_UI_Controller$gates = function (state) {
 													_1: 0,
 													_2: 1,
 													_3: A2(
-														_user$project$UI_Gate$Grouping,
+														_user$project$Main_UI_GateViewModel$Grouping,
 														20,
 														{
 															ctor: '::',
@@ -13782,7 +13835,7 @@ var _user$project$Main_UI_Controller$gates = function (state) {
 														_1: 3,
 														_2: 0,
 														_3: A2(
-															_user$project$UI_Gate$Grouping,
+															_user$project$Main_UI_GateViewModel$Grouping,
 															20,
 															{
 																ctor: '::',
@@ -13798,7 +13851,7 @@ var _user$project$Main_UI_Controller$gates = function (state) {
 																		ctor: '_Tuple3',
 																		_0: 201,
 																		_1: _user$project$UI_Gate$Not,
-																		_2: A3(_user$project$Transform$translate, _user$project$Transform$identity, 150, 20)
+																		_2: A3(_user$project$Transform$translate, _user$project$Transform$identity, 180, 20)
 																	},
 																	_1: {ctor: '[]'}
 																}
@@ -14006,18 +14059,22 @@ var _user$project$Main_UI$view = function (state) {
 	var dimensions = {width: state.width};
 	var shapeAndTransform = function (gate) {
 		var transform = A2(_user$project$Main_UI_GateViewModel$transform, state.canvas.windowSize, gate);
-		var shape = A3(
-			_user$project$UI_Gate$toShape,
-			dimensions,
-			_user$project$Main_UI_GateViewModel$isSelected(gate) ? highlightedAppearance : (_user$project$Main_UI_GateViewModel$isConnected(gate) ? highlightedAppearance : appearance),
-			_user$project$Main_UI_GateViewModel$gate(gate));
+		var appearance_ = _user$project$Main_UI_GateViewModel$isSelected(gate) ? highlightedAppearance : (_user$project$Main_UI_GateViewModel$isConnected(gate) ? highlightedAppearance : appearance);
+		var shape = function () {
+			var _p5 = _user$project$Main_UI_GateViewModel$gate(gate);
+			if (_p5.ctor === 'Gate') {
+				return A3(_user$project$UI_Gate$toShape, dimensions, appearance_, _p5._0);
+			} else {
+				return A5(_user$project$Main_UI_MetaDragToConnect$grouping, state, _p5._0, _p5._1, dimensions, appearance_);
+			}
+		}();
 		return {ctor: '_Tuple2', _0: shape, _1: transform};
 	};
 	var gate = F2(
 		function (index, model) {
-			var _p5 = shapeAndTransform(model);
-			var gate = _p5._0;
-			var transform = _p5._1;
+			var _p6 = shapeAndTransform(model);
+			var gate = _p6._0;
+			var transform = _p6._1;
 			return A2(
 				_elm_lang$svg$Svg$g,
 				{ctor: '[]'},
@@ -14047,16 +14104,16 @@ var _user$project$Main_UI$view = function (state) {
 		});
 	var position = F2(
 		function (connections, connection) {
-			var _p6 = shapeAndTransform(
+			var _p7 = shapeAndTransform(
 				A2(_user$project$Main_UI_MetaDragToConnect$gateById, state.gates, connection.gate));
-			var gate = _p6._0;
-			var transform = _p6._1;
+			var gate = _p7._0;
+			var transform = _p7._1;
 			return A2(
 				_benansell$elm_geometric_transformation$Transformer2D$apply,
 				transform,
-				function (_p7) {
-					var _p8 = _p7;
-					return {x: _p8._0, y: _p8._1};
+				function (_p8) {
+					var _p9 = _p8;
+					return {x: _p9._0, y: _p9._1};
 				}(
 					A2(
 						_user$project$Unsafe$nth,
@@ -14085,35 +14142,35 @@ var _user$project$Main_UI$view = function (state) {
 	};
 	var canvas = state.canvas;
 	var currentConnection = function () {
-		var _p9 = {ctor: '_Tuple3', _0: state.dragChain.metaDragToConnect.fromId, _1: state.dragChain.metaDragToConnect.toId, _2: state.dragChain.metaDragToConnect.to};
-		_v3_2:
+		var _p10 = {ctor: '_Tuple3', _0: state.dragChain.metaDragToConnect.fromId, _1: state.dragChain.metaDragToConnect.toId, _2: state.dragChain.metaDragToConnect.to};
+		_v4_2:
 		do {
-			if ((_p9.ctor === '_Tuple3') && (_p9._0.ctor === 'Just')) {
-				if (_p9._1.ctor === 'Just') {
-					if (_p9._2.ctor === 'Just') {
-						var _p12 = _p9._2._0;
-						var _p11 = _p9._0._0;
+			if ((_p10.ctor === '_Tuple3') && (_p10._0.ctor === 'Just')) {
+				if (_p10._1.ctor === 'Just') {
+					if (_p10._2.ctor === 'Just') {
+						var _p13 = _p10._2._0;
+						var _p12 = _p10._0._0;
 						return function (nextConnection) {
-							var _p10 = nextConnection;
-							if (_p10.ctor === 'Just') {
+							var _p11 = nextConnection;
+							if (_p11.ctor === 'Just') {
 								return {
 									ctor: '::',
 									_0: A2(
 										connectionLine,
 										_user$project$Main_UI$Dashed,
-										connection(_p10._0)),
+										connection(_p11._0)),
 									_1: {ctor: '[]'}
 								};
 							} else {
-								var to_ = {x: (_p12.x - canvas.transform.tx) / canvas.transform.a, y: (_p12.y - canvas.transform.ty) / canvas.transform.d};
-								var nextOutput = A2(_user$project$Main_UI_MetaDragToConnect$nextOutput, state, _p11);
+								var to_ = {x: (_p13.x - canvas.transform.tx) / canvas.transform.a, y: (_p13.y - canvas.transform.ty) / canvas.transform.d};
+								var nextOutput = A2(_user$project$Main_UI_MetaDragToConnect$nextOutput, state, _p12);
 								var from = A2(
 									position,
 									function (_) {
 										return _.outputs;
 									},
 									{
-										gate: _p11,
+										gate: _p12,
 										index: A2(_elm_lang$core$Maybe$withDefault, 0, nextOutput)
 									});
 								return {
@@ -14127,23 +14184,23 @@ var _user$project$Main_UI$view = function (state) {
 							}
 						}(
 							_elm_lang$core$List$head(
-								A3(_user$project$Main_UI_MetaDragToConnect$nextConnection, state, _p11, _p9._1._0)));
+								A3(_user$project$Main_UI_MetaDragToConnect$nextConnection, state, _p12, _p10._1._0)));
 					} else {
-						break _v3_2;
+						break _v4_2;
 					}
 				} else {
-					if (_p9._2.ctor === 'Just') {
-						var _p14 = _p9._2._0;
-						var _p13 = _p9._0._0;
-						var to_ = {x: (_p14.x - canvas.transform.tx) / canvas.transform.a, y: (_p14.y - canvas.transform.ty) / canvas.transform.d};
-						var nextOutput = A2(_user$project$Main_UI_MetaDragToConnect$nextOutput, state, _p13);
+					if (_p10._2.ctor === 'Just') {
+						var _p15 = _p10._2._0;
+						var _p14 = _p10._0._0;
+						var to_ = {x: (_p15.x - canvas.transform.tx) / canvas.transform.a, y: (_p15.y - canvas.transform.ty) / canvas.transform.d};
+						var nextOutput = A2(_user$project$Main_UI_MetaDragToConnect$nextOutput, state, _p14);
 						var from = A2(
 							position,
 							function (_) {
 								return _.outputs;
 							},
 							{
-								gate: _p13,
+								gate: _p14,
 								index: A2(_elm_lang$core$Maybe$withDefault, 0, nextOutput)
 							});
 						return {
@@ -14155,11 +14212,11 @@ var _user$project$Main_UI$view = function (state) {
 							_1: {ctor: '[]'}
 						};
 					} else {
-						break _v3_2;
+						break _v4_2;
 					}
 				}
 			} else {
-				break _v3_2;
+				break _v4_2;
 			}
 		} while(false);
 		return {ctor: '[]'};
@@ -14172,11 +14229,11 @@ var _user$project$Main_UI$view = function (state) {
 				ctor: '::',
 				_0: A2(
 					_elm_lang$core$List$map,
-					function (_p15) {
+					function (_p16) {
 						return A2(
 							connectionLine,
 							_user$project$Main_UI$Solid,
-							connection(_p15));
+							connection(_p16));
 					},
 					state.connections),
 				_1: {
