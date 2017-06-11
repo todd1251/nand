@@ -13648,34 +13648,32 @@ var _user$project$Main_UI_Controller$groupSelected = function (state) {
 		_user$project$Main_UI_GateViewModel$Grouping,
 		0,
 		A2(
-			_elm_lang$core$List$map,
-			function (gate) {
-				return {
-					ctor: '_Tuple3',
-					_0: -1,
-					_1: function () {
-						var _p0 = _user$project$Main_UI_GateViewModel$gate(gate);
-						if (_p0.ctor === 'Gate') {
-							return _p0._0;
-						} else {
-							return _elm_lang$core$Native_Utils.crashCase(
-								'Main.UI.Controller',
-								{
-									start: {line: 192, column: 31},
-									end: {line: 197, column: 72}
-								},
-								_p0)('TODO: nested grouping');
-						}
-					}(),
-					_2: A2(
-						_user$project$Main_UI_GateViewModel$transform,
-						{width: 0, height: 0},
-						gate)
-				};
-			},
+			_elm_lang$core$List$indexedMap,
+			F2(
+				function (index, gate) {
+					return {
+						ctor: '_Tuple3',
+						_0: 10000 + index,
+						_1: function () {
+							var _p0 = _user$project$Main_UI_GateViewModel$gate(gate);
+							if (_p0.ctor === 'Gate') {
+								return _p0._0;
+							} else {
+								return _elm_lang$core$Native_Utils.crashCase(
+									'Main.UI.Controller',
+									{
+										start: {line: 194, column: 35},
+										end: {line: 199, column: 76}
+									},
+									_p0)('TODO: nested grouping');
+							}
+						}(),
+						_2: _user$project$Transform$identity
+					};
+				}),
 			selected));
 	var model = _user$project$Main_UI_GateViewModel$from(
-		{id: -1, gate: group, selected: false, connected: false, transform: _user$project$Transform$identity, move: _elm_lang$core$Maybe$Nothing});
+		{id: 10000, gate: group, selected: false, connected: false, transform: _user$project$Transform$identity, move: _elm_lang$core$Maybe$Nothing});
 	return _elm_lang$core$Native_Utils.update(
 		state,
 		{
