@@ -13661,8 +13661,8 @@ var _user$project$Main_UI_Controller$groupSelected = function (state) {
 							return _elm_lang$core$Native_Utils.crashCase(
 								'Main.UI.Controller',
 								{
-									start: {line: 193, column: 31},
-									end: {line: 198, column: 72}
+									start: {line: 194, column: 31},
+									end: {line: 199, column: 72}
 								},
 								_p0)('TODO: nested grouping');
 						}
@@ -13672,7 +13672,26 @@ var _user$project$Main_UI_Controller$groupSelected = function (state) {
 			},
 			selected));
 	var model = _user$project$Main_UI_GateViewModel$from(
-		{id: 10000, gate: group, selected: false, connected: false, transform: _user$project$Transform$identity, move: _elm_lang$core$Maybe$Nothing});
+		{
+			id: 10000,
+			gate: group,
+			selected: false,
+			connected: false,
+			transform: A2(
+				_benansell$elm_geometric_transformation$Transformer2D$combine,
+				A2(
+					_user$project$Main_UI_GateViewModel$transform,
+					{width: 0, height: 0},
+					A2(_user$project$Unsafe$nth, 0, selected)),
+				_benansell$elm_geometric_transformation$Transformer2D$translate(
+					{
+						ctor: '_Tuple2',
+						_0: 0 - _user$project$UI_Gate$wireWidth(
+							{width: 100}),
+						_1: 0
+					})),
+			move: _elm_lang$core$Maybe$Nothing
+		});
 	return _elm_lang$core$Native_Utils.update(
 		state,
 		{
@@ -13762,15 +13781,7 @@ var _user$project$Main_UI_Controller$update = F2(
 		}
 	});
 var _user$project$Main_UI_Controller$connections = function (gates) {
-	return {
-		ctor: '::',
-		_0: _user$project$Main_UI_ConnectionViewModel$from(
-			{
-				output: {gate: 200, index: 0},
-				input: {gate: 201, index: 0}
-			}),
-		_1: {ctor: '[]'}
-	};
+	return {ctor: '[]'};
 };
 var _user$project$Main_UI_Controller$gateTransform = F5(
 	function (column, row, horizontalSpacing, verticalSpacing, dimensions) {
@@ -13871,86 +13882,7 @@ var _user$project$Main_UI_Controller$gates = function (state) {
 											_2: 4,
 											_3: _user$project$Main_UI_GateViewModel$Gate(_user$project$UI_Gate$Xnor)
 										},
-										_1: {
-											ctor: '::',
-											_0: {
-												ctor: '_Tuple4',
-												_0: 18,
-												_1: 0,
-												_2: 0,
-												_3: A2(
-													_user$project$Main_UI_GateViewModel$Grouping,
-													0,
-													{
-														ctor: '::',
-														_0: {ctor: '_Tuple3', _0: 180, _1: _user$project$UI_Gate$Buffer, _2: _user$project$Transform$identity},
-														_1: {ctor: '[]'}
-													})
-											},
-											_1: {
-												ctor: '::',
-												_0: {
-													ctor: '_Tuple4',
-													_0: 19,
-													_1: 0,
-													_2: 1,
-													_3: A2(
-														_user$project$Main_UI_GateViewModel$Grouping,
-														20,
-														{
-															ctor: '::',
-															_0: {
-																ctor: '_Tuple3',
-																_0: 190,
-																_1: _user$project$UI_Gate$Buffer,
-																_2: A3(_user$project$Transform$translate, _user$project$Transform$identity, 10, 10)
-															},
-															_1: {
-																ctor: '::',
-																_0: {
-																	ctor: '_Tuple3',
-																	_0: 191,
-																	_1: _user$project$UI_Gate$Or,
-																	_2: A3(_user$project$Transform$translate, _user$project$Transform$identity, 50, 100)
-																},
-																_1: {ctor: '[]'}
-															}
-														})
-												},
-												_1: {
-													ctor: '::',
-													_0: {
-														ctor: '_Tuple4',
-														_0: 20,
-														_1: 3,
-														_2: 0,
-														_3: A2(
-															_user$project$Main_UI_GateViewModel$Grouping,
-															20,
-															{
-																ctor: '::',
-																_0: {
-																	ctor: '_Tuple3',
-																	_0: 200,
-																	_1: _user$project$UI_Gate$Buffer,
-																	_2: A3(_user$project$Transform$translate, _user$project$Transform$identity, 10, 10)
-																},
-																_1: {
-																	ctor: '::',
-																	_0: {
-																		ctor: '_Tuple3',
-																		_0: 201,
-																		_1: _user$project$UI_Gate$Not,
-																		_2: A3(_user$project$Transform$translate, _user$project$Transform$identity, 180, 20)
-																	},
-																	_1: {ctor: '[]'}
-																}
-															})
-													},
-													_1: {ctor: '[]'}
-												}
-											}
-										}
+										_1: {ctor: '[]'}
 									}
 								}
 							}
