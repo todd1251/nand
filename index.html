@@ -13648,29 +13648,28 @@ var _user$project$Main_UI_Controller$groupSelected = function (state) {
 		_user$project$Main_UI_GateViewModel$Grouping,
 		0,
 		A2(
-			_elm_lang$core$List$indexedMap,
-			F2(
-				function (index, gate) {
-					return {
-						ctor: '_Tuple3',
-						_0: 10000 + index,
-						_1: function () {
-							var _p0 = _user$project$Main_UI_GateViewModel$gate(gate);
-							if (_p0.ctor === 'Gate') {
-								return _p0._0;
-							} else {
-								return _elm_lang$core$Native_Utils.crashCase(
-									'Main.UI.Controller',
-									{
-										start: {line: 194, column: 35},
-										end: {line: 199, column: 76}
-									},
-									_p0)('TODO: nested grouping');
-							}
-						}(),
-						_2: _user$project$Transform$identity
-					};
-				}),
+			_elm_lang$core$List$map,
+			function (gate) {
+				return {
+					ctor: '_Tuple3',
+					_0: _user$project$Main_UI_GateViewModel$id(gate),
+					_1: function () {
+						var _p0 = _user$project$Main_UI_GateViewModel$gate(gate);
+						if (_p0.ctor === 'Gate') {
+							return _p0._0;
+						} else {
+							return _elm_lang$core$Native_Utils.crashCase(
+								'Main.UI.Controller',
+								{
+									start: {line: 193, column: 31},
+									end: {line: 198, column: 72}
+								},
+								_p0)('TODO: nested grouping');
+						}
+					}(),
+					_2: _user$project$Transform$identity
+				};
+			},
 			selected));
 	var model = _user$project$Main_UI_GateViewModel$from(
 		{id: 10000, gate: group, selected: false, connected: false, transform: _user$project$Transform$identity, move: _elm_lang$core$Maybe$Nothing});
@@ -13678,18 +13677,18 @@ var _user$project$Main_UI_Controller$groupSelected = function (state) {
 		state,
 		{
 			gates: A2(
-				_elm_lang$core$List$append,
-				{
-					ctor: '::',
-					_0: model,
-					_1: {ctor: '[]'}
-				},
+				_elm_lang$core$Basics_ops['++'],
 				A2(
 					_elm_lang$core$List$filter,
 					function (_p2) {
 						return !_user$project$Main_UI_GateViewModel$isSelected(_p2);
 					},
-					state.gates))
+					state.gates),
+				{
+					ctor: '::',
+					_0: model,
+					_1: {ctor: '[]'}
+				})
 		});
 };
 var _user$project$Main_UI_Controller$gateNotAllowed = function (state) {
