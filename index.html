@@ -13643,6 +13643,7 @@ var _user$project$Main_UI_Controller$subscriptions = function (state) {
 		});
 };
 var _user$project$Main_UI_Controller$groupSelected = function (state) {
+	var dimensions = {width: state.width};
 	var selected = A2(_elm_lang$core$List$filter, _user$project$Main_UI_GateViewModel$isSelected, state.gates);
 	var group = A2(
 		_user$project$Main_UI_GateViewModel$Grouping,
@@ -13667,7 +13668,10 @@ var _user$project$Main_UI_Controller$groupSelected = function (state) {
 								_p0)('TODO: nested grouping');
 						}
 					}(),
-					_2: _user$project$Transform$identity
+					_2: A2(
+						_user$project$Main_UI_GateViewModel$transform,
+						{width: 0, height: 0},
+						gate)
 				};
 			},
 			selected));
@@ -13677,19 +13681,12 @@ var _user$project$Main_UI_Controller$groupSelected = function (state) {
 			gate: group,
 			selected: false,
 			connected: false,
-			transform: A2(
-				_benansell$elm_geometric_transformation$Transformer2D$combine,
-				A2(
-					_user$project$Main_UI_GateViewModel$transform,
-					{width: 0, height: 0},
-					A2(_user$project$Unsafe$nth, 0, selected)),
-				_benansell$elm_geometric_transformation$Transformer2D$translate(
-					{
-						ctor: '_Tuple2',
-						_0: 0 - _user$project$UI_Gate$wireWidth(
-							{width: 100}),
-						_1: 0
-					})),
+			transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
+				{
+					ctor: '_Tuple2',
+					_0: 0 - _user$project$UI_Gate$wireWidth(dimensions),
+					_1: 0
+				}),
 			move: _elm_lang$core$Maybe$Nothing
 		});
 	return _elm_lang$core$Native_Utils.update(
