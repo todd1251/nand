@@ -11481,9 +11481,8 @@ var _user$project$UI_Gate$inputWirePoints = F3(
 			},
 			A2(_elm_lang$core$List$range, 0, count - 1));
 	});
-var _user$project$UI_Gate$inputWires = F5(
-	function (count, height_, intersectionWithBaseAt, dimensions, appearance) {
-		var points = A3(_user$project$UI_Gate$inputWirePoints, count, height_, dimensions);
+var _user$project$UI_Gate$inputWires = F4(
+	function (points, intersectionWithBaseAt, dimensions, appearance) {
 		return {
 			left: A2(
 				_elm_lang$core$Maybe$withDefault,
@@ -11522,9 +11521,8 @@ var _user$project$UI_Gate$inputWires = F5(
 			outputs: {ctor: '[]'}
 		};
 	});
-var _user$project$UI_Gate$outputWires = F6(
-	function (count, width, height_, intersectionWithTipAt, dimensions, appearance) {
-		var points = A4(_user$project$UI_Gate$outputWirePoints, count, width, height_, dimensions);
+var _user$project$UI_Gate$outputWires = F4(
+	function (points, intersectionWithTipAt, dimensions, appearance) {
 		return {
 			left: A2(
 				_elm_lang$core$Maybe$withDefault,
@@ -11874,6 +11872,8 @@ var _user$project$UI_Gate$buffer8 = F2(
 			_elm_lang$core$Native_Utils.update(
 				gate_,
 				{width: gate_.width + offset}));
+		var inputWirePoints_ = A3(_user$project$UI_Gate$inputWirePoints, 1, buffer.height, dimensions);
+		var outputWirePoints_ = A4(_user$project$UI_Gate$outputWirePoints, 1, width, buffer.height, dimensions);
 		return A3(
 			_user$project$UI_Gate$group,
 			{
@@ -11881,10 +11881,9 @@ var _user$project$UI_Gate$buffer8 = F2(
 				_0: buffer,
 				_1: {
 					ctor: '::',
-					_0: A5(
+					_0: A4(
 						_user$project$UI_Gate$inputWires,
-						1,
-						buffer.height,
+						inputWirePoints_,
 						function (y) {
 							return buffer.left;
 						},
@@ -11892,11 +11891,9 @@ var _user$project$UI_Gate$buffer8 = F2(
 						appearance),
 					_1: {
 						ctor: '::',
-						_0: A6(
+						_0: A4(
 							_user$project$UI_Gate$outputWires,
-							1,
-							width,
-							buffer.height,
+							outputWirePoints_,
 							function (y) {
 								return (buffer.left + buffer.width) - offset;
 							},
@@ -11906,8 +11903,8 @@ var _user$project$UI_Gate$buffer8 = F2(
 					}
 				}
 			},
-			A3(_user$project$UI_Gate$inputWirePoints, 1, buffer.height, dimensions),
-			A4(_user$project$UI_Gate$outputWirePoints, 1, width, buffer.height, dimensions));
+			inputWirePoints_,
+			outputWirePoints_);
 	});
 var _user$project$UI_Gate$not8 = F2(
 	function (dimensions, appearance) {
@@ -11921,6 +11918,8 @@ var _user$project$UI_Gate$not8 = F2(
 				dimensions,
 				appearance,
 				A5(_user$project$UI_Gate$gate, dimensions, appearance, _user$project$UI_Gate$flatBase, _user$project$UI_Gate$noBody, _user$project$UI_Gate$arrowTip)));
+		var inputWirePoints_ = A3(_user$project$UI_Gate$inputWirePoints, 1, not.height, dimensions);
+		var outputWirePoints_ = A4(_user$project$UI_Gate$outputWirePoints, 1, width, not.height, dimensions);
 		return A3(
 			_user$project$UI_Gate$group,
 			{
@@ -11928,10 +11927,9 @@ var _user$project$UI_Gate$not8 = F2(
 				_0: not,
 				_1: {
 					ctor: '::',
-					_0: A5(
+					_0: A4(
 						_user$project$UI_Gate$inputWires,
-						1,
-						not.height,
+						inputWirePoints_,
 						function (y) {
 							return not.left;
 						},
@@ -11939,11 +11937,9 @@ var _user$project$UI_Gate$not8 = F2(
 						appearance),
 					_1: {
 						ctor: '::',
-						_0: A6(
+						_0: A4(
 							_user$project$UI_Gate$outputWires,
-							1,
-							width,
-							not.height,
+							outputWirePoints_,
 							function (y) {
 								return not.left + not.width;
 							},
@@ -11953,13 +11949,15 @@ var _user$project$UI_Gate$not8 = F2(
 					}
 				}
 			},
-			A3(_user$project$UI_Gate$inputWirePoints, 1, not.height, dimensions),
-			A4(_user$project$UI_Gate$outputWirePoints, 1, width, not.height, dimensions));
+			inputWirePoints_,
+			outputWirePoints_);
 	});
 var _user$project$UI_Gate$and8 = F2(
 	function (dimensions, appearance) {
 		var width = (_user$project$UI_Gate$gateWidth(dimensions) + (2 * _user$project$UI_Gate$inverterRadius(dimensions))) + _user$project$UI_Gate$wireWidth(dimensions);
 		var and = A5(_user$project$UI_Gate$gate, dimensions, appearance, _user$project$UI_Gate$flatBase, _user$project$UI_Gate$wideBody, _user$project$UI_Gate$roundTip);
+		var inputWirePoints_ = A3(_user$project$UI_Gate$inputWirePoints, 2, and.height, dimensions);
+		var outputWirePoints_ = A4(_user$project$UI_Gate$outputWirePoints, 1, width, and.height, dimensions);
 		return A3(
 			_user$project$UI_Gate$group,
 			{
@@ -11967,10 +11965,9 @@ var _user$project$UI_Gate$and8 = F2(
 				_0: and,
 				_1: {
 					ctor: '::',
-					_0: A5(
+					_0: A4(
 						_user$project$UI_Gate$inputWires,
-						2,
-						and.height,
+						inputWirePoints_,
 						function (y) {
 							return and.left;
 						},
@@ -11978,11 +11975,9 @@ var _user$project$UI_Gate$and8 = F2(
 						appearance),
 					_1: {
 						ctor: '::',
-						_0: A6(
+						_0: A4(
 							_user$project$UI_Gate$outputWires,
-							1,
-							width,
-							and.height,
+							outputWirePoints_,
 							function (y) {
 								return and.left + and.width;
 							},
@@ -11992,8 +11987,8 @@ var _user$project$UI_Gate$and8 = F2(
 					}
 				}
 			},
-			A3(_user$project$UI_Gate$inputWirePoints, 2, and.height, dimensions),
-			A4(_user$project$UI_Gate$outputWirePoints, 1, width, and.height, dimensions));
+			inputWirePoints_,
+			outputWirePoints_);
 	});
 var _user$project$UI_Gate$nand8 = F2(
 	function (dimensions, appearance) {
@@ -12003,6 +11998,8 @@ var _user$project$UI_Gate$nand8 = F2(
 			dimensions,
 			appearance,
 			A5(_user$project$UI_Gate$gate, dimensions, appearance, _user$project$UI_Gate$flatBase, _user$project$UI_Gate$wideBody, _user$project$UI_Gate$roundTip));
+		var inputWirePoints_ = A3(_user$project$UI_Gate$inputWirePoints, 2, nand.height, dimensions);
+		var outputWirePoints_ = A4(_user$project$UI_Gate$outputWirePoints, 1, width, nand.height, dimensions);
 		return A3(
 			_user$project$UI_Gate$group,
 			{
@@ -12010,10 +12007,9 @@ var _user$project$UI_Gate$nand8 = F2(
 				_0: nand,
 				_1: {
 					ctor: '::',
-					_0: A5(
+					_0: A4(
 						_user$project$UI_Gate$inputWires,
-						2,
-						nand.height,
+						inputWirePoints_,
 						function (y) {
 							return nand.left;
 						},
@@ -12021,11 +12017,9 @@ var _user$project$UI_Gate$nand8 = F2(
 						appearance),
 					_1: {
 						ctor: '::',
-						_0: A6(
+						_0: A4(
 							_user$project$UI_Gate$outputWires,
-							1,
-							width,
-							nand.height,
+							outputWirePoints_,
 							function (y) {
 								return nand.left + nand.width;
 							},
@@ -12035,13 +12029,15 @@ var _user$project$UI_Gate$nand8 = F2(
 					}
 				}
 			},
-			A3(_user$project$UI_Gate$inputWirePoints, 2, nand.height, dimensions),
-			A4(_user$project$UI_Gate$outputWirePoints, 1, width, nand.height, dimensions));
+			inputWirePoints_,
+			outputWirePoints_);
 	});
 var _user$project$UI_Gate$or8 = F2(
 	function (dimensions, appearance) {
 		var width = (_user$project$UI_Gate$gateWidth(dimensions) + (2 * _user$project$UI_Gate$inverterRadius(dimensions))) + _user$project$UI_Gate$wireWidth(dimensions);
 		var or = A5(_user$project$UI_Gate$gate, dimensions, appearance, _user$project$UI_Gate$curvedBase, _user$project$UI_Gate$narrowBody, _user$project$UI_Gate$spearTip);
+		var inputWirePoints_ = A3(_user$project$UI_Gate$inputWirePoints, 2, or.height, dimensions);
+		var outputWirePoints_ = A4(_user$project$UI_Gate$outputWirePoints, 1, width, or.height, dimensions);
 		return A3(
 			_user$project$UI_Gate$group,
 			{
@@ -12049,21 +12045,18 @@ var _user$project$UI_Gate$or8 = F2(
 				_0: or,
 				_1: {
 					ctor: '::',
-					_0: A5(
+					_0: A4(
 						_user$project$UI_Gate$inputWires,
-						2,
-						or.height,
+						inputWirePoints_,
 						_user$project$UI_Gate$intersectionWithBaseAt(
 							_user$project$UI_Gate$height(dimensions)),
 						dimensions,
 						appearance),
 					_1: {
 						ctor: '::',
-						_0: A6(
+						_0: A4(
 							_user$project$UI_Gate$outputWires,
-							1,
-							width,
-							or.height,
+							outputWirePoints_,
 							function (y) {
 								return or.left + or.width;
 							},
@@ -12073,8 +12066,8 @@ var _user$project$UI_Gate$or8 = F2(
 					}
 				}
 			},
-			A3(_user$project$UI_Gate$inputWirePoints, 2, or.height, dimensions),
-			A4(_user$project$UI_Gate$outputWirePoints, 1, width, or.height, dimensions));
+			inputWirePoints_,
+			outputWirePoints_);
 	});
 var _user$project$UI_Gate$nor8 = F2(
 	function (dimensions, appearance) {
@@ -12084,6 +12077,8 @@ var _user$project$UI_Gate$nor8 = F2(
 			dimensions,
 			appearance,
 			A5(_user$project$UI_Gate$gate, dimensions, appearance, _user$project$UI_Gate$curvedBase, _user$project$UI_Gate$narrowBody, _user$project$UI_Gate$spearTip));
+		var inputWirePoints_ = A3(_user$project$UI_Gate$inputWirePoints, 2, nor.height, dimensions);
+		var outputWirePoints_ = A4(_user$project$UI_Gate$outputWirePoints, 1, width, nor.height, dimensions);
 		return A3(
 			_user$project$UI_Gate$group,
 			{
@@ -12091,21 +12086,18 @@ var _user$project$UI_Gate$nor8 = F2(
 				_0: nor,
 				_1: {
 					ctor: '::',
-					_0: A5(
+					_0: A4(
 						_user$project$UI_Gate$inputWires,
-						2,
-						nor.height,
+						inputWirePoints_,
 						_user$project$UI_Gate$intersectionWithBaseAt(
 							_user$project$UI_Gate$height(dimensions)),
 						dimensions,
 						appearance),
 					_1: {
 						ctor: '::',
-						_0: A6(
+						_0: A4(
 							_user$project$UI_Gate$outputWires,
-							1,
-							width,
-							nor.height,
+							outputWirePoints_,
 							function (y) {
 								return nor.left + nor.width;
 							},
@@ -12115,13 +12107,15 @@ var _user$project$UI_Gate$nor8 = F2(
 					}
 				}
 			},
-			A3(_user$project$UI_Gate$inputWirePoints, 2, nor.height, dimensions),
-			A4(_user$project$UI_Gate$outputWirePoints, 1, width, nor.height, dimensions));
+			inputWirePoints_,
+			outputWirePoints_);
 	});
 var _user$project$UI_Gate$xor8 = F2(
 	function (dimensions, appearance) {
 		var width = (_user$project$UI_Gate$gateWidth(dimensions) + (2 * _user$project$UI_Gate$inverterRadius(dimensions))) + _user$project$UI_Gate$wireWidth(dimensions);
 		var xor = A5(_user$project$UI_Gate$gate, dimensions, appearance, _user$project$UI_Gate$curvedBase, _user$project$UI_Gate$narrowBody, _user$project$UI_Gate$spearTip);
+		var inputWirePoints_ = A3(_user$project$UI_Gate$inputWirePoints, 2, xor.height, dimensions);
+		var outputWirePoints_ = A4(_user$project$UI_Gate$outputWirePoints, 1, width, xor.height, dimensions);
 		return A3(
 			_user$project$UI_Gate$group,
 			{
@@ -12129,21 +12123,18 @@ var _user$project$UI_Gate$xor8 = F2(
 				_0: A3(_user$project$UI_Gate$twinCurvedBase, dimensions, appearance, xor),
 				_1: {
 					ctor: '::',
-					_0: A5(
+					_0: A4(
 						_user$project$UI_Gate$inputWires,
-						2,
-						xor.height,
+						inputWirePoints_,
 						_user$project$UI_Gate$intersectionWithBaseAt(
 							_user$project$UI_Gate$height(dimensions)),
 						dimensions,
 						appearance),
 					_1: {
 						ctor: '::',
-						_0: A6(
+						_0: A4(
 							_user$project$UI_Gate$outputWires,
-							1,
-							width,
-							xor.height,
+							outputWirePoints_,
 							function (y) {
 								return xor.left + xor.width;
 							},
@@ -12153,14 +12144,16 @@ var _user$project$UI_Gate$xor8 = F2(
 					}
 				}
 			},
-			A3(_user$project$UI_Gate$inputWirePoints, 2, xor.height, dimensions),
-			A4(_user$project$UI_Gate$outputWirePoints, 1, width, xor.height, dimensions));
+			inputWirePoints_,
+			outputWirePoints_);
 	});
 var _user$project$UI_Gate$xnor8 = F2(
 	function (dimensions, appearance) {
 		var width = (_user$project$UI_Gate$gateWidth(dimensions) + (2 * _user$project$UI_Gate$inverterRadius(dimensions))) + _user$project$UI_Gate$wireWidth(dimensions);
 		var xor = A5(_user$project$UI_Gate$gate, dimensions, appearance, _user$project$UI_Gate$curvedBase, _user$project$UI_Gate$narrowBody, _user$project$UI_Gate$spearTip);
 		var xnor = A3(_user$project$UI_Gate$inverted, dimensions, appearance, xor);
+		var inputWirePoints_ = A3(_user$project$UI_Gate$inputWirePoints, 2, xnor.height, dimensions);
+		var outputWirePoints_ = A4(_user$project$UI_Gate$outputWirePoints, 1, width, xnor.height, dimensions);
 		return A3(
 			_user$project$UI_Gate$group,
 			{
@@ -12171,21 +12164,18 @@ var _user$project$UI_Gate$xnor8 = F2(
 					_0: A3(_user$project$UI_Gate$twinCurvedBase, dimensions, appearance, xor),
 					_1: {
 						ctor: '::',
-						_0: A5(
+						_0: A4(
 							_user$project$UI_Gate$inputWires,
-							2,
-							xnor.height,
+							inputWirePoints_,
 							_user$project$UI_Gate$intersectionWithBaseAt(
 								_user$project$UI_Gate$height(dimensions)),
 							dimensions,
 							appearance),
 						_1: {
 							ctor: '::',
-							_0: A6(
+							_0: A4(
 								_user$project$UI_Gate$outputWires,
-								1,
-								width,
-								xnor.height,
+								outputWirePoints_,
 								function (y) {
 									return xnor.left + xnor.width;
 								},
@@ -12196,8 +12186,8 @@ var _user$project$UI_Gate$xnor8 = F2(
 					}
 				}
 			},
-			A3(_user$project$UI_Gate$inputWirePoints, 2, xnor.height, dimensions),
-			A4(_user$project$UI_Gate$outputWirePoints, 1, width, xnor.height, dimensions));
+			inputWirePoints_,
+			outputWirePoints_);
 	});
 var _user$project$UI_Gate$toShape = F3(
 	function (dimensions, appearance, gate) {
@@ -12529,13 +12519,17 @@ var _user$project$Main_UI_MetaDragToConnect$grouping = F5(
 			_elm_lang$core$List$map,
 			function (_p20) {
 				var _p21 = _p20;
+				var _p26 = _p21._2;
 				var gate_ = A3(_user$project$UI_Gate$toShape, dimensions, appearance, _p21._1);
-				var topLeft = {x: gate_.left, y: gate_.top};
+				var topLeft = A2(
+					_benansell$elm_geometric_transformation$Transformer2D$apply,
+					_p26,
+					{x: gate_.left, y: gate_.top});
 				var child = A4(
 					_user$project$UI_Gate$transformed,
 					A2(
 						_benansell$elm_geometric_transformation$Transformer2D$combine,
-						_p21._2,
+						_p26,
 						_benansell$elm_geometric_transformation$Transformer2D$translate(
 							{
 								ctor: '_Tuple2',
@@ -12580,11 +12574,11 @@ var _user$project$Main_UI_MetaDragToConnect$grouping = F5(
 		var inputs = _elm_lang$core$List$concat(
 			A2(
 				_elm_lang$core$List$map,
-				function (_p26) {
-					var _p27 = _p26;
-					var _p28 = A2(_user$project$Main_UI_MetaDragToConnect$nextInput, state, _p27._0);
-					if (_p28.ctor === 'Just') {
-						return A2(_elm_lang$core$List$drop, _p28._0, _p27._1.inputs);
+				function (_p27) {
+					var _p28 = _p27;
+					var _p29 = A2(_user$project$Main_UI_MetaDragToConnect$nextInput, state, _p28._0);
+					if (_p29.ctor === 'Just') {
+						return A2(_elm_lang$core$List$drop, _p29._0, _p28._1.inputs);
 					} else {
 						return {ctor: '[]'};
 					}
@@ -12593,27 +12587,27 @@ var _user$project$Main_UI_MetaDragToConnect$grouping = F5(
 		var outputs = _elm_lang$core$List$concat(
 			A2(
 				_elm_lang$core$List$map,
-				function (_p29) {
-					var _p30 = _p29;
-					var _p31 = A2(_user$project$Main_UI_MetaDragToConnect$nextOutput, state, _p30._0);
-					if (_p31.ctor === 'Just') {
-						return A2(_elm_lang$core$List$drop, _p31._0, _p30._1.outputs);
+				function (_p30) {
+					var _p31 = _p30;
+					var _p32 = A2(_user$project$Main_UI_MetaDragToConnect$nextOutput, state, _p31._0);
+					if (_p32.ctor === 'Just') {
+						return A2(_elm_lang$core$List$drop, _p32._0, _p31._1.outputs);
 					} else {
 						return {ctor: '[]'};
 					}
 				},
 				children_));
-		var _p32 = function () {
+		var _p33 = function () {
 			var sorted = _elm_lang$core$List$sort(
 				_elm_lang$core$List$concat(
 					A2(
 						_elm_lang$core$List$map,
-						function (_p33) {
-							var _p34 = _p33;
-							var gate_ = A3(_user$project$UI_Gate$toShape, dimensions, appearance, _p34._1);
+						function (_p34) {
+							var _p35 = _p34;
+							var gate_ = A3(_user$project$UI_Gate$toShape, dimensions, appearance, _p35._1);
 							var topLeft = A2(
 								_benansell$elm_geometric_transformation$Transformer2D$apply,
-								_p34._2,
+								_p35._2,
 								{x: gate_.left, y: gate_.top});
 							return {
 								ctor: '::',
@@ -12635,19 +12629,19 @@ var _user$project$Main_UI_MetaDragToConnect$grouping = F5(
 					sorted)
 			};
 		}();
-		var minY = _p32._0;
-		var maxY = _p32._1;
-		var _p35 = function () {
+		var minY = _p33._0;
+		var maxY = _p33._1;
+		var _p36 = function () {
 			var sorted = _elm_lang$core$List$sort(
 				_elm_lang$core$List$concat(
 					A2(
 						_elm_lang$core$List$map,
-						function (_p36) {
-							var _p37 = _p36;
-							var gate_ = A3(_user$project$UI_Gate$toShape, dimensions, appearance, _p37._1);
+						function (_p37) {
+							var _p38 = _p37;
+							var gate_ = A3(_user$project$UI_Gate$toShape, dimensions, appearance, _p38._1);
 							var topLeft = A2(
 								_benansell$elm_geometric_transformation$Transformer2D$apply,
-								_p37._2,
+								_p38._2,
 								{x: gate_.left, y: gate_.top});
 							return {
 								ctor: '::',
@@ -12669,8 +12663,8 @@ var _user$project$Main_UI_MetaDragToConnect$grouping = F5(
 					sorted)
 			};
 		}();
-		var minX = _p35._0;
-		var maxX = _p35._1;
+		var minX = _p36._0;
+		var maxX = _p36._1;
 		var grouped = {
 			left: minX,
 			top: minY,
@@ -12688,29 +12682,49 @@ var _user$project$Main_UI_MetaDragToConnect$grouping = F5(
 			inputs: {ctor: '[]'},
 			outputs: {ctor: '[]'}
 		};
-		var inputWirePoints_ = A3(
-			_user$project$UI_Gate$inputWirePoints,
-			_elm_lang$core$List$length(inputs),
-			grouped.height,
-			dimensions);
-		var outputWirePoints_ = A4(
-			_user$project$UI_Gate$outputWirePoints,
-			_elm_lang$core$List$length(outputs),
-			grouped.width + _user$project$UI_Gate$wireWidth(dimensions),
-			grouped.height,
-			dimensions);
+		var inputWirePoints_ = A2(
+			_elm_lang$core$List$map,
+			function (input) {
+				return function (_p39) {
+					var _p40 = _p39;
+					return {
+						ctor: '_Tuple2',
+						_0: (grouped.left + _p40._0) + _user$project$UI_Gate$wireWidth(dimensions),
+						_1: grouped.top + _p40._1
+					};
+				}(input);
+			},
+			A3(
+				_user$project$UI_Gate$inputWirePoints,
+				_elm_lang$core$List$length(inputs),
+				grouped.height,
+				dimensions));
+		var outputWirePoints_ = A2(
+			_elm_lang$core$List$map,
+			function (input) {
+				return function (_p41) {
+					var _p42 = _p41;
+					return {ctor: '_Tuple2', _0: grouped.left + _p42._0, _1: grouped.top + _p42._1};
+				}(input);
+			},
+			A4(
+				_user$project$UI_Gate$outputWirePoints,
+				_elm_lang$core$List$length(outputs),
+				grouped.width + _user$project$UI_Gate$wireWidth(dimensions),
+				grouped.height,
+				dimensions));
 		var shapes = A2(
 			_elm_lang$core$Basics_ops['++'],
 			A2(
 				_elm_lang$core$List$indexedMap,
 				F2(
-					function (index, _p38) {
-						var _p39 = _p38;
-						var _p41 = _p39._0;
-						var _p40 = A2(_user$project$Unsafe$nth, index, inputs);
-						var x2 = _p40._0;
-						var y2 = _p40._1;
-						var midpoint = (_p41 + _user$project$UI_Gate$wireWidth(dimensions)) + ((x2 - _p41) / 2);
+					function (index, _p43) {
+						var _p44 = _p43;
+						var _p46 = _p44._0;
+						var _p45 = A2(_user$project$Unsafe$nth, index, inputs);
+						var x2 = _p45._0;
+						var y2 = _p45._1;
+						var midpoint = (_p46 + _user$project$UI_Gate$wireWidth(dimensions)) + ((x2 - _p46) / 2);
 						return {
 							left: 0,
 							top: 0,
@@ -12722,8 +12736,8 @@ var _user$project$Main_UI_MetaDragToConnect$grouping = F5(
 									ctor: '::',
 									_0: A2(
 										_user$project$UI_Shape$MoveTo,
-										_p41 + _user$project$UI_Gate$wireWidth(dimensions),
-										_p39._1),
+										_p46 + _user$project$UI_Gate$wireWidth(dimensions),
+										_p44._1),
 									_1: {
 										ctor: '::',
 										_0: _user$project$UI_Shape$HorizontalLineTo(midpoint),
@@ -12748,13 +12762,13 @@ var _user$project$Main_UI_MetaDragToConnect$grouping = F5(
 			A2(
 				_elm_lang$core$List$indexedMap,
 				F2(
-					function (index, _p42) {
-						var _p43 = _p42;
-						var _p45 = _p43._0;
-						var _p44 = A2(_user$project$Unsafe$nth, index, outputs);
-						var x2 = _p44._0;
-						var y2 = _p44._1;
-						var midpoint = _p45 + ((x2 - _p45) / 2);
+					function (index, _p47) {
+						var _p48 = _p47;
+						var _p50 = _p48._0;
+						var _p49 = A2(_user$project$Unsafe$nth, index, outputs);
+						var x2 = _p49._0;
+						var y2 = _p49._1;
+						var midpoint = _p50 + ((x2 - _p50) / 2);
 						return {
 							left: 0,
 							top: 0,
@@ -12764,7 +12778,7 @@ var _user$project$Main_UI_MetaDragToConnect$grouping = F5(
 								_user$project$UI_Shape$Path,
 								{
 									ctor: '::',
-									_0: A2(_user$project$UI_Shape$MoveTo, _p45, _p43._1),
+									_0: A2(_user$project$UI_Shape$MoveTo, _p50, _p48._1),
 									_1: {
 										ctor: '::',
 										_0: _user$project$UI_Shape$HorizontalLineTo(midpoint),
@@ -12797,10 +12811,9 @@ var _user$project$Main_UI_MetaDragToConnect$grouping = F5(
 					_0: grouped,
 					_1: {
 						ctor: '::',
-						_0: A5(
+						_0: A4(
 							_user$project$UI_Gate$inputWires,
-							_elm_lang$core$List$length(inputs),
-							grouped.height,
+							inputWirePoints_,
 							function (y) {
 								return grouped.left;
 							},
@@ -12808,11 +12821,9 @@ var _user$project$Main_UI_MetaDragToConnect$grouping = F5(
 							appearance),
 						_1: {
 							ctor: '::',
-							_0: A6(
+							_0: A4(
 								_user$project$UI_Gate$outputWires,
-								_elm_lang$core$List$length(outputs),
-								grouped.width,
-								grouped.height,
+								outputWirePoints_,
 								function (y) {
 									return (grouped.left + grouped.width) + _user$project$UI_Gate$wireWidth(dimensions);
 								},
@@ -12873,17 +12884,17 @@ var _user$project$Main_UI_MetaDragToConnect$nextInput = F2(
 						return _elm_lang$core$Native_Utils.eq(input.gate, toId);
 					},
 					state.connections)));
-		var _p46 = connection;
-		if (_p46.ctor === 'Just') {
-			var shape = function (_p47) {
-				var _p48 = _p47;
-				return _p48._2;
+		var _p51 = connection;
+		if (_p51.ctor === 'Just') {
+			var shape = function (_p52) {
+				var _p53 = _p52;
+				return _p53._2;
 			}(
 				A2(
 					_user$project$Main_UI_MetaDragToConnect$shapeAndTransform,
 					state,
 					A2(_user$project$Main_UI_MetaDragToConnect$gateById, state.gates, toId)));
-			var input = _user$project$Main_UI_ConnectionViewModel$input(_p46._0);
+			var input = _user$project$Main_UI_ConnectionViewModel$input(_p51._0);
 			return (_elm_lang$core$Native_Utils.cmp(
 				input.index,
 				_elm_lang$core$List$length(shape.inputs) - 1) < 0) ? _elm_lang$core$Maybe$Just(input.index + 1) : _elm_lang$core$Maybe$Nothing;
@@ -12902,17 +12913,17 @@ var _user$project$Main_UI_MetaDragToConnect$nextOutput = F2(
 						return _elm_lang$core$Native_Utils.eq(output.gate, fromId);
 					},
 					state.connections)));
-		var _p49 = connection;
-		if (_p49.ctor === 'Just') {
-			var shape = function (_p50) {
-				var _p51 = _p50;
-				return _p51._2;
+		var _p54 = connection;
+		if (_p54.ctor === 'Just') {
+			var shape = function (_p55) {
+				var _p56 = _p55;
+				return _p56._2;
 			}(
 				A2(
 					_user$project$Main_UI_MetaDragToConnect$shapeAndTransform,
 					state,
 					A2(_user$project$Main_UI_MetaDragToConnect$gateById, state.gates, fromId)));
-			var output = _user$project$Main_UI_ConnectionViewModel$output(_p49._0);
+			var output = _user$project$Main_UI_ConnectionViewModel$output(_p54._0);
 			return (_elm_lang$core$Native_Utils.cmp(
 				output.index,
 				_elm_lang$core$List$length(shape.outputs) - 1) < 0) ? _elm_lang$core$Maybe$Just(output.index + 1) : _elm_lang$core$Maybe$Nothing;
@@ -12921,13 +12932,13 @@ var _user$project$Main_UI_MetaDragToConnect$nextOutput = F2(
 		}
 	});
 var _user$project$Main_UI_MetaDragToConnect$gatesWithConnectionUpdated = function (state) {
-	var _p52 = state.dragChain.metaDragToConnect.to;
-	if (_p52.ctor === 'Just') {
+	var _p57 = state.dragChain.metaDragToConnect.to;
+	if (_p57.ctor === 'Just') {
 		return A2(
 			_elm_lang$core$List$indexedMap,
 			A2(
 				_user$project$Main_UI_MetaDragToConnect$connectedIfContainsPoint,
-				_p52._0,
+				_p57._0,
 				A2(_elm_lang$core$Maybe$withDefault, -1, state.dragChain.metaDragToConnect.fromId)),
 			A2(
 				_elm_lang$core$List$map,
@@ -12956,18 +12967,18 @@ var _user$project$Main_UI_MetaDragToConnect$nextConnection = F3(
 		if (_elm_lang$core$Native_Utils.eq(fromId, toId)) {
 			return {ctor: '[]'};
 		} else {
-			var _p53 = {
+			var _p58 = {
 				ctor: '_Tuple2',
 				_0: A2(_user$project$Main_UI_MetaDragToConnect$nextOutput, state, fromId),
 				_1: A2(_user$project$Main_UI_MetaDragToConnect$nextInput, state, toId)
 			};
-			if (((_p53.ctor === '_Tuple2') && (_p53._0.ctor === 'Just')) && (_p53._1.ctor === 'Just')) {
+			if (((_p58.ctor === '_Tuple2') && (_p58._0.ctor === 'Just')) && (_p58._1.ctor === 'Just')) {
 				return {
 					ctor: '::',
 					_0: _user$project$Main_UI_ConnectionViewModel$from(
 						{
-							output: {gate: fromId, index: _p53._0._0},
-							input: {gate: toId, index: _p53._1._0}
+							output: {gate: fromId, index: _p58._0._0},
+							input: {gate: toId, index: _p58._1._0}
 						}),
 					_1: {ctor: '[]'}
 				};
@@ -12980,15 +12991,15 @@ var _user$project$Main_UI_MetaDragToConnect$update = F2(
 	function (message, state) {
 		var dragChain = state.dragChain;
 		var metaDragToConnect = dragChain.metaDragToConnect;
-		var _p54 = message;
-		switch (_p54.ctor) {
+		var _p59 = message;
+		switch (_p59.ctor) {
 			case 'OnDragStart':
-				var _p56 = _p54._1;
-				var _p55 = _p54._0;
+				var _p61 = _p59._1;
+				var _p60 = _p59._0;
 				return {
 					ctor: '_Tuple2',
-					_0: _p55.metaKey ? (_elm_lang$core$Native_Utils.eq(
-						A2(_user$project$Main_UI_MetaDragToConnect$nextOutput, state, _p56),
+					_0: _p60.metaKey ? (_elm_lang$core$Native_Utils.eq(
+						A2(_user$project$Main_UI_MetaDragToConnect$nextOutput, state, _p61),
 						_elm_lang$core$Maybe$Nothing) ? _elm_lang$core$Native_Utils.update(
 						state,
 						{allowed: false}) : _elm_lang$core$Native_Utils.update(
@@ -13002,17 +13013,17 @@ var _user$project$Main_UI_MetaDragToConnect$update = F2(
 										{
 											fromId: _elm_lang$core$Maybe$Just(
 												_user$project$Main_UI_GateViewModel$id(
-													A2(_user$project$Unsafe$nth, _p56, state.gates))),
+													A2(_user$project$Unsafe$nth, _p61, state.gates))),
 											from: _elm_lang$core$Maybe$Just(
 												{
-													x: _elm_lang$core$Basics$toFloat(_p55.offsetX),
-													y: _elm_lang$core$Basics$toFloat(_p55.offsetY)
+													x: _elm_lang$core$Basics$toFloat(_p60.offsetX),
+													y: _elm_lang$core$Basics$toFloat(_p60.offsetY)
 												}),
 											toId: _elm_lang$core$Maybe$Nothing,
 											to: _elm_lang$core$Maybe$Just(
 												{
-													x: _elm_lang$core$Basics$toFloat(_p55.offsetX),
-													y: _elm_lang$core$Basics$toFloat(_p55.offsetY)
+													x: _elm_lang$core$Basics$toFloat(_p60.offsetX),
+													y: _elm_lang$core$Basics$toFloat(_p60.offsetY)
 												})
 										})
 								})
@@ -13023,10 +13034,10 @@ var _user$project$Main_UI_MetaDragToConnect$update = F2(
 				return {
 					ctor: '_Tuple2',
 					_0: function () {
-						var _p57 = metaDragToConnect.to;
-						if (_p57.ctor === 'Just') {
-							var _p58 = _p57._0;
-							var position = {x: _p58.x + _p54._0._0, y: _p58.y + _p54._0._1};
+						var _p62 = metaDragToConnect.to;
+						if (_p62.ctor === 'Just') {
+							var _p63 = _p62._0;
+							var position = {x: _p63.x + _p59._0._0, y: _p63.y + _p59._0._1};
 							var state_ = _elm_lang$core$Native_Utils.update(
 								state,
 								{
@@ -13073,9 +13084,9 @@ var _user$project$Main_UI_MetaDragToConnect$update = F2(
 								_elm_lang$core$Basics_ops['++'],
 								state.connections,
 								function () {
-									var _p59 = {ctor: '_Tuple2', _0: metaDragToConnect.fromId, _1: metaDragToConnect.toId};
-									if (((_p59.ctor === '_Tuple2') && (_p59._0.ctor === 'Just')) && (_p59._1.ctor === 'Just')) {
-										return A3(_user$project$Main_UI_MetaDragToConnect$nextConnection, state, _p59._0._0, _p59._1._0);
+									var _p64 = {ctor: '_Tuple2', _0: metaDragToConnect.fromId, _1: metaDragToConnect.toId};
+									if (((_p64.ctor === '_Tuple2') && (_p64._0.ctor === 'Just')) && (_p64._1.ctor === 'Just')) {
+										return A3(_user$project$Main_UI_MetaDragToConnect$nextConnection, state, _p64._0._0, _p64._1._0);
 									} else {
 										return {ctor: '[]'};
 									}
