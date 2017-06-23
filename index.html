@@ -9055,15 +9055,15 @@ var _user$project$Main2$render = F2(
 		return A2(
 			_elm_lang$core$Basics_ops['++'],
 			function () {
-				var _p3 = _p4.shape;
-				if (_p3.ctor === 'Just') {
+				var _p3 = _p4.node;
+				if (_p3.ctor === 'Group') {
+					return {ctor: '[]'};
+				} else {
 					return {
 						ctor: '::',
 						_0: A2(_user$project$Main2$shapeConstructor, _p3._0, localTransform),
 						_1: {ctor: '[]'}
 					};
-				} else {
-					return {ctor: '[]'};
 				}
 			}(),
 			_elm_lang$core$List$concat(
@@ -9106,6 +9106,16 @@ var _user$project$Main2$Circle = function (a) {
 var _user$project$Main2$Rectangle = function (a) {
 	return {ctor: 'Rectangle', _0: a};
 };
+var _user$project$Main2$Output = function (a) {
+	return {ctor: 'Output', _0: a};
+};
+var _user$project$Main2$Input = function (a) {
+	return {ctor: 'Input', _0: a};
+};
+var _user$project$Main2$Shape = function (a) {
+	return {ctor: 'Shape', _0: a};
+};
+var _user$project$Main2$Group = {ctor: 'Group'};
 var _user$project$Main2$Node = function (a) {
 	return {ctor: 'Node', _0: a};
 };
@@ -9114,7 +9124,7 @@ var _user$project$Main2$root = _user$project$Main2$Node(
 		id: 0,
 		transform: _benansell$elm_geometric_transformation$Transformer2D$identity(
 			{x: 0, y: 0}),
-		shape: _elm_lang$core$Maybe$Nothing,
+		node: _user$project$Main2$Group,
 		children: {ctor: '[]'}
 	});
 var _user$project$Main2$add = F3(
@@ -9136,8 +9146,8 @@ var _user$project$Main2$add = F3(
 				})) : _elm_lang$core$Native_Utils.crash(
 			'Main2',
 			{
-				start: {line: 143, column: 9},
-				end: {line: 143, column: 20}
+				start: {line: 153, column: 9},
+				end: {line: 153, column: 20}
 			})(
 			A2(
 				_elm_lang$core$Basics_ops['++'],
@@ -9176,12 +9186,6 @@ var _user$project$Main2$update = F2(
 			};
 		}
 	});
-var _user$project$Main2$Output = function (a) {
-	return {ctor: 'Output', _0: a};
-};
-var _user$project$Main2$Input = function (a) {
-	return {ctor: 'Input', _0: a};
-};
 var _user$project$Main2$Add = function (a) {
 	return {ctor: 'Add', _0: a};
 };
@@ -9195,7 +9199,7 @@ var _user$project$Main2$commands = {
 					id: 1,
 					transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
 						{ctor: '_Tuple2', _0: -100, _1: 0}),
-					shape: _elm_lang$core$Maybe$Just(
+					node: _user$project$Main2$Shape(
 						_user$project$Main2$Rectangle(
 							{width: 100, height: 100})),
 					children: {
@@ -9205,7 +9209,7 @@ var _user$project$Main2$commands = {
 								id: 10,
 								transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
 									{ctor: '_Tuple2', _0: 50, _1: 0}),
-								shape: _elm_lang$core$Maybe$Just(
+								node: _user$project$Main2$Shape(
 									_user$project$Main2$Rectangle(
 										{width: 10, height: 10})),
 								children: {ctor: '[]'}
@@ -9224,7 +9228,7 @@ var _user$project$Main2$commands = {
 						id: 2,
 						transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
 							{ctor: '_Tuple2', _0: 100, _1: 0}),
-						shape: _elm_lang$core$Maybe$Just(
+						node: _user$project$Main2$Shape(
 							_user$project$Main2$Circle(
 								{radius: 50})),
 						children: {
@@ -9234,7 +9238,7 @@ var _user$project$Main2$commands = {
 									id: 20,
 									transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
 										{ctor: '_Tuple2', _0: -50, _1: 0}),
-									shape: _elm_lang$core$Maybe$Just(
+									node: _user$project$Main2$Shape(
 										_user$project$Main2$Circle(
 											{radius: 5})),
 									children: {ctor: '[]'}
