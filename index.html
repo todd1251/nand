@@ -8892,6 +8892,37 @@ var _elm_lang$window$Window$subMap = F2(
 			});
 	});
 _elm_lang$core$Native_Platform.effectManagers['Window'] = {pkg: 'elm-lang/window', init: _elm_lang$window$Window$init, onEffects: _elm_lang$window$Window$onEffects, onSelfMsg: _elm_lang$window$Window$onSelfMsg, tag: 'sub', subMap: _elm_lang$window$Window$subMap};
+var _user$project$Styles$css = '\n    html, body {\n        margin: 0;\n        padding: 0;\n    }\n\n    * {\n        user-select: none;\n    }\n\n    .canvas {\n        background: white;\n        height: 100%;\n        position: fixed;\n        width: 100%;\n    }\n    ';
+var _user$project$Styles$stylesheet = A3(
+	_elm_lang$html$Html$node,
+	'style',
+	{ctor: '[]'},
+	{
+		ctor: '::',
+		_0: _elm_lang$html$Html$text(_user$project$Styles$css),
+		_1: {ctor: '[]'}
+	});
+var _user$project$Canvas2$view = function (shapes) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _user$project$Styles$stylesheet,
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$svg$Svg$svg,
+					{
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$class('canvas'),
+						_1: {ctor: '[]'}
+					},
+					shapes),
+				_1: {ctor: '[]'}
+			}
+		});
+};
 var _user$project$Canvas2$toSvgTransform = function (transform) {
 	var elements = {
 		ctor: '::',
@@ -8940,6 +8971,24 @@ var _user$project$Canvas2$origin = function (size) {
 var _user$project$Canvas2$Size = F2(
 	function (a, b) {
 		return {width: a, height: b};
+	});
+var _user$project$Domain$origin = {x: 0, y: 0};
+var _user$project$Domain$Position = F2(
+	function (a, b) {
+		return {x: a, y: b};
+	});
+var _user$project$Domain$Output = function (a) {
+	return {ctor: 'Output', _0: a};
+};
+var _user$project$Domain$Input = function (a) {
+	return {ctor: 'Input', _0: a};
+};
+var _user$project$Domain$Group = function (a) {
+	return {ctor: 'Group', _0: a};
+};
+var _user$project$Domain$Component = F3(
+	function (a, b, c) {
+		return {ctor: 'Component', _0: a, _1: b, _2: c};
 	});
 var _user$project$Scene$render = F3(
 	function (origin, renderer, _p0) {
@@ -9107,96 +9156,133 @@ var _user$project$Example$Shape = function (a) {
 };
 var _user$project$Example$Group = {ctor: 'Group'};
 var _user$project$Example$scene = function () {
-	var input = {
-		id: 4,
-		node: _user$project$Example$Shape(
-			_user$project$Example$Circle(
-				{radius: 5})),
-		transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
-			{ctor: '_Tuple2', _0: -50, _1: 0})
-	};
-	var circle = {
-		id: 3,
-		node: _user$project$Example$Shape(
-			_user$project$Example$Circle(
-				{radius: 50})),
-		transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
-			{ctor: '_Tuple2', _0: 100, _1: 0})
-	};
-	var output = {
-		id: 2,
-		node: _user$project$Example$Shape(
-			_user$project$Example$Rectangle(
-				{width: 10, height: 10})),
-		transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
-			{ctor: '_Tuple2', _0: 50, _1: 0})
-	};
-	var rectangle = {
-		id: 1,
-		node: _user$project$Example$Shape(
-			_user$project$Example$Rectangle(
-				{width: 100, height: 100})),
-		transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
-			{ctor: '_Tuple2', _0: -100, _1: 0})
-	};
 	var root = {
 		id: 0,
 		node: _user$project$Example$Group,
 		transform: _benansell$elm_geometric_transformation$Transformer2D$identity(
 			{x: 0, y: 0})
 	};
-	return A3(
-		_user$project$Scene$add,
-		circle,
-		input,
-		A3(
-			_user$project$Scene$add,
-			root,
-			circle,
-			A3(
-				_user$project$Scene$add,
-				rectangle,
-				output,
-				A3(
-					_user$project$Scene$add,
-					root,
-					rectangle,
-					_user$project$Scene$create(root)))));
-}();
-var _user$project$Styles$css = '\n    html, body {\n        margin: 0;\n        padding: 0;\n    }\n\n    * {\n        user-select: none;\n    }\n\n    .canvas {\n        background: white;\n        height: 100%;\n        position: fixed;\n        width: 100%;\n    }\n    ';
-var _user$project$Styles$stylesheet = A3(
-	_elm_lang$html$Html$node,
-	'style',
-	{ctor: '[]'},
-	{
+	var components = {
 		ctor: '::',
-		_0: _elm_lang$html$Html$text(_user$project$Styles$css),
-		_1: {ctor: '[]'}
-	});
-var _user$project$Main2$view = function (state) {
-	return A2(
-		_elm_lang$html$Html$div,
-		{ctor: '[]'},
-		{
-			ctor: '::',
-			_0: _user$project$Styles$stylesheet,
-			_1: {
+		_0: A3(
+			_user$project$Domain$Component,
+			_user$project$Example$Shape(
+				_user$project$Example$Rectangle(
+					{width: 100, height: 100})),
+			{
 				ctor: '::',
-				_0: A2(
-					_elm_lang$svg$Svg$svg,
-					{
+				_0: _user$project$Domain$Input(
+					{x: -50, y: 0}),
+				_1: {
+					ctor: '::',
+					_0: _user$project$Domain$Output(
+						{x: 50, y: 0}),
+					_1: {ctor: '[]'}
+				}
+			},
+			{x: -100, y: 0}),
+		_1: {
+			ctor: '::',
+			_0: A3(
+				_user$project$Domain$Component,
+				_user$project$Example$Shape(
+					_user$project$Example$Circle(
+						{radius: 50})),
+				{
+					ctor: '::',
+					_0: _user$project$Domain$Input(
+						{x: -50, y: -30}),
+					_1: {
 						ctor: '::',
-						_0: _elm_lang$svg$Svg_Attributes$class('canvas'),
-						_1: {ctor: '[]'}
-					},
-					A3(
-						_user$project$Scene$render,
-						_user$project$Canvas2$origin(state.canvasSize),
-						_user$project$Example$render,
-						state.scene)),
-				_1: {ctor: '[]'}
-			}
-		});
+						_0: _user$project$Domain$Input(
+							{x: -50, y: 30}),
+						_1: {
+							ctor: '::',
+							_0: _user$project$Domain$Output(
+								{x: 50, y: 0}),
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				{x: 100, y: 0}),
+			_1: {ctor: '[]'}
+		}
+	};
+	var shapes = A2(
+		_elm_lang$core$Debug$log,
+		'components',
+		_elm_lang$core$List$concat(
+			A2(
+				_elm_lang$core$List$indexedMap,
+				F2(
+					function (index, component) {
+						var id = (root.id + 1) + index;
+						var _p2 = component;
+						if (_p2.ctor === 'Component') {
+							var _p4 = _p2._2;
+							return A2(
+								_elm_lang$core$Basics_ops['++'],
+								{
+									ctor: '::',
+									_0: {
+										id: (root.id + 1) + index,
+										node: _p2._0,
+										transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
+											{ctor: '_Tuple2', _0: _p4.x, _1: _p4.y})
+									},
+									_1: {ctor: '[]'}
+								},
+								A2(
+									_elm_lang$core$List$indexedMap,
+									F2(
+										function (portIndex, port_) {
+											var id = (((root.id + 1) + index) * 10) + portIndex;
+											var _p3 = port_;
+											if (_p3.ctor === 'Input') {
+												return {
+													id: id,
+													node: _user$project$Example$Shape(
+														_user$project$Example$Circle(
+															{radius: 5})),
+													transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
+														{ctor: '_Tuple2', _0: _p3._0.x, _1: _p3._0.y})
+												};
+											} else {
+												return {
+													id: id,
+													node: _user$project$Example$Shape(
+														_user$project$Example$Rectangle(
+															{width: 10, height: 10})),
+													transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
+														{ctor: '_Tuple2', _0: _p3._0.x, _1: _p3._0.y})
+												};
+											}
+										}),
+									_p2._1));
+						} else {
+							return _elm_lang$core$Native_Utils.crashCase(
+								'Example',
+								{
+									start: {line: 63, column: 33},
+									end: {line: 97, column: 69}
+								},
+								_p2)('TODO: grouping');
+						}
+					}),
+				components)));
+	return A3(
+		_elm_lang$core$List$foldl,
+		_user$project$Scene$add(root),
+		_user$project$Scene$create(root),
+		shapes);
+}();
+var _user$project$Main2$view = function (state) {
+	return _user$project$Canvas2$view(
+		A3(
+			_user$project$Scene$render,
+			_user$project$Canvas2$origin(state.canvasSize),
+			_user$project$Example$render,
+			state.scene));
 };
 var _user$project$Main2$update = F2(
 	function (message, state) {
@@ -9219,12 +9305,6 @@ var _user$project$Main2$State = F2(
 	function (a, b) {
 		return {canvasSize: a, scene: b};
 	});
-var _user$project$Main2$Output = function (a) {
-	return {ctor: 'Output', _0: a};
-};
-var _user$project$Main2$Input = function (a) {
-	return {ctor: 'Input', _0: a};
-};
 var _user$project$Main2$WindowResizedTo = function (a) {
 	return {ctor: 'WindowResizedTo', _0: a};
 };
