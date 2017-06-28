@@ -9034,13 +9034,156 @@ var _user$project$Scene$add = F3(
 					_p5,
 					{
 						ctor: '::',
-						_0: A2(
-							_user$project$Scene$Scene,
-							node,
-							{ctor: '[]'}),
+						_0: node,
 						_1: {ctor: '[]'}
 					}) : _p5));
 	});
+var _user$project$Scene$Rectangle = function (a) {
+	return {ctor: 'Rectangle', _0: a};
+};
+var _user$project$Scene$Circle = function (a) {
+	return {ctor: 'Circle', _0: a};
+};
+var _user$project$Scene$Shape = function (a) {
+	return {ctor: 'Shape', _0: a};
+};
+var _user$project$Scene$Group = {ctor: 'Group'};
+var _user$project$Scene$eval = {
+	ctor: '::',
+	_0: A2(
+		_user$project$Scene$Scene,
+		{
+			id: 'root',
+			node: _user$project$Scene$Group,
+			transform: {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_user$project$Scene$Scene,
+				{
+					id: 'root.group[0]',
+					node: _user$project$Scene$Group,
+					transform: {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_user$project$Scene$Scene,
+						{
+							id: 'root.group[0].component[0]',
+							node: _user$project$Scene$Shape(
+								_user$project$Scene$Circle(
+									{radius: 50})),
+							transform: {a: 1, b: 0, c: 0, d: 1, tx: -100, ty: 0}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_user$project$Scene$Scene,
+								{
+									id: 'root.group[0].component[0].port[0]',
+									node: _user$project$Scene$Shape(
+										_user$project$Scene$Circle(
+											{radius: 5})),
+									transform: {a: 1, b: 0, c: 0, d: 1, tx: -50, ty: 0}
+								},
+								{ctor: '[]'}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_user$project$Scene$Scene,
+									{
+										id: 'root.group[0].component[0].port[1]',
+										node: _user$project$Scene$Shape(
+											_user$project$Scene$Rectangle(
+												{width: 10, height: 10})),
+										transform: {a: 1, b: 0, c: 0, d: 1, tx: 50, ty: 0}
+									},
+									{ctor: '[]'}),
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		}),
+	_1: {
+		ctor: '::',
+		_0: A2(
+			_user$project$Scene$Scene,
+			{
+				id: 'root',
+				node: _user$project$Scene$Group,
+				transform: {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_user$project$Scene$Scene,
+					{
+						id: 'root.group[0]',
+						node: _user$project$Scene$Group,
+						transform: {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0}
+					},
+					{
+						ctor: '::',
+						_0: A2(
+							_user$project$Scene$Scene,
+							{
+								id: 'root.group[0].component[1]',
+								node: _user$project$Scene$Shape(
+									_user$project$Scene$Rectangle(
+										{width: 100, height: 100})),
+								transform: {a: 1, b: 0, c: 0, d: 1, tx: 100, ty: 0}
+							},
+							{
+								ctor: '::',
+								_0: A2(
+									_user$project$Scene$Scene,
+									{
+										id: 'root.group[0].component[1].port[0]',
+										node: _user$project$Scene$Shape(
+											_user$project$Scene$Circle(
+												{radius: 5})),
+										transform: {a: 1, b: 0, c: 0, d: 1, tx: -50, ty: -30}
+									},
+									{ctor: '[]'}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_user$project$Scene$Scene,
+										{
+											id: 'root.group[0].component[1].port[1]',
+											node: _user$project$Scene$Shape(
+												_user$project$Scene$Circle(
+													{radius: 5})),
+											transform: {a: 1, b: 0, c: 0, d: 1, tx: -50, ty: 30}
+										},
+										{ctor: '[]'}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_user$project$Scene$Scene,
+											{
+												id: 'root.group[0].component[1].port[2]',
+												node: _user$project$Scene$Shape(
+													_user$project$Scene$Rectangle(
+														{width: 10, height: 10})),
+												transform: {a: 1, b: 0, c: 0, d: 1, tx: 50, ty: 0}
+											},
+											{ctor: '[]'}),
+										_1: {ctor: '[]'}
+									}
+								}
+							}),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			}),
+		_1: {ctor: '[]'}
+	}
+};
 var _user$project$Shapes$circle = F2(
 	function (radius, transform) {
 		return A2(
@@ -9145,11 +9288,11 @@ var _user$project$Example$render = F2(
 			};
 		}
 	});
-var _user$project$Example$Circle = function (a) {
-	return {ctor: 'Circle', _0: a};
-};
 var _user$project$Example$Rectangle = function (a) {
 	return {ctor: 'Rectangle', _0: a};
+};
+var _user$project$Example$Circle = function (a) {
+	return {ctor: 'Circle', _0: a};
 };
 var _user$project$Example$Shape = function (a) {
 	return {ctor: 'Shape', _0: a};
@@ -9157,124 +9300,176 @@ var _user$project$Example$Shape = function (a) {
 var _user$project$Example$Group = {ctor: 'Group'};
 var _user$project$Example$scene = function () {
 	var root = {
-		id: 0,
+		id: 'root',
 		node: _user$project$Example$Group,
 		transform: _benansell$elm_geometric_transformation$Transformer2D$identity(
 			{x: 0, y: 0})
 	};
-	var components = {
-		ctor: '::',
-		_0: A3(
-			_user$project$Domain$Component,
-			_user$project$Example$Shape(
-				_user$project$Example$Rectangle(
-					{width: 100, height: 100})),
-			{
-				ctor: '::',
-				_0: _user$project$Domain$Input(
-					{x: -50, y: 0}),
-				_1: {
-					ctor: '::',
-					_0: _user$project$Domain$Output(
-						{x: 50, y: 0}),
-					_1: {ctor: '[]'}
-				}
-			},
-			{x: -100, y: 0}),
-		_1: {
+	var map = F4(
+		function (groupIndex, root, component, scene) {
+			var _p2 = component;
+			if (_p2.ctor === 'Component') {
+				var _p4 = _p2._2;
+				var node = {
+					id: A2(
+						_elm_lang$core$Basics_ops['++'],
+						root.id,
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'.component[',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								_elm_lang$core$Basics$toString(groupIndex),
+								']'))),
+					node: _user$project$Example$Shape(_p2._0),
+					transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
+						{ctor: '_Tuple2', _0: _p4.x, _1: _p4.y})
+				};
+				var component = A3(
+					_user$project$Scene$add,
+					root,
+					_user$project$Scene$create(node),
+					scene);
+				return A3(
+					_elm_lang$core$List$foldl,
+					_user$project$Scene$add(node),
+					component,
+					A2(
+						_elm_lang$core$List$map,
+						_user$project$Scene$create,
+						A2(
+							_elm_lang$core$List$indexedMap,
+							F2(
+								function (index, port_) {
+									var _p3 = port_;
+									if (_p3.ctor === 'Input') {
+										return {
+											id: A2(
+												_elm_lang$core$Basics_ops['++'],
+												node.id,
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													'.port[',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(index),
+														']'))),
+											node: _user$project$Example$Shape(
+												_user$project$Example$Circle(
+													{radius: 5})),
+											transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
+												{ctor: '_Tuple2', _0: _p3._0.x, _1: _p3._0.y})
+										};
+									} else {
+										return {
+											id: A2(
+												_elm_lang$core$Basics_ops['++'],
+												node.id,
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													'.port[',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(index),
+														']'))),
+											node: _user$project$Example$Shape(
+												_user$project$Example$Rectangle(
+													{width: 10, height: 10})),
+											transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
+												{ctor: '_Tuple2', _0: _p3._0.x, _1: _p3._0.y})
+										};
+									}
+								}),
+							_p2._1)));
+			} else {
+				var node = {
+					id: A2(
+						_elm_lang$core$Basics_ops['++'],
+						root.id,
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'.group[',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								_elm_lang$core$Basics$toString(groupIndex),
+								']'))),
+					node: _user$project$Example$Group,
+					transform: _benansell$elm_geometric_transformation$Transformer2D$identity(
+						{x: 0, y: 0})
+				};
+				var group = A3(
+					_user$project$Scene$add,
+					root,
+					_user$project$Scene$create(node),
+					scene);
+				return A2(
+					_elm_lang$core$Maybe$withDefault,
+					group,
+					_elm_lang$core$List$head(
+						A2(
+							_elm_lang$core$Debug$log,
+							'components',
+							A2(
+								_elm_lang$core$List$indexedMap,
+								F2(
+									function (index, component) {
+										return A4(map, index, node, component, group);
+									}),
+								_p2._0))));
+			}
+		});
+	var components = _user$project$Domain$Group(
+		{
 			ctor: '::',
 			_0: A3(
 				_user$project$Domain$Component,
-				_user$project$Example$Shape(
-					_user$project$Example$Circle(
-						{radius: 50})),
+				_user$project$Example$Circle(
+					{radius: 50}),
 				{
 					ctor: '::',
 					_0: _user$project$Domain$Input(
-						{x: -50, y: -30}),
+						{x: -50, y: 0}),
 					_1: {
 						ctor: '::',
-						_0: _user$project$Domain$Input(
-							{x: -50, y: 30}),
-						_1: {
-							ctor: '::',
-							_0: _user$project$Domain$Output(
-								{x: 50, y: 0}),
-							_1: {ctor: '[]'}
-						}
+						_0: _user$project$Domain$Output(
+							{x: 50, y: 0}),
+						_1: {ctor: '[]'}
 					}
 				},
-				{x: 100, y: 0}),
-			_1: {ctor: '[]'}
-		}
-	};
-	var shapes = A2(
-		_elm_lang$core$Debug$log,
-		'components',
-		_elm_lang$core$List$concat(
-			A2(
-				_elm_lang$core$List$indexedMap,
-				F2(
-					function (index, component) {
-						var id = (root.id + 1) + index;
-						var _p2 = component;
-						if (_p2.ctor === 'Component') {
-							var _p4 = _p2._2;
-							return A2(
-								_elm_lang$core$Basics_ops['++'],
-								{
-									ctor: '::',
-									_0: {
-										id: (root.id + 1) + index,
-										node: _p2._0,
-										transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
-											{ctor: '_Tuple2', _0: _p4.x, _1: _p4.y})
-									},
-									_1: {ctor: '[]'}
-								},
-								A2(
-									_elm_lang$core$List$indexedMap,
-									F2(
-										function (portIndex, port_) {
-											var id = (((root.id + 1) + index) * 10) + portIndex;
-											var _p3 = port_;
-											if (_p3.ctor === 'Input') {
-												return {
-													id: id,
-													node: _user$project$Example$Shape(
-														_user$project$Example$Circle(
-															{radius: 5})),
-													transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
-														{ctor: '_Tuple2', _0: _p3._0.x, _1: _p3._0.y})
-												};
-											} else {
-												return {
-													id: id,
-													node: _user$project$Example$Shape(
-														_user$project$Example$Rectangle(
-															{width: 10, height: 10})),
-													transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
-														{ctor: '_Tuple2', _0: _p3._0.x, _1: _p3._0.y})
-												};
-											}
-										}),
-									_p2._1));
-						} else {
-							return _elm_lang$core$Native_Utils.crashCase(
-								'Example',
-								{
-									start: {line: 63, column: 33},
-									end: {line: 97, column: 69}
-								},
-								_p2)('TODO: grouping');
+				{x: -100, y: 0}),
+			_1: {
+				ctor: '::',
+				_0: A3(
+					_user$project$Domain$Component,
+					_user$project$Example$Rectangle(
+						{width: 100, height: 100}),
+					{
+						ctor: '::',
+						_0: _user$project$Domain$Input(
+							{x: -50, y: -30}),
+						_1: {
+							ctor: '::',
+							_0: _user$project$Domain$Input(
+								{x: -50, y: 30}),
+							_1: {
+								ctor: '::',
+								_0: _user$project$Domain$Output(
+									{x: 50, y: 0}),
+								_1: {ctor: '[]'}
+							}
 						}
-					}),
-				components)));
-	return A3(
-		_elm_lang$core$List$foldl,
-		_user$project$Scene$add(root),
-		_user$project$Scene$create(root),
-		shapes);
+					},
+					{x: 100, y: 0}),
+				_1: {ctor: '[]'}
+			}
+		});
+	var mapped = A4(
+		map,
+		0,
+		root,
+		components,
+		_user$project$Scene$create(root));
+	return mapped;
 }();
 var _user$project$Main2$view = function (state) {
 	return _user$project$Canvas2$view(
