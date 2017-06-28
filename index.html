@@ -9402,20 +9402,21 @@ var _user$project$Example$scene = function () {
 					root,
 					_user$project$Scene$create(node),
 					scene);
-				return A2(
-					_elm_lang$core$Maybe$withDefault,
+				return A3(
+					_elm_lang$core$List$foldl,
+					F2(
+						function (_p5, scene) {
+							var _p6 = _p5;
+							return A4(map, _p6._0, node, _p6._1, scene);
+						}),
 					group,
-					_elm_lang$core$List$head(
-						A2(
-							_elm_lang$core$Debug$log,
-							'components',
-							A2(
-								_elm_lang$core$List$indexedMap,
-								F2(
-									function (index, component) {
-										return A4(map, index, node, component, group);
-									}),
-								_p2._0))));
+					A2(
+						_elm_lang$core$List$indexedMap,
+						F2(
+							function (v0, v1) {
+								return {ctor: '_Tuple2', _0: v0, _1: v1};
+							}),
+						_p2._0));
 			}
 		});
 	var components = _user$project$Domain$Group(
@@ -9463,13 +9464,12 @@ var _user$project$Example$scene = function () {
 				_1: {ctor: '[]'}
 			}
 		});
-	var mapped = A4(
+	return A4(
 		map,
 		0,
 		root,
 		components,
 		_user$project$Scene$create(root));
-	return mapped;
 }();
 var _user$project$Main2$view = function (state) {
 	return _user$project$Canvas2$view(
