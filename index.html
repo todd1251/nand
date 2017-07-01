@@ -9078,6 +9078,54 @@ var _user$project$Scene$add = F3(
 						_1: {ctor: '[]'}
 					}) : _p8));
 	});
+var _user$project$Shapes$path = F2(
+	function (points, transform) {
+		return A2(
+			_elm_lang$svg$Svg$path,
+			{
+				ctor: '::',
+				_0: _elm_lang$svg$Svg_Attributes$transform(
+					_user$project$Canvas2$toSvgTransform(transform)),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$d(
+						A2(
+							_elm_lang$core$String$join,
+							' ',
+							A2(
+								_elm_lang$core$List$indexedMap,
+								F2(
+									function (index, _p0) {
+										var _p1 = _p0;
+										return A2(
+											_elm_lang$core$Basics_ops['++'],
+											_elm_lang$core$Native_Utils.eq(index, 0) ? 'M' : 'L',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Basics$toString(_p1.x),
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													',',
+													_elm_lang$core$Basics$toString(_p1.y))));
+									}),
+								points))),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$strokeWidth('3'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$svg$Svg_Attributes$fill('none'),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				}
+			},
+			{ctor: '[]'});
+	});
 var _user$project$Shapes$line = F3(
 	function (from, to, transform) {
 		return A2(
@@ -9574,9 +9622,29 @@ var _user$project$Example$render = F2(
 							_benansell$elm_geometric_transformation$Transformer2D$apply,
 							toTransform,
 							{x: 0, y: 0});
+						var midX = fromPoint.x + ((toPoint.x - fromPoint.x) / 2);
 						return {
 							ctor: '::',
-							_0: A3(_user$project$Shapes$line, fromPoint, toPoint, transform),
+							_0: A2(
+								_user$project$Shapes$path,
+								{
+									ctor: '::',
+									_0: fromPoint,
+									_1: {
+										ctor: '::',
+										_0: {x: midX, y: fromPoint.y},
+										_1: {
+											ctor: '::',
+											_0: {x: midX, y: toPoint.y},
+											_1: {
+												ctor: '::',
+												_0: toPoint,
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								},
+								transform),
 							_1: {ctor: '[]'}
 						};
 				}
