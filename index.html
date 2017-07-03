@@ -8986,13 +8986,17 @@ var _user$project$Domain$Input = {ctor: 'Input'};
 var _user$project$Domain$Connection = function (a) {
 	return {ctor: 'Connection', _0: a};
 };
-var _user$project$Domain$Group = function (a) {
-	return {ctor: 'Group', _0: a};
-};
 var _user$project$Domain$Component = F4(
 	function (a, b, c, d) {
 		return {ctor: 'Component', _0: a, _1: b, _2: c, _3: d};
 	});
+var _user$project$Domain$Group = F3(
+	function (a, b, c) {
+		return {ctor: 'Group', _0: a, _1: b, _2: c};
+	});
+var _user$project$Domain$Collection = function (a) {
+	return {ctor: 'Collection', _0: a};
+};
 var _user$project$Scene$sceneAtNode = F2(
 	function (node, _p0) {
 		var _p1 = _p0;
@@ -9432,14 +9436,17 @@ var _user$project$Example$Circle = function (a) {
 var _user$project$Example$Connection = function (a) {
 	return {ctor: 'Connection', _0: a};
 };
-var _user$project$Example$Port = F3(
-	function (a, b, c) {
-		return {ctor: 'Port', _0: a, _1: b, _2: c};
+var _user$project$Example$Port = F4(
+	function (a, b, c, d) {
+		return {ctor: 'Port', _0: a, _1: b, _2: c, _3: d};
 	});
 var _user$project$Example$Component = F2(
 	function (a, b) {
 		return {ctor: 'Component', _0: a, _1: b};
 	});
+var _user$project$Example$Collection = function (a) {
+	return {ctor: 'Collection', _0: a};
+};
 var _user$project$Example$Group = function (a) {
 	return {ctor: 'Group', _0: a};
 };
@@ -9448,7 +9455,7 @@ var _user$project$Example$scene = function () {
 		var id = 'root';
 		return {
 			id: id,
-			node: _user$project$Example$Group(id),
+			node: _user$project$Example$Collection(id),
 			transform: _benansell$elm_geometric_transformation$Transformer2D$identity(
 				{x: 0, y: 0})
 		};
@@ -9518,13 +9525,14 @@ var _user$project$Example$scene = function () {
 														_elm_lang$core$Basics_ops['++'],
 														_elm_lang$core$Basics$toString(index),
 														']'))),
-											node: A3(_user$project$Example$Port, _p7, index, shape),
+											node: A4(_user$project$Example$Port, false, _p7, index, shape),
 											transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
 												{ctor: '_Tuple2', _0: port_.position.x, _1: port_.position.y})
 										};
 									}),
 								_p5._2)));
 				case 'Group':
+					var _p12 = _p5._0;
 					var id = A2(
 						_elm_lang$core$Basics_ops['++'],
 						root.id,
@@ -9534,7 +9542,13 @@ var _user$project$Example$scene = function () {
 							A2(
 								_elm_lang$core$Basics_ops['++'],
 								_elm_lang$core$Basics$toString(groupIndex),
-								']')));
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									'][id=',
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										_elm_lang$core$Basics$toString(_p12),
+										']')))));
 					var node = {
 						id: id,
 						node: _user$project$Example$Group(id),
@@ -9546,12 +9560,87 @@ var _user$project$Example$scene = function () {
 						root,
 						_user$project$Scene$create(node),
 						scene);
+					var group_ = A3(
+						_elm_lang$core$List$foldl,
+						_user$project$Scene$add(node),
+						group,
+						A2(
+							_elm_lang$core$List$map,
+							_user$project$Scene$create,
+							A2(
+								_elm_lang$core$List$indexedMap,
+								F2(
+									function (index, port_) {
+										var shape = function () {
+											var _p9 = port_.direction;
+											if (_p9.ctor === 'Input') {
+												return _user$project$Example$Circle(
+													{radius: 5});
+											} else {
+												return _user$project$Example$Rectangle(
+													{width: 10, height: 10});
+											}
+										}();
+										return {
+											id: A2(
+												_elm_lang$core$Basics_ops['++'],
+												node.id,
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													'.port[',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$core$Basics$toString(index),
+														']'))),
+											node: A4(_user$project$Example$Port, true, _p12, index, shape),
+											transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
+												{ctor: '_Tuple2', _0: port_.position.x, _1: port_.position.y})
+										};
+									}),
+								_p5._1)));
 					return A3(
 						_elm_lang$core$List$foldl,
 						F2(
-							function (_p9, scene) {
-								var _p10 = _p9;
-								return A4(map, _p10._0, node, _p10._1, scene);
+							function (_p10, scene) {
+								var _p11 = _p10;
+								return A4(map, _p11._0, node, _p11._1, scene);
+							}),
+						group_,
+						A2(
+							_elm_lang$core$List$indexedMap,
+							F2(
+								function (v0, v1) {
+									return {ctor: '_Tuple2', _0: v0, _1: v1};
+								}),
+							_p5._2));
+				case 'Collection':
+					var id = A2(
+						_elm_lang$core$Basics_ops['++'],
+						root.id,
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'.collection[',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								_elm_lang$core$Basics$toString(groupIndex),
+								']')));
+					var node = {
+						id: id,
+						node: _user$project$Example$Collection(id),
+						transform: _benansell$elm_geometric_transformation$Transformer2D$identity(
+							{x: 0, y: 0})
+					};
+					var group = A3(
+						_user$project$Scene$add,
+						root,
+						_user$project$Scene$create(node),
+						scene);
+					return A3(
+						_elm_lang$core$List$foldl,
+						F2(
+							function (_p13, scene) {
+								var _p14 = _p13;
+								return A4(map, _p14._0, node, _p14._1, scene);
 							}),
 						group,
 						A2(
@@ -9584,48 +9673,39 @@ var _user$project$Example$scene = function () {
 						scene);
 			}
 		});
-	var components = _user$project$Domain$Group(
+	var components = _user$project$Domain$Collection(
 		{
 			ctor: '::',
-			_0: A4(
-				_user$project$Domain$Component,
+			_0: A3(
+				_user$project$Domain$Group,
 				0,
-				_user$project$Example$Circle(
-					{radius: 50}),
 				{
 					ctor: '::',
 					_0: {
 						direction: _user$project$Domain$Input,
-						position: {x: -50, y: 0}
+						position: {x: -175, y: 0}
 					},
 					_1: {
 						ctor: '::',
 						_0: {
 							direction: _user$project$Domain$Output,
-							position: {x: 50, y: 0}
+							position: {x: 175, y: 0}
 						},
 						_1: {ctor: '[]'}
 					}
 				},
-				{x: -100, y: 0}),
-			_1: {
-				ctor: '::',
-				_0: A4(
-					_user$project$Domain$Component,
-					1,
-					_user$project$Example$Rectangle(
-						{width: 100, height: 100}),
-					{
-						ctor: '::',
-						_0: {
-							direction: _user$project$Domain$Input,
-							position: {x: -50, y: -30}
-						},
-						_1: {
+				{
+					ctor: '::',
+					_0: A4(
+						_user$project$Domain$Component,
+						1,
+						_user$project$Example$Circle(
+							{radius: 50}),
+						{
 							ctor: '::',
 							_0: {
 								direction: _user$project$Domain$Input,
-								position: {x: -50, y: 30}
+								position: {x: -50, y: 0}
 							},
 							_1: {
 								ctor: '::',
@@ -9635,27 +9715,74 @@ var _user$project$Example$scene = function () {
 								},
 								_1: {ctor: '[]'}
 							}
-						}
-					},
-					{x: 100, y: 0}),
-				_1: {
-					ctor: '::',
-					_0: _user$project$Domain$Connection(
-						{
-							from: {ctor: '_Tuple2', _0: 0, _1: 1},
-							to: {ctor: '_Tuple2', _0: 1, _1: 0}
-						}),
+						},
+						{x: -100, y: 0}),
 					_1: {
 						ctor: '::',
-						_0: _user$project$Domain$Connection(
+						_0: A4(
+							_user$project$Domain$Component,
+							2,
+							_user$project$Example$Rectangle(
+								{width: 100, height: 100}),
 							{
-								from: {ctor: '_Tuple2', _0: 0, _1: 1},
-								to: {ctor: '_Tuple2', _0: 1, _1: 1}
-							}),
-						_1: {ctor: '[]'}
+								ctor: '::',
+								_0: {
+									direction: _user$project$Domain$Input,
+									position: {x: -50, y: -30}
+								},
+								_1: {
+									ctor: '::',
+									_0: {
+										direction: _user$project$Domain$Input,
+										position: {x: -50, y: 30}
+									},
+									_1: {
+										ctor: '::',
+										_0: {
+											direction: _user$project$Domain$Output,
+											position: {x: 50, y: 0}
+										},
+										_1: {ctor: '[]'}
+									}
+								}
+							},
+							{x: 100, y: 0}),
+						_1: {
+							ctor: '::',
+							_0: _user$project$Domain$Connection(
+								{
+									from: {ctor: '_Tuple2', _0: 1, _1: 1},
+									to: {ctor: '_Tuple2', _0: 2, _1: 0}
+								}),
+							_1: {
+								ctor: '::',
+								_0: _user$project$Domain$Connection(
+									{
+										from: {ctor: '_Tuple2', _0: 1, _1: 1},
+										to: {ctor: '_Tuple2', _0: 2, _1: 1}
+									}),
+								_1: {
+									ctor: '::',
+									_0: _user$project$Domain$Connection(
+										{
+											from: {ctor: '_Tuple2', _0: 0, _1: 0},
+											to: {ctor: '_Tuple2', _0: 1, _1: 0}
+										}),
+									_1: {
+										ctor: '::',
+										_0: _user$project$Domain$Connection(
+											{
+												from: {ctor: '_Tuple2', _0: 2, _1: 2},
+												to: {ctor: '_Tuple2', _0: 0, _1: 1}
+											}),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
 					}
-				}
-			}
+				}),
+			_1: {ctor: '[]'}
 		});
 	return A4(
 		map,
@@ -9683,8 +9810,10 @@ var _user$project$Example$bounds = function (id) {
 		origin,
 		F2(
 			function (node, transform) {
-				var _p11 = node;
-				switch (_p11.ctor) {
+				var _p15 = node;
+				switch (_p15.ctor) {
+					case 'Collection':
+						return {ctor: '[]'};
 					case 'Group':
 						return {ctor: '[]'};
 					case 'Component':
@@ -9693,16 +9822,16 @@ var _user$project$Example$bounds = function (id) {
 							_0: A2(
 								_user$project$Example$transformBounds,
 								transform,
-								_user$project$Example$shapeBounds(_p11._1)),
+								_user$project$Example$shapeBounds(_p15._1)),
 							_1: {ctor: '[]'}
 						};
 					case 'Port':
-						return {
+						return _p15._0 ? {ctor: '[]'} : {
 							ctor: '::',
 							_0: A2(
 								_user$project$Example$transformBounds,
 								transform,
-								_user$project$Example$shapeBounds(_p11._2)),
+								_user$project$Example$shapeBounds(_p15._3)),
 							_1: {ctor: '[]'}
 						};
 					default:
@@ -9710,94 +9839,93 @@ var _user$project$Example$bounds = function (id) {
 				}
 			}),
 		node);
-	return A2(
-		_elm_lang$core$Debug$log,
-		'bounds',
-		_user$project$Example$fromRect(
-			A2(
-				_elm_lang$core$Debug$log,
-				'rect',
-				A2(
-					_elm_lang$core$Maybe$withDefault,
-					{left: 0, top: 0, right: 0, bottom: 0},
-					A3(
-						_elm_lang$core$List$foldl,
-						F2(
-							function (bounds, currentBounds) {
-								var _p12 = currentBounds;
-								if (_p12.ctor === 'Nothing') {
-									return _elm_lang$core$Maybe$Just(
-										{left: bounds.left, top: bounds.top, right: bounds.left + bounds.width, bottom: bounds.top + bounds.height});
-								} else {
-									var _p13 = _p12._0;
-									return _elm_lang$core$Maybe$Just(
-										{
-											left: A2(_elm_lang$core$Basics$min, bounds.left, _p13.left),
-											top: A2(_elm_lang$core$Basics$min, bounds.top, _p13.top),
-											right: A2(_elm_lang$core$Basics$max, bounds.left + bounds.width, _p13.right),
-											bottom: A2(_elm_lang$core$Basics$max, bounds.top + bounds.height, _p13.bottom)
-										});
-								}
-							}),
-						_elm_lang$core$Maybe$Nothing,
-						bounds)))));
+	return _user$project$Example$fromRect(
+		A2(
+			_elm_lang$core$Maybe$withDefault,
+			{left: 0, top: 0, right: 0, bottom: 0},
+			A3(
+				_elm_lang$core$List$foldl,
+				F2(
+					function (bounds, currentBounds) {
+						var _p16 = currentBounds;
+						if (_p16.ctor === 'Nothing') {
+							return _elm_lang$core$Maybe$Just(
+								{left: bounds.left, top: bounds.top, right: bounds.left + bounds.width, bottom: bounds.top + bounds.height});
+						} else {
+							var _p17 = _p16._0;
+							return _elm_lang$core$Maybe$Just(
+								{
+									left: A2(_elm_lang$core$Basics$min, bounds.left, _p17.left),
+									top: A2(_elm_lang$core$Basics$min, bounds.top, _p17.top),
+									right: A2(_elm_lang$core$Basics$max, bounds.left + bounds.width, _p17.right),
+									bottom: A2(_elm_lang$core$Basics$max, bounds.top + bounds.height, _p17.bottom)
+								});
+						}
+					}),
+				_elm_lang$core$Maybe$Nothing,
+				bounds)));
 };
 var _user$project$Example$render = F2(
 	function (node, transform) {
 		var render = F3(
 			function (node, transform, ports) {
-				var _p14 = node;
-				switch (_p14.ctor) {
+				var _p18 = node;
+				switch (_p18.ctor) {
+					case 'Collection':
+						return {ctor: '[]'};
 					case 'Group':
-						var bounds_ = _user$project$Example$bounds(_p14._0);
+						var margin = 20;
+						var bounds_ = _user$project$Example$bounds(_p18._0);
+						var width = bounds_.width + (margin * 2);
+						var height = bounds_.height + (margin * 2);
 						return {
 							ctor: '::',
-							_0: A5(_user$project$Shapes$dashedRectangle, bounds_.left, bounds_.top, bounds_.width, bounds_.height, transform),
+							_0: A3(_user$project$Shapes$rectangle, width, height, transform),
 							_1: {ctor: '[]'}
 						};
 					case 'Component':
 						return {
 							ctor: '::',
-							_0: A2(_user$project$Example$shapeConstructor, _p14._1, transform),
+							_0: A2(_user$project$Example$shapeConstructor, _p18._1, transform),
 							_1: {ctor: '[]'}
 						};
 					case 'Port':
 						return {
 							ctor: '::',
-							_0: A2(_user$project$Example$shapeConstructor, _p14._2, transform),
+							_0: A2(_user$project$Example$shapeConstructor, _p18._3, transform),
 							_1: {ctor: '[]'}
 						};
 					default:
 						var samePort = F2(
-							function (_p15, node) {
-								var _p16 = _p15;
-								var _p17 = node.node;
-								if (_p17.ctor === 'Port') {
-									return _elm_lang$core$Native_Utils.eq(_p17._0, _p16._0) && _elm_lang$core$Native_Utils.eq(_p17._1, _p16._1);
+							function (_p19, node) {
+								var _p20 = _p19;
+								var _p21 = node.node;
+								if (_p21.ctor === 'Port') {
+									return _elm_lang$core$Native_Utils.eq(_p21._1, _p20._0) && _elm_lang$core$Native_Utils.eq(_p21._2, _p20._1);
 								} else {
 									return false;
 								}
 							});
-						var _p18 = A3(
+						var _p22 = A3(
 							_user$project$Scene$nodeAndTransform,
 							_benansell$elm_geometric_transformation$Transformer2D$identity(
 								{x: 0, y: 0}),
-							samePort(_p14._0.from),
+							samePort(_p18._0.from),
 							_user$project$Example$scene);
-						var fromNode = _p18._0;
-						var fromTransform = _p18._1;
+						var fromNode = _p22._0;
+						var fromTransform = _p22._1;
 						var fromPoint = A2(
 							_benansell$elm_geometric_transformation$Transformer2D$apply,
 							fromTransform,
 							{x: 0, y: 0});
-						var _p19 = A3(
+						var _p23 = A3(
 							_user$project$Scene$nodeAndTransform,
 							_benansell$elm_geometric_transformation$Transformer2D$identity(
 								{x: 0, y: 0}),
-							samePort(_p14._0.to),
+							samePort(_p18._0.to),
 							_user$project$Example$scene);
-						var toNode = _p19._0;
-						var toTransform = _p19._1;
+						var toNode = _p23._0;
+						var toTransform = _p23._1;
 						var toPoint = A2(
 							_benansell$elm_geometric_transformation$Transformer2D$apply,
 							toTransform,
