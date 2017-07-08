@@ -9252,124 +9252,59 @@ var _user$project$Shapes$line = F3(
 			},
 			{ctor: '[]'});
 	});
-var _user$project$Shapes$circle = F2(
-	function (radius, transform) {
-		return A2(
-			_elm_lang$svg$Svg$circle,
-			{
+var _user$project$Shapes$strokeAttributes = function (stroke) {
+	var _p2 = stroke;
+	switch (_p2.ctor) {
+		case 'Thick':
+			return {
 				ctor: '::',
-				_0: _elm_lang$svg$Svg_Attributes$transform(
-					_user$project$Canvas2$toSvgTransform(transform)),
+				_0: _elm_lang$svg$Svg_Attributes$strokeWidth('3'),
+				_1: {ctor: '[]'}
+			};
+		case 'Thin':
+			return {
+				ctor: '::',
+				_0: _elm_lang$svg$Svg_Attributes$strokeWidth('2'),
+				_1: {ctor: '[]'}
+			};
+		default:
+			return {
+				ctor: '::',
+				_0: _elm_lang$svg$Svg_Attributes$strokeWidth('1'),
 				_1: {
 					ctor: '::',
-					_0: _elm_lang$svg$Svg_Attributes$cx('0'),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$svg$Svg_Attributes$cy('0'),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$svg$Svg_Attributes$r(
-								_elm_lang$core$Basics$toString(radius)),
-							_1: {
-								ctor: '::',
-								_0: _elm_lang$svg$Svg_Attributes$strokeWidth('3'),
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$svg$Svg_Attributes$fill('none'),
-										_1: {ctor: '[]'}
-									}
-								}
-							}
-						}
-					}
+					_0: _elm_lang$svg$Svg_Attributes$strokeDasharray('2,2'),
+					_1: {ctor: '[]'}
 				}
-			},
-			{ctor: '[]'});
-	});
-var _user$project$Shapes$dashedRectangle = F5(
-	function (left, top, width, height, transform) {
+			};
+	}
+};
+var _user$project$Shapes$rectangle = F6(
+	function (left, top, width, height, stroke, transform) {
 		return A2(
 			_elm_lang$svg$Svg$rect,
-			{
-				ctor: '::',
-				_0: _elm_lang$svg$Svg_Attributes$transform(
-					_user$project$Canvas2$toSvgTransform(
-						A2(
-							_benansell$elm_geometric_transformation$Transformer2D$combine,
-							transform,
-							A2(_user$project$Canvas2$centre, width, height)))),
-				_1: {
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
 					ctor: '::',
-					_0: _elm_lang$svg$Svg_Attributes$x(
-						_elm_lang$core$Basics$toString(left)),
+					_0: _elm_lang$svg$Svg_Attributes$transform(
+						_user$project$Canvas2$toSvgTransform(transform)),
 					_1: {
 						ctor: '::',
-						_0: _elm_lang$svg$Svg_Attributes$y(
-							_elm_lang$core$Basics$toString(top)),
+						_0: _elm_lang$svg$Svg_Attributes$x(
+							_elm_lang$core$Basics$toString(left)),
 						_1: {
 							ctor: '::',
-							_0: _elm_lang$svg$Svg_Attributes$width(
-								_elm_lang$core$Basics$toString(width)),
+							_0: _elm_lang$svg$Svg_Attributes$y(
+								_elm_lang$core$Basics$toString(top)),
 							_1: {
 								ctor: '::',
-								_0: _elm_lang$svg$Svg_Attributes$height(
-									_elm_lang$core$Basics$toString(height)),
+								_0: _elm_lang$svg$Svg_Attributes$width(
+									_elm_lang$core$Basics$toString(width)),
 								_1: {
 									ctor: '::',
-									_0: _elm_lang$svg$Svg_Attributes$strokeWidth('1'),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$svg$Svg_Attributes$strokeDasharray('2,2'),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$svg$Svg_Attributes$stroke('#ccc'),
-											_1: {
-												ctor: '::',
-												_0: _elm_lang$svg$Svg_Attributes$fill('none'),
-												_1: {ctor: '[]'}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			},
-			{ctor: '[]'});
-	});
-var _user$project$Shapes$rectangle = F3(
-	function (width, height, transform) {
-		return A2(
-			_elm_lang$svg$Svg$rect,
-			{
-				ctor: '::',
-				_0: _elm_lang$svg$Svg_Attributes$transform(
-					_user$project$Canvas2$toSvgTransform(
-						A2(
-							_benansell$elm_geometric_transformation$Transformer2D$combine,
-							transform,
-							A2(_user$project$Canvas2$centre, width, height)))),
-				_1: {
-					ctor: '::',
-					_0: _elm_lang$svg$Svg_Attributes$x('0'),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$svg$Svg_Attributes$y('0'),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$svg$Svg_Attributes$width(
-								_elm_lang$core$Basics$toString(width)),
-							_1: {
-								ctor: '::',
-								_0: _elm_lang$svg$Svg_Attributes$height(
-									_elm_lang$core$Basics$toString(height)),
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$svg$Svg_Attributes$strokeWidth('3'),
+									_0: _elm_lang$svg$Svg_Attributes$height(
+										_elm_lang$core$Basics$toString(height)),
 									_1: {
 										ctor: '::',
 										_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
@@ -9383,10 +9318,51 @@ var _user$project$Shapes$rectangle = F3(
 							}
 						}
 					}
-				}
-			},
+				},
+				_user$project$Shapes$strokeAttributes(stroke)),
 			{ctor: '[]'});
 	});
+var _user$project$Shapes$circle = F5(
+	function (cx, cy, radius, stroke, transform) {
+		return A2(
+			_elm_lang$svg$Svg$circle,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$transform(
+						_user$project$Canvas2$toSvgTransform(transform)),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$cx(
+							_elm_lang$core$Basics$toString(cx)),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$cy(
+								_elm_lang$core$Basics$toString(cy)),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$svg$Svg_Attributes$r(
+									_elm_lang$core$Basics$toString(radius)),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$svg$Svg_Attributes$fill('none'),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
+					}
+				},
+				_user$project$Shapes$strokeAttributes(stroke)),
+			{ctor: '[]'});
+	});
+var _user$project$Shapes$Dashed = {ctor: 'Dashed'};
+var _user$project$Shapes$Thin = {ctor: 'Thin'};
+var _user$project$Shapes$Thick = {ctor: 'Thick'};
 var _user$project$Example$transformBounds = F2(
 	function (transform, bounds) {
 		var origin = A2(
@@ -9414,9 +9390,9 @@ var _user$project$Example$shapeBounds = function (shape) {
 var _user$project$Example$shapeConstructor = function (shape) {
 	var _p4 = shape;
 	if (_p4.ctor === 'Circle') {
-		return _user$project$Shapes$circle(_p4._0.radius);
+		return A4(_user$project$Shapes$circle, _p4._0.cx, _p4._0.cy, _p4._0.radius, _p4._0.stroke);
 	} else {
-		return A2(_user$project$Shapes$rectangle, _p4._0.width, _p4._0.height);
+		return A5(_user$project$Shapes$rectangle, _p4._0.left, _p4._0.top, _p4._0.width, _p4._0.height, _p4._0.stroke);
 	}
 };
 var _user$project$Example$render1 = F2(
@@ -9484,11 +9460,9 @@ var _user$project$Example$boundsOf = function (shape) {
 	var _p9 = shape;
 	if (_p9.ctor === 'Circle') {
 		var _p10 = _p9._0.radius;
-		return {left: 0 - _p10, top: 0 - _p10, width: _p10 * 2, height: _p10 * 2};
+		return {left: _p9._0.cx - _p10, top: _p9._0.cy - _p10, width: _p10 * 2, height: _p10 * 2};
 	} else {
-		var _p12 = _p9._0.width;
-		var _p11 = _p9._0.height;
-		return {left: (0 - _p12) / 2, top: (0 - _p11) / 2, width: _p12, height: _p11};
+		return {left: _p9._0.left, top: _p9._0.top, width: _p9._0.width, height: _p9._0.height};
 	}
 };
 var _user$project$Example$Bounds1 = F4(
@@ -9515,44 +9489,44 @@ var _user$project$Example$Rectangle = function (a) {
 };
 var _user$project$Example$execute = F2(
 	function (command, state) {
-		var _p13 = command;
-		switch (_p13.ctor) {
+		var _p11 = command;
+		switch (_p11.ctor) {
 			case 'Add':
-				var _p15 = _p13._1;
-				var _p14 = _p13._0;
+				var _p13 = _p11._1;
+				var _p12 = _p11._0;
 				var node = {
-					id: _p14,
+					id: _p12,
 					parent: _elm_lang$core$Maybe$Nothing,
-					shape: _p15,
-					bounds: _user$project$Example$boundsOf(_p15),
+					shape: _p13,
+					bounds: _user$project$Example$boundsOf(_p13),
 					transform: _benansell$elm_geometric_transformation$Transformer2D$identity(
 						{x: 0, y: 0})
 				};
 				return _elm_lang$core$Native_Utils.update(
 					state,
 					{
-						nodes: A3(_elm_lang$core$Dict$insert, _p14, node, state.nodes)
+						nodes: A3(_elm_lang$core$Dict$insert, _p12, node, state.nodes)
 					});
 			case 'Translate':
-				var _p19 = _p13._0;
-				var _p16 = A2(_elm_lang$core$Dict$get, _p19, state.nodes);
-				if (_p16.ctor === 'Just') {
-					var _p17 = _p16._0;
+				var _p17 = _p11._0;
+				var _p14 = A2(_elm_lang$core$Dict$get, _p17, state.nodes);
+				if (_p14.ctor === 'Just') {
+					var _p15 = _p14._0;
 					var transform = _benansell$elm_geometric_transformation$Transformer2D$translate(
-						{ctor: '_Tuple2', _0: _p13._1.x, _1: _p13._1.y});
+						{ctor: '_Tuple2', _0: _p11._1.x, _1: _p11._1.y});
 					var origin = A2(
 						_benansell$elm_geometric_transformation$Transformer2D$apply,
 						transform,
-						{x: _p17.bounds.left, y: _p17.bounds.top});
-					var bounds = {left: origin.x, top: origin.y, width: _p17.bounds.width, height: _p17.bounds.height};
+						{x: _p15.bounds.left, y: _p15.bounds.top});
+					var bounds = {left: origin.x, top: origin.y, width: _p15.bounds.width, height: _p15.bounds.height};
 					return _elm_lang$core$Native_Utils.update(
 						state,
 						{
 							nodes: A3(
 								_elm_lang$core$Dict$insert,
-								_p19,
+								_p17,
 								_elm_lang$core$Native_Utils.update(
-									_p17,
+									_p15,
 									{transform: transform, bounds: bounds}),
 								state.nodes)
 						});
@@ -9563,15 +9537,16 @@ var _user$project$Example$execute = F2(
 							start: {line: 135, column: 13},
 							end: {line: 167, column: 78}
 						},
-						_p16)(
+						_p14)(
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							'Node not found with ID: ',
-							_elm_lang$core$Basics$toString(_p19)));
+							_elm_lang$core$Basics$toString(_p17)));
 				}
 			default:
-				var _p29 = _p13._0;
-				var _p20 = A2(
+				var _p27 = _p11._0;
+				var margin = 10;
+				var _p18 = A2(
 					_elm_lang$core$Tuple$mapFirst,
 					_user$project$Example$fromRect1,
 					A2(
@@ -9581,84 +9556,73 @@ var _user$project$Example$execute = F2(
 						A3(
 							_elm_lang$core$List$foldl,
 							F2(
-								function (childId, _p21) {
-									var _p22 = _p21;
-									var _p28 = _p22._1;
-									var _p23 = A2(_elm_lang$core$Dict$get, childId, _p28);
-									if (_p23.ctor === 'Just') {
-										var _p26 = _p23._0;
-										var nodeBounds = _p26.bounds;
+								function (childId, _p19) {
+									var _p20 = _p19;
+									var _p26 = _p20._1;
+									var _p21 = A2(_elm_lang$core$Dict$get, childId, _p26);
+									if (_p21.ctor === 'Just') {
+										var _p24 = _p21._0;
+										var nodeBounds = _p24.bounds;
 										return {
 											ctor: '_Tuple2',
 											_0: function () {
-												var _p24 = _p22._0;
-												if (_p24.ctor === 'Nothing') {
-													return A2(
-														_elm_lang$core$Debug$log,
-														'initial currentBounds',
-														_elm_lang$core$Maybe$Just(
-															{left: _p26.bounds.left, top: nodeBounds.top, right: nodeBounds.left + nodeBounds.width, bottom: nodeBounds.top + nodeBounds.height}));
+												var _p22 = _p20._0;
+												if (_p22.ctor === 'Nothing') {
+													return _elm_lang$core$Maybe$Just(
+														{left: _p24.bounds.left, top: nodeBounds.top, right: nodeBounds.left + nodeBounds.width, bottom: nodeBounds.top + nodeBounds.height});
 												} else {
-													var _p25 = _p24._0;
-													return A2(
-														_elm_lang$core$Debug$log,
-														'combined currentBounds',
-														_elm_lang$core$Maybe$Just(
-															{
-																left: A2(_elm_lang$core$Basics$min, nodeBounds.left, _p25.left),
-																top: A2(_elm_lang$core$Basics$min, nodeBounds.top, _p25.top),
-																right: A2(_elm_lang$core$Basics$max, nodeBounds.left + nodeBounds.width, _p25.right),
-																bottom: A2(_elm_lang$core$Basics$max, nodeBounds.top + nodeBounds.height, _p25.bottom)
-															}));
+													var _p23 = _p22._0;
+													return _elm_lang$core$Maybe$Just(
+														{
+															left: A2(_elm_lang$core$Basics$min, nodeBounds.left, _p23.left),
+															top: A2(_elm_lang$core$Basics$min, nodeBounds.top, _p23.top),
+															right: A2(_elm_lang$core$Basics$max, nodeBounds.left + nodeBounds.width, _p23.right),
+															bottom: A2(_elm_lang$core$Basics$max, nodeBounds.top + nodeBounds.height, _p23.bottom)
+														});
 												}
 											}(),
 											_1: A3(
 												_elm_lang$core$Dict$insert,
 												childId,
 												_elm_lang$core$Native_Utils.update(
-													_p26,
+													_p24,
 													{
-														parent: _elm_lang$core$Maybe$Just(_p29)
+														parent: _elm_lang$core$Maybe$Just(_p27)
 													}),
-												_p28)
+												_p26)
 										};
 									} else {
 										return _elm_lang$core$Native_Utils.crashCase(
 											'Example',
 											{
 												start: {line: 176, column: 37},
-												end: {line: 221, column: 102}
+												end: {line: 207, column: 102}
 											},
-											_p23)(
+											_p21)(
 											A2(
 												_elm_lang$core$Basics_ops['++'],
 												'Node not found with ID: ',
-												_elm_lang$core$Basics$toString(_p29)));
+												_elm_lang$core$Basics$toString(_p27)));
 									}
 								}),
 							{ctor: '_Tuple2', _0: _elm_lang$core$Maybe$Nothing, _1: state.nodes},
-							_p13._1)));
-				var bounds = _p20._0;
-				var updatedNodes = _p20._1;
+							_p11._1)));
+				var bounds = _p18._0;
+				var updatedNodes = _p18._1;
+				var bounds1 = {left: bounds.left - margin, top: bounds.top - margin, width: bounds.width + (2 * margin), height: bounds.height + (2 * margin)};
 				var node = {
-					id: _p29,
+					id: _p27,
 					parent: _elm_lang$core$Maybe$Nothing,
 					shape: _user$project$Example$Rectangle(
-						{width: bounds.width, height: bounds.height}),
-					bounds: A2(
-						_elm_lang$core$Debug$log,
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							_elm_lang$core$Basics$toString(_p29),
-							' bounds'),
-						bounds),
+						{left: bounds1.left, top: bounds1.top, width: bounds1.width, height: bounds1.height, stroke: _user$project$Shapes$Dashed}),
+					bounds: bounds1,
 					transform: _benansell$elm_geometric_transformation$Transformer2D$identity(
 						{x: 0, y: 0})
 				};
 				return _elm_lang$core$Native_Utils.update(
 					state,
 					{
-						nodes: A3(_elm_lang$core$Dict$insert, _p29, node, updatedNodes)
+						nodes: A3(_elm_lang$core$Dict$insert, _p27, node, updatedNodes)
 					});
 		}
 	});
@@ -9687,41 +9651,158 @@ var _user$project$Example$test = A3(
 			_user$project$Example$Add,
 			0,
 			_user$project$Example$Rectangle(
-				{width: 100, height: 100})),
+				{left: -50, top: -50, width: 100, height: 100, stroke: _user$project$Shapes$Thick})),
 		_1: {
 			ctor: '::',
 			_0: A2(
-				_user$project$Example$Group1,
-				10,
-				{
-					ctor: '::',
-					_0: 0,
-					_1: {ctor: '[]'}
-				}),
+				_user$project$Example$Add,
+				1,
+				_user$project$Example$Circle(
+					{cx: 0, cy: 0, radius: 5, stroke: _user$project$Shapes$Thin})),
 			_1: {
 				ctor: '::',
 				_0: A2(
-					_user$project$Example$Add,
+					_user$project$Example$Translate,
 					1,
-					_user$project$Example$Circle(
-						{radius: 5})),
+					{x: -50, y: -30}),
 				_1: {
 					ctor: '::',
 					_0: A2(
-						_user$project$Example$Translate,
-						1,
-						{x: -50, y: -30}),
+						_user$project$Example$Add,
+						2,
+						_user$project$Example$Circle(
+							{cx: 0, cy: 0, radius: 5, stroke: _user$project$Shapes$Thin})),
 					_1: {
 						ctor: '::',
 						_0: A2(
-							_user$project$Example$Group1,
-							11,
-							{
+							_user$project$Example$Translate,
+							2,
+							{x: -50, y: 30}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_user$project$Example$Add,
+								3,
+								_user$project$Example$Rectangle(
+									{left: -5, top: -5, width: 10, height: 10, stroke: _user$project$Shapes$Thin})),
+							_1: {
 								ctor: '::',
-								_0: 1,
-								_1: {ctor: '[]'}
-							}),
-						_1: {ctor: '[]'}
+								_0: A2(
+									_user$project$Example$Translate,
+									3,
+									{x: 50, y: 0}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_user$project$Example$Group1,
+										4,
+										{
+											ctor: '::',
+											_0: 0,
+											_1: {
+												ctor: '::',
+												_0: 1,
+												_1: {
+													ctor: '::',
+													_0: 2,
+													_1: {
+														ctor: '::',
+														_0: 3,
+														_1: {ctor: '[]'}
+													}
+												}
+											}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_user$project$Example$Translate,
+											4,
+											{x: 100, y: 0}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_user$project$Example$Add,
+												5,
+												_user$project$Example$Circle(
+													{cx: 0, cy: 0, radius: 50, stroke: _user$project$Shapes$Thick})),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_user$project$Example$Add,
+													6,
+													_user$project$Example$Circle(
+														{cx: 0, cy: 0, radius: 5, stroke: _user$project$Shapes$Thin})),
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_user$project$Example$Translate,
+														6,
+														{x: -50, y: 0}),
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_user$project$Example$Add,
+															7,
+															_user$project$Example$Rectangle(
+																{left: -5, top: -5, width: 10, height: 10, stroke: _user$project$Shapes$Thin})),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_user$project$Example$Translate,
+																7,
+																{x: 50, y: 0}),
+															_1: {
+																ctor: '::',
+																_0: A2(
+																	_user$project$Example$Group1,
+																	8,
+																	{
+																		ctor: '::',
+																		_0: 5,
+																		_1: {
+																			ctor: '::',
+																			_0: 6,
+																			_1: {
+																				ctor: '::',
+																				_0: 7,
+																				_1: {ctor: '[]'}
+																			}
+																		}
+																	}),
+																_1: {
+																	ctor: '::',
+																	_0: A2(
+																		_user$project$Example$Translate,
+																		8,
+																		{x: -100, y: 0}),
+																	_1: {
+																		ctor: '::',
+																		_0: A2(
+																			_user$project$Example$Group1,
+																			9,
+																			{
+																				ctor: '::',
+																				_0: 4,
+																				_1: {
+																					ctor: '::',
+																					_0: 8,
+																					_1: {ctor: '[]'}
+																				}
+																			}),
+																		_1: {ctor: '[]'}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 			}
@@ -9756,11 +9837,11 @@ var _user$project$Example$scene = function () {
 	}();
 	var map = F4(
 		function (groupIndex, root, component, scene) {
-			var _p30 = component;
-			switch (_p30.ctor) {
+			var _p28 = component;
+			switch (_p28.ctor) {
 				case 'Component':
-					var _p33 = _p30._3;
-					var _p32 = _p30._0;
+					var _p31 = _p28._3;
+					var _p30 = _p28._0;
 					var node = {
 						id: A2(
 							_elm_lang$core$Basics_ops['++'],
@@ -9776,11 +9857,11 @@ var _user$project$Example$scene = function () {
 										'][id=',
 										A2(
 											_elm_lang$core$Basics_ops['++'],
-											_elm_lang$core$Basics$toString(_p32),
+											_elm_lang$core$Basics$toString(_p30),
 											']'))))),
-						node: A2(_user$project$Example$Component, _p32, _p30._1),
+						node: A2(_user$project$Example$Component, _p30, _p28._1),
 						transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
-							{ctor: '_Tuple2', _0: _p33.x, _1: _p33.y})
+							{ctor: '_Tuple2', _0: _p31.x, _1: _p31.y})
 					};
 					var component = A3(
 						_user$project$Scene$add,
@@ -9799,13 +9880,13 @@ var _user$project$Example$scene = function () {
 								F2(
 									function (index, port_) {
 										var shape = function () {
-											var _p31 = port_.direction;
-											if (_p31.ctor === 'Input') {
+											var _p29 = port_.direction;
+											if (_p29.ctor === 'Input') {
 												return _user$project$Example$Circle(
-													{radius: 5});
+													{cx: 0, cy: 0, radius: 5, stroke: _user$project$Shapes$Thin});
 											} else {
 												return _user$project$Example$Rectangle(
-													{width: 10, height: 10});
+													{left: -5, top: -5, width: 10, height: 10, stroke: _user$project$Shapes$Thin});
 											}
 										}();
 										return {
@@ -9819,14 +9900,14 @@ var _user$project$Example$scene = function () {
 														_elm_lang$core$Basics_ops['++'],
 														_elm_lang$core$Basics$toString(index),
 														']'))),
-											node: A4(_user$project$Example$Port, false, _p32, index, shape),
+											node: A4(_user$project$Example$Port, false, _p30, index, shape),
 											transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
 												{ctor: '_Tuple2', _0: port_.position.x, _1: port_.position.y})
 										};
 									}),
-								_p30._2)));
+								_p28._2)));
 				case 'Group':
-					var _p37 = _p30._0;
+					var _p35 = _p28._0;
 					var id = A2(
 						_elm_lang$core$Basics_ops['++'],
 						root.id,
@@ -9841,7 +9922,7 @@ var _user$project$Example$scene = function () {
 									'][id=',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(_p37),
+										_elm_lang$core$Basics$toString(_p35),
 										']')))));
 					var node = {
 						id: id,
@@ -9866,13 +9947,13 @@ var _user$project$Example$scene = function () {
 								F2(
 									function (index, port_) {
 										var shape = function () {
-											var _p34 = port_.direction;
-											if (_p34.ctor === 'Input') {
+											var _p32 = port_.direction;
+											if (_p32.ctor === 'Input') {
 												return _user$project$Example$Circle(
-													{radius: 5});
+													{cx: 0, cy: 0, radius: 5, stroke: _user$project$Shapes$Thin});
 											} else {
 												return _user$project$Example$Rectangle(
-													{width: 10, height: 10});
+													{left: -5, top: -5, width: 10, height: 10, stroke: _user$project$Shapes$Thin});
 											}
 										}();
 										return {
@@ -9886,18 +9967,18 @@ var _user$project$Example$scene = function () {
 														_elm_lang$core$Basics_ops['++'],
 														_elm_lang$core$Basics$toString(index),
 														']'))),
-											node: A4(_user$project$Example$Port, true, _p37, index, shape),
+											node: A4(_user$project$Example$Port, true, _p35, index, shape),
 											transform: _benansell$elm_geometric_transformation$Transformer2D$translate(
 												{ctor: '_Tuple2', _0: port_.position.x, _1: port_.position.y})
 										};
 									}),
-								_p30._1)));
+								_p28._1)));
 					return A3(
 						_elm_lang$core$List$foldl,
 						F2(
-							function (_p35, scene) {
-								var _p36 = _p35;
-								return A4(map, _p36._0, node, _p36._1, scene);
+							function (_p33, scene) {
+								var _p34 = _p33;
+								return A4(map, _p34._0, node, _p34._1, scene);
 							}),
 						group_,
 						A2(
@@ -9906,7 +9987,7 @@ var _user$project$Example$scene = function () {
 								function (v0, v1) {
 									return {ctor: '_Tuple2', _0: v0, _1: v1};
 								}),
-							_p30._2));
+							_p28._2));
 				case 'Collection':
 					var id = A2(
 						_elm_lang$core$Basics_ops['++'],
@@ -9932,9 +10013,9 @@ var _user$project$Example$scene = function () {
 					return A3(
 						_elm_lang$core$List$foldl,
 						F2(
-							function (_p38, scene) {
-								var _p39 = _p38;
-								return A4(map, _p39._0, node, _p39._1, scene);
+							function (_p36, scene) {
+								var _p37 = _p36;
+								return A4(map, _p37._0, node, _p37._1, scene);
 							}),
 						group,
 						A2(
@@ -9943,7 +10024,7 @@ var _user$project$Example$scene = function () {
 								function (v0, v1) {
 									return {ctor: '_Tuple2', _0: v0, _1: v1};
 								}),
-							_p30._0));
+							_p28._0));
 				default:
 					var node = {
 						id: A2(
@@ -9956,7 +10037,7 @@ var _user$project$Example$scene = function () {
 									_elm_lang$core$Basics_ops['++'],
 									_elm_lang$core$Basics$toString(groupIndex),
 									']'))),
-						node: _user$project$Example$Connection(_p30._0),
+						node: _user$project$Example$Connection(_p28._0),
 						transform: _benansell$elm_geometric_transformation$Transformer2D$identity(
 							{x: 0, y: 0})
 					};
@@ -9994,7 +10075,7 @@ var _user$project$Example$scene = function () {
 						_user$project$Domain$Component,
 						1,
 						_user$project$Example$Circle(
-							{radius: 50}),
+							{cx: 0, cy: 0, radius: 50, stroke: _user$project$Shapes$Thick}),
 						{
 							ctor: '::',
 							_0: {
@@ -10017,7 +10098,7 @@ var _user$project$Example$scene = function () {
 							_user$project$Domain$Component,
 							2,
 							_user$project$Example$Rectangle(
-								{width: 100, height: 100}),
+								{left: -50, top: -50, width: 100, height: 100, stroke: _user$project$Shapes$Thin}),
 							{
 								ctor: '::',
 								_0: {
@@ -10104,8 +10185,8 @@ var _user$project$Example$bounds = function (id) {
 		origin,
 		F2(
 			function (node, transform) {
-				var _p40 = node;
-				switch (_p40.ctor) {
+				var _p38 = node;
+				switch (_p38.ctor) {
 					case 'Collection':
 						return {ctor: '[]'};
 					case 'Group':
@@ -10116,16 +10197,16 @@ var _user$project$Example$bounds = function (id) {
 							_0: A2(
 								_user$project$Example$transformBounds,
 								transform,
-								_user$project$Example$shapeBounds(_p40._1)),
+								_user$project$Example$shapeBounds(_p38._1)),
 							_1: {ctor: '[]'}
 						};
 					case 'Port':
-						return _p40._0 ? {ctor: '[]'} : {
+						return _p38._0 ? {ctor: '[]'} : {
 							ctor: '::',
 							_0: A2(
 								_user$project$Example$transformBounds,
 								transform,
-								_user$project$Example$shapeBounds(_p40._3)),
+								_user$project$Example$shapeBounds(_p38._3)),
 							_1: {ctor: '[]'}
 						};
 					default:
@@ -10141,18 +10222,18 @@ var _user$project$Example$bounds = function (id) {
 				_elm_lang$core$List$foldl,
 				F2(
 					function (bounds, currentBounds) {
-						var _p41 = currentBounds;
-						if (_p41.ctor === 'Nothing') {
+						var _p39 = currentBounds;
+						if (_p39.ctor === 'Nothing') {
 							return _elm_lang$core$Maybe$Just(
 								{left: bounds.left, top: bounds.top, right: bounds.left + bounds.width, bottom: bounds.top + bounds.height});
 						} else {
-							var _p42 = _p41._0;
+							var _p40 = _p39._0;
 							return _elm_lang$core$Maybe$Just(
 								{
-									left: A2(_elm_lang$core$Basics$min, bounds.left, _p42.left),
-									top: A2(_elm_lang$core$Basics$min, bounds.top, _p42.top),
-									right: A2(_elm_lang$core$Basics$max, bounds.left + bounds.width, _p42.right),
-									bottom: A2(_elm_lang$core$Basics$max, bounds.top + bounds.height, _p42.bottom)
+									left: A2(_elm_lang$core$Basics$min, bounds.left, _p40.left),
+									top: A2(_elm_lang$core$Basics$min, bounds.top, _p40.top),
+									right: A2(_elm_lang$core$Basics$max, bounds.left + bounds.width, _p40.right),
+									bottom: A2(_elm_lang$core$Basics$max, bounds.top + bounds.height, _p40.bottom)
 								});
 						}
 					}),
@@ -10163,63 +10244,63 @@ var _user$project$Example$render = F2(
 	function (node, transform) {
 		var render = F3(
 			function (node, transform, ports) {
-				var _p43 = node;
-				switch (_p43.ctor) {
+				var _p41 = node;
+				switch (_p41.ctor) {
 					case 'Collection':
 						return {ctor: '[]'};
 					case 'Group':
 						var margin = 20;
-						var bounds_ = _user$project$Example$bounds(_p43._0);
+						var bounds_ = _user$project$Example$bounds(_p41._0);
 						var width = bounds_.width + (margin * 2);
 						var height = bounds_.height + (margin * 2);
 						return {
 							ctor: '::',
-							_0: A5(_user$project$Shapes$dashedRectangle, bounds_.left, bounds_.top, width, height, transform),
+							_0: A6(_user$project$Shapes$rectangle, bounds_.left, bounds_.top, width, height, _user$project$Shapes$Dashed, transform),
 							_1: {ctor: '[]'}
 						};
 					case 'Component':
 						return {
 							ctor: '::',
-							_0: A2(_user$project$Example$shapeConstructor, _p43._1, transform),
+							_0: A2(_user$project$Example$shapeConstructor, _p41._1, transform),
 							_1: {ctor: '[]'}
 						};
 					case 'Port':
 						return {
 							ctor: '::',
-							_0: A2(_user$project$Example$shapeConstructor, _p43._3, transform),
+							_0: A2(_user$project$Example$shapeConstructor, _p41._3, transform),
 							_1: {ctor: '[]'}
 						};
 					default:
 						var samePort = F2(
-							function (_p44, node) {
-								var _p45 = _p44;
-								var _p46 = node.node;
-								if (_p46.ctor === 'Port') {
-									return _elm_lang$core$Native_Utils.eq(_p46._1, _p45._0) && _elm_lang$core$Native_Utils.eq(_p46._2, _p45._1);
+							function (_p42, node) {
+								var _p43 = _p42;
+								var _p44 = node.node;
+								if (_p44.ctor === 'Port') {
+									return _elm_lang$core$Native_Utils.eq(_p44._1, _p43._0) && _elm_lang$core$Native_Utils.eq(_p44._2, _p43._1);
 								} else {
 									return false;
 								}
 							});
-						var _p47 = A3(
+						var _p45 = A3(
 							_user$project$Scene$nodeAndTransform,
 							_benansell$elm_geometric_transformation$Transformer2D$identity(
 								{x: 0, y: 0}),
-							samePort(_p43._0.from),
+							samePort(_p41._0.from),
 							_user$project$Example$scene);
-						var fromNode = _p47._0;
-						var fromTransform = _p47._1;
+						var fromNode = _p45._0;
+						var fromTransform = _p45._1;
 						var fromPoint = A2(
 							_benansell$elm_geometric_transformation$Transformer2D$apply,
 							fromTransform,
 							{x: 0, y: 0});
-						var _p48 = A3(
+						var _p46 = A3(
 							_user$project$Scene$nodeAndTransform,
 							_benansell$elm_geometric_transformation$Transformer2D$identity(
 								{x: 0, y: 0}),
-							samePort(_p43._0.to),
+							samePort(_p41._0.to),
 							_user$project$Example$scene);
-						var toNode = _p48._0;
-						var toTransform = _p48._1;
+						var toNode = _p46._0;
+						var toTransform = _p46._1;
 						var toPoint = A2(
 							_benansell$elm_geometric_transformation$Transformer2D$apply,
 							toTransform,
