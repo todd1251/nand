@@ -8892,16 +8892,74 @@ var _elm_lang$window$Window$subMap = F2(
 			});
 	});
 _elm_lang$core$Native_Platform.effectManagers['Window'] = {pkg: 'elm-lang/window', init: _elm_lang$window$Window$init, onEffects: _elm_lang$window$Window$onEffects, onSelfMsg: _elm_lang$window$Window$onSelfMsg, tag: 'sub', subMap: _elm_lang$window$Window$subMap};
-var _user$project$Rectangle2$Rectangle = F4(
-	function (a, b, c, d) {
-		return {left: a, top: b, right: c, bottom: d};
+var _user$project$Position$max = F2(
+	function (a, b) {
+		return {
+			x: A2(_elm_lang$core$Basics$max, a.x, b.x),
+			y: A2(_elm_lang$core$Basics$max, a.y, b.y)
+		};
+	});
+var _user$project$Position$min = F2(
+	function (a, b) {
+		return {
+			x: A2(_elm_lang$core$Basics$min, a.x, b.x),
+			y: A2(_elm_lang$core$Basics$min, a.y, b.y)
+		};
+	});
+var _user$project$Position$subtract = F2(
+	function (a, b) {
+		return {x: a.x - b.x, y: a.y - b.y};
+	});
+var _user$project$Position$zero = {x: 0, y: 0};
+var _user$project$Position$Position = F2(
+	function (a, b) {
+		return {x: a, y: b};
+	});
+var _user$project$Size$add = F2(
+	function (a, b) {
+		return {width: a.width + b.width, height: a.height + b.height};
+	});
+var _user$project$Size$zero = {width: 0, height: 0};
+var _user$project$Size$Size = F2(
+	function (a, b) {
+		return {width: a, height: b};
+	});
+var _user$project$Rectangle2$enclose = F2(
+	function (a, b) {
+		return {
+			origin: A2(_user$project$Position$min, a.origin, b.origin),
+			extent: A2(_user$project$Position$max, a.extent, b.extent)
+		};
+	});
+var _user$project$Rectangle2$size = function (_p0) {
+	var _p1 = _p0;
+	var distance = A2(_user$project$Position$subtract, _p1.extent, _p1.origin);
+	return {width: distance.x, height: distance.y};
+};
+var _user$project$Rectangle2$zero = {origin: _user$project$Position$zero, extent: _user$project$Position$zero};
+var _user$project$Rectangle2$Rectangle = F2(
+	function (a, b) {
+		return {origin: a, extent: b};
 	});
 var _user$project$Bounds$fromRectangle = function (rectangle) {
-	return {left: rectangle.left, top: rectangle.top, width: rectangle.right - rectangle.left, height: rectangle.bottom - rectangle.top};
+	return {
+		origin: rectangle.origin,
+		size: _user$project$Rectangle2$size(rectangle)
+	};
 };
-var _user$project$Bounds$Bounds = F4(
-	function (a, b, c, d) {
-		return {left: a, top: b, width: c, height: d};
+var _user$project$Bounds$extent = function (bounds) {
+	return {x: bounds.origin.x + bounds.size.width, y: bounds.origin.y + bounds.size.height};
+};
+var _user$project$Bounds$toRectangle = function (bounds) {
+	return {
+		origin: bounds.origin,
+		extent: _user$project$Bounds$extent(bounds)
+	};
+};
+var _user$project$Bounds$zero = {origin: _user$project$Position$zero, size: _user$project$Size$zero};
+var _user$project$Bounds$Bounds = F2(
+	function (a, b) {
+		return {origin: a, size: b};
 	});
 var _user$project$Styles$css = '\n    html, body {\n        margin: 0;\n        padding: 0;\n    }\n\n    * {\n        user-select: none;\n    }\n\n    .canvas {\n        background: white;\n        height: 100%;\n        position: fixed;\n        width: 100%;\n    }\n    ';
 var _user$project$Styles$stylesheet = A3(
@@ -8979,10 +9037,6 @@ var _user$project$Canvas2$centre = F2(
 var _user$project$Canvas2$origin = function (size) {
 	return A2(_user$project$Canvas2$centre, 0 - size.width, 0 - size.height);
 };
-var _user$project$Canvas2$Size = F2(
-	function (a, b) {
-		return {width: a, height: b};
-	});
 var _user$project$Shape$line = F3(
 	function (from, to, transform) {
 		return A2(
@@ -9198,11 +9252,17 @@ var _user$project$Shape$bounds = function (shape) {
 	switch (_p4.ctor) {
 		case 'Circle':
 			var _p5 = _p4._0.radius;
-			return {left: _p4._0.cx - _p5, top: _p4._0.cy - _p5, width: _p5 * 2, height: _p5 * 2};
+			return {
+				origin: {x: _p4._0.cx - _p5, y: _p4._0.cy - _p5},
+				size: {width: _p5 * 2, height: _p5 * 2}
+			};
 		case 'Rectangle':
-			return {left: _p4._0.left, top: _p4._0.top, width: _p4._0.width, height: _p4._0.height};
+			return {
+				origin: {x: _p4._0.left, y: _p4._0.top},
+				size: {width: _p4._0.width, height: _p4._0.height}
+			};
 		default:
-			return {left: 0, top: 0, width: 0, height: 0};
+			return _user$project$Bounds$zero;
 	}
 };
 var _user$project$Shape$Path = function (a) {
@@ -9272,8 +9332,8 @@ var _user$project$Scene$transformAt = F2(
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Scene',
 				{
-					start: {line: 224, column: 5},
-					end: {line: 236, column: 72}
+					start: {line: 200, column: 5},
+					end: {line: 212, column: 72}
 				},
 				_p4)(
 				A2(
@@ -9294,8 +9354,7 @@ var _user$project$Scene$update = F2(
 					parent: _elm_lang$core$Maybe$Nothing,
 					shape: _p10,
 					bounds: _user$project$Shape$bounds(_p10),
-					transform: _benansell$elm_geometric_transformation$Transformer2D$identity(
-						{x: 0, y: 0})
+					transform: _benansell$elm_geometric_transformation$Transformer2D$identity(_user$project$Position$zero)
 				};
 				return _elm_lang$core$Native_Utils.update(
 					scene,
@@ -9309,11 +9368,8 @@ var _user$project$Scene$update = F2(
 					var _p12 = _p11._0;
 					var transform = _benansell$elm_geometric_transformation$Transformer2D$translate(
 						{ctor: '_Tuple2', _0: _p8._1.x, _1: _p8._1.y});
-					var origin = A2(
-						_benansell$elm_geometric_transformation$Transformer2D$apply,
-						transform,
-						{x: _p12.bounds.left, y: _p12.bounds.top});
-					var bounds = {left: origin.x, top: origin.y, width: _p12.bounds.width, height: _p12.bounds.height};
+					var origin = A2(_benansell$elm_geometric_transformation$Transformer2D$apply, transform, _p12.bounds.origin);
+					var bounds = {origin: origin, size: _p12.bounds.size};
 					return _elm_lang$core$Native_Utils.update(
 						scene,
 						{
@@ -9329,8 +9385,8 @@ var _user$project$Scene$update = F2(
 					return _elm_lang$core$Native_Utils.crashCase(
 						'Scene',
 						{
-							start: {line: 68, column: 13},
-							end: {line: 100, column: 78}
+							start: {line: 71, column: 13},
+							end: {line: 99, column: 78}
 						},
 						_p11)(
 						A2(
@@ -9339,96 +9395,103 @@ var _user$project$Scene$update = F2(
 							_elm_lang$core$Basics$toString(_p14)));
 				}
 			case 'Grouped':
-				var _p24 = _p8._0;
+				var _p23 = _p8._0;
 				var margin = 10;
 				var _p15 = A2(
 					_elm_lang$core$Tuple$mapFirst,
-					_user$project$Bounds$fromRectangle,
+					function (bounds) {
+						return {
+							origin: A2(
+								_user$project$Position$subtract,
+								bounds.origin,
+								{x: margin, y: margin}),
+							size: A2(
+								_user$project$Size$add,
+								bounds.size,
+								{width: 2 * margin, height: 2 * margin})
+						};
+					},
 					A2(
 						_elm_lang$core$Tuple$mapFirst,
-						_elm_lang$core$Maybe$withDefault(
-							{left: 0, top: 0, right: 0, bottom: 0}),
-						A3(
-							_elm_lang$core$List$foldl,
-							F2(
-								function (childId, _p16) {
-									var _p17 = _p16;
-									var _p23 = _p17._1;
-									var _p18 = A2(_elm_lang$core$Dict$get, childId, _p23);
-									if (_p18.ctor === 'Just') {
-										var _p21 = _p18._0;
-										var nodeBounds = _p21.bounds;
-										return {
-											ctor: '_Tuple2',
-											_0: function () {
-												var _p19 = _p17._0;
-												if (_p19.ctor === 'Nothing') {
-													return _elm_lang$core$Maybe$Just(
-														{left: _p21.bounds.left, top: nodeBounds.top, right: nodeBounds.left + nodeBounds.width, bottom: nodeBounds.top + nodeBounds.height});
-												} else {
-													var _p20 = _p19._0;
-													return _elm_lang$core$Maybe$Just(
+						_user$project$Bounds$fromRectangle,
+						A2(
+							_elm_lang$core$Tuple$mapFirst,
+							_elm_lang$core$Maybe$withDefault(_user$project$Rectangle2$zero),
+							A3(
+								_elm_lang$core$List$foldl,
+								F2(
+									function (childId, _p16) {
+										var _p17 = _p16;
+										var _p22 = _p17._1;
+										var _p18 = A2(_elm_lang$core$Dict$get, childId, _p22);
+										if (_p18.ctor === 'Just') {
+											var _p20 = _p18._0;
+											return {
+												ctor: '_Tuple2',
+												_0: function () {
+													var _p19 = _p17._0;
+													if (_p19.ctor === 'Nothing') {
+														return _elm_lang$core$Maybe$Just(
+															_user$project$Bounds$toRectangle(_p20.bounds));
+													} else {
+														return _elm_lang$core$Maybe$Just(
+															A2(
+																_user$project$Rectangle2$enclose,
+																_p19._0,
+																_user$project$Bounds$toRectangle(_p20.bounds)));
+													}
+												}(),
+												_1: A3(
+													_elm_lang$core$Dict$insert,
+													childId,
+													_elm_lang$core$Native_Utils.update(
+														_p20,
 														{
-															left: A2(_elm_lang$core$Basics$min, nodeBounds.left, _p20.left),
-															top: A2(_elm_lang$core$Basics$min, nodeBounds.top, _p20.top),
-															right: A2(_elm_lang$core$Basics$max, nodeBounds.left + nodeBounds.width, _p20.right),
-															bottom: A2(_elm_lang$core$Basics$max, nodeBounds.top + nodeBounds.height, _p20.bottom)
-														});
-												}
-											}(),
-											_1: A3(
-												_elm_lang$core$Dict$insert,
-												childId,
-												_elm_lang$core$Native_Utils.update(
-													_p21,
-													{
-														parent: _elm_lang$core$Maybe$Just(_p24)
-													}),
-												_p23)
-										};
-									} else {
-										return _elm_lang$core$Native_Utils.crashCase(
-											'Scene',
-											{
-												start: {line: 109, column: 37},
-												end: {line: 140, column: 102}
-											},
-											_p18)(
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												'Node not found with ID: ',
-												_elm_lang$core$Basics$toString(_p24)));
-									}
-								}),
-							{ctor: '_Tuple2', _0: _elm_lang$core$Maybe$Nothing, _1: scene.nodes},
-							_p8._1)));
+															parent: _elm_lang$core$Maybe$Just(_p23)
+														}),
+													_p22)
+											};
+										} else {
+											return _elm_lang$core$Native_Utils.crashCase(
+												'Scene',
+												{
+													start: {line: 111, column: 37},
+													end: {line: 130, column: 102}
+												},
+												_p18)(
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													'Node not found with ID: ',
+													_elm_lang$core$Basics$toString(_p23)));
+										}
+									}),
+								{ctor: '_Tuple2', _0: _elm_lang$core$Maybe$Nothing, _1: scene.nodes},
+								_p8._1))));
 				var bounds = _p15._0;
 				var updatedNodes = _p15._1;
-				var bounds1 = {left: bounds.left - margin, top: bounds.top - margin, width: bounds.width + (2 * margin), height: bounds.height + (2 * margin)};
 				var node = {
-					id: _p24,
+					id: _p23,
 					parent: _elm_lang$core$Maybe$Nothing,
 					shape: _user$project$Shape$Rectangle(
-						{left: bounds1.left, top: bounds1.top, width: bounds1.width, height: bounds1.height, stroke: _user$project$Shape$Dashed}),
-					bounds: bounds1,
-					transform: _benansell$elm_geometric_transformation$Transformer2D$identity(
-						{x: 0, y: 0})
+						{left: bounds.origin.x, top: bounds.origin.y, width: bounds.size.width, height: bounds.size.height, stroke: _user$project$Shape$Dashed}),
+					bounds: bounds,
+					transform: _benansell$elm_geometric_transformation$Transformer2D$identity(_user$project$Position$zero)
 				};
 				return _elm_lang$core$Native_Utils.update(
 					scene,
 					{
-						nodes: A3(_elm_lang$core$Dict$insert, _p24, node, updatedNodes)
+						nodes: A3(_elm_lang$core$Dict$insert, _p23, node, updatedNodes)
 					});
 			default:
-				var _p25 = _p8._0;
+				var _p24 = _p8._0;
 				var toPoint = A2(
 					_benansell$elm_geometric_transformation$Transformer2D$apply,
 					A2(_user$project$Scene$transformAt, _p8._2, scene.nodes),
-					{x: 0, y: 0});
+					_user$project$Position$zero);
 				var fromPoint = A2(
 					_benansell$elm_geometric_transformation$Transformer2D$apply,
 					A2(_user$project$Scene$transformAt, _p8._1, scene.nodes),
-					{x: 0, y: 0});
+					_user$project$Position$zero);
 				var midX = fromPoint.x + ((toPoint.x - fromPoint.x) / 2);
 				var points = {
 					ctor: '::',
@@ -9448,18 +9511,18 @@ var _user$project$Scene$update = F2(
 					}
 				};
 				var connection = {
-					id: _p25,
+					id: _p24,
 					parent: _elm_lang$core$Maybe$Nothing,
 					shape: _user$project$Shape$Path(
 						{points: points, stroke: _user$project$Shape$Thin}),
-					bounds: {left: 0, top: 0, width: 0, height: 0},
+					bounds: _user$project$Bounds$zero,
 					transform: _benansell$elm_geometric_transformation$Transformer2D$identity(
 						{x: 0, y: 0})
 				};
 				return _elm_lang$core$Native_Utils.update(
 					scene,
 					{
-						nodes: A3(_elm_lang$core$Dict$insert, _p25, connection, scene.nodes)
+						nodes: A3(_elm_lang$core$Dict$insert, _p24, connection, scene.nodes)
 					});
 		}
 	});
