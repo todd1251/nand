@@ -3150,75 +3150,6 @@ var _elm_lang$core$Platform$Program = {ctor: 'Program'};
 var _elm_lang$core$Platform$Task = {ctor: 'Task'};
 var _elm_lang$core$Platform$ProcessId = {ctor: 'ProcessId'};
 var _elm_lang$core$Platform$Router = {ctor: 'Router'};
-var _benansell$elm_geometric_transformation$Transformer2D$translate = function (_p0) {
-	var _p1 = _p0;
-	return {a: 1, b: 0, c: 0, d: 1, tx: _p1._0, ty: _p1._1};
-};
-var _benansell$elm_geometric_transformation$Transformer2D$shear = F2(
-	function (direction, k) {
-		var _p2 = direction;
-		if (_p2.ctor === 'Horizontal') {
-			return {a: 1, b: k, c: 0, d: 1, tx: 0, ty: 0};
-		} else {
-			return {a: 1, b: 0, c: k, d: 1, tx: 0, ty: 0};
-		}
-	});
-var _benansell$elm_geometric_transformation$Transformer2D$scale = F2(
-	function (width, height) {
-		return {a: width, b: 0, c: 0, d: height, tx: 0, ty: 0};
-	});
-var _benansell$elm_geometric_transformation$Transformer2D$scaleUniform = function (k) {
-	return A2(_benansell$elm_geometric_transformation$Transformer2D$scale, k, k);
-};
-var _benansell$elm_geometric_transformation$Transformer2D$rotate = F2(
-	function (direction, theta) {
-		var signedDirection = function () {
-			var _p3 = direction;
-			if (_p3.ctor === 'Clockwise') {
-				return 1;
-			} else {
-				return -1;
-			}
-		}();
-		return {
-			a: _elm_lang$core$Basics$cos(theta),
-			b: signedDirection * (0 - _elm_lang$core$Basics$sin(theta)),
-			c: signedDirection * _elm_lang$core$Basics$sin(theta),
-			d: _elm_lang$core$Basics$cos(theta),
-			tx: 0,
-			ty: 0
-		};
-	});
-var _benansell$elm_geometric_transformation$Transformer2D$identity = function (p) {
-	return {a: 1, b: 0, c: 0, d: 1, tx: p.x, ty: p.y};
-};
-var _benansell$elm_geometric_transformation$Transformer2D$combine = F2(
-	function (t1, t2) {
-		return {a: (t1.a * t2.a) + (t1.b * t2.c), b: (t1.a * t2.b) + (t1.b * t2.d), c: (t1.c * t2.a) + (t1.d * t2.c), d: (t1.c * t2.b) + (t1.d * t2.d), tx: ((t1.a * t2.tx) + (t1.b * t2.ty)) + t1.tx, ty: ((t1.c * t2.tx) + (t1.d * t2.ty)) + t1.ty};
-	});
-var _benansell$elm_geometric_transformation$Transformer2D$apply = F2(
-	function (t, p) {
-		return {x: ((t.a * p.x) + (t.b * p.y)) + t.tx, y: ((t.c * p.x) + (t.d * p.y)) + t.ty};
-	});
-var _benansell$elm_geometric_transformation$Transformer2D$fromPoint = function (p) {
-	return {ctor: '_Tuple2', _0: p.x, _1: p.y};
-};
-var _benansell$elm_geometric_transformation$Transformer2D$toPoint = function (_p4) {
-	var _p5 = _p4;
-	return {x: _p5._0, y: _p5._1};
-};
-var _benansell$elm_geometric_transformation$Transformer2D$Point = F2(
-	function (a, b) {
-		return {x: a, y: b};
-	});
-var _benansell$elm_geometric_transformation$Transformer2D$Transformation = F6(
-	function (a, b, c, d, e, f) {
-		return {a: a, b: b, c: c, d: d, tx: e, ty: f};
-	});
-var _benansell$elm_geometric_transformation$Transformer2D$Clockwise = {ctor: 'Clockwise'};
-var _benansell$elm_geometric_transformation$Transformer2D$AntiClockwise = {ctor: 'AntiClockwise'};
-var _benansell$elm_geometric_transformation$Transformer2D$Vertical = {ctor: 'Vertical'};
-var _benansell$elm_geometric_transformation$Transformer2D$Horizontal = {ctor: 'Horizontal'};
 //import Native.List //
 
 var _elm_lang$core$Native_Array = function() {
@@ -8892,30 +8823,30 @@ var _elm_lang$window$Window$subMap = F2(
 			});
 	});
 _elm_lang$core$Native_Platform.effectManagers['Window'] = {pkg: 'elm-lang/window', init: _elm_lang$window$Window$init, onEffects: _elm_lang$window$Window$onEffects, onSelfMsg: _elm_lang$window$Window$onSelfMsg, tag: 'sub', subMap: _elm_lang$window$Window$subMap};
-var _user$project$Position$max = F2(
+var _user$project$Point$max = F2(
 	function (a, b) {
 		return {
 			x: A2(_elm_lang$core$Basics$max, a.x, b.x),
 			y: A2(_elm_lang$core$Basics$max, a.y, b.y)
 		};
 	});
-var _user$project$Position$min = F2(
+var _user$project$Point$min = F2(
 	function (a, b) {
 		return {
 			x: A2(_elm_lang$core$Basics$min, a.x, b.x),
 			y: A2(_elm_lang$core$Basics$min, a.y, b.y)
 		};
 	});
-var _user$project$Position$subtract = F2(
+var _user$project$Point$subtract = F2(
 	function (a, b) {
 		return {x: a.x - b.x, y: a.y - b.y};
 	});
-var _user$project$Position$add = F2(
+var _user$project$Point$add = F2(
 	function (a, b) {
 		return {x: a.x + b.x, y: a.y + b.y};
 	});
-var _user$project$Position$zero = {x: 0, y: 0};
-var _user$project$Position$Position = F2(
+var _user$project$Point$zero = {x: 0, y: 0};
+var _user$project$Point$Point = F2(
 	function (a, b) {
 		return {x: a, y: b};
 	});
@@ -8931,8 +8862,8 @@ var _user$project$Size$Size = F2(
 var _user$project$Rectangle2$enclose = F2(
 	function (a, b) {
 		return {
-			origin: A2(_user$project$Position$min, a.origin, b.origin),
-			extent: A2(_user$project$Position$max, a.extent, b.extent)
+			origin: A2(_user$project$Point$min, a.origin, b.origin),
+			extent: A2(_user$project$Point$max, a.extent, b.extent)
 		};
 	});
 var _user$project$Rectangle2$margin = F2(
@@ -8940,16 +8871,16 @@ var _user$project$Rectangle2$margin = F2(
 		var _p1 = _p0;
 		var amount = {x: margin, y: margin};
 		return {
-			origin: A2(_user$project$Position$subtract, _p1.origin, amount),
-			extent: A2(_user$project$Position$add, _p1.extent, amount)
+			origin: A2(_user$project$Point$subtract, _p1.origin, amount),
+			extent: A2(_user$project$Point$add, _p1.extent, amount)
 		};
 	});
 var _user$project$Rectangle2$size = function (_p2) {
 	var _p3 = _p2;
-	var distance = A2(_user$project$Position$subtract, _p3.extent, _p3.origin);
+	var distance = A2(_user$project$Point$subtract, _p3.extent, _p3.origin);
 	return {width: distance.x, height: distance.y};
 };
-var _user$project$Rectangle2$zero = {origin: _user$project$Position$zero, extent: _user$project$Position$zero};
+var _user$project$Rectangle2$zero = {origin: _user$project$Point$zero, extent: _user$project$Point$zero};
 var _user$project$Rectangle2$Rectangle = F2(
 	function (a, b) {
 		return {origin: a, extent: b};
@@ -8969,7 +8900,7 @@ var _user$project$Bounds$toRectangle = function (bounds) {
 		extent: _user$project$Bounds$extent(bounds)
 	};
 };
-var _user$project$Bounds$zero = {origin: _user$project$Position$zero, size: _user$project$Size$zero};
+var _user$project$Bounds$zero = {origin: _user$project$Point$zero, size: _user$project$Size$zero};
 var _user$project$Bounds$Bounds = F2(
 	function (a, b) {
 		return {origin: a, size: b};
@@ -8983,6 +8914,23 @@ var _user$project$Styles$stylesheet = A3(
 		ctor: '::',
 		_0: _elm_lang$html$Html$text(_user$project$Styles$css),
 		_1: {ctor: '[]'}
+	});
+var _user$project$Transform2$combine = F2(
+	function (a, b) {
+		return {a: (a.a * b.a) + (a.b * b.c), b: (a.a * b.b) + (a.b * b.d), c: (a.c * b.a) + (a.d * b.c), d: (a.c * b.b) + (a.d * b.d), e: ((a.a * b.e) + (a.b * b.f)) + a.e, f: ((a.c * b.e) + (a.d * b.f)) + a.f};
+	});
+var _user$project$Transform2$apply = F2(
+	function (transform, point) {
+		return {x: ((transform.a * point.x) + (transform.b * point.y)) + transform.e, y: ((transform.c * point.x) + (transform.d * point.y)) + transform.f};
+	});
+var _user$project$Transform2$translate = function (_p0) {
+	var _p1 = _p0;
+	return {a: 1, b: 0, c: 0, d: 1, e: _p1.x, f: _p1.y};
+};
+var _user$project$Transform2$identity = {a: 1, b: 0, c: 0, d: 1, e: 0, f: 0};
+var _user$project$Transform2$Transform = F6(
+	function (a, b, c, d, e, f) {
+		return {a: a, b: b, c: c, d: d, e: e, f: f};
 	});
 var _user$project$Canvas2$view = function (shapes) {
 	return A2(
@@ -9020,10 +8968,10 @@ var _user$project$Canvas2$toSvgTransform = function (transform) {
 					_0: transform.d,
 					_1: {
 						ctor: '::',
-						_0: transform.tx,
+						_0: transform.e,
 						_1: {
 							ctor: '::',
-							_0: transform.ty,
+							_0: transform.f,
 							_1: {ctor: '[]'}
 						}
 					}
@@ -9044,8 +8992,8 @@ var _user$project$Canvas2$toSvgTransform = function (transform) {
 };
 var _user$project$Canvas2$centre = F2(
 	function (width, height) {
-		return _benansell$elm_geometric_transformation$Transformer2D$translate(
-			{ctor: '_Tuple2', _0: (0 - width) / 2, _1: (0 - height) / 2});
+		return _user$project$Transform2$translate(
+			{x: (0 - width) / 2, y: (0 - height) / 2});
 	});
 var _user$project$Canvas2$origin = function (size) {
 	return A2(_user$project$Canvas2$centre, 0 - size.width, 0 - size.height);
@@ -9310,7 +9258,7 @@ var _user$project$Scene$render = F2(
 						function (_p1) {
 							var _p2 = _p1;
 							var _p3 = _p2._1;
-							var transform = A2(_benansell$elm_geometric_transformation$Transformer2D$combine, parentTransform, _p3.transform);
+							var transform = A2(_user$project$Transform2$combine, parentTransform, _p3.transform);
 							return A2(
 								_elm_lang$core$Basics_ops['++'],
 								{
@@ -9336,7 +9284,7 @@ var _user$project$Scene$transformAt = F2(
 			var _p5 = _p6.parent;
 			if (_p5.ctor === 'Just') {
 				return A2(
-					_benansell$elm_geometric_transformation$Transformer2D$combine,
+					_user$project$Transform2$combine,
 					_p6.transform,
 					A2(_user$project$Scene$transformAt, _p5._0, nodes));
 			} else {
@@ -9346,8 +9294,8 @@ var _user$project$Scene$transformAt = F2(
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Scene',
 				{
-					start: {line: 190, column: 5},
-					end: {line: 202, column: 72}
+					start: {line: 191, column: 5},
+					end: {line: 203, column: 72}
 				},
 				_p4)(
 				A2(
@@ -9368,7 +9316,7 @@ var _user$project$Scene$update = F2(
 					parent: _elm_lang$core$Maybe$Nothing,
 					shape: _p10,
 					bounds: _user$project$Shape$bounds(_p10),
-					transform: _benansell$elm_geometric_transformation$Transformer2D$identity(_user$project$Position$zero)
+					transform: _user$project$Transform2$identity
 				};
 				return _elm_lang$core$Native_Utils.update(
 					scene,
@@ -9380,9 +9328,8 @@ var _user$project$Scene$update = F2(
 				var _p11 = A2(_elm_lang$core$Dict$get, _p14, scene.nodes);
 				if (_p11.ctor === 'Just') {
 					var _p12 = _p11._0;
-					var transform = _benansell$elm_geometric_transformation$Transformer2D$translate(
-						{ctor: '_Tuple2', _0: _p8._1.x, _1: _p8._1.y});
-					var origin = A2(_benansell$elm_geometric_transformation$Transformer2D$apply, transform, _p12.bounds.origin);
+					var transform = _user$project$Transform2$translate(_p8._1);
+					var origin = A2(_user$project$Transform2$apply, transform, _p12.bounds.origin);
 					var bounds = {origin: origin, size: _p12.bounds.size};
 					return _elm_lang$core$Native_Utils.update(
 						scene,
@@ -9477,7 +9424,7 @@ var _user$project$Scene$update = F2(
 					shape: _user$project$Shape$Rectangle(
 						{origin: bounds.origin, size: bounds.size, stroke: _user$project$Shape$Dashed}),
 					bounds: bounds,
-					transform: _benansell$elm_geometric_transformation$Transformer2D$identity(_user$project$Position$zero)
+					transform: _user$project$Transform2$identity
 				};
 				return _elm_lang$core$Native_Utils.update(
 					scene,
@@ -9487,13 +9434,13 @@ var _user$project$Scene$update = F2(
 			default:
 				var _p25 = _p8._0;
 				var toPoint = A2(
-					_benansell$elm_geometric_transformation$Transformer2D$apply,
+					_user$project$Transform2$apply,
 					A2(_user$project$Scene$transformAt, _p8._2, scene.nodes),
-					_user$project$Position$zero);
+					_user$project$Point$zero);
 				var fromPoint = A2(
-					_benansell$elm_geometric_transformation$Transformer2D$apply,
+					_user$project$Transform2$apply,
 					A2(_user$project$Scene$transformAt, _p8._1, scene.nodes),
-					_user$project$Position$zero);
+					_user$project$Point$zero);
 				var midX = fromPoint.x + ((toPoint.x - fromPoint.x) / 2);
 				var points = {
 					ctor: '::',
@@ -9518,8 +9465,7 @@ var _user$project$Scene$update = F2(
 					shape: _user$project$Shape$Path(
 						{points: points, stroke: _user$project$Shape$Thin}),
 					bounds: _user$project$Bounds$zero,
-					transform: _benansell$elm_geometric_transformation$Transformer2D$identity(
-						{x: 0, y: 0})
+					transform: _user$project$Transform2$identity
 				};
 				return _elm_lang$core$Native_Utils.update(
 					scene,
