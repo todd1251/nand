@@ -9294,8 +9294,8 @@ var _user$project$Scene$transformAt = F2(
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Scene',
 				{
-					start: {line: 191, column: 5},
-					end: {line: 203, column: 72}
+					start: {line: 196, column: 5},
+					end: {line: 208, column: 72}
 				},
 				_p4)(
 				A2(
@@ -9304,41 +9304,103 @@ var _user$project$Scene$transformAt = F2(
 					_elm_lang$core$Basics$toString(node)));
 		}
 	});
+var _user$project$Scene$group = F3(
+	function (id, nodes, scene) {
+		return A2(
+			_elm_lang$core$Tuple$mapFirst,
+			function (_p8) {
+				return _user$project$Bounds$fromRectangle(
+					A2(
+						_user$project$Rectangle2$margin,
+						10,
+						A2(_elm_lang$core$Maybe$withDefault, _user$project$Rectangle2$zero, _p8)));
+			},
+			A3(
+				_elm_lang$core$List$foldl,
+				F2(
+					function (childId, _p9) {
+						var _p10 = _p9;
+						var _p15 = _p10._1;
+						var _p11 = A2(_elm_lang$core$Dict$get, childId, _p15);
+						if (_p11.ctor === 'Just') {
+							var _p13 = _p11._0;
+							return {
+								ctor: '_Tuple2',
+								_0: function () {
+									var _p12 = _p10._0;
+									if (_p12.ctor === 'Nothing') {
+										return _elm_lang$core$Maybe$Just(
+											_user$project$Bounds$toRectangle(_p13.bounds));
+									} else {
+										return _elm_lang$core$Maybe$Just(
+											A2(
+												_user$project$Rectangle2$enclose,
+												_p12._0,
+												_user$project$Bounds$toRectangle(_p13.bounds)));
+									}
+								}(),
+								_1: A3(
+									_elm_lang$core$Dict$insert,
+									childId,
+									_elm_lang$core$Native_Utils.update(
+										_p13,
+										{
+											parent: _elm_lang$core$Maybe$Just(id)
+										}),
+									_p15)
+							};
+						} else {
+							return _elm_lang$core$Native_Utils.crashCase(
+								'Scene',
+								{
+									start: {line: 58, column: 21},
+									end: {line: 77, column: 86}
+								},
+								_p11)(
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									'Node not found with ID: ',
+									_elm_lang$core$Basics$toString(id)));
+						}
+					}),
+				{ctor: '_Tuple2', _0: _elm_lang$core$Maybe$Nothing, _1: scene.nodes},
+				nodes));
+	});
 var _user$project$Scene$update = F2(
 	function (event, scene) {
-		var _p8 = event;
-		switch (_p8.ctor) {
+		var _p16 = event;
+		switch (_p16.ctor) {
 			case 'Added':
-				var _p10 = _p8._1;
-				var _p9 = _p8._0;
+				var _p18 = _p16._1;
+				var _p17 = _p16._0;
 				var node = {
-					id: _p9,
+					id: _p17,
 					parent: _elm_lang$core$Maybe$Nothing,
-					shape: _p10,
-					bounds: _user$project$Shape$bounds(_p10),
+					shape: _p18,
+					bounds: _user$project$Shape$bounds(_p18),
 					transform: _user$project$Transform2$identity
 				};
 				return _elm_lang$core$Native_Utils.update(
 					scene,
 					{
-						nodes: A3(_elm_lang$core$Dict$insert, _p9, node, scene.nodes)
+						nodes: A3(_elm_lang$core$Dict$insert, _p17, node, scene.nodes)
 					});
 			case 'Translated':
-				var _p14 = _p8._0;
-				var _p11 = A2(_elm_lang$core$Dict$get, _p14, scene.nodes);
-				if (_p11.ctor === 'Just') {
-					var _p12 = _p11._0;
-					var transform = _user$project$Transform2$translate(_p8._1);
-					var origin = A2(_user$project$Transform2$apply, transform, _p12.bounds.origin);
-					var bounds = {origin: origin, size: _p12.bounds.size};
+				var _p22 = _p16._0;
+				var _p19 = A2(_elm_lang$core$Dict$get, _p22, scene.nodes);
+				if (_p19.ctor === 'Just') {
+					var _p20 = _p19._0;
+					var transform = _user$project$Transform2$translate(_p16._1);
+					var origin = A2(_user$project$Transform2$apply, transform, _p20.bounds.origin);
+					var bounds = {origin: origin, size: _p20.bounds.size};
 					return _elm_lang$core$Native_Utils.update(
 						scene,
 						{
 							nodes: A3(
 								_elm_lang$core$Dict$insert,
-								_p14,
+								_p22,
 								_elm_lang$core$Native_Utils.update(
-									_p12,
+									_p20,
 									{transform: transform, bounds: bounds}),
 								scene.nodes)
 						});
@@ -9346,78 +9408,20 @@ var _user$project$Scene$update = F2(
 					return _elm_lang$core$Native_Utils.crashCase(
 						'Scene',
 						{
-							start: {line: 70, column: 13},
-							end: {line: 98, column: 78}
+							start: {line: 107, column: 13},
+							end: {line: 135, column: 78}
 						},
-						_p11)(
+						_p19)(
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							'Node not found with ID: ',
-							_elm_lang$core$Basics$toString(_p14)));
+							_elm_lang$core$Basics$toString(_p22)));
 				}
 			case 'Grouped':
-				var _p24 = _p8._0;
-				var _p15 = A2(
-					_elm_lang$core$Tuple$mapFirst,
-					function (_p16) {
-						return _user$project$Bounds$fromRectangle(
-							A2(
-								_user$project$Rectangle2$margin,
-								10,
-								A2(_elm_lang$core$Maybe$withDefault, _user$project$Rectangle2$zero, _p16)));
-					},
-					A3(
-						_elm_lang$core$List$foldl,
-						F2(
-							function (childId, _p17) {
-								var _p18 = _p17;
-								var _p23 = _p18._1;
-								var _p19 = A2(_elm_lang$core$Dict$get, childId, _p23);
-								if (_p19.ctor === 'Just') {
-									var _p21 = _p19._0;
-									return {
-										ctor: '_Tuple2',
-										_0: function () {
-											var _p20 = _p18._0;
-											if (_p20.ctor === 'Nothing') {
-												return _elm_lang$core$Maybe$Just(
-													_user$project$Bounds$toRectangle(_p21.bounds));
-											} else {
-												return _elm_lang$core$Maybe$Just(
-													A2(
-														_user$project$Rectangle2$enclose,
-														_p20._0,
-														_user$project$Bounds$toRectangle(_p21.bounds)));
-											}
-										}(),
-										_1: A3(
-											_elm_lang$core$Dict$insert,
-											childId,
-											_elm_lang$core$Native_Utils.update(
-												_p21,
-												{
-													parent: _elm_lang$core$Maybe$Just(_p24)
-												}),
-											_p23)
-									};
-								} else {
-									return _elm_lang$core$Native_Utils.crashCase(
-										'Scene',
-										{
-											start: {line: 107, column: 37},
-											end: {line: 126, column: 102}
-										},
-										_p19)(
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											'Node not found with ID: ',
-											_elm_lang$core$Basics$toString(_p24)));
-								}
-							}),
-						{ctor: '_Tuple2', _0: _elm_lang$core$Maybe$Nothing, _1: scene.nodes},
-						_p8._1));
-				var bounds = _p15._0;
-				var updatedNodes = _p15._1;
+				var _p24 = _p16._0;
+				var _p23 = A3(_user$project$Scene$group, _p24, _p16._1, scene);
+				var bounds = _p23._0;
+				var updatedNodes = _p23._1;
 				var node = {
 					id: _p24,
 					parent: _elm_lang$core$Maybe$Nothing,
@@ -9432,14 +9436,14 @@ var _user$project$Scene$update = F2(
 						nodes: A3(_elm_lang$core$Dict$insert, _p24, node, updatedNodes)
 					});
 			default:
-				var _p25 = _p8._0;
+				var _p25 = _p16._0;
 				var toPoint = A2(
 					_user$project$Transform2$apply,
-					A2(_user$project$Scene$transformAt, _p8._2, scene.nodes),
+					A2(_user$project$Scene$transformAt, _p16._2, scene.nodes),
 					_user$project$Point$zero);
 				var fromPoint = A2(
 					_user$project$Transform2$apply,
-					A2(_user$project$Scene$transformAt, _p8._1, scene.nodes),
+					A2(_user$project$Scene$transformAt, _p16._1, scene.nodes),
 					_user$project$Point$zero);
 				var midX = fromPoint.x + ((toPoint.x - fromPoint.x) / 2);
 				var points = {
