@@ -9294,8 +9294,8 @@ var _user$project$Scene$transformAt = F2(
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Scene',
 				{
-					start: {line: 196, column: 5},
-					end: {line: 208, column: 72}
+					start: {line: 197, column: 5},
+					end: {line: 209, column: 72}
 				},
 				_p4)(
 				A2(
@@ -9303,6 +9303,30 @@ var _user$project$Scene$transformAt = F2(
 					'Node not found with ID: ',
 					_elm_lang$core$Basics$toString(node)));
 		}
+	});
+var _user$project$Scene$updateNodes = F2(
+	function (nodes, scene) {
+		return _elm_lang$core$Native_Utils.update(
+			scene,
+			{nodes: nodes});
+	});
+var _user$project$Scene$addNode = F2(
+	function (node, scene) {
+		return A2(
+			_user$project$Scene$updateNodes,
+			A3(_elm_lang$core$Dict$insert, node.id, node, scene.nodes),
+			scene);
+	});
+var _user$project$Scene$addShape = F2(
+	function (id, shape) {
+		return _user$project$Scene$addNode(
+			{
+				id: id,
+				parent: _elm_lang$core$Maybe$Nothing,
+				shape: shape,
+				bounds: _user$project$Shape$bounds(shape),
+				transform: _user$project$Transform2$identity
+			});
 	});
 var _user$project$Scene$group = F3(
 	function (id, nodes, scene) {
@@ -9371,72 +9395,47 @@ var _user$project$Scene$update = F2(
 		var _p16 = event;
 		switch (_p16.ctor) {
 			case 'Added':
-				var _p18 = _p16._1;
-				var _p17 = _p16._0;
-				var node = {
-					id: _p17,
-					parent: _elm_lang$core$Maybe$Nothing,
-					shape: _p18,
-					bounds: _user$project$Shape$bounds(_p18),
-					transform: _user$project$Transform2$identity
-				};
-				return _elm_lang$core$Native_Utils.update(
-					scene,
-					{
-						nodes: A3(_elm_lang$core$Dict$insert, _p17, node, scene.nodes)
-					});
+				return A3(_user$project$Scene$addShape, _p16._0, _p16._1, scene);
 			case 'Translated':
-				var _p22 = _p16._0;
-				var _p19 = A2(_elm_lang$core$Dict$get, _p22, scene.nodes);
-				if (_p19.ctor === 'Just') {
-					var _p20 = _p19._0;
+				var _p20 = _p16._0;
+				var _p17 = A2(_elm_lang$core$Dict$get, _p20, scene.nodes);
+				if (_p17.ctor === 'Just') {
+					var _p18 = _p17._0;
 					var transform = _user$project$Transform2$translate(_p16._1);
-					var origin = A2(_user$project$Transform2$apply, transform, _p20.bounds.origin);
-					var bounds = {origin: origin, size: _p20.bounds.size};
-					return _elm_lang$core$Native_Utils.update(
-						scene,
-						{
-							nodes: A3(
-								_elm_lang$core$Dict$insert,
-								_p22,
-								_elm_lang$core$Native_Utils.update(
-									_p20,
-									{transform: transform, bounds: bounds}),
-								scene.nodes)
-						});
+					var origin = A2(_user$project$Transform2$apply, transform, _p18.bounds.origin);
+					var bounds = {origin: origin, size: _p18.bounds.size};
+					return A2(
+						_user$project$Scene$addNode,
+						_elm_lang$core$Native_Utils.update(
+							_p18,
+							{transform: transform, bounds: bounds}),
+						scene);
 				} else {
 					return _elm_lang$core$Native_Utils.crashCase(
 						'Scene',
 						{
-							start: {line: 107, column: 13},
-							end: {line: 135, column: 78}
+							start: {line: 124, column: 13},
+							end: {line: 148, column: 78}
 						},
-						_p19)(
+						_p17)(
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							'Node not found with ID: ',
-							_elm_lang$core$Basics$toString(_p22)));
+							_elm_lang$core$Basics$toString(_p20)));
 				}
 			case 'Grouped':
-				var _p24 = _p16._0;
-				var _p23 = A3(_user$project$Scene$group, _p24, _p16._1, scene);
-				var bounds = _p23._0;
-				var updatedNodes = _p23._1;
-				var node = {
-					id: _p24,
-					parent: _elm_lang$core$Maybe$Nothing,
-					shape: _user$project$Shape$Rectangle(
-						{origin: bounds.origin, size: bounds.size, stroke: _user$project$Shape$Dashed}),
-					bounds: bounds,
-					transform: _user$project$Transform2$identity
-				};
-				return _elm_lang$core$Native_Utils.update(
-					scene,
-					{
-						nodes: A3(_elm_lang$core$Dict$insert, _p24, node, updatedNodes)
-					});
+				var _p22 = _p16._0;
+				var _p21 = A3(_user$project$Scene$group, _p22, _p16._1, scene);
+				var bounds = _p21._0;
+				var updatedNodes = _p21._1;
+				var shape = _user$project$Shape$Rectangle(
+					{origin: bounds.origin, size: bounds.size, stroke: _user$project$Shape$Dashed});
+				return A3(
+					_user$project$Scene$addShape,
+					_p22,
+					shape,
+					A2(_user$project$Scene$updateNodes, updatedNodes, scene));
 			default:
-				var _p25 = _p16._0;
 				var toPoint = A2(
 					_user$project$Transform2$apply,
 					A2(_user$project$Scene$transformAt, _p16._2, scene.nodes),
@@ -9463,19 +9462,9 @@ var _user$project$Scene$update = F2(
 						}
 					}
 				};
-				var connection = {
-					id: _p25,
-					parent: _elm_lang$core$Maybe$Nothing,
-					shape: _user$project$Shape$Path(
-						{points: points, stroke: _user$project$Shape$Thin}),
-					bounds: _user$project$Bounds$zero,
-					transform: _user$project$Transform2$identity
-				};
-				return _elm_lang$core$Native_Utils.update(
-					scene,
-					{
-						nodes: A3(_elm_lang$core$Dict$insert, _p25, connection, scene.nodes)
-					});
+				var connection = _user$project$Shape$Path(
+					{points: points, stroke: _user$project$Shape$Thin});
+				return A3(_user$project$Scene$addShape, _p16._0, connection, scene);
 		}
 	});
 var _user$project$Scene$empty = {nodes: _elm_lang$core$Dict$empty};
