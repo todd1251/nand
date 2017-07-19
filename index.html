@@ -8998,50 +8998,6 @@ var _user$project$Canvas2$centre = F2(
 var _user$project$Canvas2$origin = function (size) {
 	return A2(_user$project$Canvas2$centre, 0 - size.width, 0 - size.height);
 };
-var _user$project$Shape$line = F3(
-	function (from, to, transform) {
-		return A2(
-			_elm_lang$svg$Svg$line,
-			{
-				ctor: '::',
-				_0: _elm_lang$svg$Svg_Attributes$transform(
-					_user$project$Canvas2$toSvgTransform(transform)),
-				_1: {
-					ctor: '::',
-					_0: _elm_lang$svg$Svg_Attributes$x1(
-						_elm_lang$core$Basics$toString(from.x)),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$svg$Svg_Attributes$y1(
-							_elm_lang$core$Basics$toString(from.y)),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$svg$Svg_Attributes$x2(
-								_elm_lang$core$Basics$toString(to.x)),
-							_1: {
-								ctor: '::',
-								_0: _elm_lang$svg$Svg_Attributes$y2(
-									_elm_lang$core$Basics$toString(to.y)),
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$svg$Svg_Attributes$strokeWidth('3'),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$svg$Svg_Attributes$fill('none'),
-											_1: {ctor: '[]'}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			},
-			{ctor: '[]'});
-	});
 var _user$project$Shape$strokeAttributes = function (stroke) {
 	var _p0 = stroke;
 	switch (_p0.ctor) {
@@ -9049,13 +9005,29 @@ var _user$project$Shape$strokeAttributes = function (stroke) {
 			return {
 				ctor: '::',
 				_0: _elm_lang$svg$Svg_Attributes$strokeWidth('3'),
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$fill('none'),
+						_1: {ctor: '[]'}
+					}
+				}
 			};
 		case 'Thin':
 			return {
 				ctor: '::',
 				_0: _elm_lang$svg$Svg_Attributes$strokeWidth('2'),
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$fill('none'),
+						_1: {ctor: '[]'}
+					}
+				}
 			};
 		default:
 			return {
@@ -9064,7 +9036,15 @@ var _user$project$Shape$strokeAttributes = function (stroke) {
 				_1: {
 					ctor: '::',
 					_0: _elm_lang$svg$Svg_Attributes$strokeDasharray('2,2'),
-					_1: {ctor: '[]'}
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$stroke('#ccc'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$fill('none'),
+							_1: {ctor: '[]'}
+						}
+					}
 				}
 			};
 	}
@@ -9095,15 +9075,7 @@ var _user$project$Shape$rectangle = F6(
 									ctor: '::',
 									_0: _elm_lang$svg$Svg_Attributes$height(
 										_elm_lang$core$Basics$toString(height)),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$svg$Svg_Attributes$fill('none'),
-											_1: {ctor: '[]'}
-										}
-									}
+									_1: {ctor: '[]'}
 								}
 							}
 						}
@@ -9134,15 +9106,7 @@ var _user$project$Shape$circle = F5(
 								ctor: '::',
 								_0: _elm_lang$svg$Svg_Attributes$r(
 									_elm_lang$core$Basics$toString(radius)),
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$svg$Svg_Attributes$fill('none'),
-										_1: {ctor: '[]'}
-									}
-								}
+								_1: {ctor: '[]'}
 							}
 						}
 					}
@@ -9183,15 +9147,7 @@ var _user$project$Shape$path = F3(
 														_elm_lang$core$Basics$toString(_p2.y))));
 										}),
 									path))),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
-							_1: {
-								ctor: '::',
-								_0: _elm_lang$svg$Svg_Attributes$fill('none'),
-								_1: {ctor: '[]'}
-							}
-						}
+						_1: {ctor: '[]'}
 					}
 				},
 				_user$project$Shape$strokeAttributes(stroke)),
@@ -9320,8 +9276,8 @@ var _user$project$Scene$nodeById = F2(
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Scene',
 				{
-					start: {line: 57, column: 5},
-					end: {line: 63, column: 70}
+					start: {line: 56, column: 5},
+					end: {line: 62, column: 70}
 				},
 				_p4)(
 				A2(
