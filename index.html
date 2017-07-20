@@ -9276,8 +9276,8 @@ var _user$project$Scene$changeParent = F2(
 						if (_elm_lang$core$Native_Utils.eq(node.parent, _elm_lang$core$Maybe$Nothing)) {
 							var _p4 = node.shape;
 							if (_p4.ctor === 'Rectangle') {
-								return _user$project$Shape$Rectangle(
-									{origin: _p4._0.origin, size: _p4._0.size, stroke: _user$project$Shape$NoStroke});
+								return _elm_lang$core$Native_Utils.eq(_p4._0.stroke, _user$project$Shape$Dashed) ? _user$project$Shape$Rectangle(
+									{origin: _p4._0.origin, size: _p4._0.size, stroke: _user$project$Shape$NoStroke}) : node.shape;
 							} else {
 								return node.shape;
 							}
