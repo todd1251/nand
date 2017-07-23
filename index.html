@@ -9290,8 +9290,8 @@ var _user$project$Scene$nodeById = F2(
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Scene',
 				{
-					start: {line: 56, column: 5},
-					end: {line: 62, column: 70}
+					start: {line: 57, column: 5},
+					end: {line: 63, column: 70}
 				},
 				_p5)(
 				A2(
@@ -9385,7 +9385,13 @@ var _user$project$Scene$update = F2(
 				var bounds = updatedScene.bounds;
 				return A2(
 					_user$project$Scene$addNode,
-					{id: _p16, parent: _elm_lang$core$Maybe$Nothing, shape: _elm_lang$core$Maybe$Nothing, bounds: bounds, transform: _user$project$Transform2$identity},
+					{
+						id: _p16,
+						parent: _elm_lang$core$Maybe$Nothing,
+						shape: _p15._2(bounds),
+						bounds: bounds,
+						transform: _user$project$Transform2$identity
+					},
 					updatedScene);
 			default:
 				var toPoint = A2(
@@ -9428,9 +9434,9 @@ var _user$project$Scene$Scene = F2(
 	function (a, b) {
 		return {nodes: a, bounds: b};
 	});
-var _user$project$Scene$Grouped = F2(
-	function (a, b) {
-		return {ctor: 'Grouped', _0: a, _1: b};
+var _user$project$Scene$Grouped = F3(
+	function (a, b, c) {
+		return {ctor: 'Grouped', _0: a, _1: b, _2: c};
 	});
 var _user$project$Scene$Connected = F3(
 	function (a, b, c) {
@@ -9536,7 +9542,7 @@ var _user$project$Main2$scene = A3(
 									{x: 50, y: 0}),
 								_1: {
 									ctor: '::',
-									_0: A2(
+									_0: A3(
 										_user$project$Scene$Grouped,
 										4,
 										{
@@ -9555,6 +9561,9 @@ var _user$project$Main2$scene = A3(
 													}
 												}
 											}
+										},
+										function (_p2) {
+											return _elm_lang$core$Maybe$Nothing;
 										}),
 									_1: {
 										ctor: '::',
@@ -9609,7 +9618,7 @@ var _user$project$Main2$scene = A3(
 																{x: 50, y: 0}),
 															_1: {
 																ctor: '::',
-																_0: A2(
+																_0: A3(
 																	_user$project$Scene$Grouped,
 																	8,
 																	{
@@ -9624,6 +9633,9 @@ var _user$project$Main2$scene = A3(
 																				_1: {ctor: '[]'}
 																			}
 																		}
+																	},
+																	function (_p3) {
+																		return _elm_lang$core$Maybe$Nothing;
 																	}),
 																_1: {
 																	ctor: '::',
@@ -9639,7 +9651,7 @@ var _user$project$Main2$scene = A3(
 																			_0: A3(_user$project$Scene$Connected, 10, 7, 2),
 																			_1: {
 																				ctor: '::',
-																				_0: A2(
+																				_0: A3(
 																					_user$project$Scene$Grouped,
 																					11,
 																					{
@@ -9658,6 +9670,11 @@ var _user$project$Main2$scene = A3(
 																								}
 																							}
 																						}
+																					},
+																					function (bounds) {
+																						return _elm_lang$core$Maybe$Just(
+																							_user$project$Shape$Rectangle(
+																								{origin: bounds.origin, size: bounds.size, stroke: _user$project$Shape$Thin}));
 																					}),
 																				_1: {
 																					ctor: '::',
