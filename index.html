@@ -9474,6 +9474,14 @@ var _user$project$Main2$update = F2(
 			_1: _elm_lang$core$Platform_Cmd$none
 		};
 	});
+var _user$project$Main2$rectangleBounds = function (bounds) {
+	return _elm_lang$core$Maybe$Just(
+		_user$project$Shape$Rectangle(
+			{origin: bounds.origin, size: bounds.size, stroke: _user$project$Shape$Thin}));
+};
+var _user$project$Main2$noBounds = function (bounds) {
+	return _elm_lang$core$Maybe$Nothing;
+};
 var _user$project$Main2$scene = A3(
 	_elm_lang$core$List$foldl,
 	_user$project$Scene$update,
@@ -9562,9 +9570,7 @@ var _user$project$Main2$scene = A3(
 												}
 											}
 										},
-										function (_p2) {
-											return _elm_lang$core$Maybe$Nothing;
-										}),
+										_user$project$Main2$noBounds),
 									_1: {
 										ctor: '::',
 										_0: A2(
@@ -9634,9 +9640,7 @@ var _user$project$Main2$scene = A3(
 																			}
 																		}
 																	},
-																	function (_p3) {
-																		return _elm_lang$core$Maybe$Nothing;
-																	}),
+																	_user$project$Main2$noBounds),
 																_1: {
 																	ctor: '::',
 																	_0: A2(
@@ -9671,11 +9675,7 @@ var _user$project$Main2$scene = A3(
 																							}
 																						}
 																					},
-																					function (bounds) {
-																						return _elm_lang$core$Maybe$Just(
-																							_user$project$Shape$Rectangle(
-																								{origin: bounds.origin, size: bounds.size, stroke: _user$project$Shape$Thin}));
-																					}),
+																					_user$project$Main2$rectangleBounds),
 																				_1: {
 																					ctor: '::',
 																					_0: A2(
