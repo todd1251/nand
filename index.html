@@ -9450,58 +9450,102 @@ var _user$project$Scene$Added = F2(
 	function (a, b) {
 		return {ctor: 'Added', _0: a, _1: b};
 	});
-var _user$project$Scene2$flatMap = F2(
-	function (f, a) {
-		var _p0 = A2(_elm_lang$core$Maybe$map, f, a);
-		if (_p0.ctor === 'Nothing') {
-			return _elm_lang$core$Maybe$Nothing;
+var _user$project$Result_Extra$flatMap = F2(
+	function (f, result) {
+		var _p0 = A2(_elm_lang$core$Result$map, f, result);
+		if (_p0.ctor === 'Err') {
+			return _elm_lang$core$Result$Err(_p0._0);
 		} else {
 			return _p0._0;
 		}
 	});
-var _user$project$Scene2$CreateNode = {ctor: 'CreateNode'};
-var _user$project$Scene2$NodeCreated = {ctor: 'NodeCreated'};
-var _user$project$Scene2$createNode = function (_p1) {
-	var _p2 = _p1;
-	return _elm_lang$core$Maybe$Just(_user$project$Scene2$NodeCreated);
+var _user$project$Scene2$nodeIdToString = function (_p0) {
+	var _p1 = _p0;
+	return _elm_lang$core$Basics$toString(_p1._0);
 };
+var _user$project$Scene2$NodeId = function (a) {
+	return {ctor: 'NodeId', _0: a};
+};
+var _user$project$Scene2$nodeId = function (id) {
+	return _user$project$Scene2$NodeId(id);
+};
+var _user$project$Scene2$CreateNode = function (a) {
+	return {ctor: 'CreateNode', _0: a};
+};
+var _user$project$Scene2$NodeCreated = function (a) {
+	return {ctor: 'NodeCreated', _0: a};
+};
+var _user$project$Scene2$createNode = F2(
+	function (id, _p2) {
+		var _p3 = _p2;
+		return A2(
+			_elm_lang$core$List$any,
+			F2(
+				function (x, y) {
+					return _elm_lang$core$Native_Utils.eq(x, y);
+				})(id),
+			_p3._0.nodes) ? _elm_lang$core$Result$Err(
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				'Node already present with ID: ',
+				_user$project$Scene2$nodeIdToString(id))) : _elm_lang$core$Result$Ok(
+			_user$project$Scene2$NodeCreated(id));
+	});
 var _user$project$Scene2$Scene2 = function (a) {
 	return {ctor: 'Scene2', _0: a};
 };
 var _user$project$Scene2$empty = _user$project$Scene2$Scene2(
 	{
-		events: {ctor: '[]'}
+		events: {ctor: '[]'},
+		nodes: {ctor: '[]'}
 	});
 var _user$project$Scene2$apply = F2(
-	function (_p3, event) {
-		var _p4 = _p3;
-		var _p5 = _p4._0;
+	function (_p4, event) {
+		var _p5 = _p4;
+		var _p7 = _p5._0;
 		return _user$project$Scene2$Scene2(
-			_elm_lang$core$Native_Utils.update(
-				_p5,
-				{
-					events: A2(
-						_elm_lang$core$Basics_ops['++'],
-						_p5.events,
+			function (scene) {
+				return _elm_lang$core$Native_Utils.update(
+					scene,
+					{
+						events: A2(
+							_elm_lang$core$Basics_ops['++'],
+							scene.events,
+							{
+								ctor: '::',
+								_0: event,
+								_1: {ctor: '[]'}
+							})
+					});
+			}(
+				function () {
+					var _p6 = event;
+					return _elm_lang$core$Native_Utils.update(
+						_p7,
 						{
-							ctor: '::',
-							_0: event,
-							_1: {ctor: '[]'}
-						})
-				}));
+							nodes: A2(
+								_elm_lang$core$Basics_ops['++'],
+								_p7.nodes,
+								{
+									ctor: '::',
+									_0: _p6._0,
+									_1: {ctor: '[]'}
+								})
+						});
+				}()));
 	});
 var _user$project$Scene2$execute = F2(
 	function (command, scene) {
 		return A2(
-			_user$project$Scene2$flatMap,
+			_user$project$Result_Extra$flatMap,
 			function (scene) {
-				var _p6 = command;
-				var _p7 = _user$project$Scene2$createNode(scene);
-				if (_p7.ctor === 'Nothing') {
-					return _elm_lang$core$Maybe$Nothing;
+				var _p8 = command;
+				var _p9 = A2(_user$project$Scene2$createNode, _p8._0, scene);
+				if (_p9.ctor === 'Err') {
+					return _elm_lang$core$Result$Err(_p9._0);
 				} else {
-					return _elm_lang$core$Maybe$Just(
-						A2(_user$project$Scene2$apply, scene, _p7._0));
+					return _elm_lang$core$Result$Ok(
+						A2(_user$project$Scene2$apply, scene, _p9._0));
 				}
 			},
 			scene);
@@ -9531,19 +9575,25 @@ var _user$project$Main2$update = F2(
 		};
 	});
 var _user$project$Main2$scene2 = A2(
-	_elm_lang$core$Debug$log,
-	'scene2',
+	_elm_lang$core$Result$withDefault,
+	_user$project$Scene2$empty,
 	A2(
-		_elm_lang$core$Maybe$withDefault,
-		_user$project$Scene2$empty,
+		_elm_lang$core$Debug$log,
+		'scene2',
 		A3(
 			_elm_lang$core$List$foldl,
 			_user$project$Scene2$execute,
-			_elm_lang$core$Maybe$Just(_user$project$Scene2$empty),
+			_elm_lang$core$Result$Ok(_user$project$Scene2$empty),
 			{
 				ctor: '::',
-				_0: _user$project$Scene2$CreateNode,
-				_1: {ctor: '[]'}
+				_0: _user$project$Scene2$CreateNode(
+					_user$project$Scene2$nodeId(0)),
+				_1: {
+					ctor: '::',
+					_0: _user$project$Scene2$CreateNode(
+						_user$project$Scene2$nodeId(0)),
+					_1: {ctor: '[]'}
+				}
 			})));
 var _user$project$Main2$rectangleBounds = function (bounds) {
 	return _elm_lang$core$Maybe$Just(
