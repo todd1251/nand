@@ -9528,16 +9528,6 @@ var _user$project$Result_Extra$flatMap = F2(
 			return _p0._0;
 		}
 	});
-var _user$project$Scene_Node$toString = function (_p0) {
-	var _p1 = _p0;
-	return _elm_lang$core$Basics$toString(_p1._0);
-};
-var _user$project$Scene_Node$Id = function (a) {
-	return {ctor: 'Id', _0: a};
-};
-var _user$project$Scene_Node$id = function (id) {
-	return _user$project$Scene_Node$Id(id);
-};
 var _user$project$Transform$toSvgTransform = function (transform) {
 	var elements = {
 		ctor: '::',
@@ -9634,7 +9624,7 @@ var _user$project$Scene2$transform = F2(
 			A2(
 				_elm_lang$core$Basics_ops['++'],
 				'Node not found with ID: ',
-				_user$project$Scene_Node$toString(id)));
+				_elm_lang$core$Basics$toString(id)));
 	});
 var _user$project$Scene2$Inserted = function (a) {
 	return {ctor: 'Inserted', _0: a};
@@ -9651,7 +9641,7 @@ var _user$project$Scene2$insert = F2(
 			A2(
 				_elm_lang$core$Basics_ops['++'],
 				'Node already present with ID: ',
-				_user$project$Scene_Node$toString(id))) : _elm_lang$core$Result$Ok(
+				_elm_lang$core$Basics$toString(id))) : _elm_lang$core$Result$Ok(
 			_user$project$Scene2$Inserted(id));
 	});
 var _user$project$Scene2$Scene2 = function (a) {
@@ -9776,16 +9766,13 @@ var _user$project$Main2$scene2 = A2(
 			_elm_lang$core$Result$Ok(_user$project$Scene2$empty),
 			{
 				ctor: '::',
-				_0: _user$project$Scene2$Insert(
-					_user$project$Scene_Node$id(0)),
+				_0: _user$project$Scene2$Insert(0),
 				_1: {
 					ctor: '::',
-					_0: _user$project$Scene2$Insert(
-						_user$project$Scene_Node$id(1)),
+					_0: _user$project$Scene2$Insert(1),
 					_1: {
 						ctor: '::',
-						_0: _user$project$Scene2$Transform(
-							_user$project$Scene_Node$id(1)),
+						_0: _user$project$Scene2$Transform(1),
 						_1: {ctor: '[]'}
 					}
 				}
