@@ -9598,6 +9598,10 @@ var _user$project$Transform$translateBeforeScale = F3(
 var _user$project$Transform$identity = _benansell$elm_geometric_transformation$Transformer2D$identity(
 	_benansell$elm_geometric_transformation$Transformer2D$toPoint(
 		{ctor: '_Tuple2', _0: 0, _1: 0}));
+var _user$project$Scene2$events = function (_p0) {
+	var _p1 = _p0;
+	return _p1._0.events;
+};
 var _user$project$Scene2$Node = F2(
 	function (a, b) {
 		return {id: a, transform: b};
@@ -9612,14 +9616,14 @@ var _user$project$Scene2$Transformed = function (a) {
 	return {ctor: 'Transformed', _0: a};
 };
 var _user$project$Scene2$transform = F2(
-	function (id, _p0) {
-		var _p1 = _p0;
+	function (id, _p2) {
+		var _p3 = _p2;
 		return A2(
 			_elm_lang$core$List$any,
 			function (node) {
 				return _elm_lang$core$Native_Utils.eq(node.id, id);
 			},
-			_p1._0.nodes) ? _elm_lang$core$Result$Ok(
+			_p3._0.nodes) ? _elm_lang$core$Result$Ok(
 			_user$project$Scene2$Transformed(id)) : _elm_lang$core$Result$Err(
 			A2(
 				_elm_lang$core$Basics_ops['++'],
@@ -9630,14 +9634,14 @@ var _user$project$Scene2$Inserted = function (a) {
 	return {ctor: 'Inserted', _0: a};
 };
 var _user$project$Scene2$insert = F2(
-	function (id, _p2) {
-		var _p3 = _p2;
+	function (id, _p4) {
+		var _p5 = _p4;
 		return A2(
 			_elm_lang$core$List$any,
 			function (node) {
 				return _elm_lang$core$Native_Utils.eq(node.id, id);
 			},
-			_p3._0.nodes) ? _elm_lang$core$Result$Err(
+			_p5._0.nodes) ? _elm_lang$core$Result$Err(
 			A2(
 				_elm_lang$core$Basics_ops['++'],
 				'Node already present with ID: ',
@@ -9653,9 +9657,9 @@ var _user$project$Scene2$empty = _user$project$Scene2$Scene2(
 		nodes: {ctor: '[]'}
 	});
 var _user$project$Scene2$apply = F2(
-	function (_p4, event) {
-		var _p5 = _p4;
-		var _p8 = _p5._0;
+	function (_p6, event) {
+		var _p7 = _p6;
+		var _p10 = _p7._0;
 		return _user$project$Scene2$Scene2(
 			function (scene) {
 				return _elm_lang$core$Native_Utils.update(
@@ -9672,37 +9676,37 @@ var _user$project$Scene2$apply = F2(
 					});
 			}(
 				function () {
-					var _p6 = event;
-					if (_p6.ctor === 'Inserted') {
+					var _p8 = event;
+					if (_p8.ctor === 'Inserted') {
 						return _elm_lang$core$Native_Utils.update(
-							_p8,
+							_p10,
 							{
 								nodes: A2(
 									_elm_lang$core$Basics_ops['++'],
-									_p8.nodes,
+									_p10.nodes,
 									{
 										ctor: '::',
-										_0: {id: _p6._0, transform: _elm_lang$core$Maybe$Nothing},
+										_0: {id: _p8._0, transform: _elm_lang$core$Maybe$Nothing},
 										_1: {ctor: '[]'}
 									})
 							});
 					} else {
-						var _p7 = _p6._0;
+						var _p9 = _p8._0;
 						return _elm_lang$core$Native_Utils.update(
-							_p8,
+							_p10,
 							{
 								nodes: A2(
 									_elm_lang$core$Basics_ops['++'],
 									A2(
 										_elm_lang$core$List$filter,
 										function (node) {
-											return !_elm_lang$core$Native_Utils.eq(node.id, _p7);
+											return !_elm_lang$core$Native_Utils.eq(node.id, _p9);
 										},
-										_p8.nodes),
+										_p10.nodes),
 									{
 										ctor: '::',
 										_0: {
-											id: _p7,
+											id: _p9,
 											transform: _elm_lang$core$Maybe$Just(_user$project$Transform$identity)
 										},
 										_1: {ctor: '[]'}
@@ -9720,11 +9724,11 @@ var _user$project$Scene2$execute = F2(
 					_elm_lang$core$Result$map,
 					_user$project$Scene2$apply(scene),
 					function () {
-						var _p9 = command;
-						if (_p9.ctor === 'Insert') {
-							return A2(_user$project$Scene2$insert, _p9._0, scene);
+						var _p11 = command;
+						if (_p11.ctor === 'Insert') {
+							return A2(_user$project$Scene2$insert, _p11._0, scene);
 						} else {
-							return A2(_user$project$Scene2$transform, _p9._0, scene);
+							return A2(_user$project$Scene2$transform, _p11._0, scene);
 						}
 					}());
 			},
@@ -9773,7 +9777,23 @@ var _user$project$Main2$scene2 = A2(
 					_1: {
 						ctor: '::',
 						_0: _user$project$Scene2$Transform(1),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: _user$project$Scene2$Insert(2),
+							_1: {
+								ctor: '::',
+								_0: _user$project$Scene2$Transform(2),
+								_1: {
+									ctor: '::',
+									_0: _user$project$Scene2$Insert(3),
+									_1: {
+										ctor: '::',
+										_0: _user$project$Scene2$Transform(3),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
 					}
 				}
 			})));
