@@ -9713,96 +9713,119 @@ var _user$project$Scene2$empty = _user$project$Scene2$Scene2(
 		events: {ctor: '[]'},
 		nodes: {ctor: '[]'}
 	});
-var _user$project$Scene2$apply = F2(
-	function (_p8, event) {
+var _user$project$Scene2$inserted = F3(
+	function (id, node, _p8) {
 		var _p9 = _p8;
-		var _p12 = _p9._0;
+		var _p10 = _p9._0;
 		return _user$project$Scene2$Scene2(
-			function (scene) {
-				return _elm_lang$core$Native_Utils.update(
-					scene,
-					{
-						events: A2(
-							_elm_lang$core$Basics_ops['++'],
-							scene.events,
-							{
-								ctor: '::',
-								_0: event,
-								_1: {ctor: '[]'}
-							})
-					});
-			}(
-				function () {
-					var _p10 = event;
-					switch (_p10.ctor) {
-						case 'Inserted':
-							return _elm_lang$core$Native_Utils.update(
-								_p12,
+			_elm_lang$core$Native_Utils.update(
+				_p10,
+				{
+					nodes: A2(
+						_elm_lang$core$Basics_ops['++'],
+						_p10.nodes,
+						{
+							ctor: '::',
+							_0: {
+								id: id,
+								node: _elm_lang$core$Maybe$Just(node),
+								transform: _elm_lang$core$Maybe$Nothing
+							},
+							_1: {ctor: '[]'}
+						})
+				}));
+	});
+var _user$project$Scene2$transformed = F3(
+	function (id, transform, _p11) {
+		var _p12 = _p11;
+		var _p13 = _p12._0;
+		var node = A2(
+			_user$project$Unsafe$nth,
+			0,
+			A2(
+				_elm_lang$core$List$filter,
+				function (node) {
+					return _elm_lang$core$Native_Utils.eq(node.id, id);
+				},
+				_p13.nodes));
+		return _user$project$Scene2$Scene2(
+			_elm_lang$core$Native_Utils.update(
+				_p13,
+				{
+					nodes: A2(
+						_elm_lang$core$Basics_ops['++'],
+						A2(
+							_elm_lang$core$List$filter,
+							function (node) {
+								return !_elm_lang$core$Native_Utils.eq(node.id, id);
+							},
+							_p13.nodes),
+						{
+							ctor: '::',
+							_0: _elm_lang$core$Native_Utils.update(
+								node,
 								{
-									nodes: A2(
-										_elm_lang$core$Basics_ops['++'],
-										_p12.nodes,
-										{
-											ctor: '::',
-											_0: {
-												id: _p10._0,
-												node: _elm_lang$core$Maybe$Just(_p10._1),
-												transform: _elm_lang$core$Maybe$Nothing
-											},
-											_1: {ctor: '[]'}
-										})
-								});
-						case 'Transformed':
-							var _p11 = _p10._0;
-							var node = A2(
-								_user$project$Unsafe$nth,
-								0,
-								A2(
-									_elm_lang$core$List$filter,
-									function (node) {
-										return _elm_lang$core$Native_Utils.eq(node.id, _p11);
-									},
-									_p12.nodes));
-							return _elm_lang$core$Native_Utils.update(
-								_p12,
-								{
-									nodes: A2(
-										_elm_lang$core$Basics_ops['++'],
-										A2(
-											_elm_lang$core$List$filter,
-											function (node) {
-												return !_elm_lang$core$Native_Utils.eq(node.id, _p11);
-											},
-											_p12.nodes),
-										{
-											ctor: '::',
-											_0: _elm_lang$core$Native_Utils.update(
-												node,
-												{
-													transform: _elm_lang$core$Maybe$Just(_p10._1)
-												}),
-											_1: {ctor: '[]'}
-										})
-								});
-						default:
-							var nodes_ = A2(
-								_elm_lang$core$Debug$log,
-								'nodes',
-								A2(
-									_elm_lang$core$List$filter,
-									function (node) {
-										return A2(
-											_elm_lang$core$List$any,
-											F2(
-												function (x, y) {
-													return _elm_lang$core$Native_Utils.eq(x, y);
-												})(node.id),
-											_p10._1);
-									},
-									_p12.nodes));
-							return _p12;
-					}
-				}()));
+									transform: _elm_lang$core$Maybe$Just(transform)
+								}),
+							_1: {ctor: '[]'}
+						})
+				}));
+	});
+var _user$project$Scene2$grouped = F3(
+	function (id, nodes, _p14) {
+		var _p15 = _p14;
+		var _p16 = _p15._0;
+		var groupedNodes = A2(
+			_elm_lang$core$Debug$log,
+			'groupedNodes',
+			A2(
+				_elm_lang$core$List$filter,
+				function (node) {
+					return A2(
+						_elm_lang$core$List$any,
+						F2(
+							function (x, y) {
+								return _elm_lang$core$Native_Utils.eq(x, y);
+							})(node.id),
+						nodes);
+				},
+				_p16.nodes));
+		return _user$project$Scene2$Scene2(_p16);
+	});
+var _user$project$Scene2$append = F2(
+	function (event, _p17) {
+		var _p18 = _p17;
+		var _p19 = _p18._0;
+		return _user$project$Scene2$Scene2(
+			_elm_lang$core$Native_Utils.update(
+				_p19,
+				{
+					events: A2(
+						_elm_lang$core$Basics_ops['++'],
+						_p19.events,
+						{
+							ctor: '::',
+							_0: event,
+							_1: {ctor: '[]'}
+						})
+				}));
+	});
+var _user$project$Scene2$apply = F2(
+	function (scene, event) {
+		return A2(
+			_user$project$Scene2$append,
+			event,
+			function () {
+				var _p20 = event;
+				switch (_p20.ctor) {
+					case 'Inserted':
+						return A3(_user$project$Scene2$inserted, _p20._0, _p20._1, scene);
+					case 'Transformed':
+						return A3(_user$project$Scene2$transformed, _p20._0, _p20._1, scene);
+					default:
+						return A3(_user$project$Scene2$grouped, _p20._0, _p20._1, scene);
+				}
+			}());
 	});
 var _user$project$Scene2$execute = F2(
 	function (command, scene) {
@@ -9813,14 +9836,14 @@ var _user$project$Scene2$execute = F2(
 					_elm_lang$core$Result$map,
 					_user$project$Scene2$apply(scene),
 					function () {
-						var _p13 = command;
-						switch (_p13.ctor) {
+						var _p21 = command;
+						switch (_p21.ctor) {
 							case 'Insert':
-								return A3(_user$project$Scene2$insert, _p13._0, _p13._1, scene);
+								return A3(_user$project$Scene2$insert, _p21._0, _p21._1, scene);
 							case 'Transform':
-								return A3(_user$project$Scene2$transform, _p13._0, _p13._1, scene);
+								return A3(_user$project$Scene2$transform, _p21._0, _p21._1, scene);
 							default:
-								return A3(_user$project$Scene2$group, _p13._0, _p13._1, scene);
+								return A3(_user$project$Scene2$group, _p21._0, _p21._1, scene);
 						}
 					}());
 			},
