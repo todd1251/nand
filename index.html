@@ -9625,9 +9625,9 @@ var _user$project$Scene2$events = function (_p0) {
 	var _p1 = _p0;
 	return _p1._0.events;
 };
-var _user$project$Scene2$Node = F3(
-	function (a, b, c) {
-		return {id: a, node: b, transform: c};
+var _user$project$Scene2$Node = F5(
+	function (a, b, c, d, e) {
+		return {id: a, node: b, parent: c, transform: d, bounds: e};
 	});
 var _user$project$Scene2$Group = F2(
 	function (a, b) {
@@ -9711,7 +9711,8 @@ var _user$project$Scene2$Scene2 = function (a) {
 var _user$project$Scene2$empty = _user$project$Scene2$Scene2(
 	{
 		events: {ctor: '[]'},
-		nodes: {ctor: '[]'}
+		nodes: {ctor: '[]'},
+		bounds: _user$project$Bounds$zero
 	});
 var _user$project$Scene2$inserted = F3(
 	function (id, node, _p8) {
@@ -9729,7 +9730,9 @@ var _user$project$Scene2$inserted = F3(
 							_0: {
 								id: id,
 								node: _elm_lang$core$Maybe$Just(node),
-								transform: _elm_lang$core$Maybe$Nothing
+								parent: _elm_lang$core$Maybe$Nothing,
+								transform: _elm_lang$core$Maybe$Nothing,
+								bounds: _user$project$Bounds$zero
 							},
 							_1: {ctor: '[]'}
 						})
@@ -9774,35 +9777,112 @@ var _user$project$Scene2$transformed = F3(
 var _user$project$Scene2$grouped = F3(
 	function (id, nodes, _p14) {
 		var _p15 = _p14;
-		var _p16 = _p15._0;
-		var groupedNodes = A2(
-			_elm_lang$core$Debug$log,
-			'groupedNodes',
-			A2(
-				_elm_lang$core$List$filter,
-				function (node) {
-					return A2(
-						_elm_lang$core$List$any,
+		var _p25 = _p15._0;
+		var changeParent = F3(
+			function (node, parent, nodes) {
+				return A2(
+					_elm_lang$core$Basics_ops['++'],
+					A2(
+						_elm_lang$core$List$filter,
+						function (node_) {
+							return !_elm_lang$core$Native_Utils.eq(node_.id, node.id);
+						},
+						nodes),
+					{
+						ctor: '::',
+						_0: _elm_lang$core$Native_Utils.update(
+							node,
+							{
+								parent: _elm_lang$core$Maybe$Just(parent)
+							}),
+						_1: {ctor: '[]'}
+					});
+			});
+		var nodeById = F2(
+			function (id, nodes) {
+				var _p16 = _elm_lang$core$List$head(
+					A2(
+						_elm_lang$core$List$filter,
+						function (node) {
+							return _elm_lang$core$Native_Utils.eq(node.id, id);
+						},
+						nodes));
+				if (_p16.ctor === 'Just') {
+					return _p16._0;
+				} else {
+					return _elm_lang$core$Native_Utils.crashCase(
+						'Scene2',
+						{
+							start: {line: 141, column: 13},
+							end: {line: 151, column: 78}
+						},
+						_p16)(
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'Node not found with ID: ',
+							_elm_lang$core$Basics$toString(id)));
+				}
+			});
+		var enclose = F2(
+			function (rectangle, bounds) {
+				return A2(
+					_user$project$Rectangle2$enclose,
+					rectangle,
+					_user$project$Bounds$toRectangle(bounds));
+			});
+		var margin = 10;
+		return _user$project$Scene2$Scene2(
+			function (_p18) {
+				var _p19 = _p18;
+				return _elm_lang$core$Native_Utils.update(
+					_p25,
+					{nodes: _p19._1, bounds: _p19._0});
+			}(
+				A2(
+					_elm_lang$core$Tuple$mapFirst,
+					function (_p20) {
+						return _user$project$Bounds$fromRectangle(
+							A2(
+								_user$project$Rectangle2$margin,
+								margin,
+								A2(_elm_lang$core$Maybe$withDefault, _user$project$Rectangle2$zero, _p20)));
+					},
+					A3(
+						_elm_lang$core$List$foldl,
 						F2(
-							function (x, y) {
-								return _elm_lang$core$Native_Utils.eq(x, y);
-							})(node.id),
-						nodes);
-				},
-				_p16.nodes));
-		return _user$project$Scene2$Scene2(_p16);
+							function (childId, _p21) {
+								var _p22 = _p21;
+								var _p24 = _p22._1;
+								var node = A2(nodeById, childId, _p24);
+								return {
+									ctor: '_Tuple2',
+									_0: function () {
+										var _p23 = _p22._0;
+										if (_p23.ctor === 'Nothing') {
+											return _elm_lang$core$Maybe$Just(
+												_user$project$Bounds$toRectangle(node.bounds));
+										} else {
+											return _elm_lang$core$Maybe$Just(
+												A2(enclose, _p23._0, node.bounds));
+										}
+									}(),
+									_1: A3(changeParent, node, id, _p24)
+								};
+							}),
+						{ctor: '_Tuple2', _0: _elm_lang$core$Maybe$Nothing, _1: _p25.nodes},
+						nodes))));
 	});
 var _user$project$Scene2$append = F2(
-	function (event, _p17) {
-		var _p18 = _p17;
-		var _p19 = _p18._0;
+	function (event, _p26) {
+		var _p27 = _p26;
+		var _p28 = _p27._0;
 		return _user$project$Scene2$Scene2(
 			_elm_lang$core$Native_Utils.update(
-				_p19,
+				_p28,
 				{
 					events: A2(
 						_elm_lang$core$Basics_ops['++'],
-						_p19.events,
+						_p28.events,
 						{
 							ctor: '::',
 							_0: event,
@@ -9816,14 +9896,14 @@ var _user$project$Scene2$apply = F2(
 			_user$project$Scene2$append,
 			event,
 			function () {
-				var _p20 = event;
-				switch (_p20.ctor) {
+				var _p29 = event;
+				switch (_p29.ctor) {
 					case 'Inserted':
-						return A3(_user$project$Scene2$inserted, _p20._0, _p20._1, scene);
+						return A3(_user$project$Scene2$inserted, _p29._0, _p29._1, scene);
 					case 'Transformed':
-						return A3(_user$project$Scene2$transformed, _p20._0, _p20._1, scene);
+						return A3(_user$project$Scene2$transformed, _p29._0, _p29._1, scene);
 					default:
-						return A3(_user$project$Scene2$grouped, _p20._0, _p20._1, scene);
+						return A3(_user$project$Scene2$grouped, _p29._0, _p29._1, scene);
 				}
 			}());
 	});
@@ -9836,14 +9916,14 @@ var _user$project$Scene2$execute = F2(
 					_elm_lang$core$Result$map,
 					_user$project$Scene2$apply(scene),
 					function () {
-						var _p21 = command;
-						switch (_p21.ctor) {
+						var _p30 = command;
+						switch (_p30.ctor) {
 							case 'Insert':
-								return A3(_user$project$Scene2$insert, _p21._0, _p21._1, scene);
+								return A3(_user$project$Scene2$insert, _p30._0, _p30._1, scene);
 							case 'Transform':
-								return A3(_user$project$Scene2$transform, _p21._0, _p21._1, scene);
+								return A3(_user$project$Scene2$transform, _p30._0, _p30._1, scene);
 							default:
-								return A3(_user$project$Scene2$group, _p21._0, _p21._1, scene);
+								return A3(_user$project$Scene2$group, _p30._0, _p30._1, scene);
 						}
 					}());
 			},
