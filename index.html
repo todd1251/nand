@@ -10175,15 +10175,74 @@ var _user$project$Main2$scene2 = function () {
 					_user$project$Scene2$Update,
 					11,
 					_user$project$Shape$Rectangle(
-						{origin: bounds.origin, size: bounds.size, stroke: _user$project$Shape$Dashed})),
+						{origin: bounds.origin, size: bounds.size, stroke: _user$project$Shape$Thick})),
 				_1: {
 					ctor: '::',
 					_0: A2(
-						_user$project$Scene2$Transform,
-						11,
-						_user$project$Transform2$translate(
-							{x: -100, y: -100})),
-					_1: {ctor: '[]'}
+						_user$project$Scene2$Insert,
+						12,
+						_user$project$Shape$Circle(
+							{
+								centre: {x: 0, y: 0},
+								radius: 5,
+								stroke: _user$project$Shape$Thin
+							})),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_user$project$Scene2$Transform,
+							12,
+							_user$project$Transform2$translate(
+								{x: bounds.origin.x, y: bounds.origin.y + (bounds.size.height / 2)})),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_user$project$Scene2$Insert,
+								13,
+								_user$project$Shape$Rectangle(
+									{
+										origin: {x: -5, y: -5},
+										size: {width: 10, height: 10},
+										stroke: _user$project$Shape$Thin
+									})),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_user$project$Scene2$Transform,
+									13,
+									_user$project$Transform2$translate(
+										{x: bounds.origin.x + bounds.size.width, y: bounds.origin.y + (bounds.size.height / 2)})),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_user$project$Scene2$Group,
+										14,
+										{
+											ctor: '::',
+											_0: 11,
+											_1: {
+												ctor: '::',
+												_0: 12,
+												_1: {
+													ctor: '::',
+													_0: 13,
+													_1: {ctor: '[]'}
+												}
+											}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_user$project$Scene2$Transform,
+											14,
+											_user$project$Transform2$translate(
+												{x: -100, y: -100})),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
+					}
 				}
 			}));
 }();
