@@ -9543,8 +9543,8 @@ var _user$project$Scene2$nodeById = F2(
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Scene2',
 				{
-					start: {line: 178, column: 5},
-					end: {line: 188, column: 70}
+					start: {line: 181, column: 5},
+					end: {line: 191, column: 70}
 				},
 				_p6)(
 				A2(
@@ -9955,6 +9955,37 @@ var _user$project$Main2$update = F2(
 			_1: _elm_lang$core$Platform_Cmd$none
 		};
 	});
+var _user$project$Main2$connect = F3(
+	function (from, to, scene) {
+		var toPoint = A2(
+			_user$project$Transform2$apply,
+			A2(_user$project$Scene2$transformAt, to, scene),
+			_user$project$Point$zero);
+		var fromPoint = A2(
+			_user$project$Transform2$apply,
+			A2(_user$project$Scene2$transformAt, from, scene),
+			_user$project$Point$zero);
+		var midX = fromPoint.x + ((toPoint.x - fromPoint.x) / 2);
+		var points = {
+			ctor: '::',
+			_0: fromPoint,
+			_1: {
+				ctor: '::',
+				_0: {x: midX, y: fromPoint.y},
+				_1: {
+					ctor: '::',
+					_0: {x: midX, y: toPoint.y},
+					_1: {
+						ctor: '::',
+						_0: toPoint,
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		};
+		return _user$project$Shape$Path(
+			{points: points, stroke: _user$project$Shape$Thin});
+	});
 var _user$project$Main2$scene2 = function () {
 	var scene = A3(
 		_elm_lang$core$List$foldl,
@@ -10126,22 +10157,7 @@ var _user$project$Main2$scene2 = function () {
 																			8,
 																			_user$project$Transform2$translate(
 																				{x: -100, y: 0})),
-																		_1: {
-																			ctor: '::',
-																			_0: A2(
-																				_user$project$Scene2$Group,
-																				11,
-																				{
-																					ctor: '::',
-																					_0: 4,
-																					_1: {
-																						ctor: '::',
-																						_0: 8,
-																						_1: {ctor: '[]'}
-																					}
-																				}),
-																			_1: {ctor: '[]'}
-																		}
+																		_1: {ctor: '[]'}
 																	}
 																}
 															}
@@ -10158,89 +10174,174 @@ var _user$project$Main2$scene2 = function () {
 				}
 			}
 		});
+	var connected = A3(
+		_elm_lang$core$List$foldl,
+		_user$project$Scene2$execute(_user$project$Shape$bounds),
+		scene,
+		{
+			ctor: '::',
+			_0: A2(
+				_user$project$Scene2$Insert,
+				9,
+				A3(
+					_user$project$Main2$connect,
+					7,
+					1,
+					A2(_elm_lang$core$Result$withDefault, _user$project$Scene2$empty, scene))),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_user$project$Scene2$Insert,
+					10,
+					A3(
+						_user$project$Main2$connect,
+						7,
+						2,
+						A2(_elm_lang$core$Result$withDefault, _user$project$Scene2$empty, scene))),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_user$project$Scene2$Group,
+						11,
+						{
+							ctor: '::',
+							_0: 4,
+							_1: {
+								ctor: '::',
+								_0: 8,
+								_1: {
+									ctor: '::',
+									_0: 9,
+									_1: {
+										ctor: '::',
+										_0: 10,
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}
+			}
+		});
 	var bounds = A2(
 		_user$project$Scene2$bounds,
 		11,
-		A2(_elm_lang$core$Result$withDefault, _user$project$Scene2$empty, scene));
+		A2(_elm_lang$core$Result$withDefault, _user$project$Scene2$empty, connected));
+	var grouped = A3(
+		_elm_lang$core$List$foldl,
+		_user$project$Scene2$execute(_user$project$Shape$bounds),
+		connected,
+		{
+			ctor: '::',
+			_0: A2(
+				_user$project$Scene2$Update,
+				11,
+				_user$project$Shape$Rectangle(
+					{origin: bounds.origin, size: bounds.size, stroke: _user$project$Shape$Thick})),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_user$project$Scene2$Insert,
+					12,
+					_user$project$Shape$Circle(
+						{
+							centre: {x: 0, y: 0},
+							radius: 5,
+							stroke: _user$project$Shape$Thin
+						})),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_user$project$Scene2$Transform,
+						12,
+						_user$project$Transform2$translate(
+							{x: bounds.origin.x, y: bounds.origin.y + (bounds.size.height / 2)})),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_user$project$Scene2$Insert,
+							13,
+							_user$project$Shape$Rectangle(
+								{
+									origin: {x: -5, y: -5},
+									size: {width: 10, height: 10},
+									stroke: _user$project$Shape$Thin
+								})),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_user$project$Scene2$Transform,
+								13,
+								_user$project$Transform2$translate(
+									{x: bounds.origin.x + bounds.size.width, y: bounds.origin.y + (bounds.size.height / 2)})),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			}
+		});
 	return A2(
 		_elm_lang$core$Result$withDefault,
 		_user$project$Scene2$empty,
 		A3(
 			_elm_lang$core$List$foldl,
 			_user$project$Scene2$execute(_user$project$Shape$bounds),
-			scene,
+			grouped,
 			{
 				ctor: '::',
 				_0: A2(
-					_user$project$Scene2$Update,
-					11,
-					_user$project$Shape$Rectangle(
-						{origin: bounds.origin, size: bounds.size, stroke: _user$project$Shape$Thick})),
+					_user$project$Scene2$Insert,
+					14,
+					A3(
+						_user$project$Main2$connect,
+						12,
+						6,
+						A2(_elm_lang$core$Result$withDefault, _user$project$Scene2$empty, grouped))),
 				_1: {
 					ctor: '::',
 					_0: A2(
 						_user$project$Scene2$Insert,
-						12,
-						_user$project$Shape$Circle(
-							{
-								centre: {x: 0, y: 0},
-								radius: 5,
-								stroke: _user$project$Shape$Thin
-							})),
+						15,
+						A3(
+							_user$project$Main2$connect,
+							3,
+							13,
+							A2(_elm_lang$core$Result$withDefault, _user$project$Scene2$empty, grouped))),
 					_1: {
 						ctor: '::',
 						_0: A2(
-							_user$project$Scene2$Transform,
-							12,
-							_user$project$Transform2$translate(
-								{x: bounds.origin.x, y: bounds.origin.y + (bounds.size.height / 2)})),
+							_user$project$Scene2$Group,
+							16,
+							{
+								ctor: '::',
+								_0: 11,
+								_1: {
+									ctor: '::',
+									_0: 12,
+									_1: {
+										ctor: '::',
+										_0: 13,
+										_1: {
+											ctor: '::',
+											_0: 14,
+											_1: {
+												ctor: '::',
+												_0: 15,
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							}),
 						_1: {
 							ctor: '::',
 							_0: A2(
-								_user$project$Scene2$Insert,
-								13,
-								_user$project$Shape$Rectangle(
-									{
-										origin: {x: -5, y: -5},
-										size: {width: 10, height: 10},
-										stroke: _user$project$Shape$Thin
-									})),
-							_1: {
-								ctor: '::',
-								_0: A2(
-									_user$project$Scene2$Transform,
-									13,
-									_user$project$Transform2$translate(
-										{x: bounds.origin.x + bounds.size.width, y: bounds.origin.y + (bounds.size.height / 2)})),
-								_1: {
-									ctor: '::',
-									_0: A2(
-										_user$project$Scene2$Group,
-										14,
-										{
-											ctor: '::',
-											_0: 11,
-											_1: {
-												ctor: '::',
-												_0: 12,
-												_1: {
-													ctor: '::',
-													_0: 13,
-													_1: {ctor: '[]'}
-												}
-											}
-										}),
-									_1: {
-										ctor: '::',
-										_0: A2(
-											_user$project$Scene2$Transform,
-											14,
-											_user$project$Transform2$translate(
-												{x: -100, y: -100})),
-										_1: {ctor: '[]'}
-									}
-								}
-							}
+								_user$project$Scene2$Transform,
+								16,
+								_user$project$Transform2$translate(
+									{x: -100, y: -100})),
+							_1: {ctor: '[]'}
 						}
 					}
 				}
