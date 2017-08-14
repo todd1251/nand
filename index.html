@@ -9292,7 +9292,6 @@ var _user$project$Scene2$grouped2 = F3(
 					rectangle,
 					_user$project$Bounds$toRectangle(bounds));
 			});
-		var margin = 10;
 		return function (_p4) {
 			var _p5 = _p4;
 			var groupNode = {id: id, node: _elm_lang$core$Maybe$Nothing, parent: _elm_lang$core$Maybe$Nothing, transform: _user$project$Transform2$identity, bounds: _p5._0};
@@ -9313,10 +9312,7 @@ var _user$project$Scene2$grouped2 = F3(
 				_elm_lang$core$Tuple$mapFirst,
 				function (_p6) {
 					return _user$project$Bounds$fromRectangle(
-						A2(
-							_user$project$Rectangle2$margin,
-							margin,
-							A2(_elm_lang$core$Maybe$withDefault, _user$project$Rectangle2$zero, _p6)));
+						A2(_elm_lang$core$Maybe$withDefault, _user$project$Rectangle2$zero, _p6));
 				},
 				A3(
 					_elm_lang$core$List$foldl,
@@ -10199,10 +10195,15 @@ var _user$project$Main2$scene2 = A2(
 							scene);
 					}(
 						function (scene) {
-							var bounds = A2(
-								_user$project$Scene2$bounds,
-								11,
-								A2(_elm_lang$core$Result$withDefault, _user$project$Scene2$empty, scene));
+							var bounds = _user$project$Bounds$fromRectangle(
+								A2(
+									_user$project$Rectangle2$margin,
+									10,
+									_user$project$Bounds$toRectangle(
+										A2(
+											_user$project$Scene2$bounds,
+											11,
+											A2(_elm_lang$core$Result$withDefault, _user$project$Scene2$empty, scene)))));
 							return A3(
 								_user$project$Scene2$transform2,
 								13,
