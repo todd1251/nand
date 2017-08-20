@@ -9694,48 +9694,98 @@ var _user$project$Main2$connect = F3(
 		return _user$project$Shape$Path(
 			{points: points, stroke: _user$project$Shape$Thin});
 	});
-var _user$project$Main2$inputShape = _user$project$Shape$Circle(
-	{
-		centre: {x: 0, y: 0},
-		radius: 5,
-		stroke: _user$project$Shape$Thin
-	});
-var _user$project$Main2$withInputs = F4(
-	function (id, inputs, shape, scene) {
-		var sceneWithShape = A4(_user$project$Scene$insert, id, shape, _user$project$Shape$bounds, scene);
-		var bounds = A2(
-			_user$project$Scene$bounds,
-			id,
-			A2(_elm_lang$core$Result$withDefault, _user$project$Scene$empty, sceneWithShape));
-		var from = bounds.origin.y + ((bounds.size.height * 1) / 4);
-		var to = bounds.origin.y + ((bounds.size.height * 3) / 4);
-		var step = (to - from) / _elm_lang$core$Basics$toFloat(
-			_elm_lang$core$List$length(inputs) - 1);
+var _user$project$Main2$distributeVertically = F5(
+	function (nodes, x, from, to, scene) {
+		var steps = _elm_lang$core$List$length(nodes) - 1;
+		var step = _elm_lang$core$Native_Utils.eq(steps, 0) ? 0 : ((to - from) / _elm_lang$core$Basics$toFloat(steps));
 		return A3(
 			_elm_lang$core$List$foldl,
 			F2(
 				function (_p2, scene) {
 					var _p3 = _p2;
-					var _p4 = _p3._1;
 					var transform = _user$project$Transform2$translate(
 						{
-							x: bounds.origin.x,
-							y: from + (step * _elm_lang$core$Basics$toFloat(_p3._0))
+							x: x,
+							y: _elm_lang$core$Native_Utils.eq(steps, 0) ? 0 : (from + (step * _elm_lang$core$Basics$toFloat(_p3._0)))
 						});
-					return A3(
-						_user$project$Scene$transform,
-						_p4,
-						transform,
-						A4(_user$project$Scene$insert, _p4, _user$project$Main2$inputShape, _user$project$Shape$bounds, scene));
+					return A3(_user$project$Scene$transform, _p3._1, transform, scene);
 				}),
-			sceneWithShape,
+			scene,
 			A2(
 				_elm_lang$core$List$indexedMap,
 				F2(
 					function (v0, v1) {
 						return {ctor: '_Tuple2', _0: v0, _1: v1};
 					}),
-				inputs));
+				nodes));
+	});
+var _user$project$Main2$duplicate = F3(
+	function (nodes, shape, scene) {
+		return A3(
+			_elm_lang$core$List$foldl,
+			F2(
+				function (_p4, scene) {
+					var _p5 = _p4;
+					return A4(_user$project$Scene$insert, _p5._1, shape, _user$project$Shape$bounds, scene);
+				}),
+			scene,
+			A2(
+				_elm_lang$core$List$indexedMap,
+				F2(
+					function (v0, v1) {
+						return {ctor: '_Tuple2', _0: v0, _1: v1};
+					}),
+				nodes));
+	});
+var _user$project$Main2$outputShape = _user$project$Shape$Rectangle(
+	{
+		origin: {x: -5, y: -5},
+		size: {width: 10, height: 10},
+		stroke: _user$project$Shape$Thin
+	});
+var _user$project$Main2$inputShape = _user$project$Shape$Circle(
+	{
+		centre: {x: 0, y: 0},
+		radius: 5,
+		stroke: _user$project$Shape$Thin
+	});
+var _user$project$Main2$insert = F6(
+	function (id, node, inputs, outputs, shape, scene) {
+		var sceneWithNode = A4(_user$project$Scene$insert, node, shape, _user$project$Shape$bounds, scene);
+		var bounds = A2(
+			_user$project$Scene$bounds,
+			node,
+			A2(_elm_lang$core$Result$withDefault, _user$project$Scene$empty, sceneWithNode));
+		var from = bounds.origin.y + ((bounds.size.height * 1) / 4);
+		var to = bounds.origin.y + ((bounds.size.height * 3) / 4);
+		return A3(
+			_user$project$Scene$group,
+			id,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: node,
+					_1: {ctor: '[]'}
+				},
+				A2(_elm_lang$core$Basics_ops['++'], inputs, outputs)),
+			A5(
+				_user$project$Main2$distributeVertically,
+				outputs,
+				bounds.origin.x + bounds.size.width,
+				from,
+				to,
+				A3(
+					_user$project$Main2$duplicate,
+					outputs,
+					_user$project$Main2$outputShape,
+					A5(
+						_user$project$Main2$distributeVertically,
+						inputs,
+						bounds.origin.x,
+						from,
+						to,
+						A3(_user$project$Main2$duplicate, inputs, _user$project$Main2$inputShape, sceneWithNode)))));
 	});
 var _user$project$Main2$scene = A2(
 	_elm_lang$core$Result$withDefault,
@@ -9890,121 +9940,56 @@ var _user$project$Main2$scene = A2(
 										8,
 										_user$project$Transform2$translate(
 											{x: -100, y: 0}),
-										A3(
-											_user$project$Scene$group,
+										A6(
+											_user$project$Main2$insert,
 											8,
+											5,
 											{
 												ctor: '::',
-												_0: 5,
-												_1: {
-													ctor: '::',
-													_0: 6,
-													_1: {
-														ctor: '::',
-														_0: 7,
-														_1: {ctor: '[]'}
-													}
-												}
+												_0: 6,
+												_1: {ctor: '[]'}
 											},
+											{
+												ctor: '::',
+												_0: 7,
+												_1: {ctor: '[]'}
+											},
+											_user$project$Shape$Circle(
+												{
+													centre: {x: 0, y: 0},
+													radius: 50,
+													stroke: _user$project$Shape$Thick
+												}),
 											A3(
 												_user$project$Scene$transform,
-												7,
+												4,
 												_user$project$Transform2$translate(
-													{x: 50, y: 0}),
-												A4(
-													_user$project$Scene$insert,
-													7,
+													{x: 100, y: 0}),
+												A6(
+													_user$project$Main2$insert,
+													4,
+													0,
+													{
+														ctor: '::',
+														_0: 1,
+														_1: {
+															ctor: '::',
+															_0: 2,
+															_1: {ctor: '[]'}
+														}
+													},
+													{
+														ctor: '::',
+														_0: 3,
+														_1: {ctor: '[]'}
+													},
 													_user$project$Shape$Rectangle(
 														{
-															origin: {x: -5, y: -5},
-															size: {width: 10, height: 10},
-															stroke: _user$project$Shape$Thin
+															origin: {x: -50, y: -50},
+															size: {width: 100, height: 100},
+															stroke: _user$project$Shape$Thick
 														}),
-													_user$project$Shape$bounds,
-													A3(
-														_user$project$Scene$transform,
-														6,
-														_user$project$Transform2$translate(
-															{x: -50, y: 0}),
-														A4(
-															_user$project$Scene$insert,
-															6,
-															_user$project$Shape$Circle(
-																{
-																	centre: {x: 0, y: 0},
-																	radius: 5,
-																	stroke: _user$project$Shape$Thin
-																}),
-															_user$project$Shape$bounds,
-															A4(
-																_user$project$Scene$insert,
-																5,
-																_user$project$Shape$Circle(
-																	{
-																		centre: {x: 0, y: 0},
-																		radius: 50,
-																		stroke: _user$project$Shape$Thick
-																	}),
-																_user$project$Shape$bounds,
-																A3(
-																	_user$project$Scene$transform,
-																	4,
-																	_user$project$Transform2$translate(
-																		{x: 100, y: 0}),
-																	A3(
-																		_user$project$Scene$group,
-																		4,
-																		{
-																			ctor: '::',
-																			_0: 0,
-																			_1: {
-																				ctor: '::',
-																				_0: 1,
-																				_1: {
-																					ctor: '::',
-																					_0: 2,
-																					_1: {
-																						ctor: '::',
-																						_0: 3,
-																						_1: {ctor: '[]'}
-																					}
-																				}
-																			}
-																		},
-																		A3(
-																			_user$project$Scene$transform,
-																			3,
-																			_user$project$Transform2$translate(
-																				{x: 50, y: 0}),
-																			A4(
-																				_user$project$Scene$insert,
-																				3,
-																				_user$project$Shape$Rectangle(
-																					{
-																						origin: {x: -5, y: -5},
-																						size: {width: 10, height: 10},
-																						stroke: _user$project$Shape$Thin
-																					}),
-																				_user$project$Shape$bounds,
-																				A4(
-																					_user$project$Main2$withInputs,
-																					0,
-																					{
-																						ctor: '::',
-																						_0: 1,
-																						_1: {
-																							ctor: '::',
-																							_0: 2,
-																							_1: {ctor: '[]'}
-																						}
-																					},
-																					_user$project$Shape$Rectangle(
-																						{
-																							origin: {x: -50, y: -50},
-																							size: {width: 100, height: 100},
-																							stroke: _user$project$Shape$Thick
-																						}),
-																					_elm_lang$core$Result$Ok(_user$project$Scene$empty))))))))))))))))))))));
+													_elm_lang$core$Result$Ok(_user$project$Scene$empty))))))))))))));
 var _user$project$Main2$State = F2(
 	function (a, b) {
 		return {canvasSize: a, scene: b};
