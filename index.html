@@ -9789,6 +9789,36 @@ var _user$project$Main2$insert = F6(
 			},
 			A4(_user$project$Scene$insert, node, shape, _user$project$Shape$bounds, scene));
 	});
+var _user$project$Main2$combine = F6(
+	function (id, node, inputs, outputs, margin, scene) {
+		var bounds = _user$project$Bounds$fromRectangle(
+			A2(
+				_user$project$Rectangle2$margin,
+				margin,
+				_user$project$Bounds$toRectangle(
+					A2(_user$project$Scene$bounds, node, scene))));
+		var from = bounds.origin.y + ((bounds.size.height * 1) / 4);
+		var to = bounds.origin.y + ((bounds.size.height * 3) / 4);
+		return A2(
+			_elm_lang$core$Result$andThen,
+			A4(_user$project$Main2$distributeVertically, outputs, bounds.origin.x + bounds.size.width, from, to),
+			A2(
+				_elm_lang$core$Result$andThen,
+				A2(_user$project$Main2$duplicate, outputs, _user$project$Main2$outputShape),
+				A2(
+					_elm_lang$core$Result$andThen,
+					A4(_user$project$Main2$distributeVertically, inputs, bounds.origin.x, from, to),
+					A2(
+						_elm_lang$core$Result$andThen,
+						A2(_user$project$Main2$duplicate, inputs, _user$project$Main2$inputShape),
+						A4(
+							_user$project$Scene$update,
+							node,
+							_user$project$Shape$Rectangle(
+								{origin: bounds.origin, size: bounds.size, stroke: _user$project$Shape$Thick}),
+							_user$project$Shape$bounds,
+							scene)))));
+	});
 var _user$project$Main2$scene = A2(
 	_elm_lang$core$Result$withDefault,
 	_user$project$Scene$empty,
@@ -9833,59 +9863,21 @@ var _user$project$Main2$scene = A2(
 					A3(_user$project$Main2$connect, 14, 12, 6),
 					A2(
 						_elm_lang$core$Result$andThen,
-						function (scene) {
-							var bounds = _user$project$Bounds$fromRectangle(
-								A2(
-									_user$project$Rectangle2$margin,
-									20,
-									_user$project$Bounds$toRectangle(
-										A2(_user$project$Scene$bounds, 11, scene))));
-							return A2(
-								_elm_lang$core$Result$andThen,
-								A2(
-									_user$project$Scene$transform,
-									13,
-									_user$project$Transform2$translate(
-										{x: bounds.origin.x + bounds.size.width, y: bounds.origin.y + (bounds.size.height / 2)})),
-								A2(
-									_elm_lang$core$Result$andThen,
-									A3(
-										_user$project$Scene$insert,
-										13,
-										_user$project$Shape$Rectangle(
-											{
-												origin: {x: -5, y: -5},
-												size: {width: 10, height: 10},
-												stroke: _user$project$Shape$Thin
-											}),
-										_user$project$Shape$bounds),
-									A2(
-										_elm_lang$core$Result$andThen,
-										A2(
-											_user$project$Scene$transform,
-											12,
-											_user$project$Transform2$translate(
-												{x: bounds.origin.x, y: bounds.origin.y + (bounds.size.height / 2)})),
-										A2(
-											_elm_lang$core$Result$andThen,
-											A3(
-												_user$project$Scene$insert,
-												12,
-												_user$project$Shape$Circle(
-													{
-														centre: {x: 0, y: 0},
-														radius: 5,
-														stroke: _user$project$Shape$Thin
-													}),
-												_user$project$Shape$bounds),
-											A4(
-												_user$project$Scene$update,
-												11,
-												_user$project$Shape$Rectangle(
-													{origin: bounds.origin, size: bounds.size, stroke: _user$project$Shape$Thick}),
-												_user$project$Shape$bounds,
-												scene)))));
-						},
+						A5(
+							_user$project$Main2$combine,
+							16,
+							11,
+							{
+								ctor: '::',
+								_0: 12,
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: 13,
+								_1: {ctor: '[]'}
+							},
+							20),
 						A2(
 							_elm_lang$core$Result$andThen,
 							A2(
