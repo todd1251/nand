@@ -9743,17 +9743,31 @@ var _user$project$Main2$duplicate = F3(
 					}),
 				nodes));
 	});
-var _user$project$Main2$outputShape = _user$project$Shape$Rectangle(
+var _user$project$Main2$outputShape = _user$project$Shape$Path(
 	{
-		origin: {x: -5, y: -5},
-		size: {width: 10, height: 10},
-		stroke: _user$project$Shape$Thin
+		points: {
+			ctor: '::',
+			_0: {x: -20, y: 0},
+			_1: {
+				ctor: '::',
+				_0: {x: 0, y: 0},
+				_1: {ctor: '[]'}
+			}
+		},
+		stroke: _user$project$Shape$Thick
 	});
-var _user$project$Main2$inputShape = _user$project$Shape$Circle(
+var _user$project$Main2$inputShape = _user$project$Shape$Path(
 	{
-		centre: {x: 0, y: 0},
-		radius: 5,
-		stroke: _user$project$Shape$Thin
+		points: {
+			ctor: '::',
+			_0: {x: 0, y: 0},
+			_1: {
+				ctor: '::',
+				_0: {x: 20, y: 0},
+				_1: {ctor: '[]'}
+			}
+		},
+		stroke: _user$project$Shape$Thick
 	});
 var _user$project$Main2$insert = F6(
 	function (id, node, inputs, outputs, shape, scene) {
@@ -9778,13 +9792,13 @@ var _user$project$Main2$insert = F6(
 							A2(_elm_lang$core$Basics_ops['++'], inputs, outputs))),
 					A2(
 						_elm_lang$core$Result$andThen,
-						A4(_user$project$Main2$distributeVertically, outputs, bounds.origin.x + bounds.size.width, from, to),
+						A4(_user$project$Main2$distributeVertically, outputs, (bounds.origin.x + bounds.size.width) + 20, from, to),
 						A2(
 							_elm_lang$core$Result$andThen,
 							A2(_user$project$Main2$duplicate, outputs, _user$project$Main2$outputShape),
 							A2(
 								_elm_lang$core$Result$andThen,
-								A4(_user$project$Main2$distributeVertically, inputs, bounds.origin.x, from, to),
+								A4(_user$project$Main2$distributeVertically, inputs, bounds.origin.x - 20, from, to),
 								A3(_user$project$Main2$duplicate, inputs, _user$project$Main2$inputShape, scene)))));
 			},
 			A4(_user$project$Scene$insert, node, shape, _user$project$Shape$bounds, scene));
@@ -9801,13 +9815,13 @@ var _user$project$Main2$combine = F6(
 		var to = bounds.origin.y + ((bounds.size.height * 3) / 4);
 		return A2(
 			_elm_lang$core$Result$andThen,
-			A4(_user$project$Main2$distributeVertically, outputs, bounds.origin.x + bounds.size.width, from, to),
+			A4(_user$project$Main2$distributeVertically, outputs, (bounds.origin.x + bounds.size.width) + 20, from, to),
 			A2(
 				_elm_lang$core$Result$andThen,
 				A2(_user$project$Main2$duplicate, outputs, _user$project$Main2$outputShape),
 				A2(
 					_elm_lang$core$Result$andThen,
-					A4(_user$project$Main2$distributeVertically, inputs, bounds.origin.x, from, to),
+					A4(_user$project$Main2$distributeVertically, inputs, bounds.origin.x - 20, from, to),
 					A2(
 						_elm_lang$core$Result$andThen,
 						A2(_user$project$Main2$duplicate, inputs, _user$project$Main2$inputShape),
