@@ -8998,14 +8998,18 @@ var _user$project$Canvas2$centre = F2(
 var _user$project$Canvas2$origin = function (size) {
 	return A2(_user$project$Canvas2$centre, 0 - size.width, 0 - size.height);
 };
-var _user$project$Result_Extra$flatMap = F2(
-	function (f, result) {
-		var _p0 = A2(_elm_lang$core$Result$map, f, result);
-		if (_p0.ctor === 'Err') {
-			return _elm_lang$core$Result$Err(_p0._0);
-		} else {
-			return _p0._0;
-		}
+var _user$project$Scene$removed = F2(
+	function (id, state) {
+		return _elm_lang$core$Native_Utils.update(
+			state,
+			{
+				nodes: A2(
+					_elm_lang$core$List$filter,
+					function (node) {
+						return !_elm_lang$core$Native_Utils.eq(node.id, id);
+					},
+					state.nodes)
+			});
 	});
 var _user$project$Scene$inserted = F4(
 	function (id, node, bounds, state) {
@@ -9043,8 +9047,8 @@ var _user$project$Scene$nodeForId = F2(
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Scene',
 				{
-					start: {line: 94, column: 5},
-					end: {line: 103, column: 70}
+					start: {line: 99, column: 5},
+					end: {line: 108, column: 70}
 				},
 				_p0)(
 				A2(
@@ -9189,6 +9193,8 @@ var _user$project$Scene$apply = F2(
 				return A4(_user$project$Scene$inserted, _p9._0, _p9._1, _p9._2, state);
 			case 'Updated':
 				return A4(_user$project$Scene$updated, _p9._0, _p9._1, _p9._2, state);
+			case 'Removed':
+				return A2(_user$project$Scene$removed, _p9._0, state);
 			case 'Transformed':
 				return A3(_user$project$Scene$transformed, _p9._0, _p9._1, state);
 			default:
@@ -9218,17 +9224,45 @@ var _user$project$Scene$bounds = F2(
 				}(
 					_user$project$Scene$state(scene))));
 	});
+var _user$project$Scene$node = F2(
+	function (id, scene) {
+		var _p12 = function (_) {
+			return _.node;
+		}(
+			A2(
+				_user$project$Scene$nodeForId,
+				id,
+				function (_) {
+					return _.nodes;
+				}(
+					_user$project$Scene$state(scene))));
+		if (_p12.ctor === 'Just') {
+			return _p12._0;
+		} else {
+			return _elm_lang$core$Native_Utils.crashCase(
+				'Scene',
+				{
+					start: {line: 326, column: 5},
+					end: {line: 337, column: 69}
+				},
+				_p12)(
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'FIXME: no node with ID ',
+					_elm_lang$core$Basics$toString(id)));
+		}
+	});
 var _user$project$Scene$transformAt = F2(
 	function (id, scene) {
 		var transformAt1 = F2(
 			function (id, nodes) {
 				var node = A2(_user$project$Scene$nodeForId, id, nodes);
-				var _p12 = node.parent;
-				if (_p12.ctor === 'Just') {
+				var _p14 = node.parent;
+				if (_p14.ctor === 'Just') {
 					return A2(
 						_user$project$Transform2$combine,
 						node.transform,
-						A2(transformAt1, _p12._0, nodes));
+						A2(transformAt1, _p14._0, nodes));
 				} else {
 					return node.transform;
 				}
@@ -9245,14 +9279,14 @@ var _user$project$Scene$render = F3(
 	function (origin, renderer, scene) {
 		var render1 = F3(
 			function (parent, parentTransform, nodes) {
-				var _p13 = A2(
+				var _p15 = A2(
 					_elm_lang$core$List$partition,
 					function (node) {
 						return _elm_lang$core$Native_Utils.eq(node.parent, parent);
 					},
 					nodes);
-				var roots = _p13._0;
-				var others = _p13._1;
+				var roots = _p15._0;
+				var others = _p15._1;
 				return _elm_lang$core$List$concat(
 					A2(
 						_elm_lang$core$List$map,
@@ -9261,11 +9295,11 @@ var _user$project$Scene$render = F3(
 							return A2(
 								_elm_lang$core$Basics_ops['++'],
 								function () {
-									var _p14 = node.node;
-									if (_p14.ctor === 'Just') {
+									var _p16 = node.node;
+									if (_p16.ctor === 'Just') {
 										return {
 											ctor: '::',
-											_0: A2(renderer, _p14._0, transform),
+											_0: A2(renderer, _p16._0, transform),
 											_1: {ctor: '[]'}
 										};
 									} else {
@@ -9304,6 +9338,9 @@ var _user$project$Scene$Transformed = F2(
 	function (a, b) {
 		return {ctor: 'Transformed', _0: a, _1: b};
 	});
+var _user$project$Scene$Removed = function (a) {
+	return {ctor: 'Removed', _0: a};
+};
 var _user$project$Scene$Updated = F3(
 	function (a, b, c) {
 		return {ctor: 'Updated', _0: a, _1: b, _2: c};
@@ -9316,12 +9353,12 @@ var _user$project$Scene$Scene = function (a) {
 	return {ctor: 'Scene', _0: a};
 };
 var _user$project$Scene$append = F2(
-	function (_p15, event) {
-		var _p16 = _p15;
+	function (_p17, event) {
+		var _p18 = _p17;
 		return _user$project$Scene$Scene(
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				_p16._0,
+				_p18._0,
 				{
 					ctor: '::',
 					_0: event,
@@ -9376,6 +9413,25 @@ var _user$project$Scene$update = F4(
 						id,
 						node,
 						bounds(node))) : _elm_lang$core$Result$Err(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'Node not found with ID: ',
+						_elm_lang$core$Basics$toString(id)));
+			});
+	});
+var _user$project$Scene$remove = F2(
+	function (id, scene) {
+		return A2(
+			_user$project$Scene$execute,
+			scene,
+			function (state) {
+				return A2(
+					_elm_lang$core$List$any,
+					function (node) {
+						return _elm_lang$core$Native_Utils.eq(node.id, id);
+					},
+					state.nodes) ? _elm_lang$core$Result$Ok(
+					_user$project$Scene$Removed(id)) : _elm_lang$core$Result$Err(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
 						'Node not found with ID: ',
@@ -9633,6 +9689,29 @@ var _user$project$Shape$Dashed = {ctor: 'Dashed'};
 var _user$project$Shape$Thin = {ctor: 'Thin'};
 var _user$project$Shape$Thick = {ctor: 'Thick'};
 var _user$project$Shape$NoStroke = {ctor: 'NoStroke'};
+var _user$project$Unsafe$nth = F2(
+	function (index, xs) {
+		return function (x) {
+			var _p0 = x;
+			if (_p0.ctor === 'Just') {
+				return _p0._0;
+			} else {
+				return _elm_lang$core$Native_Utils.crashCase(
+					'Unsafe',
+					{
+						start: {line: 11, column: 17},
+						end: {line: 16, column: 87}
+					},
+					_p0)(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'No item found with index: ',
+						_elm_lang$core$Basics$toString(index)));
+			}
+		}(
+			_elm_lang$core$List$head(
+				A2(_elm_lang$core$List$drop, index, xs)));
+	});
 var _user$project$Main2$view = function (state) {
 	return _user$project$Canvas2$view(
 		A3(
@@ -9660,14 +9739,31 @@ var _user$project$Main2$update = F2(
 	});
 var _user$project$Main2$connect = F4(
 	function (id, from, to, scene) {
-		var toPoint = A2(
-			_user$project$Transform2$apply,
-			A2(_user$project$Scene$transformAt, to, scene),
-			_user$project$Point$zero);
+		var transformPoints = function (id) {
+			return A2(
+				_elm_lang$core$List$map,
+				_user$project$Transform2$apply(
+					A2(_user$project$Scene$transformAt, id, scene)),
+				function () {
+					var _p2 = A2(_user$project$Scene$node, id, scene);
+					if (_p2.ctor === 'Path') {
+						return _p2._0.points;
+					} else {
+						return {
+							ctor: '::',
+							_0: _user$project$Point$zero,
+							_1: {ctor: '[]'}
+						};
+					}
+				}());
+		};
+		var fromPoints = transformPoints(from);
 		var fromPoint = A2(
-			_user$project$Transform2$apply,
-			A2(_user$project$Scene$transformAt, from, scene),
-			_user$project$Point$zero);
+			_user$project$Unsafe$nth,
+			_elm_lang$core$List$length(fromPoints) - 1,
+			fromPoints);
+		var toPoints = transformPoints(to);
+		var toPoint = A2(_user$project$Unsafe$nth, 0, toPoints);
 		var midX = fromPoint.x + ((toPoint.x - fromPoint.x) / 2);
 		var points = {
 			ctor: '::',
@@ -9690,7 +9786,13 @@ var _user$project$Main2$connect = F4(
 			_user$project$Scene$insert,
 			id,
 			_user$project$Shape$Path(
-				{points: points, stroke: _user$project$Shape$Thin}),
+				{
+					points: A2(
+						_elm_lang$core$Basics_ops['++'],
+						fromPoints,
+						A2(_elm_lang$core$Basics_ops['++'], points, toPoints)),
+					stroke: _user$project$Shape$Thin
+				}),
 			_user$project$Shape$bounds,
 			scene);
 	});
@@ -9701,16 +9803,16 @@ var _user$project$Main2$distributeVertically = F5(
 		return A3(
 			_elm_lang$core$List$foldl,
 			F2(
-				function (_p2, scene) {
-					var _p3 = _p2;
+				function (_p3, scene) {
+					var _p4 = _p3;
 					var transform = _user$project$Transform2$translate(
 						{
 							x: x,
-							y: _elm_lang$core$Native_Utils.eq(steps, 0) ? 0 : (from + (step * _elm_lang$core$Basics$toFloat(_p3._0)))
+							y: _elm_lang$core$Native_Utils.eq(steps, 0) ? 0 : (from + (step * _elm_lang$core$Basics$toFloat(_p4._0)))
 						});
 					return A2(
 						_elm_lang$core$Result$andThen,
-						A2(_user$project$Scene$transform, _p3._1, transform),
+						A2(_user$project$Scene$transform, _p4._1, transform),
 						scene);
 				}),
 			_elm_lang$core$Result$Ok(scene),
@@ -9727,11 +9829,11 @@ var _user$project$Main2$duplicate = F3(
 		return A3(
 			_elm_lang$core$List$foldl,
 			F2(
-				function (_p4, scene) {
-					var _p5 = _p4;
+				function (_p5, scene) {
+					var _p6 = _p5;
 					return A2(
 						_elm_lang$core$Result$andThen,
-						A3(_user$project$Scene$insert, _p5._1, shape, _user$project$Shape$bounds),
+						A3(_user$project$Scene$insert, _p6._1, shape, _user$project$Shape$bounds),
 						scene);
 				}),
 			_elm_lang$core$Result$Ok(scene),
@@ -9853,134 +9955,147 @@ var _user$project$Main2$scene = A2(
 					_0: 11,
 					_1: {
 						ctor: '::',
-						_0: 12,
+						_0: 14,
 						_1: {
 							ctor: '::',
-							_0: 13,
-							_1: {
-								ctor: '::',
-								_0: 14,
-								_1: {
-									ctor: '::',
-									_0: 15,
-									_1: {ctor: '[]'}
-								}
-							}
+							_0: 15,
+							_1: {ctor: '[]'}
 						}
 					}
 				}),
 			A2(
 				_elm_lang$core$Result$andThen,
-				A3(_user$project$Main2$connect, 15, 3, 13),
+				_user$project$Scene$remove(13),
 				A2(
 					_elm_lang$core$Result$andThen,
-					A3(_user$project$Main2$connect, 14, 12, 6),
+					_user$project$Scene$remove(12),
 					A2(
 						_elm_lang$core$Result$andThen,
-						A5(
-							_user$project$Main2$combine,
-							16,
-							11,
-							{
-								ctor: '::',
-								_0: 12,
-								_1: {ctor: '[]'}
-							},
-							{
-								ctor: '::',
-								_0: 13,
-								_1: {ctor: '[]'}
-							},
-							20),
+						_user$project$Scene$remove(6),
 						A2(
 							_elm_lang$core$Result$andThen,
-							A2(
-								_user$project$Scene$group,
-								11,
-								{
-									ctor: '::',
-									_0: 4,
-									_1: {
-										ctor: '::',
-										_0: 8,
-										_1: {
-											ctor: '::',
-											_0: 9,
-											_1: {
-												ctor: '::',
-												_0: 10,
-												_1: {ctor: '[]'}
-											}
-										}
-									}
-								}),
+							_user$project$Scene$remove(3),
 							A2(
 								_elm_lang$core$Result$andThen,
-								A3(_user$project$Main2$connect, 10, 7, 2),
+								A3(_user$project$Main2$connect, 15, 3, 13),
 								A2(
 									_elm_lang$core$Result$andThen,
-									A3(_user$project$Main2$connect, 9, 7, 1),
+									A3(_user$project$Main2$connect, 14, 12, 6),
 									A2(
 										_elm_lang$core$Result$andThen,
-										A2(
-											_user$project$Scene$transform,
-											8,
-											_user$project$Transform2$translate(
-												{x: -100, y: 0})),
+										A5(
+											_user$project$Main2$combine,
+											16,
+											11,
+											{
+												ctor: '::',
+												_0: 12,
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: 13,
+												_1: {ctor: '[]'}
+											},
+											20),
 										A2(
 											_elm_lang$core$Result$andThen,
-											A5(
-												_user$project$Main2$insert,
-												8,
-												5,
-												{
-													ctor: '::',
-													_0: 6,
-													_1: {ctor: '[]'}
-												},
-												{
-													ctor: '::',
-													_0: 7,
-													_1: {ctor: '[]'}
-												},
-												_user$project$Shape$Circle(
-													{
-														centre: {x: 0, y: 0},
-														radius: 50,
-														stroke: _user$project$Shape$Thick
-													})),
 											A2(
-												_elm_lang$core$Result$andThen,
-												A2(
-													_user$project$Scene$transform,
-													4,
-													_user$project$Transform2$translate(
-														{x: 100, y: 0})),
-												A6(
-													_user$project$Main2$insert,
-													4,
-													0,
-													{
+												_user$project$Scene$group,
+												11,
+												{
+													ctor: '::',
+													_0: 4,
+													_1: {
 														ctor: '::',
-														_0: 1,
+														_0: 8,
 														_1: {
 															ctor: '::',
-															_0: 2,
-															_1: {ctor: '[]'}
+															_0: 9,
+															_1: {
+																ctor: '::',
+																_0: 10,
+																_1: {ctor: '[]'}
+															}
 														}
-													},
-													{
-														ctor: '::',
-														_0: 3,
-														_1: {ctor: '[]'}
-													},
-													_user$project$Shape$Rectangle(
-														{
-															origin: {x: -50, y: -50},
-															size: {width: 100, height: 100},
-															stroke: _user$project$Shape$Thick
-														}),
-													_user$project$Scene$empty)))))))))))));
+													}
+												}),
+											A2(
+												_elm_lang$core$Result$andThen,
+												_user$project$Scene$remove(2),
+												A2(
+													_elm_lang$core$Result$andThen,
+													_user$project$Scene$remove(1),
+													A2(
+														_elm_lang$core$Result$andThen,
+														_user$project$Scene$remove(7),
+														A2(
+															_elm_lang$core$Result$andThen,
+															A3(_user$project$Main2$connect, 10, 7, 2),
+															A2(
+																_elm_lang$core$Result$andThen,
+																A3(_user$project$Main2$connect, 9, 7, 1),
+																A2(
+																	_elm_lang$core$Result$andThen,
+																	A2(
+																		_user$project$Scene$transform,
+																		8,
+																		_user$project$Transform2$translate(
+																			{x: -100, y: 0})),
+																	A2(
+																		_elm_lang$core$Result$andThen,
+																		A5(
+																			_user$project$Main2$insert,
+																			8,
+																			5,
+																			{
+																				ctor: '::',
+																				_0: 6,
+																				_1: {ctor: '[]'}
+																			},
+																			{
+																				ctor: '::',
+																				_0: 7,
+																				_1: {ctor: '[]'}
+																			},
+																			_user$project$Shape$Circle(
+																				{
+																					centre: {x: 0, y: 0},
+																					radius: 50,
+																					stroke: _user$project$Shape$Thick
+																				})),
+																		A2(
+																			_elm_lang$core$Result$andThen,
+																			A2(
+																				_user$project$Scene$transform,
+																				4,
+																				_user$project$Transform2$translate(
+																					{x: 100, y: 0})),
+																			A6(
+																				_user$project$Main2$insert,
+																				4,
+																				0,
+																				{
+																					ctor: '::',
+																					_0: 1,
+																					_1: {
+																						ctor: '::',
+																						_0: 2,
+																						_1: {ctor: '[]'}
+																					}
+																				},
+																				{
+																					ctor: '::',
+																					_0: 3,
+																					_1: {ctor: '[]'}
+																				},
+																				_user$project$Shape$Rectangle(
+																					{
+																						origin: {x: -50, y: -50},
+																						size: {width: 100, height: 100},
+																						stroke: _user$project$Shape$Thick
+																					}),
+																				_user$project$Scene$empty))))))))))))))))))));
 var _user$project$Main2$State = F2(
 	function (a, b) {
 		return {canvasSize: a, scene: b};
