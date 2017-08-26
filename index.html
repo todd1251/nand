@@ -9876,6 +9876,14 @@ var _user$project$Main2$insert = F6(
 		return A2(
 			_elm_lang$core$Result$andThen,
 			function (scene) {
+				var x = function () {
+					var _p7 = shape;
+					if (_p7.ctor === 'Circle') {
+						return 6;
+					} else {
+						return 0;
+					}
+				}();
 				var bounds = A2(_user$project$Scene$bounds, node, scene);
 				var from = bounds.origin.y + ((bounds.size.height * 1) / 4);
 				var to = bounds.origin.y + ((bounds.size.height * 3) / 4);
@@ -9900,7 +9908,7 @@ var _user$project$Main2$insert = F6(
 							A2(_user$project$Main2$duplicate, outputs, _user$project$Main2$outputShape),
 							A2(
 								_elm_lang$core$Result$andThen,
-								A4(_user$project$Main2$distributeVertically, inputs, bounds.origin.x - 20, from, to),
+								A4(_user$project$Main2$distributeVertically, inputs, (bounds.origin.x + x) - 20, from, to),
 								A3(_user$project$Main2$duplicate, inputs, _user$project$Main2$inputShape, scene)))));
 			},
 			A4(_user$project$Scene$insert, node, shape, _user$project$Shape$bounds, scene));
@@ -9958,8 +9966,12 @@ var _user$project$Main2$scene = A2(
 						_0: 14,
 						_1: {
 							ctor: '::',
-							_0: 15,
-							_1: {ctor: '[]'}
+							_0: 144,
+							_1: {
+								ctor: '::',
+								_0: 15,
+								_1: {ctor: '[]'}
+							}
 						}
 					}
 				}),
@@ -9968,134 +9980,151 @@ var _user$project$Main2$scene = A2(
 				_user$project$Scene$remove(13),
 				A2(
 					_elm_lang$core$Result$andThen,
-					_user$project$Scene$remove(12),
+					_user$project$Scene$remove(122),
 					A2(
 						_elm_lang$core$Result$andThen,
-						_user$project$Scene$remove(6),
+						_user$project$Scene$remove(12),
 						A2(
 							_elm_lang$core$Result$andThen,
-							_user$project$Scene$remove(3),
+							_user$project$Scene$remove(66),
 							A2(
 								_elm_lang$core$Result$andThen,
-								A3(_user$project$Main2$connect, 15, 3, 13),
+								_user$project$Scene$remove(6),
 								A2(
 									_elm_lang$core$Result$andThen,
-									A3(_user$project$Main2$connect, 14, 12, 6),
+									_user$project$Scene$remove(3),
 									A2(
 										_elm_lang$core$Result$andThen,
-										A5(
-											_user$project$Main2$combine,
-											16,
-											11,
-											{
-												ctor: '::',
-												_0: 12,
-												_1: {ctor: '[]'}
-											},
-											{
-												ctor: '::',
-												_0: 13,
-												_1: {ctor: '[]'}
-											},
-											20),
+										A3(_user$project$Main2$connect, 15, 3, 13),
 										A2(
 											_elm_lang$core$Result$andThen,
-											A2(
-												_user$project$Scene$group,
-												11,
-												{
-													ctor: '::',
-													_0: 4,
-													_1: {
-														ctor: '::',
-														_0: 8,
-														_1: {
-															ctor: '::',
-															_0: 9,
-															_1: {
-																ctor: '::',
-																_0: 10,
-																_1: {ctor: '[]'}
-															}
-														}
-													}
-												}),
+											A3(_user$project$Main2$connect, 144, 122, 66),
 											A2(
 												_elm_lang$core$Result$andThen,
-												_user$project$Scene$remove(2),
+												A3(_user$project$Main2$connect, 14, 12, 6),
 												A2(
 													_elm_lang$core$Result$andThen,
-													_user$project$Scene$remove(1),
+													A5(
+														_user$project$Main2$combine,
+														16,
+														11,
+														{
+															ctor: '::',
+															_0: 12,
+															_1: {
+																ctor: '::',
+																_0: 122,
+																_1: {ctor: '[]'}
+															}
+														},
+														{
+															ctor: '::',
+															_0: 13,
+															_1: {ctor: '[]'}
+														},
+														20),
 													A2(
 														_elm_lang$core$Result$andThen,
-														_user$project$Scene$remove(7),
+														A2(
+															_user$project$Scene$group,
+															11,
+															{
+																ctor: '::',
+																_0: 4,
+																_1: {
+																	ctor: '::',
+																	_0: 8,
+																	_1: {
+																		ctor: '::',
+																		_0: 9,
+																		_1: {
+																			ctor: '::',
+																			_0: 10,
+																			_1: {ctor: '[]'}
+																		}
+																	}
+																}
+															}),
 														A2(
 															_elm_lang$core$Result$andThen,
-															A3(_user$project$Main2$connect, 10, 7, 2),
+															_user$project$Scene$remove(2),
 															A2(
 																_elm_lang$core$Result$andThen,
-																A3(_user$project$Main2$connect, 9, 7, 1),
+																_user$project$Scene$remove(1),
 																A2(
 																	_elm_lang$core$Result$andThen,
-																	A2(
-																		_user$project$Scene$transform,
-																		8,
-																		_user$project$Transform2$translate(
-																			{x: -100, y: 0})),
+																	_user$project$Scene$remove(7),
 																	A2(
 																		_elm_lang$core$Result$andThen,
-																		A5(
-																			_user$project$Main2$insert,
-																			8,
-																			5,
-																			{
-																				ctor: '::',
-																				_0: 6,
-																				_1: {ctor: '[]'}
-																			},
-																			{
-																				ctor: '::',
-																				_0: 7,
-																				_1: {ctor: '[]'}
-																			},
-																			_user$project$Shape$Circle(
-																				{
-																					centre: {x: 0, y: 0},
-																					radius: 50,
-																					stroke: _user$project$Shape$Thick
-																				})),
+																		A3(_user$project$Main2$connect, 10, 7, 2),
 																		A2(
 																			_elm_lang$core$Result$andThen,
+																			A3(_user$project$Main2$connect, 9, 7, 1),
 																			A2(
-																				_user$project$Scene$transform,
-																				4,
-																				_user$project$Transform2$translate(
-																					{x: 100, y: 0})),
-																			A6(
-																				_user$project$Main2$insert,
-																				4,
-																				0,
-																				{
-																					ctor: '::',
-																					_0: 1,
-																					_1: {
-																						ctor: '::',
-																						_0: 2,
-																						_1: {ctor: '[]'}
-																					}
-																				},
-																				{
-																					ctor: '::',
-																					_0: 3,
-																					_1: {ctor: '[]'}
-																				},
-																				_user$project$Shape$Rectangle(
-																					{
-																						origin: {x: -50, y: -50},
-																						size: {width: 100, height: 100},
-																						stroke: _user$project$Shape$Thick
-																					}),
-																				_user$project$Scene$empty))))))))))))))))))));
+																				_elm_lang$core$Result$andThen,
+																				A2(
+																					_user$project$Scene$transform,
+																					8,
+																					_user$project$Transform2$translate(
+																						{x: -100, y: 0})),
+																				A2(
+																					_elm_lang$core$Result$andThen,
+																					A5(
+																						_user$project$Main2$insert,
+																						8,
+																						5,
+																						{
+																							ctor: '::',
+																							_0: 6,
+																							_1: {
+																								ctor: '::',
+																								_0: 66,
+																								_1: {ctor: '[]'}
+																							}
+																						},
+																						{
+																							ctor: '::',
+																							_0: 7,
+																							_1: {ctor: '[]'}
+																						},
+																						_user$project$Shape$Circle(
+																							{
+																								centre: {x: 0, y: 0},
+																								radius: 50,
+																								stroke: _user$project$Shape$Thick
+																							})),
+																					A2(
+																						_elm_lang$core$Result$andThen,
+																						A2(
+																							_user$project$Scene$transform,
+																							4,
+																							_user$project$Transform2$translate(
+																								{x: 100, y: 0})),
+																						A6(
+																							_user$project$Main2$insert,
+																							4,
+																							0,
+																							{
+																								ctor: '::',
+																								_0: 1,
+																								_1: {
+																									ctor: '::',
+																									_0: 2,
+																									_1: {ctor: '[]'}
+																								}
+																							},
+																							{
+																								ctor: '::',
+																								_0: 3,
+																								_1: {ctor: '[]'}
+																							},
+																							_user$project$Shape$Rectangle(
+																								{
+																									origin: {x: -50, y: -50},
+																									size: {width: 100, height: 100},
+																									stroke: _user$project$Shape$Thick
+																								}),
+																							_user$project$Scene$empty)))))))))))))))))))))));
 var _user$project$Main2$State = F2(
 	function (a, b) {
 		return {canvasSize: a, scene: b};
