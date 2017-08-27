@@ -9767,19 +9767,11 @@ var _user$project$Main2$connect = F4(
 		var midX = fromPoint.x + ((toPoint.x - fromPoint.x) / 2);
 		var points = {
 			ctor: '::',
-			_0: fromPoint,
+			_0: {x: midX, y: fromPoint.y},
 			_1: {
 				ctor: '::',
-				_0: {x: midX, y: fromPoint.y},
-				_1: {
-					ctor: '::',
-					_0: {x: midX, y: toPoint.y},
-					_1: {
-						ctor: '::',
-						_0: toPoint,
-						_1: {ctor: '[]'}
-					}
-				}
+				_0: {x: midX, y: toPoint.y},
+				_1: {ctor: '[]'}
 			}
 		};
 		return A4(
