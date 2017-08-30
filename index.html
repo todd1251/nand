@@ -9739,12 +9739,18 @@ var _user$project$Main2$update = F2(
 	});
 var _user$project$Main2$fanout = F3(
 	function (id, node, scene) {
-		return A4(
-			_user$project$Scene$insert,
-			id,
-			A2(_user$project$Scene$node, node, scene),
-			_user$project$Shape$bounds,
-			scene);
+		return A2(
+			_elm_lang$core$Result$andThen,
+			A2(
+				_user$project$Scene$transform,
+				id,
+				A2(_user$project$Scene$transformAt, node, scene)),
+			A4(
+				_user$project$Scene$insert,
+				id,
+				A2(_user$project$Scene$node, node, scene),
+				_user$project$Shape$bounds,
+				scene));
 	});
 var _user$project$Main2$connect = F4(
 	function (id, from, to, scene) {
