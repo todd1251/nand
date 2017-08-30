@@ -9047,8 +9047,8 @@ var _user$project$Scene$nodeForId = F2(
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Scene',
 				{
-					start: {line: 99, column: 5},
-					end: {line: 108, column: 70}
+					start: {line: 106, column: 5},
+					end: {line: 115, column: 70}
 				},
 				_p0)(
 				A2(
@@ -9105,6 +9105,29 @@ var _user$project$Scene$transformed = F3(
 						_0: _elm_lang$core$Native_Utils.update(
 							node,
 							{transform: newTransform, bounds: bounds}),
+						_1: {ctor: '[]'}
+					})
+			});
+	});
+var _user$project$Scene$parented = F3(
+	function (id, parent, state) {
+		var node = A2(_user$project$Scene$nodeForId, id, state.nodes);
+		return _elm_lang$core$Native_Utils.update(
+			state,
+			{
+				nodes: A2(
+					_elm_lang$core$Basics_ops['++'],
+					A2(
+						_elm_lang$core$List$filter,
+						function (node) {
+							return !_elm_lang$core$Native_Utils.eq(node.id, id);
+						},
+						state.nodes),
+					{
+						ctor: '::',
+						_0: _elm_lang$core$Native_Utils.update(
+							node,
+							{parent: parent}),
 						_1: {ctor: '[]'}
 					})
 			});
@@ -9185,22 +9208,23 @@ var _user$project$Scene$grouped = F3(
 					{ctor: '_Tuple2', _0: _elm_lang$core$Maybe$Nothing, _1: state.nodes},
 					nodes)));
 	});
-var _user$project$Scene$apply = F2(
-	function (event, state) {
-		var _p9 = event;
-		switch (_p9.ctor) {
-			case 'Inserted':
-				return A4(_user$project$Scene$inserted, _p9._0, _p9._1, _p9._2, state);
-			case 'Updated':
-				return A4(_user$project$Scene$updated, _p9._0, _p9._1, _p9._2, state);
-			case 'Removed':
-				return A2(_user$project$Scene$removed, _p9._0, state);
-			case 'Transformed':
-				return A3(_user$project$Scene$transformed, _p9._0, _p9._1, state);
-			default:
-				return A3(_user$project$Scene$grouped, _p9._0, _p9._1, state);
-		}
-	});
+var _user$project$Scene$apply = function (event) {
+	var _p9 = event;
+	switch (_p9.ctor) {
+		case 'Inserted':
+			return A3(_user$project$Scene$inserted, _p9._0, _p9._1, _p9._2);
+		case 'Updated':
+			return A3(_user$project$Scene$updated, _p9._0, _p9._1, _p9._2);
+		case 'Removed':
+			return _user$project$Scene$removed(_p9._0);
+		case 'Transformed':
+			return A2(_user$project$Scene$transformed, _p9._0, _p9._1);
+		case 'Parented':
+			return A2(_user$project$Scene$parented, _p9._0, _p9._1);
+		default:
+			return A2(_user$project$Scene$grouped, _p9._0, _p9._1);
+	}
+};
 var _user$project$Scene$state = function (_p10) {
 	var _p11 = _p10;
 	return A3(
@@ -9242,8 +9266,8 @@ var _user$project$Scene$node = F2(
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Scene',
 				{
-					start: {line: 326, column: 5},
-					end: {line: 337, column: 69}
+					start: {line: 363, column: 5},
+					end: {line: 374, column: 69}
 				},
 				_p12)(
 				A2(
@@ -9251,6 +9275,32 @@ var _user$project$Scene$node = F2(
 					'FIXME: no node with ID ',
 					_elm_lang$core$Basics$toString(id)));
 		}
+	});
+var _user$project$Scene$parentOf = F2(
+	function (id, scene) {
+		return function (_) {
+			return _.parent;
+		}(
+			A2(
+				_user$project$Scene$nodeForId,
+				id,
+				function (_) {
+					return _.nodes;
+				}(
+					_user$project$Scene$state(scene))));
+	});
+var _user$project$Scene$transformOf = F2(
+	function (id, scene) {
+		return function (_) {
+			return _.transform;
+		}(
+			A2(
+				_user$project$Scene$nodeForId,
+				id,
+				function (_) {
+					return _.nodes;
+				}(
+					_user$project$Scene$state(scene))));
 	});
 var _user$project$Scene$transformAt = F2(
 	function (id, scene) {
@@ -9333,6 +9383,10 @@ var _user$project$Scene$State = function (a) {
 var _user$project$Scene$Grouped = F2(
 	function (a, b) {
 		return {ctor: 'Grouped', _0: a, _1: b};
+	});
+var _user$project$Scene$Parented = F2(
+	function (a, b) {
+		return {ctor: 'Parented', _0: a, _1: b};
 	});
 var _user$project$Scene$Transformed = F2(
 	function (a, b) {
@@ -9451,6 +9505,25 @@ var _user$project$Scene$transform = F3(
 					},
 					state.nodes) ? _elm_lang$core$Result$Ok(
 					A2(_user$project$Scene$Transformed, id, t)) : _elm_lang$core$Result$Err(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'Node not found with ID: ',
+						_elm_lang$core$Basics$toString(id)));
+			});
+	});
+var _user$project$Scene$parent = F3(
+	function (id, p, scene) {
+		return A2(
+			_user$project$Scene$execute,
+			scene,
+			function (state) {
+				return A2(
+					_elm_lang$core$List$any,
+					function (node) {
+						return _elm_lang$core$Native_Utils.eq(node.id, id);
+					},
+					state.nodes) ? _elm_lang$core$Result$Ok(
+					A2(_user$project$Scene$Parented, id, p)) : _elm_lang$core$Result$Err(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
 						'Node not found with ID: ',
@@ -9744,13 +9817,19 @@ var _user$project$Main2$fanout = F3(
 			A2(
 				_user$project$Scene$transform,
 				id,
-				A2(_user$project$Scene$transformAt, node, scene)),
-			A4(
-				_user$project$Scene$insert,
-				id,
-				A2(_user$project$Scene$node, node, scene),
-				_user$project$Shape$bounds,
-				scene));
+				A2(_user$project$Scene$transformOf, node, scene)),
+			A2(
+				_elm_lang$core$Result$andThen,
+				A2(
+					_user$project$Scene$parent,
+					id,
+					A2(_user$project$Scene$parentOf, node, scene)),
+				A4(
+					_user$project$Scene$insert,
+					id,
+					A2(_user$project$Scene$node, node, scene),
+					_user$project$Shape$bounds,
+					scene)));
 	});
 var _user$project$Main2$connect = F4(
 	function (id, from, to, scene) {
