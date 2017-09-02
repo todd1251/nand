@@ -10126,10 +10126,20 @@ var _user$project$Main2$insert = F6(
 	});
 var _user$project$Main2$toScene = F2(
 	function (circuit, scene) {
+		var layout = {
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 1,
+				_1: _user$project$Transform2$translate(
+					{x: 100, y: 0})
+			},
+			_1: {ctor: '[]'}
+		};
 		var _p8 = circuit;
 		if (_p8.ctor === 'Gate') {
-			var _p16 = _p8._0.ports;
-			var _p15 = _p8._0.id;
+			var _p17 = _p8._0.ports;
+			var _p16 = _p8._0.id;
 			var outputs = _elm_lang$core$List$concat(
 				A2(
 					_elm_lang$core$List$map,
@@ -10146,7 +10156,7 @@ var _user$project$Main2$toScene = F2(
 							};
 						}
 					},
-					_p16));
+					_p17));
 			var inputs = _elm_lang$core$List$concat(
 				A2(
 					_elm_lang$core$List$map,
@@ -10163,18 +10173,43 @@ var _user$project$Main2$toScene = F2(
 							return {ctor: '[]'};
 						}
 					},
-					_p16));
+					_p17));
+			var scene_ = A6(
+				_user$project$Main2$insert,
+				1000 + _user$project$Circuit$rawId(_p16),
+				_user$project$Circuit$rawId(_p16),
+				inputs,
+				outputs,
+				_p8._0.shape,
+				scene);
 			return A2(
 				_elm_lang$core$Result$withDefault,
 				_user$project$Scene$empty,
-				A6(
-					_user$project$Main2$insert,
-					1000 + _user$project$Circuit$rawId(_p15),
-					_user$project$Circuit$rawId(_p15),
-					inputs,
-					outputs,
-					_p8._0.shape,
-					scene));
+				function () {
+					var _p15 = _user$project$Circuit$rawId(_p16);
+					switch (_p15) {
+						case 1:
+							return A2(
+								_elm_lang$core$Result$andThen,
+								A2(
+									_user$project$Scene$transform,
+									1001,
+									_user$project$Transform2$translate(
+										{x: 100, y: 0})),
+								scene_);
+						case 2:
+							return A2(
+								_elm_lang$core$Result$andThen,
+								A2(
+									_user$project$Scene$transform,
+									1002,
+									_user$project$Transform2$translate(
+										{x: -100, y: 0})),
+								scene_);
+						default:
+							return scene_;
+					}
+				}());
 		} else {
 			return A3(
 				_elm_lang$core$List$foldl,
