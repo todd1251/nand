@@ -9206,6 +9206,14 @@ var _user$project$Circuit$rawId = function (_p0) {
 	var _p1 = _p0;
 	return _p1._0;
 };
+var _user$project$Circuit$fromId = function (_p2) {
+	var _p3 = _p2;
+	return _user$project$Circuit$rawId(_p3.from);
+};
+var _user$project$Circuit$toId = function (_p4) {
+	var _p5 = _p4;
+	return _user$project$Circuit$rawId(_p5.to);
+};
 var _user$project$Circuit$Port = F2(
 	function (a, b) {
 		return {id: a, direction: b};
@@ -10220,7 +10228,24 @@ var _user$project$Main2$toScene = F2(
 					function (circuit, scene) {
 						return A2(_user$project$Main2$toScene, circuit, scene);
 					}),
-				scene,
+				A3(
+					_elm_lang$core$List$foldl,
+					F2(
+						function (connection, scene) {
+							var to = _user$project$Circuit$toId(connection);
+							var from = _user$project$Circuit$fromId(connection);
+							return A2(
+								_elm_lang$core$Result$withDefault,
+								_user$project$Scene$empty,
+								A4(
+									_user$project$Main2$connect,
+									10000 + _user$project$Circuit$rawId(_p8._0.id),
+									from,
+									to,
+									scene));
+						}),
+					scene,
+					_p8._0.connections),
 				_p8._0.circuits);
 		}
 	});
