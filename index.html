@@ -9316,16 +9316,9 @@ var _user$project$Circuit$circuit = function () {
 				ctor: '::',
 				_0: {
 					from: _user$project$Circuit$Id(102),
-					to: _user$project$Circuit$Id(201)
+					to: _user$project$Circuit$Id(200)
 				},
-				_1: {
-					ctor: '::',
-					_0: {
-						from: _user$project$Circuit$Id(102),
-						to: _user$project$Circuit$Id(202)
-					},
-					_1: {ctor: '[]'}
-				}
+				_1: {ctor: '[]'}
 			}
 		});
 }();
@@ -9363,8 +9356,8 @@ var _user$project$Scene$inserted = F4(
 					})
 			});
 	});
-var _user$project$Scene$nodeForId = F2(
-	function (id, nodes) {
+var _user$project$Scene$nodeForId = F3(
+	function (title, id, nodes) {
 		var _p0 = _elm_lang$core$List$head(
 			A2(
 				_elm_lang$core$List$filter,
@@ -9379,18 +9372,21 @@ var _user$project$Scene$nodeForId = F2(
 				'Scene',
 				{
 					start: {line: 106, column: 5},
-					end: {line: 115, column: 70}
+					end: {line: 115, column: 92}
 				},
 				_p0)(
 				A2(
 					_elm_lang$core$Basics_ops['++'],
-					'Node not found with ID: ',
-					_elm_lang$core$Basics$toString(id)));
+					title,
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						': nodeForId: Node not found with ID: ',
+						_elm_lang$core$Basics$toString(id))));
 		}
 	});
 var _user$project$Scene$updated = F4(
 	function (id, node, bounds, state) {
-		var existingNode = A2(_user$project$Scene$nodeForId, id, state.nodes);
+		var existingNode = A3(_user$project$Scene$nodeForId, 'updated', id, state.nodes);
 		return _elm_lang$core$Native_Utils.update(
 			state,
 			{
@@ -9416,7 +9412,7 @@ var _user$project$Scene$updated = F4(
 	});
 var _user$project$Scene$transformed = F3(
 	function (id, transform, state) {
-		var node = A2(_user$project$Scene$nodeForId, id, state.nodes);
+		var node = A3(_user$project$Scene$nodeForId, 'transformed', id, state.nodes);
 		var newTransform = A2(_user$project$Transform2$combine, node.transform, transform);
 		var origin = A2(_user$project$Transform2$apply, newTransform, node.bounds.origin);
 		var bounds = {origin: origin, size: node.bounds.size};
@@ -9442,7 +9438,7 @@ var _user$project$Scene$transformed = F3(
 	});
 var _user$project$Scene$parented = F3(
 	function (id, parent, state) {
-		var node = A2(_user$project$Scene$nodeForId, id, state.nodes);
+		var node = A3(_user$project$Scene$nodeForId, 'parented', id, state.nodes);
 		return _elm_lang$core$Native_Utils.update(
 			state,
 			{
@@ -9520,7 +9516,7 @@ var _user$project$Scene$grouped = F3(
 						function (childId, _p5) {
 							var _p6 = _p5;
 							var _p8 = _p6._1;
-							var node = A2(_user$project$Scene$nodeForId, childId, _p8);
+							var node = A3(_user$project$Scene$nodeForId, 'grouped', childId, _p8);
 							return {
 								ctor: '_Tuple2',
 								_0: function () {
@@ -9571,8 +9567,9 @@ var _user$project$Scene$bounds = F2(
 		return function (_) {
 			return _.bounds;
 		}(
-			A2(
+			A3(
 				_user$project$Scene$nodeForId,
+				'bounds',
 				id,
 				function (_) {
 					return _.nodes;
@@ -9584,8 +9581,9 @@ var _user$project$Scene$node = F2(
 		var _p12 = function (_) {
 			return _.node;
 		}(
-			A2(
+			A3(
 				_user$project$Scene$nodeForId,
+				'node',
 				id,
 				function (_) {
 					return _.nodes;
@@ -9612,8 +9610,9 @@ var _user$project$Scene$parentOf = F2(
 		return function (_) {
 			return _.parent;
 		}(
-			A2(
+			A3(
 				_user$project$Scene$nodeForId,
+				'parentOf',
 				id,
 				function (_) {
 					return _.nodes;
@@ -9625,8 +9624,9 @@ var _user$project$Scene$transformOf = F2(
 		return function (_) {
 			return _.transform;
 		}(
-			A2(
+			A3(
 				_user$project$Scene$nodeForId,
+				'transformOf',
 				id,
 				function (_) {
 					return _.nodes;
@@ -9637,7 +9637,7 @@ var _user$project$Scene$transformAt = F2(
 	function (id, scene) {
 		var transformAt1 = F2(
 			function (id, nodes) {
-				var node = A2(_user$project$Scene$nodeForId, id, nodes);
+				var node = A3(_user$project$Scene$nodeForId, 'transformAt', id, nodes);
 				var _p14 = node.parent;
 				if (_p14.ctor === 'Just') {
 					return A2(
@@ -9772,7 +9772,7 @@ var _user$project$Scene$insert = F4(
 					state.nodes) ? _elm_lang$core$Result$Err(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						'Node already present with ID: ',
+						'insert: Node already present with ID: ',
 						_elm_lang$core$Basics$toString(id))) : _elm_lang$core$Result$Ok(
 					A3(
 						_user$project$Scene$Inserted,
@@ -9800,7 +9800,7 @@ var _user$project$Scene$update = F4(
 						bounds(node))) : _elm_lang$core$Result$Err(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						'Node not found with ID: ',
+						'update: Node not found with ID: ',
 						_elm_lang$core$Basics$toString(id)));
 			});
 	});
@@ -9819,7 +9819,7 @@ var _user$project$Scene$remove = F2(
 					_user$project$Scene$Removed(id)) : _elm_lang$core$Result$Err(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						'Node not found with ID: ',
+						'remove: Node not found with ID: ',
 						_elm_lang$core$Basics$toString(id)));
 			});
 	});
@@ -9838,7 +9838,7 @@ var _user$project$Scene$transform = F3(
 					A2(_user$project$Scene$Transformed, id, t)) : _elm_lang$core$Result$Err(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						'Node not found with ID: ',
+						'transform: Node not found with ID: ',
 						_elm_lang$core$Basics$toString(id)));
 			});
 	});
@@ -9857,7 +9857,7 @@ var _user$project$Scene$parent = F3(
 					A2(_user$project$Scene$Parented, id, p)) : _elm_lang$core$Result$Err(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						'Node not found with ID: ',
+						'parent: Node not found with ID: ',
 						_elm_lang$core$Basics$toString(id)));
 			});
 	});
@@ -9883,7 +9883,7 @@ var _user$project$Scene$group = F3(
 					A2(_user$project$Scene$Grouped, id, nodes)) : _elm_lang$core$Result$Err(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						'Not all nodes found with IDs: ',
+						'group: Not all nodes found with IDs: ',
 						_elm_lang$core$Basics$toString(nodes)));
 			});
 	});
@@ -10140,7 +10140,7 @@ var _user$project$Main2$toScene = F2(
 				ctor: '_Tuple2',
 				_0: 1,
 				_1: _user$project$Transform2$translate(
-					{x: 100, y: 0})
+					{x: -100, y: 0})
 			},
 			_1: {
 				ctor: '::',
@@ -10148,7 +10148,7 @@ var _user$project$Main2$toScene = F2(
 					ctor: '_Tuple2',
 					_0: 2,
 					_1: _user$project$Transform2$translate(
-						{x: -100, y: 0})
+						{x: 100, y: 0})
 				},
 				_1: {ctor: '[]'}
 			}
@@ -10225,28 +10225,28 @@ var _user$project$Main2$toScene = F2(
 			return A3(
 				_elm_lang$core$List$foldl,
 				F2(
-					function (circuit, scene) {
-						return A2(_user$project$Main2$toScene, circuit, scene);
+					function (connection, scene) {
+						var to = _user$project$Circuit$toId(connection);
+						var from = _user$project$Circuit$fromId(connection);
+						return A2(
+							_elm_lang$core$Result$withDefault,
+							_user$project$Scene$empty,
+							A4(
+								_user$project$Main2$connect,
+								10000 + _user$project$Circuit$rawId(_p8._0.id),
+								from,
+								to,
+								scene));
 					}),
 				A3(
 					_elm_lang$core$List$foldl,
 					F2(
-						function (connection, scene) {
-							var to = _user$project$Circuit$toId(connection);
-							var from = _user$project$Circuit$fromId(connection);
-							return A2(
-								_elm_lang$core$Result$withDefault,
-								_user$project$Scene$empty,
-								A4(
-									_user$project$Main2$connect,
-									10000 + _user$project$Circuit$rawId(_p8._0.id),
-									from,
-									to,
-									scene));
+						function (circuit, scene) {
+							return A2(_user$project$Main2$toScene, circuit, scene);
 						}),
 					scene,
-					_p8._0.connections),
-				_p8._0.circuits);
+					_p8._0.circuits),
+				_p8._0.connections);
 		}
 	});
 var _user$project$Main2$combine = F6(
