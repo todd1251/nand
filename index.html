@@ -9297,31 +9297,77 @@ var _user$project$Circuit$rectangleGate = _user$project$Circuit$Gate(
 			}
 		}
 	});
-var _user$project$Circuit$circuit = function () {
-	var gate2 = _user$project$Circuit$rectangleGate;
-	var gate1 = _user$project$Circuit$circleGate;
-	return _user$project$Circuit$Circuit(
-		{
-			id: _user$project$Circuit$Id(3),
-			circuits: {
-				ctor: '::',
-				_0: gate1,
-				_1: {
-					ctor: '::',
-					_0: gate2,
-					_1: {ctor: '[]'}
-				}
+var _user$project$Circuit$fanoutGate = _user$project$Circuit$Gate(
+	{
+		id: _user$project$Circuit$Id(3),
+		shape: _user$project$Shape$Circle(
+			{
+				centre: {x: 0, y: 0},
+				radius: 0,
+				stroke: _user$project$Shape$NoStroke
+			}),
+		ports: {
+			ctor: '::',
+			_0: {
+				id: _user$project$Circuit$Id(300),
+				direction: _user$project$Circuit$Input
 			},
-			connections: {
+			_1: {
 				ctor: '::',
 				_0: {
-					from: _user$project$Circuit$Id(102),
+					id: _user$project$Circuit$Id(301),
+					direction: _user$project$Circuit$Output
+				},
+				_1: {
+					ctor: '::',
+					_0: {
+						id: _user$project$Circuit$Id(302),
+						direction: _user$project$Circuit$Output
+					},
+					_1: {ctor: '[]'}
+				}
+			}
+		}
+	});
+var _user$project$Circuit$circuit = _user$project$Circuit$Circuit(
+	{
+		id: _user$project$Circuit$Id(4),
+		circuits: {
+			ctor: '::',
+			_0: _user$project$Circuit$circleGate,
+			_1: {
+				ctor: '::',
+				_0: _user$project$Circuit$rectangleGate,
+				_1: {
+					ctor: '::',
+					_0: _user$project$Circuit$fanoutGate,
+					_1: {ctor: '[]'}
+				}
+			}
+		},
+		connections: {
+			ctor: '::',
+			_0: {
+				from: _user$project$Circuit$Id(102),
+				to: _user$project$Circuit$Id(300)
+			},
+			_1: {
+				ctor: '::',
+				_0: {
+					from: _user$project$Circuit$Id(301),
 					to: _user$project$Circuit$Id(200)
 				},
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: {
+						from: _user$project$Circuit$Id(302),
+						to: _user$project$Circuit$Id(201)
+					},
+					_1: {ctor: '[]'}
+				}
 			}
-		});
-}();
+		}
+	});
 var _user$project$Scene$removed = F2(
 	function (id, state) {
 		return _elm_lang$core$Native_Utils.update(
@@ -10150,7 +10196,11 @@ var _user$project$Main2$toScene = F2(
 					_1: _user$project$Transform2$translate(
 						{x: 100, y: 0})
 				},
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 3, _1: _user$project$Transform2$identity},
+					_1: {ctor: '[]'}
+				}
 			}
 		};
 		var _p8 = circuit;
@@ -10231,12 +10281,7 @@ var _user$project$Main2$toScene = F2(
 						return A2(
 							_elm_lang$core$Result$withDefault,
 							_user$project$Scene$empty,
-							A4(
-								_user$project$Main2$connect,
-								10000 + _user$project$Circuit$rawId(_p8._0.id),
-								from,
-								to,
-								scene));
+							A4(_user$project$Main2$connect, 10000 + from, from, to, scene));
 					}),
 				A3(
 					_elm_lang$core$List$foldl,
