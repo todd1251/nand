@@ -10272,74 +10272,75 @@ var _user$project$Main2$toScene = F2(
 					_1: _user$project$Transform2$translate(
 						{x: 100, y: 0})
 				},
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple2',
+						_0: 3,
+						_1: _user$project$Transform2$translate(
+							{x: -30, y: 0})
+					},
+					_1: {ctor: '[]'}
+				}
 			}
 		};
 		var _p17 = circuit;
 		if (_p17.ctor === 'Gate') {
-			var _p29 = _p17._0.shape;
-			var _p28 = _p17._0.ports;
-			var _p27 = _p17._0.id;
-			var layout_ = function () {
-				var _p18 = _p29;
-				if (_p18.ctor === 'Nothing') {
-					return {ctor: '_Tuple2', _0: -1, _1: _user$project$Transform2$identity};
-				} else {
-					return A2(
-						_user$project$Unsafe$nth,
-						0,
-						A2(
-							_elm_lang$core$List$filter,
-							function (_p19) {
-								var _p20 = _p19;
-								return _elm_lang$core$Native_Utils.eq(
-									_p20._0,
-									_user$project$Circuit$rawId(_p27));
-							},
-							layout));
-				}
-			}();
+			var _p27 = _p17._0.ports;
+			var _p26 = _p17._0.id;
+			var layout_ = A2(
+				_user$project$Unsafe$nth,
+				0,
+				A2(
+					_elm_lang$core$List$filter,
+					function (_p18) {
+						var _p19 = _p18;
+						return _elm_lang$core$Native_Utils.eq(
+							_p19._0,
+							_user$project$Circuit$rawId(_p26));
+					},
+					layout));
 			var outputs = _elm_lang$core$List$concat(
 				A2(
 					_elm_lang$core$List$map,
-					function (_p21) {
-						var _p22 = _p21;
-						var _p23 = _p22.direction;
-						if (_p23.ctor === 'Input') {
+					function (_p20) {
+						var _p21 = _p20;
+						var _p22 = _p21.direction;
+						if (_p22.ctor === 'Input') {
 							return {ctor: '[]'};
 						} else {
 							return {
 								ctor: '::',
-								_0: _user$project$Circuit$rawId(_p22.id),
+								_0: _user$project$Circuit$rawId(_p21.id),
 								_1: {ctor: '[]'}
 							};
 						}
 					},
-					_p28));
+					_p27));
 			var inputs = _elm_lang$core$List$concat(
 				A2(
 					_elm_lang$core$List$map,
-					function (_p24) {
-						var _p25 = _p24;
-						var _p26 = _p25.direction;
-						if (_p26.ctor === 'Input') {
+					function (_p23) {
+						var _p24 = _p23;
+						var _p25 = _p24.direction;
+						if (_p25.ctor === 'Input') {
 							return {
 								ctor: '::',
-								_0: _user$project$Circuit$rawId(_p25.id),
+								_0: _user$project$Circuit$rawId(_p24.id),
 								_1: {ctor: '[]'}
 							};
 						} else {
 							return {ctor: '[]'};
 						}
 					},
-					_p28));
+					_p27));
 			var scene_ = A6(
 				_user$project$Main2$insert,
-				1000 + _user$project$Circuit$rawId(_p27),
-				_user$project$Circuit$rawId(_p27),
+				1000 + _user$project$Circuit$rawId(_p26),
+				_user$project$Circuit$rawId(_p26),
 				inputs,
 				outputs,
-				_p29,
+				_p17._0.shape,
 				scene);
 			return A2(
 				_elm_lang$core$Result$withDefault,
@@ -10348,7 +10349,7 @@ var _user$project$Main2$toScene = F2(
 					_elm_lang$core$Result$andThen,
 					A2(
 						_user$project$Scene$transform,
-						1000 + _user$project$Circuit$rawId(_p27),
+						1000 + _user$project$Circuit$rawId(_p26),
 						_elm_lang$core$Tuple$second(layout_)),
 					scene_));
 		} else {
@@ -10408,11 +10409,11 @@ var _user$project$Main2$combine = F6(
 							_elm_lang$core$Maybe$Just(
 								_user$project$Shape$Rectangle(
 									{origin: bounds.origin, size: bounds.size, stroke: _user$project$Shape$Thick})),
-							function (_p30) {
+							function (_p28) {
 								return A2(
 									_elm_lang$core$Maybe$withDefault,
 									_user$project$Bounds$zero,
-									A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p30));
+									A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p28));
 							},
 							scene)))));
 	});
