@@ -10343,34 +10343,38 @@ var _user$project$Main2$toScene = F2(
 				_p17._0.shape,
 				scene);
 			return A2(
-				_elm_lang$core$Result$withDefault,
-				_user$project$Scene$empty,
+				_elm_lang$core$Result$andThen,
 				A2(
-					_elm_lang$core$Result$andThen,
-					A2(
-						_user$project$Scene$transform,
-						1000 + _user$project$Circuit$rawId(_p26),
-						_elm_lang$core$Tuple$second(layout_)),
-					scene_));
+					_user$project$Scene$transform,
+					1000 + _user$project$Circuit$rawId(_p26),
+					_elm_lang$core$Tuple$second(layout_)),
+				scene_);
 		} else {
 			return A3(
 				_elm_lang$core$List$foldl,
 				F2(
 					function (connection, scene) {
-						var to = _user$project$Circuit$toId(connection);
-						var from = _user$project$Circuit$fromId(connection);
-						return A2(
-							_elm_lang$core$Result$withDefault,
-							_user$project$Scene$empty,
-							A4(_user$project$Main2$connect, 10000 + from, from, to, scene));
+						var _p28 = scene;
+						if (_p28.ctor === 'Ok') {
+							var to = _user$project$Circuit$toId(connection);
+							var from = _user$project$Circuit$fromId(connection);
+							return A4(_user$project$Main2$connect, 10000 + from, from, to, _p28._0);
+						} else {
+							return _elm_lang$core$Result$Err(_p28._0);
+						}
 					}),
 				A3(
 					_elm_lang$core$List$foldl,
 					F2(
 						function (circuit, scene) {
-							return A2(_user$project$Main2$toScene, circuit, scene);
+							var _p29 = scene;
+							if (_p29.ctor === 'Ok') {
+								return A2(_user$project$Main2$toScene, circuit, _p29._0);
+							} else {
+								return _elm_lang$core$Result$Err(_p29._0);
+							}
 						}),
-					scene,
+					_elm_lang$core$Result$Ok(scene),
 					_p17._0.circuits),
 				_p17._0.connections);
 		}
@@ -10409,11 +10413,11 @@ var _user$project$Main2$combine = F6(
 							_elm_lang$core$Maybe$Just(
 								_user$project$Shape$Rectangle(
 									{origin: bounds.origin, size: bounds.size, stroke: _user$project$Shape$Thick})),
-							function (_p28) {
+							function (_p30) {
 								return A2(
 									_elm_lang$core$Maybe$withDefault,
 									_user$project$Bounds$zero,
-									A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p28));
+									A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p30));
 							},
 							scene)))));
 	});
@@ -10588,7 +10592,10 @@ var _user$project$Main2$init = {
 	ctor: '_Tuple2',
 	_0: {
 		canvasSize: {width: 800, height: 600},
-		scene: A2(_user$project$Main2$toScene, _user$project$Circuit$circuit, _user$project$Scene$empty)
+		scene: A2(
+			_elm_lang$core$Result$withDefault,
+			_user$project$Scene$empty,
+			A2(_user$project$Main2$toScene, _user$project$Circuit$circuit, _user$project$Scene$empty))
 	},
 	_1: A2(_elm_lang$core$Task$perform, _user$project$Main2$WindowResizedTo, _elm_lang$window$Window$size)
 };
