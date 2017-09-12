@@ -9937,6 +9937,15 @@ var _user$project$Scene$group = F3(
 	});
 var _user$project$Scene$empty = _user$project$Scene$Scene(
 	{ctor: '[]'});
+var _user$project$Result_Extra$flatMap = F2(
+	function (f, result) {
+		var _p0 = A2(_elm_lang$core$Result$map, f, result);
+		if (_p0.ctor === 'Err') {
+			return _elm_lang$core$Result$Err(_p0._0);
+		} else {
+			return _p0._0;
+		}
+	});
 var _user$project$Unsafe$nth = F2(
 	function (index, xs) {
 		return function (x) {
@@ -10352,28 +10361,20 @@ var _user$project$Main2$toScene = F2(
 		} else {
 			return A3(
 				_elm_lang$core$List$foldl,
-				F2(
-					function (connection, scene) {
-						var _p28 = scene;
-						if (_p28.ctor === 'Ok') {
+				function (connection) {
+					return _user$project$Result_Extra$flatMap(
+						function (scene) {
 							var to = _user$project$Circuit$toId(connection);
 							var from = _user$project$Circuit$fromId(connection);
-							return A4(_user$project$Main2$connect, 10000 + from, from, to, _p28._0);
-						} else {
-							return _elm_lang$core$Result$Err(_p28._0);
-						}
-					}),
+							return A4(_user$project$Main2$connect, 10000 + from, from, to, scene);
+						});
+				},
 				A3(
 					_elm_lang$core$List$foldl,
-					F2(
-						function (circuit, scene) {
-							var _p29 = scene;
-							if (_p29.ctor === 'Ok') {
-								return A2(_user$project$Main2$toScene, circuit, _p29._0);
-							} else {
-								return _elm_lang$core$Result$Err(_p29._0);
-							}
-						}),
+					function (circuit) {
+						return _user$project$Result_Extra$flatMap(
+							_user$project$Main2$toScene(circuit));
+					},
 					_elm_lang$core$Result$Ok(scene),
 					_p17._0.circuits),
 				_p17._0.connections);
@@ -10413,11 +10414,11 @@ var _user$project$Main2$combine = F6(
 							_elm_lang$core$Maybe$Just(
 								_user$project$Shape$Rectangle(
 									{origin: bounds.origin, size: bounds.size, stroke: _user$project$Shape$Thick})),
-							function (_p30) {
+							function (_p28) {
 								return A2(
 									_elm_lang$core$Maybe$withDefault,
 									_user$project$Bounds$zero,
-									A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p30));
+									A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p28));
 							},
 							scene)))));
 	});
