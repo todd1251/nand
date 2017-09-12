@@ -9266,39 +9266,41 @@ var _user$project$Circuit$circleGate = _user$project$Circuit$Gate(
 			}
 		}
 	});
-var _user$project$Circuit$rectangleGate = _user$project$Circuit$Gate(
-	{
-		id: _user$project$Circuit$Id(2),
-		shape: _elm_lang$core$Maybe$Just(
-			_user$project$Shape$Rectangle(
-				{
-					origin: {x: -50, y: -50},
-					size: {width: 100, height: 100},
-					stroke: _user$project$Shape$Thick
-				})),
-		ports: {
-			ctor: '::',
-			_0: {
-				id: _user$project$Circuit$Id(200),
-				direction: _user$project$Circuit$Input
-			},
-			_1: {
+var _user$project$Circuit$rectangleGate = function (id) {
+	return _user$project$Circuit$Gate(
+		{
+			id: _user$project$Circuit$Id(id),
+			shape: _elm_lang$core$Maybe$Just(
+				_user$project$Shape$Rectangle(
+					{
+						origin: {x: -50, y: -50},
+						size: {width: 100, height: 100},
+						stroke: _user$project$Shape$Thick
+					})),
+			ports: {
 				ctor: '::',
 				_0: {
-					id: _user$project$Circuit$Id(201),
+					id: _user$project$Circuit$Id((id * 100) + 0),
 					direction: _user$project$Circuit$Input
 				},
 				_1: {
 					ctor: '::',
 					_0: {
-						id: _user$project$Circuit$Id(202),
-						direction: _user$project$Circuit$Output
+						id: _user$project$Circuit$Id((id * 100) + 1),
+						direction: _user$project$Circuit$Input
 					},
-					_1: {ctor: '[]'}
+					_1: {
+						ctor: '::',
+						_0: {
+							id: _user$project$Circuit$Id((id * 100) + 2),
+							direction: _user$project$Circuit$Output
+						},
+						_1: {ctor: '[]'}
+					}
 				}
 			}
-		}
-	});
+		});
+};
 var _user$project$Circuit$fanoutGate = _user$project$Circuit$Gate(
 	{
 		id: _user$project$Circuit$Id(3),
@@ -9328,42 +9330,55 @@ var _user$project$Circuit$fanoutGate = _user$project$Circuit$Gate(
 	});
 var _user$project$Circuit$circuit = _user$project$Circuit$Circuit(
 	{
-		id: _user$project$Circuit$Id(4),
+		id: _user$project$Circuit$Id(5),
 		circuits: {
 			ctor: '::',
-			_0: _user$project$Circuit$circleGate,
+			_0: _user$project$Circuit$rectangleGate(6),
 			_1: {
 				ctor: '::',
-				_0: _user$project$Circuit$rectangleGate,
-				_1: {
-					ctor: '::',
-					_0: _user$project$Circuit$fanoutGate,
-					_1: {ctor: '[]'}
-				}
+				_0: _user$project$Circuit$Circuit(
+					{
+						id: _user$project$Circuit$Id(4),
+						circuits: {
+							ctor: '::',
+							_0: _user$project$Circuit$circleGate,
+							_1: {
+								ctor: '::',
+								_0: _user$project$Circuit$rectangleGate(2),
+								_1: {
+									ctor: '::',
+									_0: _user$project$Circuit$fanoutGate,
+									_1: {ctor: '[]'}
+								}
+							}
+						},
+						connections: {
+							ctor: '::',
+							_0: {
+								from: _user$project$Circuit$Id(102),
+								to: _user$project$Circuit$Id(300)
+							},
+							_1: {
+								ctor: '::',
+								_0: {
+									from: _user$project$Circuit$Id(301),
+									to: _user$project$Circuit$Id(200)
+								},
+								_1: {
+									ctor: '::',
+									_0: {
+										from: _user$project$Circuit$Id(302),
+										to: _user$project$Circuit$Id(201)
+									},
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}),
+				_1: {ctor: '[]'}
 			}
 		},
-		connections: {
-			ctor: '::',
-			_0: {
-				from: _user$project$Circuit$Id(102),
-				to: _user$project$Circuit$Id(300)
-			},
-			_1: {
-				ctor: '::',
-				_0: {
-					from: _user$project$Circuit$Id(301),
-					to: _user$project$Circuit$Id(200)
-				},
-				_1: {
-					ctor: '::',
-					_0: {
-						from: _user$project$Circuit$Id(302),
-						to: _user$project$Circuit$Id(201)
-					},
-					_1: {ctor: '[]'}
-				}
-			}
-		}
+		connections: {ctor: '[]'}
 	});
 var _user$project$Scene$removed = F2(
 	function (id, state) {
@@ -10289,7 +10304,16 @@ var _user$project$Main2$toScene = F2(
 						_1: _user$project$Transform2$translate(
 							{x: -30, y: 0})
 					},
-					_1: {ctor: '[]'}
+					_1: {
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 6,
+							_1: _user$project$Transform2$translate(
+								{x: 0, y: -120})
+						},
+						_1: {ctor: '[]'}
+					}
 				}
 			}
 		};
