@@ -9233,39 +9233,41 @@ var _user$project$Circuit$Circuit = function (a) {
 var _user$project$Circuit$Gate = function (a) {
 	return {ctor: 'Gate', _0: a};
 };
-var _user$project$Circuit$circleGate = _user$project$Circuit$Gate(
-	{
-		id: _user$project$Circuit$Id(1),
-		shape: _elm_lang$core$Maybe$Just(
-			_user$project$Shape$Circle(
-				{
-					centre: {x: 0, y: 0},
-					radius: 50,
-					stroke: _user$project$Shape$Thick
-				})),
-		ports: {
-			ctor: '::',
-			_0: {
-				id: _user$project$Circuit$Id(100),
-				direction: _user$project$Circuit$Input
-			},
-			_1: {
+var _user$project$Circuit$circleGate = function (id) {
+	return _user$project$Circuit$Gate(
+		{
+			id: _user$project$Circuit$Id(id),
+			shape: _elm_lang$core$Maybe$Just(
+				_user$project$Shape$Circle(
+					{
+						centre: {x: 0, y: 0},
+						radius: 50,
+						stroke: _user$project$Shape$Thick
+					})),
+			ports: {
 				ctor: '::',
 				_0: {
-					id: _user$project$Circuit$Id(101),
+					id: _user$project$Circuit$Id((id * 100) + 0),
 					direction: _user$project$Circuit$Input
 				},
 				_1: {
 					ctor: '::',
 					_0: {
-						id: _user$project$Circuit$Id(102),
-						direction: _user$project$Circuit$Output
+						id: _user$project$Circuit$Id((id * 100) + 1),
+						direction: _user$project$Circuit$Input
 					},
-					_1: {ctor: '[]'}
+					_1: {
+						ctor: '::',
+						_0: {
+							id: _user$project$Circuit$Id((id * 100) + 2),
+							direction: _user$project$Circuit$Output
+						},
+						_1: {ctor: '[]'}
+					}
 				}
 			}
-		}
-	});
+		});
+};
 var _user$project$Circuit$rectangleGate = function (id) {
 	return _user$project$Circuit$Gate(
 		{
@@ -9336,53 +9338,64 @@ var _user$project$Circuit$circuit = _user$project$Circuit$Circuit(
 			_0: _user$project$Circuit$rectangleGate(6),
 			_1: {
 				ctor: '::',
-				_0: _user$project$Circuit$Circuit(
-					{
-						id: _user$project$Circuit$Id(4),
-						circuits: {
-							ctor: '::',
-							_0: _user$project$Circuit$circleGate,
-							_1: {
+				_0: _user$project$Circuit$circleGate(7),
+				_1: {
+					ctor: '::',
+					_0: _user$project$Circuit$Circuit(
+						{
+							id: _user$project$Circuit$Id(4),
+							circuits: {
 								ctor: '::',
-								_0: _user$project$Circuit$rectangleGate(2),
+								_0: _user$project$Circuit$circleGate(1),
 								_1: {
 									ctor: '::',
-									_0: _user$project$Circuit$fanoutGate,
-									_1: {ctor: '[]'}
+									_0: _user$project$Circuit$rectangleGate(2),
+									_1: {
+										ctor: '::',
+										_0: _user$project$Circuit$fanoutGate,
+										_1: {ctor: '[]'}
+									}
 								}
-							}
-						},
-						connections: {
-							ctor: '::',
-							_0: {
-								from: _user$project$Circuit$Id(102),
-								to: _user$project$Circuit$Id(300)
 							},
-							_1: {
+							connections: {
 								ctor: '::',
 								_0: {
-									from: _user$project$Circuit$Id(301),
-									to: _user$project$Circuit$Id(200)
+									from: _user$project$Circuit$Id(102),
+									to: _user$project$Circuit$Id(300)
 								},
 								_1: {
 									ctor: '::',
 									_0: {
-										from: _user$project$Circuit$Id(302),
-										to: _user$project$Circuit$Id(201)
+										from: _user$project$Circuit$Id(301),
+										to: _user$project$Circuit$Id(200)
 									},
 									_1: {
 										ctor: '::',
 										_0: {
-											from: _user$project$Circuit$Id(202),
-											to: _user$project$Circuit$Id(600)
+											from: _user$project$Circuit$Id(302),
+											to: _user$project$Circuit$Id(201)
 										},
-										_1: {ctor: '[]'}
+										_1: {
+											ctor: '::',
+											_0: {
+												from: _user$project$Circuit$Id(202),
+												to: _user$project$Circuit$Id(600)
+											},
+											_1: {
+												ctor: '::',
+												_0: {
+													from: _user$project$Circuit$Id(702),
+													to: _user$project$Circuit$Id(601)
+												},
+												_1: {ctor: '[]'}
+											}
+										}
 									}
 								}
 							}
-						}
-					}),
-				_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				}
 			}
 		},
 		connections: {ctor: '[]'}
@@ -10319,7 +10332,16 @@ var _user$project$Main2$toScene = F2(
 							_1: _user$project$Transform2$translate(
 								{x: 300, y: 150})
 						},
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: {
+								ctor: '_Tuple2',
+								_0: 7,
+								_1: _user$project$Transform2$translate(
+									{x: -100, y: 150})
+							},
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			}
