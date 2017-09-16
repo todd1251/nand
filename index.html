@@ -10412,25 +10412,61 @@ var _user$project$Main2$toScene = F2(
 					_elm_lang$core$Tuple$second(layout_)),
 				scene_);
 		} else {
-			return A3(
-				_elm_lang$core$List$foldl,
-				function (connection) {
-					return _user$project$Result_Extra$flatMap(
-						function (scene) {
-							var to = _user$project$Circuit$toId(connection);
-							var from = _user$project$Circuit$fromId(connection);
-							return A4(_user$project$Main2$connect, 10000 + from, from, to, scene);
-						});
+			var _p29 = _p17._0.id;
+			return A2(
+				_elm_lang$core$Result$andThen,
+				function (scene) {
+					var scene_ = A2(
+						_elm_lang$core$Result$withDefault,
+						_user$project$Scene$empty,
+						A6(
+							_user$project$Main2$insert,
+							100000 + _user$project$Circuit$rawId(_p29),
+							_user$project$Circuit$rawId(_p29),
+							{ctor: '[]'},
+							{ctor: '[]'},
+							_elm_lang$core$Maybe$Nothing,
+							scene));
+					var bounds = A2(
+						_elm_lang$core$Debug$log,
+						'bounds',
+						A2(
+							_user$project$Scene$bounds,
+							100000 + _user$project$Circuit$rawId(_p29),
+							scene_));
+					return A4(
+						_user$project$Scene$update,
+						_user$project$Circuit$rawId(_p29),
+						_elm_lang$core$Maybe$Just(
+							_user$project$Shape$Rectangle(
+								{origin: bounds.origin, size: bounds.size, stroke: _user$project$Shape$Thick})),
+						function (_p28) {
+							return A2(
+								_elm_lang$core$Maybe$withDefault,
+								_user$project$Bounds$zero,
+								A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p28));
+						},
+						scene_);
 				},
 				A3(
 					_elm_lang$core$List$foldl,
-					function (circuit) {
+					function (connection) {
 						return _user$project$Result_Extra$flatMap(
-							_user$project$Main2$toScene(circuit));
+							function (scene) {
+								var to = _user$project$Circuit$toId(connection);
+								var from = _user$project$Circuit$fromId(connection);
+								return A4(_user$project$Main2$connect, 10000 + from, from, to, scene);
+							});
 					},
-					_elm_lang$core$Result$Ok(scene),
-					_p17._0.circuits),
-				_p17._0.connections);
+					A3(
+						_elm_lang$core$List$foldl,
+						function (circuit) {
+							return _user$project$Result_Extra$flatMap(
+								_user$project$Main2$toScene(circuit));
+						},
+						_elm_lang$core$Result$Ok(scene),
+						_p17._0.circuits),
+					_p17._0.connections));
 		}
 	});
 var _user$project$Main2$combine = F6(
@@ -10467,11 +10503,11 @@ var _user$project$Main2$combine = F6(
 							_elm_lang$core$Maybe$Just(
 								_user$project$Shape$Rectangle(
 									{origin: bounds.origin, size: bounds.size, stroke: _user$project$Shape$Thick})),
-							function (_p28) {
+							function (_p30) {
 								return A2(
 									_elm_lang$core$Maybe$withDefault,
 									_user$project$Bounds$zero,
-									A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p28));
+									A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p30));
 							},
 							scene)))));
 	});
