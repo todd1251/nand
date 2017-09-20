@@ -10353,7 +10353,8 @@ var _user$project$Main2$toScene = F2(
 								scene)
 						};
 					} else {
-						var _p31 = _p18._0.id;
+						var _p32 = _p18._0.id;
+						var _p31 = _p18._0.connections;
 						var children = A3(
 							_elm_lang$core$List$foldl,
 							F2(
@@ -10378,10 +10379,19 @@ var _user$project$Main2$toScene = F2(
 								_1: _elm_lang$core$Result$Ok(scene)
 							},
 							_p18._0.circuits);
+						var ids1 = A2(
+							_elm_lang$core$Basics_ops['++'],
+							_elm_lang$core$Tuple$first(children),
+							A2(
+								_elm_lang$core$List$map,
+								function (connection) {
+									return A2(_user$project$Circuit$suffix, 'connection', connection.from);
+								},
+								_p31));
 						return {
 							ctor: '_Tuple3',
-							_0: _p31,
-							_1: _elm_lang$core$Tuple$first(children),
+							_0: _p32,
+							_1: ids1,
 							_2: A2(
 								_elm_lang$core$Result$andThen,
 								function (scene) {
@@ -10390,11 +10400,11 @@ var _user$project$Main2$toScene = F2(
 										'bounds',
 										A2(
 											_user$project$Scene$bounds,
-											A2(_user$project$Circuit$suffix, 'group', _p31),
+											A2(_user$project$Circuit$suffix, 'group', _p32),
 											scene));
 									return A4(
 										_user$project$Scene$update,
-										A2(_user$project$Circuit$suffix, 'group', _p31),
+										A2(_user$project$Circuit$suffix, 'group', _p32),
 										_elm_lang$core$Maybe$Just(
 											_user$project$Shape$Rectangle(
 												{origin: bounds.origin, size: bounds.size, stroke: _user$project$Shape$Dashed})),
@@ -10413,8 +10423,8 @@ var _user$project$Main2$toScene = F2(
 										_elm_lang$core$Result$andThen,
 										A2(
 											_user$project$Scene$group,
-											A2(_user$project$Circuit$suffix, 'group', _p31),
-											_elm_lang$core$Tuple$first(children)),
+											A2(_user$project$Circuit$suffix, 'group', _p32),
+											ids1),
 										A3(
 											_elm_lang$core$List$foldl,
 											function (connection) {
@@ -10426,7 +10436,7 @@ var _user$project$Main2$toScene = F2(
 														connection.to));
 											},
 											_elm_lang$core$Tuple$second(children),
-											_p18._0.connections))))
+											_p31))))
 						};
 					}
 				}();
@@ -10493,9 +10503,9 @@ var _user$project$Main2$toScene = F2(
 					0,
 					A2(
 						_elm_lang$core$List$filter,
-						function (_p32) {
-							var _p33 = _p32;
-							return _elm_lang$core$Native_Utils.eq(_p33._0, id);
+						function (_p33) {
+							var _p34 = _p33;
+							return _elm_lang$core$Native_Utils.eq(_p34._0, id);
 						},
 						layout));
 				return {
