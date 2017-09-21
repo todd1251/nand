@@ -10396,12 +10396,9 @@ var _user$project$Main2$toScene = F2(
 								_elm_lang$core$Result$andThen,
 								function (scene) {
 									var bounds = A2(
-										_elm_lang$core$Debug$log,
-										'bounds',
-										A2(
-											_user$project$Scene$bounds,
-											A2(_user$project$Circuit$suffix, 'group', _p32),
-											scene));
+										_user$project$Scene$bounds,
+										A2(_user$project$Circuit$suffix, 'group', _p32),
+										scene);
 									return A4(
 										_user$project$Scene$update,
 										A2(_user$project$Circuit$suffix, 'group', _p32),
@@ -10417,26 +10414,23 @@ var _user$project$Main2$toScene = F2(
 										scene);
 								},
 								A2(
-									_elm_lang$core$Debug$log,
-									'circuit group',
+									_elm_lang$core$Result$andThen,
 									A2(
-										_elm_lang$core$Result$andThen,
-										A2(
-											_user$project$Scene$group,
-											A2(_user$project$Circuit$suffix, 'group', _p32),
-											ids1),
-										A3(
-											_elm_lang$core$List$foldl,
-											function (connection) {
-												return _user$project$Result_Extra$flatMap(
-													A3(
-														_user$project$Main2$connect,
-														A2(_user$project$Circuit$suffix, 'connection', connection.from),
-														connection.from,
-														connection.to));
-											},
-											_elm_lang$core$Tuple$second(children),
-											_p31))))
+										_user$project$Scene$group,
+										A2(_user$project$Circuit$suffix, 'group', _p32),
+										ids1),
+									A3(
+										_elm_lang$core$List$foldl,
+										function (connection) {
+											return _user$project$Result_Extra$flatMap(
+												A3(
+													_user$project$Main2$connect,
+													A2(_user$project$Circuit$suffix, 'connection', connection.from),
+													connection.from,
+													connection.to));
+										},
+										_elm_lang$core$Tuple$second(children),
+										_p31)))
 						};
 					}
 				}();
@@ -10489,7 +10483,7 @@ var _user$project$Main2$toScene = F2(
 											ctor: '_Tuple2',
 											_0: _user$project$Circuit$id('circuit1'),
 											_1: _user$project$Transform2$translate(
-												{x: 0, y: -100})
+												{x: 0, y: 0})
 										},
 										_1: {ctor: '[]'}
 									}
