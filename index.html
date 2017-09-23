@@ -10308,7 +10308,7 @@ var _user$project$Main2$combine = F6(
 		var to = bounds.origin.y + ((bounds.size.height * 3) / 4);
 		return A2(
 			_elm_lang$core$Result$andThen,
-			A4(_user$project$Main2$distributeVertically, outputs, (bounds.origin.x + bounds.size.width) + 20, from, to),
+			A4(_user$project$Main2$distributeVertically, outputs, (bounds.origin.x + bounds.size.width) + margin, from, to),
 			A2(
 				_elm_lang$core$Result$andThen,
 				A2(
@@ -10317,7 +10317,7 @@ var _user$project$Main2$combine = F6(
 					_elm_lang$core$Maybe$Just(_user$project$Main2$outputShape)),
 				A2(
 					_elm_lang$core$Result$andThen,
-					A4(_user$project$Main2$distributeVertically, inputs, bounds.origin.x - 20, from, to),
+					A4(_user$project$Main2$distributeVertically, inputs, bounds.origin.x - margin, from, to),
 					A2(
 						_elm_lang$core$Result$andThen,
 						A2(
@@ -10489,19 +10489,28 @@ var _user$project$Main2$toScene = F2(
 							_elm_lang$core$Debug$log,
 							'unconnected inputs',
 							A2(
-								_elm_lang$core$List$filter,
-								function (input) {
-									return !A2(
-										_elm_lang$core$List$member,
-										input,
+								_elm_lang$core$List$indexedMap,
+								function (index) {
+									return _user$project$Circuit$suffix(
 										A2(
-											_elm_lang$core$List$map,
-											function (_) {
-												return _.to;
-											},
-											allConnections));
+											_elm_lang$core$Basics_ops['++'],
+											'port',
+											_elm_lang$core$Basics$toString(index + 1)));
 								},
-								allInputs));
+								A2(
+									_elm_lang$core$List$filter,
+									function (input) {
+										return !A2(
+											_elm_lang$core$List$member,
+											input,
+											A2(
+												_elm_lang$core$List$map,
+												function (_) {
+													return _.to;
+												},
+												allConnections));
+									},
+									allInputs)));
 						return {
 							ctor: '_Tuple3',
 							_0: _p40,
@@ -10584,8 +10593,7 @@ var _user$project$Main2$toScene = F2(
 										_0: {
 											ctor: '_Tuple2',
 											_0: _user$project$Circuit$id('circuit1'),
-											_1: _user$project$Transform2$translate(
-												{x: -50, y: -50})
+											_1: _user$project$Transform2$identity
 										},
 										_1: {ctor: '[]'}
 									}
