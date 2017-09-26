@@ -10395,9 +10395,9 @@ var _user$project$Main2$toScene = F2(
 								scene)
 						};
 					} else {
-						var _p49 = _p19._0.id;
-						var _p48 = _p19._0.connections;
-						var _p47 = _p19._0.circuits;
+						var _p51 = _p19._0.id;
+						var _p50 = _p19._0.connections;
+						var _p49 = _p19._0.circuits;
 						var children = A3(
 							_elm_lang$core$List$foldl,
 							F2(
@@ -10421,7 +10421,7 @@ var _user$project$Main2$toScene = F2(
 								_0: ids,
 								_1: _elm_lang$core$Result$Ok(scene)
 							},
-							_p47);
+							_p49);
 						var ids1 = A2(
 							_elm_lang$core$Basics_ops['++'],
 							_elm_lang$core$Tuple$first(children),
@@ -10430,7 +10430,7 @@ var _user$project$Main2$toScene = F2(
 								function (connection) {
 									return A2(_user$project$Circuit$suffix, 'connection', connection.from);
 								},
-								_p48));
+								_p50));
 						var gatherPorts1 = F2(
 							function (circuit, _p31) {
 								var _p32 = _p31;
@@ -10477,9 +10477,9 @@ var _user$project$Main2$toScene = F2(
 							{
 								ctor: '_Tuple2',
 								_0: {ctor: '[]'},
-								_1: _p48
+								_1: _p50
 							},
-							_p47);
+							_p49);
 						var allOutputs = _p37._0;
 						var allConnections1 = _p37._1;
 						var gatherPorts = F2(
@@ -10528,9 +10528,9 @@ var _user$project$Main2$toScene = F2(
 							{
 								ctor: '_Tuple2',
 								_0: {ctor: '[]'},
-								_1: _p48
+								_1: _p50
 							},
-							_p47);
+							_p49);
 						var allInputs = _p44._0;
 						var allConnections = _p44._1;
 						var unconnectedInputs = A2(
@@ -10565,13 +10565,20 @@ var _user$project$Main2$toScene = F2(
 								allInputs));
 						var unconnectedOutputs = A2(
 							_elm_lang$core$List$indexedMap,
-							function (index) {
-								return _user$project$Circuit$suffix(
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										'output',
-										_elm_lang$core$Basics$toString(index + 1)));
-							},
+							F2(
+								function (index, output) {
+									return {
+										ctor: '_Tuple2',
+										_0: output,
+										_1: A2(
+											_user$project$Circuit$suffix,
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												'output',
+												_elm_lang$core$Basics$toString(index + 1)),
+											output)
+									};
+								}),
 							A2(
 								_elm_lang$core$List$filter,
 								function (output) {
@@ -10590,16 +10597,16 @@ var _user$project$Main2$toScene = F2(
 							_elm_lang$core$Result$andThen,
 							A5(
 								_user$project$Main2$combine,
-								A2(_user$project$Circuit$suffix, 'circuit', _p49),
-								A2(_user$project$Circuit$suffix, 'group', _p49),
+								A2(_user$project$Circuit$suffix, 'circuit', _p51),
+								A2(_user$project$Circuit$suffix, 'group', _p51),
 								A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$first, unconnectedInputs),
-								unconnectedOutputs,
+								A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$second, unconnectedOutputs),
 								20),
 							A2(
 								_elm_lang$core$Result$andThen,
 								A2(
 									_user$project$Scene$group,
-									A2(_user$project$Circuit$suffix, 'group', _p49),
+									A2(_user$project$Circuit$suffix, 'group', _p51),
 									ids1),
 								A3(
 									_elm_lang$core$List$foldl,
@@ -10612,7 +10619,7 @@ var _user$project$Main2$toScene = F2(
 												connection.to));
 									},
 									_elm_lang$core$Tuple$second(children),
-									_p48)));
+									_p50)));
 						var circuit2 = A3(
 							_elm_lang$core$List$foldl,
 							function (_p45) {
@@ -10627,7 +10634,21 @@ var _user$project$Main2$toScene = F2(
 							},
 							circuit1,
 							unconnectedInputs);
-						return {ctor: '_Tuple3', _0: _p49, _1: ids1, _2: circuit2};
+						var circuit3 = A3(
+							_elm_lang$core$List$foldl,
+							function (_p47) {
+								var _p48 = _p47;
+								var connection = {from: _p48._0, to: _p48._1};
+								return _user$project$Result_Extra$flatMap(
+									A3(
+										_user$project$Main2$connect,
+										A2(_user$project$Circuit$suffix, 'connection', connection.from),
+										connection.from,
+										connection.to));
+							},
+							circuit2,
+							unconnectedOutputs);
+						return {ctor: '_Tuple3', _0: _p51, _1: ids1, _2: circuit3};
 					}
 				}();
 				var id = _p18._0;
@@ -10678,9 +10699,18 @@ var _user$project$Main2$toScene = F2(
 										_0: {
 											ctor: '_Tuple2',
 											_0: _user$project$Circuit$id('circuit1'),
-											_1: _user$project$Transform2$identity
+											_1: _user$project$Transform2$translate(
+												{x: -50, y: -50})
 										},
-										_1: {ctor: '[]'}
+										_1: {
+											ctor: '::',
+											_0: {
+												ctor: '_Tuple2',
+												_0: _user$project$Circuit$id('circuit1'),
+												_1: _user$project$Transform2$identity
+											},
+											_1: {ctor: '[]'}
+										}
 									}
 								}
 							}
@@ -10692,9 +10722,9 @@ var _user$project$Main2$toScene = F2(
 					0,
 					A2(
 						_elm_lang$core$List$filter,
-						function (_p50) {
-							var _p51 = _p50;
-							return _elm_lang$core$Native_Utils.eq(_p51._0, id);
+						function (_p52) {
+							var _p53 = _p52;
+							return _elm_lang$core$Native_Utils.eq(_p53._0, id);
 						},
 						layout));
 				return {
