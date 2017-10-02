@@ -9202,6 +9202,168 @@ var _user$project$Shape$Dashed = {ctor: 'Dashed'};
 var _user$project$Shape$Thin = {ctor: 'Thin'};
 var _user$project$Shape$Thick = {ctor: 'Thick'};
 var _user$project$Shape$NoStroke = {ctor: 'NoStroke'};
+var _user$project$Circuit2$PortName = function (a) {
+	return {ctor: 'PortName', _0: a};
+};
+var _user$project$Circuit2$Output = {ctor: 'Output'};
+var _user$project$Circuit2$Input = {ctor: 'Input'};
+var _user$project$Circuit2$Port = function (a) {
+	return {ctor: 'Port', _0: a};
+};
+var _user$project$Circuit2$CircuitName = function (a) {
+	return {ctor: 'CircuitName', _0: a};
+};
+var _user$project$Circuit2$Connection = function (a) {
+	return {ctor: 'Connection', _0: a};
+};
+var _user$project$Circuit2$Circuit = function (a) {
+	return {ctor: 'Circuit', _0: a};
+};
+var _user$project$Circuit2$empty = _user$project$Circuit2$Circuit(
+	{
+		name: _user$project$Circuit2$CircuitName('empty'),
+		ports: {ctor: '[]'},
+		connections: {ctor: '[]'},
+		circuits: {ctor: '[]'}
+	});
+var _user$project$Circuit2$add = F2(
+	function (_p0, circuit) {
+		var _p1 = _p0;
+		return _user$project$Circuit2$Circuit(
+			{
+				name: _p1._0.name,
+				ports: _p1._0.ports,
+				connections: _p1._0.connections,
+				circuits: A2(
+					_elm_lang$core$Basics_ops['++'],
+					_p1._0.circuits,
+					{
+						ctor: '::',
+						_0: circuit,
+						_1: {ctor: '[]'}
+					})
+			});
+	});
+var _user$project$Circuit2$gate = function (name) {
+	return _user$project$Circuit2$Circuit(
+		{
+			name: _user$project$Circuit2$CircuitName(name),
+			ports: {
+				ctor: '::',
+				_0: _user$project$Circuit2$Port(
+					{
+						name: _user$project$Circuit2$PortName('input1'),
+						direction: _user$project$Circuit2$Input
+					}),
+				_1: {
+					ctor: '::',
+					_0: _user$project$Circuit2$Port(
+						{
+							name: _user$project$Circuit2$PortName('input2'),
+							direction: _user$project$Circuit2$Input
+						}),
+					_1: {
+						ctor: '::',
+						_0: _user$project$Circuit2$Port(
+							{
+								name: _user$project$Circuit2$PortName('output1'),
+								direction: _user$project$Circuit2$Output
+							}),
+						_1: {ctor: '[]'}
+					}
+				}
+			},
+			connections: {ctor: '[]'},
+			circuits: {ctor: '[]'}
+		});
+};
+var _user$project$Circuit2$fanoutGate = function (name) {
+	return _user$project$Circuit2$Circuit(
+		{
+			name: _user$project$Circuit2$CircuitName(name),
+			ports: {
+				ctor: '::',
+				_0: _user$project$Circuit2$Port(
+					{
+						name: _user$project$Circuit2$PortName('input1'),
+						direction: _user$project$Circuit2$Input
+					}),
+				_1: {
+					ctor: '::',
+					_0: _user$project$Circuit2$Port(
+						{
+							name: _user$project$Circuit2$PortName('output1'),
+							direction: _user$project$Circuit2$Output
+						}),
+					_1: {
+						ctor: '::',
+						_0: _user$project$Circuit2$Port(
+							{
+								name: _user$project$Circuit2$PortName('output2'),
+								direction: _user$project$Circuit2$Output
+							}),
+						_1: {ctor: '[]'}
+					}
+				}
+			},
+			connections: {ctor: '[]'},
+			circuits: {ctor: '[]'}
+		});
+};
+var _user$project$Circuit2$fanout = F3(
+	function (fanoutName, port_, _p2) {
+		var _p3 = _p2;
+		return _user$project$Circuit2$Circuit(
+			{
+				name: _p3._0.name,
+				ports: _p3._0.ports,
+				connections: A2(
+					_elm_lang$core$Basics_ops['++'],
+					_p3._0.connections,
+					{
+						ctor: '::',
+						_0: _user$project$Circuit2$Connection(
+							{
+								from: port_,
+								to: {
+									ctor: '_Tuple2',
+									_0: _user$project$Circuit2$CircuitName(fanoutName),
+									_1: _user$project$Circuit2$PortName('input1')
+								}
+							}),
+						_1: {ctor: '[]'}
+					}),
+				circuits: A2(
+					_elm_lang$core$Basics_ops['++'],
+					_p3._0.circuits,
+					{
+						ctor: '::',
+						_0: _user$project$Circuit2$fanoutGate(fanoutName),
+						_1: {ctor: '[]'}
+					})
+			});
+	});
+var _user$project$Circuit2$circuit = A3(
+	_user$project$Circuit2$fanout,
+	'fanout1',
+	{
+		ctor: '_Tuple2',
+		_0: _user$project$Circuit2$CircuitName('gate1'),
+		_1: _user$project$Circuit2$PortName('output1')
+	},
+	A2(
+		_user$project$Circuit2$add,
+		_user$project$Circuit2$gate('gate4'),
+		A2(
+			_user$project$Circuit2$add,
+			_user$project$Circuit2$gate('gate3'),
+			A2(
+				_user$project$Circuit2$add,
+				_user$project$Circuit2$gate('gate2'),
+				A2(
+					_user$project$Circuit2$add,
+					_user$project$Circuit2$gate('gate1'),
+					_user$project$Circuit2$empty)))));
 var _user$project$Circuit$Port = F2(
 	function (a, b) {
 		return {id: a, direction: b};
@@ -9332,59 +9494,52 @@ var _user$project$Circuit$fanoutGate = function (id) {
 			}
 		});
 };
-var _user$project$Circuit$circuit = _user$project$Circuit$Circuit(
-	{
-		id: _user$project$Circuit$Id('circuit2'),
-		circuits: {
-			ctor: '::',
-			_0: _user$project$Circuit$rectangleGate(
-				_user$project$Circuit$Id('gate5')),
-			_1: {
+var _user$project$Circuit$circuit = function () {
+	var _p2 = _user$project$Circuit2$circuit;
+	return _user$project$Circuit$Circuit(
+		{
+			id: _user$project$Circuit$Id('circuit2'),
+			circuits: {
 				ctor: '::',
-				_0: _user$project$Circuit$Circuit(
-					{
-						id: _user$project$Circuit$Id('circuit1'),
-						circuits: {
-							ctor: '::',
-							_0: _user$project$Circuit$circleGate(
-								_user$project$Circuit$Id('gate1')),
-							_1: {
+				_0: _user$project$Circuit$rectangleGate(
+					_user$project$Circuit$Id('gate5')),
+				_1: {
+					ctor: '::',
+					_0: _user$project$Circuit$Circuit(
+						{
+							id: _user$project$Circuit$Id('circuit1'),
+							circuits: {
 								ctor: '::',
-								_0: _user$project$Circuit$rectangleGate(
-									_user$project$Circuit$Id('gate2')),
+								_0: _user$project$Circuit$circleGate(
+									_user$project$Circuit$Id('gate1')),
 								_1: {
 									ctor: '::',
-									_0: _user$project$Circuit$circleGate(
-										_user$project$Circuit$Id('gate3')),
+									_0: _user$project$Circuit$rectangleGate(
+										_user$project$Circuit$Id('gate2')),
 									_1: {
 										ctor: '::',
-										_0: _user$project$Circuit$rectangleGate(
-											_user$project$Circuit$Id('gate4')),
+										_0: _user$project$Circuit$circleGate(
+											_user$project$Circuit$Id('gate3')),
 										_1: {
 											ctor: '::',
-											_0: _user$project$Circuit$fanoutGate(
-												_user$project$Circuit$Id('fanout1')),
-											_1: {ctor: '[]'}
+											_0: _user$project$Circuit$rectangleGate(
+												_user$project$Circuit$Id('gate4')),
+											_1: {
+												ctor: '::',
+												_0: _user$project$Circuit$fanoutGate(
+													_user$project$Circuit$Id('fanout1')),
+												_1: {ctor: '[]'}
+											}
 										}
 									}
 								}
-							}
-						},
-						ports: {
-							ctor: '::',
-							_0: {
-								id: A2(
-									_user$project$Circuit$suffix,
-									'input1',
-									_user$project$Circuit$Id('circuit1')),
-								direction: _user$project$Circuit$Input
 							},
-							_1: {
+							ports: {
 								ctor: '::',
 								_0: {
 									id: A2(
 										_user$project$Circuit$suffix,
-										'input2',
+										'input1',
 										_user$project$Circuit$Id('circuit1')),
 									direction: _user$project$Circuit$Input
 								},
@@ -9393,7 +9548,7 @@ var _user$project$Circuit$circuit = _user$project$Circuit$Circuit(
 									_0: {
 										id: A2(
 											_user$project$Circuit$suffix,
-											'input3',
+											'input2',
 											_user$project$Circuit$Id('circuit1')),
 										direction: _user$project$Circuit$Input
 									},
@@ -9402,7 +9557,7 @@ var _user$project$Circuit$circuit = _user$project$Circuit$Circuit(
 										_0: {
 											id: A2(
 												_user$project$Circuit$suffix,
-												'input4',
+												'input3',
 												_user$project$Circuit$Id('circuit1')),
 											direction: _user$project$Circuit$Input
 										},
@@ -9411,59 +9566,69 @@ var _user$project$Circuit$circuit = _user$project$Circuit$Circuit(
 											_0: {
 												id: A2(
 													_user$project$Circuit$suffix,
-													'output1',
+													'input4',
 													_user$project$Circuit$Id('circuit1')),
-												direction: _user$project$Circuit$Output
+												direction: _user$project$Circuit$Input
 											},
-											_1: {ctor: '[]'}
+											_1: {
+												ctor: '::',
+												_0: {
+													id: A2(
+														_user$project$Circuit$suffix,
+														'output1',
+														_user$project$Circuit$Id('circuit1')),
+													direction: _user$project$Circuit$Output
+												},
+												_1: {ctor: '[]'}
+											}
 										}
 									}
 								}
-							}
-						},
-						connections: {
-							ctor: '::',
-							_0: {
-								from: _user$project$Circuit$Id('gate1.output1'),
-								to: _user$project$Circuit$Id('fanout1.input1')
 							},
-							_1: {
+							connections: {
 								ctor: '::',
 								_0: {
-									from: _user$project$Circuit$Id('fanout1.output1'),
-									to: _user$project$Circuit$Id('gate2.input1')
+									from: _user$project$Circuit$Id('gate1.output1'),
+									to: _user$project$Circuit$Id('fanout1.input1')
 								},
 								_1: {
 									ctor: '::',
 									_0: {
-										from: _user$project$Circuit$Id('fanout1.output2'),
-										to: _user$project$Circuit$Id('gate2.input2')
+										from: _user$project$Circuit$Id('fanout1.output1'),
+										to: _user$project$Circuit$Id('gate2.input1')
 									},
 									_1: {
 										ctor: '::',
 										_0: {
-											from: _user$project$Circuit$Id('gate2.output1'),
-											to: _user$project$Circuit$Id('gate3.input1')
+											from: _user$project$Circuit$Id('fanout1.output2'),
+											to: _user$project$Circuit$Id('gate2.input2')
 										},
 										_1: {
 											ctor: '::',
 											_0: {
-												from: _user$project$Circuit$Id('gate4.output1'),
-												to: _user$project$Circuit$Id('gate3.input2')
+												from: _user$project$Circuit$Id('gate2.output1'),
+												to: _user$project$Circuit$Id('gate3.input1')
 											},
-											_1: {ctor: '[]'}
+											_1: {
+												ctor: '::',
+												_0: {
+													from: _user$project$Circuit$Id('gate4.output1'),
+													to: _user$project$Circuit$Id('gate3.input2')
+												},
+												_1: {ctor: '[]'}
+											}
 										}
 									}
 								}
 							}
-						}
-					}),
-				_1: {ctor: '[]'}
-			}
-		},
-		ports: {ctor: '[]'},
-		connections: {ctor: '[]'}
-	});
+						}),
+					_1: {ctor: '[]'}
+				}
+			},
+			ports: {ctor: '[]'},
+			connections: {ctor: '[]'}
+		});
+}();
 var _user$project$Result_Extra$flatMap = F2(
 	function (f, result) {
 		var _p0 = A2(_elm_lang$core$Result$map, f, result);
