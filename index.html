@@ -9202,44 +9202,10 @@ var _user$project$Shape$Dashed = {ctor: 'Dashed'};
 var _user$project$Shape$Thin = {ctor: 'Thin'};
 var _user$project$Shape$Thick = {ctor: 'Thick'};
 var _user$project$Shape$NoStroke = {ctor: 'NoStroke'};
-var _user$project$Unsafe$nth = F2(
-	function (index, xs) {
-		return function (x) {
-			var _p0 = x;
-			if (_p0.ctor === 'Just') {
-				return _p0._0;
-			} else {
-				return _elm_lang$core$Native_Utils.crashCase(
-					'Unsafe',
-					{
-						start: {line: 11, column: 17},
-						end: {line: 16, column: 87}
-					},
-					_p0)(
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						'No item found with index: ',
-						_elm_lang$core$Basics$toString(index)));
-			}
-		}(
-			_elm_lang$core$List$head(
-				A2(_elm_lang$core$List$drop, index, xs)));
-	});
-var _user$project$Circuit2$group = F2(
-	function (group, circuit) {
-		return circuit;
-	});
-var _user$project$Circuit2$circuitByName = F2(
-	function (circuitName, _p0) {
-		var _p1 = _p0;
-		return _elm_lang$core$Native_Utils.eq(_p1._0.name, circuitName) ? _p1 : A2(
-			_user$project$Unsafe$nth,
-			0,
-			A2(
-				_elm_lang$core$List$map,
-				_user$project$Circuit2$circuitByName(circuitName),
-				_p1._0.circuits));
-	});
+var _user$project$Circuit2$Grouped = {ctor: 'Grouped'};
+var _user$project$Circuit2$Connected = {ctor: 'Connected'};
+var _user$project$Circuit2$FannedOut = {ctor: 'FannedOut'};
+var _user$project$Circuit2$Added = {ctor: 'Added'};
 var _user$project$Circuit2$PortName = function (a) {
 	return {ctor: 'PortName', _0: a};
 };
@@ -9254,170 +9220,23 @@ var _user$project$Circuit2$CircuitName = function (a) {
 var _user$project$Circuit2$Connection = function (a) {
 	return {ctor: 'Connection', _0: a};
 };
-var _user$project$Circuit2$Circuit = function (a) {
-	return {ctor: 'Circuit', _0: a};
+var _user$project$Circuit2$Group = function (a) {
+	return {ctor: 'Group', _0: a};
 };
-var _user$project$Circuit2$empty = _user$project$Circuit2$Circuit(
+var _user$project$Circuit2$empty = _user$project$Circuit2$Group(
 	{
 		name: _user$project$Circuit2$CircuitName('empty'),
 		ports: {ctor: '[]'},
 		connections: {ctor: '[]'},
 		circuits: {ctor: '[]'}
 	});
-var _user$project$Circuit2$add = F2(
-	function (_p2, circuit) {
-		var _p3 = _p2;
-		return _user$project$Circuit2$Circuit(
-			{
-				name: _p3._0.name,
-				ports: _p3._0.ports,
-				connections: _p3._0.connections,
-				circuits: A2(
-					_elm_lang$core$Basics_ops['++'],
-					_p3._0.circuits,
-					{
-						ctor: '::',
-						_0: circuit,
-						_1: {ctor: '[]'}
-					})
-			});
-	});
-var _user$project$Circuit2$gate = function (name) {
-	return _user$project$Circuit2$Circuit(
-		{
-			name: _user$project$Circuit2$CircuitName(name),
-			ports: {
-				ctor: '::',
-				_0: _user$project$Circuit2$Port(
-					{
-						name: _user$project$Circuit2$PortName('input1'),
-						direction: _user$project$Circuit2$Input
-					}),
-				_1: {
-					ctor: '::',
-					_0: _user$project$Circuit2$Port(
-						{
-							name: _user$project$Circuit2$PortName('input2'),
-							direction: _user$project$Circuit2$Input
-						}),
-					_1: {
-						ctor: '::',
-						_0: _user$project$Circuit2$Port(
-							{
-								name: _user$project$Circuit2$PortName('output1'),
-								direction: _user$project$Circuit2$Output
-							}),
-						_1: {ctor: '[]'}
-					}
-				}
-			},
-			connections: {ctor: '[]'},
-			circuits: {ctor: '[]'}
-		});
+var _user$project$Circuit2$circuit = _user$project$Circuit2$empty;
+var _user$project$Circuit2$Fanout = function (a) {
+	return {ctor: 'Fanout', _0: a};
 };
-var _user$project$Circuit2$fanoutGate = function (name) {
-	return _user$project$Circuit2$Circuit(
-		{
-			name: _user$project$Circuit2$CircuitName(name),
-			ports: {
-				ctor: '::',
-				_0: _user$project$Circuit2$Port(
-					{
-						name: _user$project$Circuit2$PortName('input1'),
-						direction: _user$project$Circuit2$Input
-					}),
-				_1: {
-					ctor: '::',
-					_0: _user$project$Circuit2$Port(
-						{
-							name: _user$project$Circuit2$PortName('output1'),
-							direction: _user$project$Circuit2$Output
-						}),
-					_1: {
-						ctor: '::',
-						_0: _user$project$Circuit2$Port(
-							{
-								name: _user$project$Circuit2$PortName('output2'),
-								direction: _user$project$Circuit2$Output
-							}),
-						_1: {ctor: '[]'}
-					}
-				}
-			},
-			connections: {ctor: '[]'},
-			circuits: {ctor: '[]'}
-		});
+var _user$project$Circuit2$Gate = function (a) {
+	return {ctor: 'Gate', _0: a};
 };
-var _user$project$Circuit2$fanout = F3(
-	function (fanoutName, _p5, _p4) {
-		var _p6 = _p5;
-		var _p9 = _p6._0;
-		var _p7 = _p4;
-		var _p8 = _p7;
-		var to = _user$project$Circuit2$Circuit(
-			{
-				name: _p7._0.name,
-				ports: _p7._0.ports,
-				connections: A2(
-					_elm_lang$core$Basics_ops['++'],
-					_p7._0.connections,
-					{
-						ctor: '::',
-						_0: _user$project$Circuit2$Connection(
-							{
-								from: {ctor: '_Tuple2', _0: _p9, _1: _p6._1},
-								to: {
-									ctor: '_Tuple2',
-									_0: _user$project$Circuit2$CircuitName(fanoutName),
-									_1: _user$project$Circuit2$PortName('input1')
-								}
-							}),
-						_1: {ctor: '[]'}
-					}),
-				circuits: A2(
-					_elm_lang$core$Basics_ops['++'],
-					_p7._0.circuits,
-					{
-						ctor: '::',
-						_0: _user$project$Circuit2$fanoutGate(fanoutName),
-						_1: {ctor: '[]'}
-					})
-			});
-		var from = A2(_user$project$Circuit2$circuitByName, _p9, _p8);
-		return A2(
-			_user$project$Circuit2$group,
-			{
-				ctor: '::',
-				_0: from,
-				_1: {
-					ctor: '::',
-					_0: to,
-					_1: {ctor: '[]'}
-				}
-			},
-			_p8);
-	});
-var _user$project$Circuit2$circuit = A3(
-	_user$project$Circuit2$fanout,
-	'fanout1',
-	{
-		ctor: '_Tuple2',
-		_0: _user$project$Circuit2$CircuitName('gate1'),
-		_1: _user$project$Circuit2$PortName('output1')
-	},
-	A2(
-		_user$project$Circuit2$add,
-		_user$project$Circuit2$gate('gate4'),
-		A2(
-			_user$project$Circuit2$add,
-			_user$project$Circuit2$gate('gate3'),
-			A2(
-				_user$project$Circuit2$add,
-				_user$project$Circuit2$gate('gate2'),
-				A2(
-					_user$project$Circuit2$add,
-					_user$project$Circuit2$gate('gate1'),
-					_user$project$Circuit2$empty)))));
 var _user$project$Circuit$Port = F2(
 	function (a, b) {
 		return {id: a, direction: b};
@@ -10264,6 +10083,29 @@ var _user$project$Scene$group = F3(
 	});
 var _user$project$Scene$empty = _user$project$Scene$Scene(
 	{ctor: '[]'});
+var _user$project$Unsafe$nth = F2(
+	function (index, xs) {
+		return function (x) {
+			var _p0 = x;
+			if (_p0.ctor === 'Just') {
+				return _p0._0;
+			} else {
+				return _elm_lang$core$Native_Utils.crashCase(
+					'Unsafe',
+					{
+						start: {line: 11, column: 17},
+						end: {line: 16, column: 87}
+					},
+					_p0)(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'No item found with index: ',
+						_elm_lang$core$Basics$toString(index)));
+			}
+		}(
+			_elm_lang$core$List$head(
+				A2(_elm_lang$core$List$drop, index, xs)));
+	});
 var _user$project$Main2$view = function (state) {
 	return _user$project$Canvas2$view(
 		A3(
