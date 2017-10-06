@@ -9202,14 +9202,6 @@ var _user$project$Shape$Dashed = {ctor: 'Dashed'};
 var _user$project$Shape$Thin = {ctor: 'Thin'};
 var _user$project$Shape$Thick = {ctor: 'Thick'};
 var _user$project$Shape$NoStroke = {ctor: 'NoStroke'};
-var _user$project$Circuit2$Group2 = {ctor: 'Group2'};
-var _user$project$Circuit2$Connection2 = {ctor: 'Connection2'};
-var _user$project$Circuit2$Port2 = {ctor: 'Port2'};
-var _user$project$Circuit2$Circuit2 = {ctor: 'Circuit2'};
-var _user$project$Circuit2$Grouped = {ctor: 'Grouped'};
-var _user$project$Circuit2$Connected = {ctor: 'Connected'};
-var _user$project$Circuit2$FannedOut = {ctor: 'FannedOut'};
-var _user$project$Circuit2$Added = {ctor: 'Added'};
 var _user$project$Circuit2$PortName = function (a) {
 	return {ctor: 'PortName', _0: a};
 };
@@ -9218,29 +9210,176 @@ var _user$project$Circuit2$Input = {ctor: 'Input'};
 var _user$project$Circuit2$Port = function (a) {
 	return {ctor: 'Port', _0: a};
 };
-var _user$project$Circuit2$CircuitName = function (a) {
-	return {ctor: 'CircuitName', _0: a};
+var _user$project$Circuit2$port_ = F2(
+	function (name, direction) {
+		return _user$project$Circuit2$Port(
+			{name: name, direction: direction});
+	});
+var _user$project$Circuit2$PortReference = function (a) {
+	return {ctor: 'PortReference', _0: a};
+};
+var _user$project$Circuit2$portReference = F2(
+	function (path, portName) {
+		return _user$project$Circuit2$PortReference(
+			{path: path, name: portName});
+	});
+var _user$project$Circuit2$ConnectionName = function (a) {
+	return {ctor: 'ConnectionName', _0: a};
 };
 var _user$project$Circuit2$Connection = function (a) {
 	return {ctor: 'Connection', _0: a};
 };
-var _user$project$Circuit2$Group = function (a) {
-	return {ctor: 'Group', _0: a};
-};
-var _user$project$Circuit2$empty = _user$project$Circuit2$Group(
-	{
-		name: _user$project$Circuit2$CircuitName('empty'),
-		ports: {ctor: '[]'},
-		connections: {ctor: '[]'},
-		circuits: {ctor: '[]'}
+var _user$project$Circuit2$connection = F3(
+	function (name, from, to) {
+		return _user$project$Circuit2$Connection(
+			{name: name, from: from, to: to});
 	});
-var _user$project$Circuit2$circuit = _user$project$Circuit2$empty;
-var _user$project$Circuit2$Fanout = function (a) {
-	return {ctor: 'Fanout', _0: a};
+var _user$project$Circuit2$CircuitName = function (a) {
+	return {ctor: 'CircuitName', _0: a};
 };
-var _user$project$Circuit2$Gate = function (a) {
-	return {ctor: 'Gate', _0: a};
+var _user$project$Circuit2$Circuit = function (a) {
+	return {ctor: 'Circuit', _0: a};
 };
+var _user$project$Circuit2$circuit = function (name) {
+	return _user$project$Circuit2$Circuit(
+		{
+			name: name,
+			ports: {ctor: '[]'},
+			connections: {ctor: '[]'},
+			circuits: {ctor: '[]'}
+		});
+};
+var _user$project$Circuit2$empty = _user$project$Circuit2$circuit(
+	_user$project$Circuit2$CircuitName('root'));
+var _user$project$Circuit2$add = F2(
+	function (circuit1, _p0) {
+		var _p1 = _p0;
+		var _p2 = _p1._0;
+		return _user$project$Circuit2$Circuit(
+			_elm_lang$core$Native_Utils.update(
+				_p2,
+				{
+					circuits: A2(
+						_elm_lang$core$Basics_ops['++'],
+						_p2.circuits,
+						{
+							ctor: '::',
+							_0: circuit1,
+							_1: {ctor: '[]'}
+						})
+				}));
+	});
+var _user$project$Circuit2$addPort = F3(
+	function (circuitName, port_, _p3) {
+		var _p4 = _p3;
+		var _p5 = _p4._0;
+		return _elm_lang$core$Native_Utils.eq(_p5.name, circuitName) ? _user$project$Circuit2$Circuit(
+			_elm_lang$core$Native_Utils.update(
+				_p5,
+				{
+					ports: A2(
+						_elm_lang$core$Basics_ops['++'],
+						_p5.ports,
+						{
+							ctor: '::',
+							_0: port_,
+							_1: {ctor: '[]'}
+						})
+				})) : _user$project$Circuit2$Circuit(
+			_elm_lang$core$Native_Utils.update(
+				_p5,
+				{
+					circuits: A2(
+						_elm_lang$core$List$map,
+						A2(_user$project$Circuit2$addPort, circuitName, port_),
+						_p5.circuits)
+				}));
+	});
+var _user$project$Circuit2$connect = F2(
+	function (connection, _p6) {
+		var _p7 = _p6;
+		var _p8 = _p7._0;
+		return _user$project$Circuit2$Circuit(
+			_elm_lang$core$Native_Utils.update(
+				_p8,
+				{
+					connections: A2(
+						_elm_lang$core$Basics_ops['++'],
+						_p8.connections,
+						{
+							ctor: '::',
+							_0: connection,
+							_1: {ctor: '[]'}
+						})
+				}));
+	});
+var _user$project$Circuit2$example = function () {
+	var connection1 = _user$project$Circuit2$ConnectionName('connection1');
+	var output1 = _user$project$Circuit2$PortName('output1');
+	var input2 = _user$project$Circuit2$PortName('input2');
+	var input1 = _user$project$Circuit2$PortName('input1');
+	var gate2 = _user$project$Circuit2$CircuitName('gate2');
+	var gate1 = _user$project$Circuit2$CircuitName('gate1');
+	return A2(
+		_elm_lang$core$Debug$log,
+		'circuit',
+		A2(
+			_user$project$Circuit2$connect,
+			A3(
+				_user$project$Circuit2$connection,
+				connection1,
+				A2(
+					_user$project$Circuit2$portReference,
+					{
+						ctor: '::',
+						_0: gate1,
+						_1: {ctor: '[]'}
+					},
+					output1),
+				A2(
+					_user$project$Circuit2$portReference,
+					{
+						ctor: '::',
+						_0: gate2,
+						_1: {ctor: '[]'}
+					},
+					input1)),
+			A3(
+				_user$project$Circuit2$addPort,
+				gate2,
+				A2(_user$project$Circuit2$port_, output1, _user$project$Circuit2$Output),
+				A3(
+					_user$project$Circuit2$addPort,
+					gate2,
+					A2(_user$project$Circuit2$port_, input2, _user$project$Circuit2$Input),
+					A3(
+						_user$project$Circuit2$addPort,
+						gate2,
+						A2(_user$project$Circuit2$port_, input1, _user$project$Circuit2$Input),
+						A2(
+							_user$project$Circuit2$add,
+							_user$project$Circuit2$circuit(gate2),
+							A3(
+								_user$project$Circuit2$addPort,
+								gate1,
+								A2(_user$project$Circuit2$port_, output1, _user$project$Circuit2$Output),
+								A3(
+									_user$project$Circuit2$addPort,
+									gate1,
+									A2(_user$project$Circuit2$port_, input2, _user$project$Circuit2$Input),
+									A3(
+										_user$project$Circuit2$addPort,
+										gate1,
+										A2(_user$project$Circuit2$port_, input1, _user$project$Circuit2$Input),
+										A2(
+											_user$project$Circuit2$add,
+											_user$project$Circuit2$circuit(gate1),
+											_user$project$Circuit2$empty))))))))));
+}();
+var _user$project$Circuit2$Grouped = {ctor: 'Grouped'};
+var _user$project$Circuit2$Connected = {ctor: 'Connected'};
+var _user$project$Circuit2$FannedOut = {ctor: 'FannedOut'};
+var _user$project$Circuit2$Added = {ctor: 'Added'};
 var _user$project$Circuit$Port = F2(
 	function (a, b) {
 		return {id: a, direction: b};
@@ -9372,7 +9511,7 @@ var _user$project$Circuit$fanoutGate = function (id) {
 		});
 };
 var _user$project$Circuit$circuit = function () {
-	var _p2 = _user$project$Circuit2$circuit;
+	var _p2 = _user$project$Circuit2$example;
 	return _user$project$Circuit$Circuit(
 		{
 			id: _user$project$Circuit$Id('circuit2'),
