@@ -9313,7 +9313,62 @@ var _user$project$Circuit2$connect = F2(
 						})
 				}));
 	});
+var _user$project$Circuit2$group = F4(
+	function (name, circuits, connections, _p9) {
+		var _p10 = _p9;
+		var _p19 = _p10._0;
+		var ungroupedCircuits = A2(
+			_elm_lang$core$List$filter,
+			function (_p11) {
+				var _p12 = _p11;
+				return !A2(_elm_lang$core$List$member, _p12._0.name, circuits);
+			},
+			_p19.circuits);
+		var groupedCircuits = A2(
+			_elm_lang$core$List$filter,
+			function (_p13) {
+				var _p14 = _p13;
+				return A2(_elm_lang$core$List$member, _p14._0.name, circuits);
+			},
+			_p19.circuits);
+		var ungroupedConnections = A2(
+			_elm_lang$core$List$filter,
+			function (_p15) {
+				var _p16 = _p15;
+				return !A2(_elm_lang$core$List$member, _p16._0.name, connections);
+			},
+			_p19.connections);
+		var groupedConnections = A2(
+			_elm_lang$core$List$filter,
+			function (_p17) {
+				var _p18 = _p17;
+				return A2(_elm_lang$core$List$member, _p18._0.name, connections);
+			},
+			_p19.connections);
+		var group_ = _user$project$Circuit2$Circuit(
+			{
+				name: name,
+				ports: {ctor: '[]'},
+				connections: groupedConnections,
+				circuits: groupedCircuits
+			});
+		return _user$project$Circuit2$Circuit(
+			_elm_lang$core$Native_Utils.update(
+				_p19,
+				{
+					connections: ungroupedConnections,
+					circuits: A2(
+						_elm_lang$core$Basics_ops['++'],
+						ungroupedCircuits,
+						{
+							ctor: '::',
+							_0: group_,
+							_1: {ctor: '[]'}
+						})
+				}));
+	});
 var _user$project$Circuit2$example = function () {
+	var group1 = _user$project$Circuit2$CircuitName('group1');
 	var connection1 = _user$project$Circuit2$ConnectionName('connection1');
 	var output1 = _user$project$Circuit2$PortName('output1');
 	var input2 = _user$project$Circuit2$PortName('input2');
@@ -9323,58 +9378,75 @@ var _user$project$Circuit2$example = function () {
 	return A2(
 		_elm_lang$core$Debug$log,
 		'circuit',
-		A2(
-			_user$project$Circuit2$connect,
-			A3(
-				_user$project$Circuit2$connection,
-				connection1,
-				A2(
-					_user$project$Circuit2$portReference,
-					{
-						ctor: '::',
-						_0: gate1,
-						_1: {ctor: '[]'}
-					},
-					output1),
-				A2(
-					_user$project$Circuit2$portReference,
-					{
-						ctor: '::',
-						_0: gate2,
-						_1: {ctor: '[]'}
-					},
-					input1)),
-			A3(
-				_user$project$Circuit2$addPort,
-				gate2,
-				A2(_user$project$Circuit2$port_, output1, _user$project$Circuit2$Output),
+		A4(
+			_user$project$Circuit2$group,
+			group1,
+			{
+				ctor: '::',
+				_0: gate1,
+				_1: {
+					ctor: '::',
+					_0: gate2,
+					_1: {ctor: '[]'}
+				}
+			},
+			{
+				ctor: '::',
+				_0: connection1,
+				_1: {ctor: '[]'}
+			},
+			A2(
+				_user$project$Circuit2$connect,
+				A3(
+					_user$project$Circuit2$connection,
+					connection1,
+					A2(
+						_user$project$Circuit2$portReference,
+						{
+							ctor: '::',
+							_0: gate1,
+							_1: {ctor: '[]'}
+						},
+						output1),
+					A2(
+						_user$project$Circuit2$portReference,
+						{
+							ctor: '::',
+							_0: gate2,
+							_1: {ctor: '[]'}
+						},
+						input1)),
 				A3(
 					_user$project$Circuit2$addPort,
 					gate2,
-					A2(_user$project$Circuit2$port_, input2, _user$project$Circuit2$Input),
+					A2(_user$project$Circuit2$port_, output1, _user$project$Circuit2$Output),
 					A3(
 						_user$project$Circuit2$addPort,
 						gate2,
-						A2(_user$project$Circuit2$port_, input1, _user$project$Circuit2$Input),
-						A2(
-							_user$project$Circuit2$add,
-							_user$project$Circuit2$circuit(gate2),
-							A3(
-								_user$project$Circuit2$addPort,
-								gate1,
-								A2(_user$project$Circuit2$port_, output1, _user$project$Circuit2$Output),
+						A2(_user$project$Circuit2$port_, input2, _user$project$Circuit2$Input),
+						A3(
+							_user$project$Circuit2$addPort,
+							gate2,
+							A2(_user$project$Circuit2$port_, input1, _user$project$Circuit2$Input),
+							A2(
+								_user$project$Circuit2$add,
+								_user$project$Circuit2$circuit(gate2),
 								A3(
 									_user$project$Circuit2$addPort,
 									gate1,
-									A2(_user$project$Circuit2$port_, input2, _user$project$Circuit2$Input),
+									A2(_user$project$Circuit2$port_, output1, _user$project$Circuit2$Output),
 									A3(
 										_user$project$Circuit2$addPort,
 										gate1,
-										A2(_user$project$Circuit2$port_, input1, _user$project$Circuit2$Input),
-										A2(
-											_user$project$Circuit2$add,
-											_user$project$Circuit2$circuit(gate1),
-											_user$project$Circuit2$empty))))))))));
+										A2(_user$project$Circuit2$port_, input2, _user$project$Circuit2$Input),
+										A3(
+											_user$project$Circuit2$addPort,
+											gate1,
+											A2(_user$project$Circuit2$port_, input1, _user$project$Circuit2$Input),
+											A2(
+												_user$project$Circuit2$add,
+												_user$project$Circuit2$circuit(gate1),
+												_user$project$Circuit2$empty)))))))))));
 }();
 var _user$project$Circuit2$Grouped = {ctor: 'Grouped'};
 var _user$project$Circuit2$Connected = {ctor: 'Connected'};
