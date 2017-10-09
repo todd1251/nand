@@ -9316,35 +9316,142 @@ var _user$project$Circuit2$connect = F2(
 var _user$project$Circuit2$group = F4(
 	function (name, circuits, connections, _p9) {
 		var _p10 = _p9;
-		var _p19 = _p10._0;
+		var _p38 = _p10._0;
 		var ungroupedCircuits = A2(
 			_elm_lang$core$List$filter,
 			function (_p11) {
 				var _p12 = _p11;
 				return !A2(_elm_lang$core$List$member, _p12._0.name, circuits);
 			},
-			_p19.circuits);
+			_p38.circuits);
 		var groupedCircuits = A2(
 			_elm_lang$core$List$filter,
 			function (_p13) {
 				var _p14 = _p13;
 				return A2(_elm_lang$core$List$member, _p14._0.name, circuits);
 			},
-			_p19.circuits);
+			_p38.circuits);
+		var _p15 = function () {
+			var gather = _elm_lang$core$List$foldl(
+				F2(
+					function (_p17, _p16) {
+						var _p18 = _p17;
+						var _p29 = _p18._0;
+						var _p19 = _p16;
+						var _p28 = _p19._0;
+						var outputs = A2(
+							_elm_lang$core$List$map,
+							function (_p20) {
+								var _p21 = _p20;
+								return _user$project$Circuit2$PortReference(
+									{path: _p28, name: _p21._0.name});
+							},
+							A2(
+								_elm_lang$core$List$filter,
+								function (_p22) {
+									var _p23 = _p22;
+									return _elm_lang$core$Native_Utils.eq(_p23._0.direction, _user$project$Circuit2$Output);
+								},
+								_p29.ports));
+						var inputs = A2(
+							_elm_lang$core$List$map,
+							function (_p24) {
+								var _p25 = _p24;
+								return _user$project$Circuit2$PortReference(
+									{path: _p28, name: _p25._0.name});
+							},
+							A2(
+								_elm_lang$core$List$filter,
+								function (_p26) {
+									var _p27 = _p26;
+									return _elm_lang$core$Native_Utils.eq(_p27._0.direction, _user$project$Circuit2$Input);
+								},
+								_p29.ports));
+						return A2(
+							gather,
+							{
+								ctor: '_Tuple4',
+								_0: A2(
+									_elm_lang$core$Basics_ops['++'],
+									_p28,
+									{
+										ctor: '::',
+										_0: _p29.name,
+										_1: {ctor: '[]'}
+									}),
+								_1: A2(_elm_lang$core$Basics_ops['++'], _p19._1, inputs),
+								_2: A2(_elm_lang$core$Basics_ops['++'], _p19._2, outputs),
+								_3: A2(_elm_lang$core$Basics_ops['++'], _p19._3, _p29.connections)
+							},
+							_p29.circuits);
+					}));
+			return A2(
+				_elm_lang$core$Debug$log,
+				'(path, allInputs, allOutputs, allConnections)',
+				A2(
+					gather,
+					{
+						ctor: '_Tuple4',
+						_0: {ctor: '[]'},
+						_1: {ctor: '[]'},
+						_2: {ctor: '[]'},
+						_3: _p38.connections
+					},
+					groupedCircuits));
+		}();
+		var allInputs = _p15._1;
+		var allOutputs = _p15._2;
+		var allConnections = _p15._3;
+		var unconnectedInputs = A2(
+			_elm_lang$core$Debug$log,
+			'unconnectedInputs',
+			A2(
+				_elm_lang$core$List$filter,
+				function (input) {
+					return !A2(
+						_elm_lang$core$List$member,
+						input,
+						A2(
+							_elm_lang$core$List$map,
+							function (_p30) {
+								var _p31 = _p30;
+								return _p31._0.to;
+							},
+							allConnections));
+				},
+				allInputs));
+		var unconnectedOutputs = A2(
+			_elm_lang$core$Debug$log,
+			'unconnectedOutputs',
+			A2(
+				_elm_lang$core$List$filter,
+				function (output) {
+					return !A2(
+						_elm_lang$core$List$member,
+						output,
+						A2(
+							_elm_lang$core$List$map,
+							function (_p32) {
+								var _p33 = _p32;
+								return _p33._0.from;
+							},
+							allConnections));
+				},
+				allOutputs));
 		var ungroupedConnections = A2(
 			_elm_lang$core$List$filter,
-			function (_p15) {
-				var _p16 = _p15;
-				return !A2(_elm_lang$core$List$member, _p16._0.name, connections);
+			function (_p34) {
+				var _p35 = _p34;
+				return !A2(_elm_lang$core$List$member, _p35._0.name, connections);
 			},
-			_p19.connections);
+			_p38.connections);
 		var groupedConnections = A2(
 			_elm_lang$core$List$filter,
-			function (_p17) {
-				var _p18 = _p17;
-				return A2(_elm_lang$core$List$member, _p18._0.name, connections);
+			function (_p36) {
+				var _p37 = _p36;
+				return A2(_elm_lang$core$List$member, _p37._0.name, connections);
 			},
-			_p19.connections);
+			_p38.connections);
 		var group_ = _user$project$Circuit2$Circuit(
 			{
 				name: name,
@@ -9354,7 +9461,7 @@ var _user$project$Circuit2$group = F4(
 			});
 		return _user$project$Circuit2$Circuit(
 			_elm_lang$core$Native_Utils.update(
-				_p19,
+				_p38,
 				{
 					connections: ungroupedConnections,
 					circuits: A2(
@@ -9368,7 +9475,7 @@ var _user$project$Circuit2$group = F4(
 				}));
 	});
 var _user$project$Circuit2$example = function () {
-	var group1 = _user$project$Circuit2$CircuitName('group1');
+	var circuit1 = _user$project$Circuit2$CircuitName('circuit1');
 	var connection1 = _user$project$Circuit2$ConnectionName('connection1');
 	var output1 = _user$project$Circuit2$PortName('output1');
 	var input2 = _user$project$Circuit2$PortName('input2');
@@ -9380,7 +9487,7 @@ var _user$project$Circuit2$example = function () {
 		'circuit',
 		A4(
 			_user$project$Circuit2$group,
-			group1,
+			circuit1,
 			{
 				ctor: '::',
 				_0: gate1,
