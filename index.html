@@ -9794,14 +9794,14 @@ var _user$project$Circuit2$group = F4(
 						allConnections));
 			},
 			allInputs);
-		var innerInputPorts = A2(
+		var inputPorts = A2(
 			_elm_lang$core$List$map,
 			function (input) {
 				return {
 					ctor: '_Tuple2',
 					_0: A2(
 						_user$project$Circuit2$port_,
-						A2(_user$project$Circuit2$suffix, 'inner', input),
+						A2(_user$project$Circuit2$suffix, 'input', input),
 						_user$project$Circuit2$Input),
 					_1: input
 				};
@@ -9835,21 +9835,7 @@ var _user$project$Circuit2$group = F4(
 							_p37._0._0.name),
 						_p37._1);
 				}),
-			innerInputPorts);
-		var outerInputPorts = _elm_lang$core$List$concat(
-			A2(
-				_elm_lang$core$List$map,
-				function (input) {
-					return {
-						ctor: '::',
-						_0: A2(
-							_user$project$Circuit2$port_,
-							A2(_user$project$Circuit2$suffix, 'outer', input),
-							_user$project$Circuit2$Input),
-						_1: {ctor: '[]'}
-					};
-				},
-				unconnectedInputs));
+			inputPorts);
 		var unconnectedOutputs = A2(
 			_elm_lang$core$List$filter,
 			function (output) {
@@ -9865,14 +9851,14 @@ var _user$project$Circuit2$group = F4(
 						allConnections));
 			},
 			allOutputs);
-		var innerOutputPorts = A2(
+		var outputPorts = A2(
 			_elm_lang$core$List$map,
 			function (output) {
 				return {
 					ctor: '_Tuple2',
 					_0: A2(
 						_user$project$Circuit2$port_,
-						A2(_user$project$Circuit2$suffix, 'inner', output),
+						A2(_user$project$Circuit2$suffix, 'output', output),
 						_user$project$Circuit2$Output),
 					_1: output
 				};
@@ -9906,16 +9892,7 @@ var _user$project$Circuit2$group = F4(
 							_p42._0._0.name),
 						_p42._1);
 				}),
-			innerOutputPorts);
-		var outerOutputPorts = A2(
-			_elm_lang$core$List$map,
-			function (output) {
-				return A2(
-					_user$project$Circuit2$port_,
-					A2(_user$project$Circuit2$suffix, 'outer', output),
-					_user$project$Circuit2$Output);
-			},
-			unconnectedOutputs);
+			outputPorts);
 		var ungroupedConnections = A2(
 			_elm_lang$core$List$filter,
 			function (_p44) {
@@ -9933,10 +9910,7 @@ var _user$project$Circuit2$group = F4(
 		var group_ = _user$project$Circuit2$Circuit(
 			{
 				name: _user$project$Circuit2$CircuitName('group'),
-				ports: A2(
-					_elm_lang$core$Basics_ops['++'],
-					A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$first, innerInputPorts),
-					A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$first, innerOutputPorts)),
+				ports: {ctor: '[]'},
 				connections: A2(
 					_elm_lang$core$Basics_ops['++'],
 					groupedConnections,
@@ -9946,7 +9920,10 @@ var _user$project$Circuit2$group = F4(
 		var outer = _user$project$Circuit2$Circuit(
 			{
 				name: name,
-				ports: A2(_elm_lang$core$Basics_ops['++'], outerInputPorts, outerOutputPorts),
+				ports: A2(
+					_elm_lang$core$Basics_ops['++'],
+					A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$first, inputPorts),
+					A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$first, outputPorts)),
 				connections: {ctor: '[]'},
 				circuits: {
 					ctor: '::',
@@ -11190,22 +11167,26 @@ var _user$project$Main2$view = function (state) {
 				{ctor: '[]'}),
 			_1: {
 				ctor: '::',
-				_0: _user$project$Canvas2$view(
-					A3(
-						_user$project$Scene$render,
-						_user$project$Canvas2$origin(state.canvasSize),
-						F2(
-							function (shape, transform) {
-								var _p0 = shape;
-								if (_p0.ctor === 'Just') {
-									return _elm_lang$core$Maybe$Just(
-										A2(_user$project$Shape$constructor, _p0._0, transform));
-								} else {
-									return _elm_lang$core$Maybe$Nothing;
-								}
-							}),
-						state.scene)),
-				_1: {ctor: '[]'}
+				_0: _user$project$PrintAny$view(_user$project$Circuit2$example),
+				_1: {
+					ctor: '::',
+					_0: _user$project$Canvas2$view(
+						A3(
+							_user$project$Scene$render,
+							_user$project$Canvas2$origin(state.canvasSize),
+							F2(
+								function (shape, transform) {
+									var _p0 = shape;
+									if (_p0.ctor === 'Just') {
+										return _elm_lang$core$Maybe$Just(
+											A2(_user$project$Shape$constructor, _p0._0, transform));
+									} else {
+										return _elm_lang$core$Maybe$Nothing;
+									}
+								}),
+							state.scene)),
+					_1: {ctor: '[]'}
+				}
 			}
 		});
 };
