@@ -11167,26 +11167,22 @@ var _user$project$Main2$view = function (state) {
 				{ctor: '[]'}),
 			_1: {
 				ctor: '::',
-				_0: _user$project$PrintAny$view(_user$project$Circuit2$example),
-				_1: {
-					ctor: '::',
-					_0: _user$project$Canvas2$view(
-						A3(
-							_user$project$Scene$render,
-							_user$project$Canvas2$origin(state.canvasSize),
-							F2(
-								function (shape, transform) {
-									var _p0 = shape;
-									if (_p0.ctor === 'Just') {
-										return _elm_lang$core$Maybe$Just(
-											A2(_user$project$Shape$constructor, _p0._0, transform));
-									} else {
-										return _elm_lang$core$Maybe$Nothing;
-									}
-								}),
-							state.scene)),
-					_1: {ctor: '[]'}
-				}
+				_0: _user$project$Canvas2$view(
+					A3(
+						_user$project$Scene$render,
+						_user$project$Canvas2$origin(state.canvasSize),
+						F2(
+							function (shape, transform) {
+								var _p0 = shape;
+								if (_p0.ctor === 'Just') {
+									return _elm_lang$core$Maybe$Just(
+										A2(_user$project$Shape$constructor, _p0._0, transform));
+								} else {
+									return _elm_lang$core$Maybe$Nothing;
+								}
+							}),
+						state.scene)),
+				_1: {ctor: '[]'}
 			}
 		});
 };
