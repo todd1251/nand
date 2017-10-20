@@ -3150,6 +3150,75 @@ var _elm_lang$core$Platform$Program = {ctor: 'Program'};
 var _elm_lang$core$Platform$Task = {ctor: 'Task'};
 var _elm_lang$core$Platform$ProcessId = {ctor: 'ProcessId'};
 var _elm_lang$core$Platform$Router = {ctor: 'Router'};
+var _benansell$elm_geometric_transformation$Transformer2D$translate = function (_p0) {
+	var _p1 = _p0;
+	return {a: 1, b: 0, c: 0, d: 1, tx: _p1._0, ty: _p1._1};
+};
+var _benansell$elm_geometric_transformation$Transformer2D$shear = F2(
+	function (direction, k) {
+		var _p2 = direction;
+		if (_p2.ctor === 'Horizontal') {
+			return {a: 1, b: k, c: 0, d: 1, tx: 0, ty: 0};
+		} else {
+			return {a: 1, b: 0, c: k, d: 1, tx: 0, ty: 0};
+		}
+	});
+var _benansell$elm_geometric_transformation$Transformer2D$scale = F2(
+	function (width, height) {
+		return {a: width, b: 0, c: 0, d: height, tx: 0, ty: 0};
+	});
+var _benansell$elm_geometric_transformation$Transformer2D$scaleUniform = function (k) {
+	return A2(_benansell$elm_geometric_transformation$Transformer2D$scale, k, k);
+};
+var _benansell$elm_geometric_transformation$Transformer2D$rotate = F2(
+	function (direction, theta) {
+		var signedDirection = function () {
+			var _p3 = direction;
+			if (_p3.ctor === 'Clockwise') {
+				return 1;
+			} else {
+				return -1;
+			}
+		}();
+		return {
+			a: _elm_lang$core$Basics$cos(theta),
+			b: signedDirection * (0 - _elm_lang$core$Basics$sin(theta)),
+			c: signedDirection * _elm_lang$core$Basics$sin(theta),
+			d: _elm_lang$core$Basics$cos(theta),
+			tx: 0,
+			ty: 0
+		};
+	});
+var _benansell$elm_geometric_transformation$Transformer2D$identity = function (p) {
+	return {a: 1, b: 0, c: 0, d: 1, tx: p.x, ty: p.y};
+};
+var _benansell$elm_geometric_transformation$Transformer2D$combine = F2(
+	function (t1, t2) {
+		return {a: (t1.a * t2.a) + (t1.b * t2.c), b: (t1.a * t2.b) + (t1.b * t2.d), c: (t1.c * t2.a) + (t1.d * t2.c), d: (t1.c * t2.b) + (t1.d * t2.d), tx: ((t1.a * t2.tx) + (t1.b * t2.ty)) + t1.tx, ty: ((t1.c * t2.tx) + (t1.d * t2.ty)) + t1.ty};
+	});
+var _benansell$elm_geometric_transformation$Transformer2D$apply = F2(
+	function (t, p) {
+		return {x: ((t.a * p.x) + (t.b * p.y)) + t.tx, y: ((t.c * p.x) + (t.d * p.y)) + t.ty};
+	});
+var _benansell$elm_geometric_transformation$Transformer2D$fromPoint = function (p) {
+	return {ctor: '_Tuple2', _0: p.x, _1: p.y};
+};
+var _benansell$elm_geometric_transformation$Transformer2D$toPoint = function (_p4) {
+	var _p5 = _p4;
+	return {x: _p5._0, y: _p5._1};
+};
+var _benansell$elm_geometric_transformation$Transformer2D$Point = F2(
+	function (a, b) {
+		return {x: a, y: b};
+	});
+var _benansell$elm_geometric_transformation$Transformer2D$Transformation = F6(
+	function (a, b, c, d, e, f) {
+		return {a: a, b: b, c: c, d: d, tx: e, ty: f};
+	});
+var _benansell$elm_geometric_transformation$Transformer2D$Clockwise = {ctor: 'Clockwise'};
+var _benansell$elm_geometric_transformation$Transformer2D$AntiClockwise = {ctor: 'AntiClockwise'};
+var _benansell$elm_geometric_transformation$Transformer2D$Vertical = {ctor: 'Vertical'};
+var _benansell$elm_geometric_transformation$Transformer2D$Horizontal = {ctor: 'Horizontal'};
 //import Native.List //
 
 var _elm_lang$core$Native_Array = function() {
@@ -10872,6 +10941,76 @@ var _user$project$Shape$Dashed = {ctor: 'Dashed'};
 var _user$project$Shape$Thin = {ctor: 'Thin'};
 var _user$project$Shape$Thick = {ctor: 'Thick'};
 var _user$project$Shape$NoStroke = {ctor: 'NoStroke'};
+var _user$project$Transform$toSvgTransform = function (transform) {
+	var elements = {
+		ctor: '::',
+		_0: transform.a,
+		_1: {
+			ctor: '::',
+			_0: transform.b,
+			_1: {
+				ctor: '::',
+				_0: transform.c,
+				_1: {
+					ctor: '::',
+					_0: transform.d,
+					_1: {
+						ctor: '::',
+						_0: transform.tx,
+						_1: {
+							ctor: '::',
+							_0: transform.ty,
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			}
+		}
+	};
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		'matrix(',
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			A2(
+				_elm_lang$core$String$join,
+				', ',
+				A2(_elm_lang$core$List$map, _elm_lang$core$Basics$toString, elements)),
+			')'));
+};
+var _user$project$Transform$scaleAll = F2(
+	function (transform, scale) {
+		return {a: transform.a * scale, b: transform.b * scale, c: transform.c * scale, d: transform.d * scale, tx: transform.tx * scale, ty: transform.ty * scale};
+	});
+var _user$project$Transform$scale = F2(
+	function (transform, scale) {
+		return A2(
+			_benansell$elm_geometric_transformation$Transformer2D$combine,
+			transform,
+			_benansell$elm_geometric_transformation$Transformer2D$scaleUniform(scale));
+	});
+var _user$project$Transform$translatePointBeforeScale = F2(
+	function (_p0, transform) {
+		var _p1 = _p0;
+		return _benansell$elm_geometric_transformation$Transformer2D$combine(
+			_benansell$elm_geometric_transformation$Transformer2D$translate(
+				{ctor: '_Tuple2', _0: _p1._0 / transform.a, _1: _p1._1 / transform.d}));
+	});
+var _user$project$Transform$translate = F3(
+	function (transform, dx, dy) {
+		return A2(
+			_benansell$elm_geometric_transformation$Transformer2D$combine,
+			transform,
+			_benansell$elm_geometric_transformation$Transformer2D$translate(
+				{ctor: '_Tuple2', _0: dx, _1: dy}));
+	});
+var _user$project$Transform$translateBeforeScale = F3(
+	function (transform, dx, dy) {
+		return A3(_user$project$Transform$translate, transform, dx / transform.a, dy / transform.d);
+	});
+var _user$project$Transform$identity = _benansell$elm_geometric_transformation$Transformer2D$identity(
+	_benansell$elm_geometric_transformation$Transformer2D$toPoint(
+		{ctor: '_Tuple2', _0: 0, _1: 0}));
 var _user$project$Unsafe$nth = F2(
 	function (index, xs) {
 		return function (x) {
@@ -10943,6 +11082,26 @@ var _user$project$Main2$update = F2(
 			_1: _elm_lang$core$Platform_Cmd$none
 		};
 	});
+var _user$project$Main2$toScene2 = F2(
+	function (circuit, scene) {
+		return A4(
+			_user$project$Scene$insert,
+			'test',
+			_elm_lang$core$Maybe$Just(
+				_user$project$Shape$Rectangle(
+					{
+						origin: {x: -10, y: -10},
+						size: {width: 20, height: 20},
+						stroke: _user$project$Shape$Thin
+					})),
+			function (_p3) {
+				return A2(
+					_elm_lang$core$Maybe$withDefault,
+					_user$project$Bounds$zero,
+					A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p3));
+			},
+			scene);
+	});
 var _user$project$Main2$outputShape = _user$project$Shape$Path(
 	{
 		points: {
@@ -10968,20 +11127,6 @@ var _user$project$Main2$inputShape = _user$project$Shape$Path(
 			}
 		},
 		stroke: _user$project$Shape$Thick
-	});
-var _user$project$Main2$toScene2 = F2(
-	function (circuit, scene) {
-		return A4(
-			_user$project$Scene$insert,
-			'test',
-			_elm_lang$core$Maybe$Just(_user$project$Main2$inputShape),
-			function (_p3) {
-				return A2(
-					_elm_lang$core$Maybe$withDefault,
-					_user$project$Bounds$zero,
-					A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p3));
-			},
-			scene);
 	});
 var _user$project$Main2$State = F2(
 	function (a, b) {
