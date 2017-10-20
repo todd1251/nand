@@ -9347,210 +9347,6 @@ var _user$project$Canvas2$centre = F2(
 var _user$project$Canvas2$origin = function (size) {
 	return A2(_user$project$Canvas2$centre, 0 - size.width, 0 - size.height);
 };
-var _user$project$Shape$strokeAttributes = function (stroke) {
-	var _p0 = stroke;
-	switch (_p0.ctor) {
-		case 'NoStroke':
-			return {
-				ctor: '::',
-				_0: _elm_lang$svg$Svg_Attributes$fill('none'),
-				_1: {ctor: '[]'}
-			};
-		case 'Thick':
-			return {
-				ctor: '::',
-				_0: _elm_lang$svg$Svg_Attributes$strokeWidth('3'),
-				_1: {
-					ctor: '::',
-					_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$svg$Svg_Attributes$fill('none'),
-						_1: {ctor: '[]'}
-					}
-				}
-			};
-		case 'Thin':
-			return {
-				ctor: '::',
-				_0: _elm_lang$svg$Svg_Attributes$strokeWidth('2'),
-				_1: {
-					ctor: '::',
-					_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$svg$Svg_Attributes$fill('none'),
-						_1: {ctor: '[]'}
-					}
-				}
-			};
-		default:
-			return {
-				ctor: '::',
-				_0: _elm_lang$svg$Svg_Attributes$strokeWidth('1'),
-				_1: {
-					ctor: '::',
-					_0: _elm_lang$svg$Svg_Attributes$strokeDasharray('2,2'),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$svg$Svg_Attributes$stroke('#ccc'),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$svg$Svg_Attributes$fill('none'),
-							_1: {ctor: '[]'}
-						}
-					}
-				}
-			};
-	}
-};
-var _user$project$Shape$rectangle = F6(
-	function (left, top, width, height, stroke, transform) {
-		return A2(
-			_elm_lang$svg$Svg$rect,
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				{
-					ctor: '::',
-					_0: _elm_lang$svg$Svg_Attributes$transform(
-						_user$project$Canvas2$toSvgTransform(transform)),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$svg$Svg_Attributes$x(
-							_elm_lang$core$Basics$toString(left)),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$svg$Svg_Attributes$y(
-								_elm_lang$core$Basics$toString(top)),
-							_1: {
-								ctor: '::',
-								_0: _elm_lang$svg$Svg_Attributes$width(
-									_elm_lang$core$Basics$toString(width)),
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$svg$Svg_Attributes$height(
-										_elm_lang$core$Basics$toString(height)),
-									_1: {ctor: '[]'}
-								}
-							}
-						}
-					}
-				},
-				_user$project$Shape$strokeAttributes(stroke)),
-			{ctor: '[]'});
-	});
-var _user$project$Shape$circle = F5(
-	function (cx, cy, radius, stroke, transform) {
-		return A2(
-			_elm_lang$svg$Svg$circle,
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				{
-					ctor: '::',
-					_0: _elm_lang$svg$Svg_Attributes$transform(
-						_user$project$Canvas2$toSvgTransform(transform)),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$svg$Svg_Attributes$cx(
-							_elm_lang$core$Basics$toString(cx)),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$svg$Svg_Attributes$cy(
-								_elm_lang$core$Basics$toString(cy)),
-							_1: {
-								ctor: '::',
-								_0: _elm_lang$svg$Svg_Attributes$r(
-									_elm_lang$core$Basics$toString(radius)),
-								_1: {ctor: '[]'}
-							}
-						}
-					}
-				},
-				_user$project$Shape$strokeAttributes(stroke)),
-			{ctor: '[]'});
-	});
-var _user$project$Shape$path = F3(
-	function (path, stroke, transform) {
-		return A2(
-			_elm_lang$svg$Svg$path,
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				{
-					ctor: '::',
-					_0: _elm_lang$svg$Svg_Attributes$transform(
-						_user$project$Canvas2$toSvgTransform(transform)),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$svg$Svg_Attributes$d(
-							A2(
-								_elm_lang$core$String$join,
-								' ',
-								A2(
-									_elm_lang$core$List$indexedMap,
-									F2(
-										function (index, _p1) {
-											var _p2 = _p1;
-											return A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Native_Utils.eq(index, 0) ? 'M' : 'L',
-												A2(
-													_elm_lang$core$Basics_ops['++'],
-													_elm_lang$core$Basics$toString(_p2.x),
-													A2(
-														_elm_lang$core$Basics_ops['++'],
-														',',
-														_elm_lang$core$Basics$toString(_p2.y))));
-										}),
-									path))),
-						_1: {ctor: '[]'}
-					}
-				},
-				_user$project$Shape$strokeAttributes(stroke)),
-			{ctor: '[]'});
-	});
-var _user$project$Shape$constructor = function (shape) {
-	var _p3 = shape;
-	switch (_p3.ctor) {
-		case 'Circle':
-			var _p4 = _p3._0.centre;
-			return A4(_user$project$Shape$circle, _p4.x, _p4.y, _p3._0.radius, _p3._0.stroke);
-		case 'Rectangle':
-			var _p6 = _p3._0.size;
-			var _p5 = _p3._0.origin;
-			return A5(_user$project$Shape$rectangle, _p5.x, _p5.y, _p6.width, _p6.height, _p3._0.stroke);
-		default:
-			return A2(_user$project$Shape$path, _p3._0.points, _p3._0.stroke);
-	}
-};
-var _user$project$Shape$bounds = function (shape) {
-	var _p7 = shape;
-	switch (_p7.ctor) {
-		case 'Circle':
-			var _p9 = _p7._0.radius;
-			var _p8 = _p7._0.centre;
-			return {
-				origin: {x: _p8.x - _p9, y: _p8.y - _p9},
-				size: {width: _p9 * 2, height: _p9 * 2}
-			};
-		case 'Rectangle':
-			return {origin: _p7._0.origin, size: _p7._0.size};
-		default:
-			return _user$project$Bounds$zero;
-	}
-};
-var _user$project$Shape$Path = function (a) {
-	return {ctor: 'Path', _0: a};
-};
-var _user$project$Shape$Rectangle = function (a) {
-	return {ctor: 'Rectangle', _0: a};
-};
-var _user$project$Shape$Circle = function (a) {
-	return {ctor: 'Circle', _0: a};
-};
-var _user$project$Shape$Dashed = {ctor: 'Dashed'};
-var _user$project$Shape$Thin = {ctor: 'Thin'};
-var _user$project$Shape$Thick = {ctor: 'Thick'};
-var _user$project$Shape$NoStroke = {ctor: 'NoStroke'};
 var _user$project$Circuit2$CircuitName = function (a) {
 	return {ctor: 'CircuitName', _0: a};
 };
@@ -10028,271 +9824,6 @@ var _user$project$Circuit2$example = function () {
 											_user$project$Circuit2$add,
 											_user$project$Circuit2$circuit(gate1),
 											_user$project$Circuit2$empty))))))))));
-}();
-var _user$project$Circuit$Port = F2(
-	function (a, b) {
-		return {id: a, direction: b};
-	});
-var _user$project$Circuit$Connection = F2(
-	function (a, b) {
-		return {from: a, to: b};
-	});
-var _user$project$Circuit$Id = function (a) {
-	return {ctor: 'Id', _0: a};
-};
-var _user$project$Circuit$id = function (id) {
-	return _user$project$Circuit$Id(id);
-};
-var _user$project$Circuit$suffix = F2(
-	function (suffix, _p0) {
-		var _p1 = _p0;
-		return _user$project$Circuit$Id(
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				_p1._0,
-				A2(_elm_lang$core$Basics_ops['++'], '.', suffix)));
-	});
-var _user$project$Circuit$Output = {ctor: 'Output'};
-var _user$project$Circuit$Input = {ctor: 'Input'};
-var _user$project$Circuit$Circuit = function (a) {
-	return {ctor: 'Circuit', _0: a};
-};
-var _user$project$Circuit$Gate = function (a) {
-	return {ctor: 'Gate', _0: a};
-};
-var _user$project$Circuit$circleGate = function (id) {
-	return _user$project$Circuit$Gate(
-		{
-			id: id,
-			shape: _elm_lang$core$Maybe$Just(
-				_user$project$Shape$Circle(
-					{
-						centre: {x: 0, y: 0},
-						radius: 50,
-						stroke: _user$project$Shape$Thick
-					})),
-			ports: {
-				ctor: '::',
-				_0: {
-					id: A2(_user$project$Circuit$suffix, 'input1', id),
-					direction: _user$project$Circuit$Input
-				},
-				_1: {
-					ctor: '::',
-					_0: {
-						id: A2(_user$project$Circuit$suffix, 'input2', id),
-						direction: _user$project$Circuit$Input
-					},
-					_1: {
-						ctor: '::',
-						_0: {
-							id: A2(_user$project$Circuit$suffix, 'output1', id),
-							direction: _user$project$Circuit$Output
-						},
-						_1: {ctor: '[]'}
-					}
-				}
-			}
-		});
-};
-var _user$project$Circuit$rectangleGate = function (id) {
-	return _user$project$Circuit$Gate(
-		{
-			id: id,
-			shape: _elm_lang$core$Maybe$Just(
-				_user$project$Shape$Rectangle(
-					{
-						origin: {x: -50, y: -50},
-						size: {width: 100, height: 100},
-						stroke: _user$project$Shape$Thick
-					})),
-			ports: {
-				ctor: '::',
-				_0: {
-					id: A2(_user$project$Circuit$suffix, 'input1', id),
-					direction: _user$project$Circuit$Input
-				},
-				_1: {
-					ctor: '::',
-					_0: {
-						id: A2(_user$project$Circuit$suffix, 'input2', id),
-						direction: _user$project$Circuit$Input
-					},
-					_1: {
-						ctor: '::',
-						_0: {
-							id: A2(_user$project$Circuit$suffix, 'output1', id),
-							direction: _user$project$Circuit$Output
-						},
-						_1: {ctor: '[]'}
-					}
-				}
-			}
-		});
-};
-var _user$project$Circuit$fanoutGate = function (id) {
-	return _user$project$Circuit$Gate(
-		{
-			id: id,
-			shape: _elm_lang$core$Maybe$Nothing,
-			ports: {
-				ctor: '::',
-				_0: {
-					id: A2(_user$project$Circuit$suffix, 'input1', id),
-					direction: _user$project$Circuit$Input
-				},
-				_1: {
-					ctor: '::',
-					_0: {
-						id: A2(_user$project$Circuit$suffix, 'output1', id),
-						direction: _user$project$Circuit$Output
-					},
-					_1: {
-						ctor: '::',
-						_0: {
-							id: A2(_user$project$Circuit$suffix, 'output2', id),
-							direction: _user$project$Circuit$Output
-						},
-						_1: {ctor: '[]'}
-					}
-				}
-			}
-		});
-};
-var _user$project$Circuit$circuit = function () {
-	var _p2 = _user$project$Circuit2$example;
-	return _user$project$Circuit$Circuit(
-		{
-			id: _user$project$Circuit$Id('circuit2'),
-			circuits: {
-				ctor: '::',
-				_0: _user$project$Circuit$rectangleGate(
-					_user$project$Circuit$Id('gate5')),
-				_1: {
-					ctor: '::',
-					_0: _user$project$Circuit$Circuit(
-						{
-							id: _user$project$Circuit$Id('circuit1'),
-							circuits: {
-								ctor: '::',
-								_0: _user$project$Circuit$circleGate(
-									_user$project$Circuit$Id('gate1')),
-								_1: {
-									ctor: '::',
-									_0: _user$project$Circuit$rectangleGate(
-										_user$project$Circuit$Id('gate2')),
-									_1: {
-										ctor: '::',
-										_0: _user$project$Circuit$circleGate(
-											_user$project$Circuit$Id('gate3')),
-										_1: {
-											ctor: '::',
-											_0: _user$project$Circuit$rectangleGate(
-												_user$project$Circuit$Id('gate4')),
-											_1: {
-												ctor: '::',
-												_0: _user$project$Circuit$fanoutGate(
-													_user$project$Circuit$Id('fanout1')),
-												_1: {ctor: '[]'}
-											}
-										}
-									}
-								}
-							},
-							ports: {
-								ctor: '::',
-								_0: {
-									id: A2(
-										_user$project$Circuit$suffix,
-										'input1',
-										_user$project$Circuit$Id('circuit1')),
-									direction: _user$project$Circuit$Input
-								},
-								_1: {
-									ctor: '::',
-									_0: {
-										id: A2(
-											_user$project$Circuit$suffix,
-											'input2',
-											_user$project$Circuit$Id('circuit1')),
-										direction: _user$project$Circuit$Input
-									},
-									_1: {
-										ctor: '::',
-										_0: {
-											id: A2(
-												_user$project$Circuit$suffix,
-												'input3',
-												_user$project$Circuit$Id('circuit1')),
-											direction: _user$project$Circuit$Input
-										},
-										_1: {
-											ctor: '::',
-											_0: {
-												id: A2(
-													_user$project$Circuit$suffix,
-													'input4',
-													_user$project$Circuit$Id('circuit1')),
-												direction: _user$project$Circuit$Input
-											},
-											_1: {
-												ctor: '::',
-												_0: {
-													id: A2(
-														_user$project$Circuit$suffix,
-														'output1',
-														_user$project$Circuit$Id('circuit1')),
-													direction: _user$project$Circuit$Output
-												},
-												_1: {ctor: '[]'}
-											}
-										}
-									}
-								}
-							},
-							connections: {
-								ctor: '::',
-								_0: {
-									from: _user$project$Circuit$Id('gate1.output1'),
-									to: _user$project$Circuit$Id('fanout1.input1')
-								},
-								_1: {
-									ctor: '::',
-									_0: {
-										from: _user$project$Circuit$Id('fanout1.output1'),
-										to: _user$project$Circuit$Id('gate2.input1')
-									},
-									_1: {
-										ctor: '::',
-										_0: {
-											from: _user$project$Circuit$Id('fanout1.output2'),
-											to: _user$project$Circuit$Id('gate2.input2')
-										},
-										_1: {
-											ctor: '::',
-											_0: {
-												from: _user$project$Circuit$Id('gate2.output1'),
-												to: _user$project$Circuit$Id('gate3.input1')
-											},
-											_1: {
-												ctor: '::',
-												_0: {
-													from: _user$project$Circuit$Id('gate4.output1'),
-													to: _user$project$Circuit$Id('gate3.input2')
-												},
-												_1: {ctor: '[]'}
-											}
-										}
-									}
-								}
-							}
-						}),
-					_1: {ctor: '[]'}
-				}
-			},
-			ports: {ctor: '[]'},
-			connections: {ctor: '[]'}
-		});
 }();
 var _user$project$PrintAny$splitLine = function (line) {
 	var newLine = A2(_elm_lang$core$String$dropLeft, 5, line);
@@ -11137,6 +10668,210 @@ var _user$project$Scene$group = F3(
 	});
 var _user$project$Scene$empty = _user$project$Scene$Scene(
 	{ctor: '[]'});
+var _user$project$Shape$strokeAttributes = function (stroke) {
+	var _p0 = stroke;
+	switch (_p0.ctor) {
+		case 'NoStroke':
+			return {
+				ctor: '::',
+				_0: _elm_lang$svg$Svg_Attributes$fill('none'),
+				_1: {ctor: '[]'}
+			};
+		case 'Thick':
+			return {
+				ctor: '::',
+				_0: _elm_lang$svg$Svg_Attributes$strokeWidth('3'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$fill('none'),
+						_1: {ctor: '[]'}
+					}
+				}
+			};
+		case 'Thin':
+			return {
+				ctor: '::',
+				_0: _elm_lang$svg$Svg_Attributes$strokeWidth('2'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$fill('none'),
+						_1: {ctor: '[]'}
+					}
+				}
+			};
+		default:
+			return {
+				ctor: '::',
+				_0: _elm_lang$svg$Svg_Attributes$strokeWidth('1'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$strokeDasharray('2,2'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$stroke('#ccc'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$fill('none'),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			};
+	}
+};
+var _user$project$Shape$rectangle = F6(
+	function (left, top, width, height, stroke, transform) {
+		return A2(
+			_elm_lang$svg$Svg$rect,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$transform(
+						_user$project$Canvas2$toSvgTransform(transform)),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$x(
+							_elm_lang$core$Basics$toString(left)),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$y(
+								_elm_lang$core$Basics$toString(top)),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$svg$Svg_Attributes$width(
+									_elm_lang$core$Basics$toString(width)),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$svg$Svg_Attributes$height(
+										_elm_lang$core$Basics$toString(height)),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				},
+				_user$project$Shape$strokeAttributes(stroke)),
+			{ctor: '[]'});
+	});
+var _user$project$Shape$circle = F5(
+	function (cx, cy, radius, stroke, transform) {
+		return A2(
+			_elm_lang$svg$Svg$circle,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$transform(
+						_user$project$Canvas2$toSvgTransform(transform)),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$cx(
+							_elm_lang$core$Basics$toString(cx)),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$cy(
+								_elm_lang$core$Basics$toString(cy)),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$svg$Svg_Attributes$r(
+									_elm_lang$core$Basics$toString(radius)),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				},
+				_user$project$Shape$strokeAttributes(stroke)),
+			{ctor: '[]'});
+	});
+var _user$project$Shape$path = F3(
+	function (path, stroke, transform) {
+		return A2(
+			_elm_lang$svg$Svg$path,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				{
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$transform(
+						_user$project$Canvas2$toSvgTransform(transform)),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$d(
+							A2(
+								_elm_lang$core$String$join,
+								' ',
+								A2(
+									_elm_lang$core$List$indexedMap,
+									F2(
+										function (index, _p1) {
+											var _p2 = _p1;
+											return A2(
+												_elm_lang$core$Basics_ops['++'],
+												_elm_lang$core$Native_Utils.eq(index, 0) ? 'M' : 'L',
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													_elm_lang$core$Basics$toString(_p2.x),
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														',',
+														_elm_lang$core$Basics$toString(_p2.y))));
+										}),
+									path))),
+						_1: {ctor: '[]'}
+					}
+				},
+				_user$project$Shape$strokeAttributes(stroke)),
+			{ctor: '[]'});
+	});
+var _user$project$Shape$constructor = function (shape) {
+	var _p3 = shape;
+	switch (_p3.ctor) {
+		case 'Circle':
+			var _p4 = _p3._0.centre;
+			return A4(_user$project$Shape$circle, _p4.x, _p4.y, _p3._0.radius, _p3._0.stroke);
+		case 'Rectangle':
+			var _p6 = _p3._0.size;
+			var _p5 = _p3._0.origin;
+			return A5(_user$project$Shape$rectangle, _p5.x, _p5.y, _p6.width, _p6.height, _p3._0.stroke);
+		default:
+			return A2(_user$project$Shape$path, _p3._0.points, _p3._0.stroke);
+	}
+};
+var _user$project$Shape$bounds = function (shape) {
+	var _p7 = shape;
+	switch (_p7.ctor) {
+		case 'Circle':
+			var _p9 = _p7._0.radius;
+			var _p8 = _p7._0.centre;
+			return {
+				origin: {x: _p8.x - _p9, y: _p8.y - _p9},
+				size: {width: _p9 * 2, height: _p9 * 2}
+			};
+		case 'Rectangle':
+			return {origin: _p7._0.origin, size: _p7._0.size};
+		default:
+			return _user$project$Bounds$zero;
+	}
+};
+var _user$project$Shape$Path = function (a) {
+	return {ctor: 'Path', _0: a};
+};
+var _user$project$Shape$Rectangle = function (a) {
+	return {ctor: 'Rectangle', _0: a};
+};
+var _user$project$Shape$Circle = function (a) {
+	return {ctor: 'Circle', _0: a};
+};
+var _user$project$Shape$Dashed = {ctor: 'Dashed'};
+var _user$project$Shape$Thin = {ctor: 'Thin'};
+var _user$project$Shape$Thick = {ctor: 'Thick'};
+var _user$project$Shape$NoStroke = {ctor: 'NoStroke'};
 var _user$project$Unsafe$nth = F2(
 	function (index, xs) {
 		return function (x) {
@@ -11208,153 +10943,6 @@ var _user$project$Main2$update = F2(
 			_1: _elm_lang$core$Platform_Cmd$none
 		};
 	});
-var _user$project$Main2$fanout = F3(
-	function (id, node, scene) {
-		return A2(
-			_elm_lang$core$Result$andThen,
-			A2(
-				_user$project$Scene$transform,
-				id,
-				A2(_user$project$Scene$transformOf, node, scene)),
-			A2(
-				_elm_lang$core$Result$andThen,
-				A2(
-					_user$project$Scene$parent,
-					id,
-					A2(_user$project$Scene$parentOf, node, scene)),
-				A4(
-					_user$project$Scene$insert,
-					id,
-					A2(_user$project$Scene$node, node, scene),
-					function (_p3) {
-						return A2(
-							_elm_lang$core$Maybe$withDefault,
-							_user$project$Bounds$zero,
-							A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p3));
-					},
-					scene)));
-	});
-var _user$project$Main2$connect = F4(
-	function (id, from, to, scene) {
-		var transformPoints = function (id) {
-			return A2(
-				_elm_lang$core$List$map,
-				_user$project$Transform2$apply(
-					A2(_user$project$Scene$transformAt, id, scene)),
-				function () {
-					var _p4 = A2(_user$project$Scene$node, id, scene);
-					if ((_p4.ctor === 'Just') && (_p4._0.ctor === 'Path')) {
-						return _p4._0._0.points;
-					} else {
-						return {
-							ctor: '::',
-							_0: _user$project$Point$zero,
-							_1: {ctor: '[]'}
-						};
-					}
-				}());
-		};
-		var fromPoints = transformPoints(from);
-		var fromPoint = A2(
-			_user$project$Unsafe$nth,
-			_elm_lang$core$List$length(fromPoints) - 1,
-			fromPoints);
-		var toPoints = transformPoints(to);
-		var toPoint = A2(_user$project$Unsafe$nth, 0, toPoints);
-		var midX = fromPoint.x + ((toPoint.x - fromPoint.x) / 2);
-		var points = {
-			ctor: '::',
-			_0: {x: midX, y: fromPoint.y},
-			_1: {
-				ctor: '::',
-				_0: {x: midX, y: toPoint.y},
-				_1: {ctor: '[]'}
-			}
-		};
-		return A2(
-			_elm_lang$core$Result$andThen,
-			_user$project$Scene$remove(to),
-			A2(
-				_elm_lang$core$Result$andThen,
-				_user$project$Scene$remove(from),
-				A4(
-					_user$project$Scene$insert,
-					id,
-					_elm_lang$core$Maybe$Just(
-						_user$project$Shape$Path(
-							{
-								points: A2(
-									_elm_lang$core$Basics_ops['++'],
-									fromPoints,
-									A2(_elm_lang$core$Basics_ops['++'], points, toPoints)),
-								stroke: _user$project$Shape$Thin
-							})),
-					function (_p5) {
-						return A2(
-							_elm_lang$core$Maybe$withDefault,
-							_user$project$Bounds$zero,
-							A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p5));
-					},
-					scene)));
-	});
-var _user$project$Main2$distributeVertically = F5(
-	function (nodes, x, from, to, scene) {
-		var steps = _elm_lang$core$List$length(nodes) - 1;
-		var step = _elm_lang$core$Native_Utils.eq(steps, 0) ? 0 : ((to - from) / _elm_lang$core$Basics$toFloat(steps));
-		return A3(
-			_elm_lang$core$List$foldl,
-			F2(
-				function (_p6, scene) {
-					var _p7 = _p6;
-					var transform = _user$project$Transform2$translate(
-						{
-							x: x,
-							y: _elm_lang$core$Native_Utils.eq(steps, 0) ? (from + ((to - from) / 2)) : (from + (step * _elm_lang$core$Basics$toFloat(_p7._0)))
-						});
-					return A2(
-						_elm_lang$core$Result$andThen,
-						A2(_user$project$Scene$transform, _p7._1, transform),
-						scene);
-				}),
-			_elm_lang$core$Result$Ok(scene),
-			A2(
-				_elm_lang$core$List$indexedMap,
-				F2(
-					function (v0, v1) {
-						return {ctor: '_Tuple2', _0: v0, _1: v1};
-					}),
-				nodes));
-	});
-var _user$project$Main2$duplicate = F3(
-	function (nodes, shape, scene) {
-		return A3(
-			_elm_lang$core$List$foldl,
-			F2(
-				function (_p8, scene) {
-					var _p9 = _p8;
-					return A2(
-						_elm_lang$core$Result$andThen,
-						A3(
-							_user$project$Scene$insert,
-							_p9._1,
-							shape,
-							function (_p10) {
-								return A2(
-									_elm_lang$core$Maybe$withDefault,
-									_user$project$Bounds$zero,
-									A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p10));
-							}),
-						scene);
-				}),
-			_elm_lang$core$Result$Ok(scene),
-			A2(
-				_elm_lang$core$List$indexedMap,
-				F2(
-					function (v0, v1) {
-						return {ctor: '_Tuple2', _0: v0, _1: v1};
-					}),
-				nodes));
-	});
 var _user$project$Main2$outputShape = _user$project$Shape$Path(
 	{
 		points: {
@@ -11381,553 +10969,19 @@ var _user$project$Main2$inputShape = _user$project$Shape$Path(
 		},
 		stroke: _user$project$Shape$Thick
 	});
-var _user$project$Main2$insert = F6(
-	function (id, node, inputs, outputs, shape, scene) {
-		return A2(
-			_elm_lang$core$Result$andThen,
-			function (scene) {
-				var x = function () {
-					var _p11 = shape;
-					if ((_p11.ctor === 'Just') && (_p11._0.ctor === 'Circle')) {
-						return 6;
-					} else {
-						return 0;
-					}
-				}();
-				var bounds = A2(_user$project$Scene$bounds, node, scene);
-				var from = bounds.origin.y + ((bounds.size.height * 1) / 4);
-				var to = bounds.origin.y + ((bounds.size.height * 3) / 4);
-				return A2(
-					_elm_lang$core$Result$andThen,
-					A2(
-						_user$project$Scene$group,
-						id,
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							{
-								ctor: '::',
-								_0: node,
-								_1: {ctor: '[]'}
-							},
-							A2(_elm_lang$core$Basics_ops['++'], inputs, outputs))),
-					A2(
-						_elm_lang$core$Result$andThen,
-						function (scene) {
-							var _p12 = shape;
-							if (_p12.ctor === 'Nothing') {
-								return _elm_lang$core$Result$Ok(scene);
-							} else {
-								return A5(_user$project$Main2$distributeVertically, outputs, (bounds.origin.x + bounds.size.width) + 20, from, to, scene);
-							}
-						},
-						A2(
-							_elm_lang$core$Result$andThen,
-							A2(
-								_user$project$Main2$duplicate,
-								outputs,
-								function () {
-									var _p13 = shape;
-									if (_p13.ctor === 'Nothing') {
-										return _elm_lang$core$Maybe$Nothing;
-									} else {
-										return _elm_lang$core$Maybe$Just(_user$project$Main2$outputShape);
-									}
-								}()),
-							A2(
-								_elm_lang$core$Result$andThen,
-								function (scene) {
-									var _p14 = shape;
-									if (_p14.ctor === 'Nothing') {
-										return _elm_lang$core$Result$Ok(scene);
-									} else {
-										return A5(_user$project$Main2$distributeVertically, inputs, (bounds.origin.x + x) - 20, from, to, scene);
-									}
-								},
-								A3(
-									_user$project$Main2$duplicate,
-									inputs,
-									function () {
-										var _p15 = shape;
-										if (_p15.ctor === 'Nothing') {
-											return _elm_lang$core$Maybe$Nothing;
-										} else {
-											return _elm_lang$core$Maybe$Just(_user$project$Main2$inputShape);
-										}
-									}(),
-									scene)))));
-			},
-			A4(
-				_user$project$Scene$insert,
-				node,
-				shape,
-				function (_p16) {
-					return A2(
-						_elm_lang$core$Maybe$withDefault,
-						_user$project$Bounds$zero,
-						A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p16));
-				},
-				scene));
-	});
-var _user$project$Main2$combine = F5(
-	function (node, inputs, outputs, margin, scene) {
-		var bounds = _user$project$Bounds$fromRectangle(
-			A2(
-				_user$project$Rectangle2$margin,
-				margin,
-				_user$project$Bounds$toRectangle(
-					A2(_user$project$Scene$bounds, node, scene))));
-		var from = bounds.origin.y + ((bounds.size.height * 1) / 4);
-		var to = bounds.origin.y + ((bounds.size.height * 3) / 4);
-		return A2(
-			_elm_lang$core$Result$andThen,
-			A4(_user$project$Main2$distributeVertically, outputs, (bounds.origin.x + bounds.size.width) + margin, from, to),
-			A2(
-				_elm_lang$core$Result$andThen,
-				A2(
-					_user$project$Main2$duplicate,
-					outputs,
-					_elm_lang$core$Maybe$Just(_user$project$Main2$outputShape)),
-				A2(
-					_elm_lang$core$Result$andThen,
-					A4(_user$project$Main2$distributeVertically, inputs, bounds.origin.x - margin, from, to),
-					A2(
-						_elm_lang$core$Result$andThen,
-						A2(
-							_user$project$Main2$duplicate,
-							inputs,
-							_elm_lang$core$Maybe$Just(_user$project$Main2$inputShape)),
-						A4(
-							_user$project$Scene$update,
-							node,
-							_elm_lang$core$Maybe$Just(
-								_user$project$Shape$Rectangle(
-									{origin: bounds.origin, size: bounds.size, stroke: _user$project$Shape$Thick})),
-							function (_p17) {
-								return A2(
-									_elm_lang$core$Maybe$withDefault,
-									_user$project$Bounds$zero,
-									A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p17));
-							},
-							scene)))));
-	});
-var _user$project$Main2$toScene = F2(
+var _user$project$Main2$toScene2 = F2(
 	function (circuit, scene) {
-		var toScene1 = F3(
-			function (circuit, ids, scene) {
-				var _p18 = function () {
-					var _p19 = circuit;
-					if (_p19.ctor === 'Gate') {
-						var _p27 = _p19._0.ports;
-						var _p26 = _p19._0.id;
-						var outputs = _elm_lang$core$List$concat(
-							A2(
-								_elm_lang$core$List$map,
-								function (_p20) {
-									var _p21 = _p20;
-									var _p22 = _p21.direction;
-									if (_p22.ctor === 'Input') {
-										return {ctor: '[]'};
-									} else {
-										return {
-											ctor: '::',
-											_0: _p21.id,
-											_1: {ctor: '[]'}
-										};
-									}
-								},
-								_p27));
-						var inputs = _elm_lang$core$List$concat(
-							A2(
-								_elm_lang$core$List$map,
-								function (_p23) {
-									var _p24 = _p23;
-									var _p25 = _p24.direction;
-									if (_p25.ctor === 'Input') {
-										return {
-											ctor: '::',
-											_0: _p24.id,
-											_1: {ctor: '[]'}
-										};
-									} else {
-										return {ctor: '[]'};
-									}
-								},
-								_p27));
-						return {
-							ctor: '_Tuple4',
-							_0: A2(_user$project$Circuit$suffix, 'group', _p26),
-							_1: _p26,
-							_2: ids,
-							_3: A6(
-								_user$project$Main2$insert,
-								A2(_user$project$Circuit$suffix, 'group', _p26),
-								_p26,
-								inputs,
-								outputs,
-								_p19._0.shape,
-								scene)
-						};
-					} else {
-						var _p57 = _p19._0.id;
-						var _p56 = _p19._0.connections;
-						var _p55 = _p19._0.circuits;
-						var group = A2(_user$project$Circuit$suffix, 'circuit', _p57);
-						var children = A3(
-							_elm_lang$core$List$foldl,
-							F2(
-								function (circuit, _p28) {
-									var _p29 = _p28;
-									var _p30 = A3(
-										toScene1,
-										circuit,
-										{ctor: '[]'},
-										A2(_elm_lang$core$Result$withDefault, _user$project$Scene$empty, _p29._1));
-									var newIds = _p30._0;
-									var newScene = _p30._1;
-									return {
-										ctor: '_Tuple2',
-										_0: A2(_elm_lang$core$Basics_ops['++'], _p29._0, newIds),
-										_1: newScene
-									};
-								}),
-							{
-								ctor: '_Tuple2',
-								_0: ids,
-								_1: _elm_lang$core$Result$Ok(scene)
-							},
-							_p55);
-						var ids1 = A2(
-							_elm_lang$core$Basics_ops['++'],
-							_elm_lang$core$Tuple$first(children),
-							A2(
-								_elm_lang$core$List$map,
-								function (connection) {
-									return A2(_user$project$Circuit$suffix, 'connection', connection.from);
-								},
-								_p56));
-						var unconnectedOutputs = {ctor: '[]'};
-						var gatherPorts1 = F2(
-							function (circuit, _p31) {
-								var _p32 = _p31;
-								var _p36 = _p32._0;
-								var _p35 = _p32._1;
-								var _p33 = circuit;
-								if (_p33.ctor === 'Gate') {
-									return {
-										ctor: '_Tuple2',
-										_0: A2(
-											_elm_lang$core$Basics_ops['++'],
-											_p36,
-											A2(
-												_elm_lang$core$List$filterMap,
-												function (port1) {
-													var _p34 = port1.direction;
-													if (_p34.ctor === 'Input') {
-														return _elm_lang$core$Maybe$Nothing;
-													} else {
-														return _elm_lang$core$Maybe$Just(port1.id);
-													}
-												},
-												_p33._0.ports)),
-										_1: _p35
-									};
-								} else {
-									return A3(
-										_elm_lang$core$List$foldl,
-										F2(
-											function (circuit, collection) {
-												return A2(gatherPorts1, circuit, collection);
-											}),
-										{
-											ctor: '_Tuple2',
-											_0: _p36,
-											_1: A2(_elm_lang$core$Basics_ops['++'], _p35, _p33._0.connections)
-										},
-										_p33._0.circuits);
-								}
-							});
-						var _p37 = A3(
-							_elm_lang$core$List$foldl,
-							gatherPorts1,
-							{
-								ctor: '_Tuple2',
-								_0: {ctor: '[]'},
-								_1: _p56
-							},
-							_p55);
-						var allOutputs = _p37._0;
-						var allConnections1 = _p37._1;
-						var unconnectedInputs = {ctor: '[]'};
-						var circuit1 = A2(
-							_elm_lang$core$Result$andThen,
-							A4(
-								_user$project$Main2$combine,
-								A2(_user$project$Circuit$suffix, 'group', _p57),
-								A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$first, unconnectedInputs),
-								A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$second, unconnectedOutputs),
-								20),
-							A2(
-								_elm_lang$core$Result$andThen,
-								A2(
-									_user$project$Scene$group,
-									A2(_user$project$Circuit$suffix, 'group', _p57),
-									ids1),
-								A3(
-									_elm_lang$core$List$foldl,
-									function (connection) {
-										return _user$project$Result_Extra$flatMap(
-											A3(
-												_user$project$Main2$connect,
-												A2(_user$project$Circuit$suffix, 'connection', connection.from),
-												connection.from,
-												connection.to));
-									},
-									_elm_lang$core$Tuple$second(children),
-									_p56)));
-						var _p38 = A3(
-							_elm_lang$core$List$foldl,
-							F2(
-								function (_p40, _p39) {
-									var _p41 = _p40;
-									var _p42 = _p39;
-									var connection = {from: _p41._0, to: _p41._1};
-									var id = A2(_user$project$Circuit$suffix, 'connection', connection.from);
-									return {
-										ctor: '_Tuple2',
-										_0: A2(
-											_user$project$Result_Extra$flatMap,
-											A3(_user$project$Main2$connect, id, connection.from, connection.to),
-											_p42._0),
-										_1: A2(
-											_elm_lang$core$Basics_ops['++'],
-											_p42._1,
-											{
-												ctor: '::',
-												_0: id,
-												_1: {ctor: '[]'}
-											})
-									};
-								}),
-							{
-								ctor: '_Tuple2',
-								_0: circuit1,
-								_1: {ctor: '[]'}
-							},
-							unconnectedInputs);
-						var circuit2 = _p38._0;
-						var inner1 = _p38._1;
-						var _p43 = A3(
-							_elm_lang$core$List$foldl,
-							F2(
-								function (_p45, _p44) {
-									var _p46 = _p45;
-									var _p47 = _p44;
-									var connection = {from: _p46._0, to: _p46._1};
-									var id = A2(_user$project$Circuit$suffix, 'connection', connection.from);
-									return {
-										ctor: '_Tuple2',
-										_0: A2(
-											_user$project$Result_Extra$flatMap,
-											A3(_user$project$Main2$connect, id, connection.from, connection.to),
-											_p47._0),
-										_1: A2(
-											_elm_lang$core$Basics_ops['++'],
-											_p47._1,
-											{
-												ctor: '::',
-												_0: id,
-												_1: {ctor: '[]'}
-											})
-									};
-								}),
-							{
-								ctor: '_Tuple2',
-								_0: circuit2,
-								_1: {ctor: '[]'}
-							},
-							unconnectedOutputs);
-						var circuit3 = _p43._0;
-						var inner2 = _p43._1;
-						var circuit4 = A2(
-							_elm_lang$core$Result$andThen,
-							A2(
-								_user$project$Scene$group,
-								group,
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									{
-										ctor: '::',
-										_0: A2(_user$project$Circuit$suffix, 'group', _p57),
-										_1: {ctor: '[]'}
-									},
-									A2(_elm_lang$core$Basics_ops['++'], inner1, inner2))),
-							circuit3);
-						var gatherPorts = F2(
-							function (circuit, _p48) {
-								var _p49 = _p48;
-								var _p53 = _p49._0;
-								var _p52 = _p49._1;
-								var _p50 = circuit;
-								if (_p50.ctor === 'Gate') {
-									return {
-										ctor: '_Tuple2',
-										_0: A2(
-											_elm_lang$core$Basics_ops['++'],
-											_p53,
-											A2(
-												_elm_lang$core$List$filterMap,
-												function (port1) {
-													var _p51 = port1.direction;
-													if (_p51.ctor === 'Input') {
-														return _elm_lang$core$Maybe$Just(port1.id);
-													} else {
-														return _elm_lang$core$Maybe$Nothing;
-													}
-												},
-												_p50._0.ports)),
-										_1: _p52
-									};
-								} else {
-									return A3(
-										_elm_lang$core$List$foldl,
-										F2(
-											function (circuit, collection) {
-												return A2(gatherPorts, circuit, collection);
-											}),
-										{
-											ctor: '_Tuple2',
-											_0: _p53,
-											_1: A2(_elm_lang$core$Basics_ops['++'], _p52, _p50._0.connections)
-										},
-										_p50._0.circuits);
-								}
-							});
-						var _p54 = A3(
-							_elm_lang$core$List$foldl,
-							gatherPorts,
-							{
-								ctor: '_Tuple2',
-								_0: {ctor: '[]'},
-								_1: _p56
-							},
-							_p55);
-						var allInputs = _p54._0;
-						var allConnections = _p54._1;
-						return {ctor: '_Tuple4', _0: group, _1: _p57, _2: ids1, _3: circuit4};
-					}
-				}();
-				var group = _p18._0;
-				var id = _p18._1;
-				var ids_ = _p18._2;
-				var scene_ = _p18._3;
-				var layout = {
-					ctor: '::',
-					_0: {
-						ctor: '_Tuple2',
-						_0: _user$project$Circuit$id('gate1'),
-						_1: _user$project$Transform2$translate(
-							{x: -100, y: 0})
-					},
-					_1: {
-						ctor: '::',
-						_0: {
-							ctor: '_Tuple2',
-							_0: _user$project$Circuit$id('gate2'),
-							_1: _user$project$Transform2$translate(
-								{x: 100, y: 0})
-						},
-						_1: {
-							ctor: '::',
-							_0: {
-								ctor: '_Tuple2',
-								_0: _user$project$Circuit$id('fanout1'),
-								_1: _user$project$Transform2$translate(
-									{x: -30, y: 0})
-							},
-							_1: {
-								ctor: '::',
-								_0: {
-									ctor: '_Tuple2',
-									_0: _user$project$Circuit$id('gate3'),
-									_1: _user$project$Transform2$translate(
-										{x: 300, y: 150})
-								},
-								_1: {
-									ctor: '::',
-									_0: {
-										ctor: '_Tuple2',
-										_0: _user$project$Circuit$id('gate4'),
-										_1: _user$project$Transform2$translate(
-											{x: -100, y: 150})
-									},
-									_1: {
-										ctor: '::',
-										_0: {
-											ctor: '_Tuple2',
-											_0: _user$project$Circuit$id('circuit1'),
-											_1: _user$project$Transform2$translate(
-												{x: -100, y: -100})
-										},
-										_1: {
-											ctor: '::',
-											_0: {
-												ctor: '_Tuple2',
-												_0: _user$project$Circuit$id('gate5'),
-												_1: _user$project$Transform2$translate(
-													{x: -300, y: 0})
-											},
-											_1: {
-												ctor: '::',
-												_0: {
-													ctor: '_Tuple2',
-													_0: _user$project$Circuit$id('circuit2'),
-													_1: _user$project$Transform2$translate(
-														{x: 50, y: 50})
-												},
-												_1: {ctor: '[]'}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				};
-				var layout_ = A2(
-					_user$project$Unsafe$nth,
-					0,
-					A2(
-						_elm_lang$core$List$filter,
-						function (_p58) {
-							var _p59 = _p58;
-							return _elm_lang$core$Native_Utils.eq(_p59._0, id);
-						},
-						layout));
-				return {
-					ctor: '_Tuple2',
-					_0: A2(
-						_elm_lang$core$Basics_ops['++'],
-						ids_,
-						{
-							ctor: '::',
-							_0: group,
-							_1: {ctor: '[]'}
-						}),
-					_1: A2(
-						_elm_lang$core$Result$andThen,
-						A2(
-							_user$project$Scene$transform,
-							group,
-							_elm_lang$core$Tuple$second(layout_)),
-						scene_)
-				};
-			});
-		return _elm_lang$core$Tuple$second(
-			A3(
-				toScene1,
-				circuit,
-				{ctor: '[]'},
-				scene));
+		return A4(
+			_user$project$Scene$insert,
+			'test',
+			_elm_lang$core$Maybe$Just(_user$project$Main2$inputShape),
+			function (_p3) {
+				return A2(
+					_elm_lang$core$Maybe$withDefault,
+					_user$project$Bounds$zero,
+					A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p3));
+			},
+			scene);
 	});
 var _user$project$Main2$State = F2(
 	function (a, b) {
@@ -11943,7 +10997,7 @@ var _user$project$Main2$init = {
 		scene: A2(
 			_elm_lang$core$Result$withDefault,
 			_user$project$Scene$empty,
-			A2(_user$project$Main2$toScene, _user$project$Circuit$circuit, _user$project$Scene$empty))
+			A2(_user$project$Main2$toScene2, _user$project$Circuit2$example, _user$project$Scene$empty))
 	},
 	_1: A2(_elm_lang$core$Task$perform, _user$project$Main2$WindowResizedTo, _elm_lang$window$Window$size)
 };
