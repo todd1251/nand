@@ -11111,54 +11111,72 @@ var _user$project$Main2$inputShape = _user$project$Shape$Path(
 var _user$project$Main2$toScene2 = F2(
 	function (_p3, scene) {
 		var _p4 = _p3;
-		var _p11 = _p4._0;
-		return A3(
-			_elm_lang$core$List$foldl,
-			function (shape) {
-				return _elm_lang$core$Result$andThen(
-					A3(
-						_user$project$Scene$insert,
-						'port',
-						_elm_lang$core$Maybe$Just(shape),
-						function (_p5) {
-							return A2(
-								_elm_lang$core$Maybe$withDefault,
-								_user$project$Bounds$zero,
-								A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p5));
-						}));
-			},
-			A4(
-				_user$project$Scene$insert,
-				function () {
-					var _p6 = _p11.name;
-					return _p6._0;
-				}(),
-				_elm_lang$core$Maybe$Just(
-					_user$project$Shape$Rectangle(
-						{
-							origin: {x: -50, y: -50},
-							size: {width: 100, height: 100},
-							stroke: _user$project$Shape$Thin
-						})),
-				function (_p7) {
-					return A2(
-						_elm_lang$core$Maybe$withDefault,
-						_user$project$Bounds$zero,
-						A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p7));
+		var _p13 = _p4._0;
+		return A2(
+			_elm_lang$core$Debug$log,
+			'scene',
+			A3(
+				_elm_lang$core$List$foldl,
+				function (_p5) {
+					var _p6 = _p5;
+					return _elm_lang$core$Result$andThen(
+						A3(
+							_user$project$Scene$insert,
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								'port',
+								_elm_lang$core$Basics$toString(_p6._0 + 1)),
+							_elm_lang$core$Maybe$Just(_p6._1),
+							function (_p7) {
+								return A2(
+									_elm_lang$core$Maybe$withDefault,
+									_user$project$Bounds$zero,
+									A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p7));
+							}));
 				},
-				scene),
-			A2(
-				_elm_lang$core$List$map,
-				function (_p8) {
-					var _p9 = _p8;
-					var _p10 = _p9._0.direction;
-					if (_p10.ctor === 'Input') {
-						return _user$project$Main2$inputShape;
-					} else {
-						return _user$project$Main2$outputShape;
-					}
-				},
-				_p11.ports));
+				A4(
+					_user$project$Scene$insert,
+					function () {
+						var _p8 = _p13.name;
+						return _p8._0;
+					}(),
+					_elm_lang$core$Maybe$Just(
+						_user$project$Shape$Rectangle(
+							{
+								origin: {x: -50, y: -50},
+								size: {width: 100, height: 100},
+								stroke: _user$project$Shape$Thin
+							})),
+					function (_p9) {
+						return A2(
+							_elm_lang$core$Maybe$withDefault,
+							_user$project$Bounds$zero,
+							A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p9));
+					},
+					A2(
+						_elm_lang$core$Result$withDefault,
+						_user$project$Scene$empty,
+						A3(
+							_elm_lang$core$List$foldl,
+							function (circuit) {
+								return _elm_lang$core$Result$andThen(
+									_user$project$Main2$toScene2(circuit));
+							},
+							_elm_lang$core$Result$Ok(scene),
+							_p13.circuits))),
+				A2(
+					_elm_lang$core$List$indexedMap,
+					F2(
+						function (index, _p10) {
+							var _p11 = _p10;
+							var _p12 = _p11._0.direction;
+							if (_p12.ctor === 'Input') {
+								return {ctor: '_Tuple2', _0: index, _1: _user$project$Main2$inputShape};
+							} else {
+								return {ctor: '_Tuple2', _0: index, _1: _user$project$Main2$outputShape};
+							}
+						}),
+					_p13.ports)));
 	});
 var _user$project$Main2$State = F2(
 	function (a, b) {
