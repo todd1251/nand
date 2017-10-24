@@ -10970,103 +10970,189 @@ var _user$project$Main2$inputShape = _user$project$Shape$Path(
 		stroke: _user$project$Shape$Thick
 	});
 var _user$project$Main2$toScene2 = F2(
-	function (_p3, scene) {
-		var _p4 = _p3;
-		var _p15 = _p4._0;
-		var layout = {
-			ctor: '::',
-			_0: {
-				ctor: '_Tuple2',
-				_0: 'circuit1',
-				_1: _user$project$Transform2$translate(
-					{x: -100, y: -100})
-			},
-			_1: {ctor: '[]'}
-		};
-		return A2(
-			_elm_lang$core$Debug$log,
-			'scene',
-			A3(
-				_elm_lang$core$List$foldl,
-				function (_p5) {
-					var _p6 = _p5;
-					return _elm_lang$core$Result$andThen(
-						A3(
-							_user$project$Scene$insert,
+	function (circuit, scene) {
+		var toScene2_ = F3(
+			function (path, _p3, scene) {
+				var _p4 = _p3;
+				var _p19 = _p4._0;
+				var layout = {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'root', _1: _user$project$Transform2$identity},
+					_1: {
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 'root.circuit1',
+							_1: _user$project$Transform2$translate(
+								{x: -100, y: -100})
+						},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'root.circuit1.group', _1: _user$project$Transform2$identity},
+							_1: {
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple2',
+									_0: 'root.circuit1.group.gate1',
+									_1: _user$project$Transform2$translate(
+										{x: -100, y: 0})
+								},
+								_1: {
+									ctor: '::',
+									_0: {
+										ctor: '_Tuple2',
+										_0: 'root.circuit1.group.gate1.port1',
+										_1: _user$project$Transform2$translate(
+											{x: -100, y: 0})
+									},
+									_1: {
+										ctor: '::',
+										_0: {
+											ctor: '_Tuple2',
+											_0: 'root.circuit1.group.gate2',
+											_1: _user$project$Transform2$translate(
+												{x: 100, y: 0})
+										},
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
+					}
+				};
+				var path_ = A2(
+					_elm_lang$core$Basics_ops['++'],
+					path,
+					{
+						ctor: '::',
+						_0: _p19.name,
+						_1: {ctor: '[]'}
+					});
+				var name = A2(
+					_elm_lang$core$String$join,
+					'.',
+					A2(
+						_elm_lang$core$List$map,
+						function (_p5) {
+							var _p6 = _p5;
+							return _p6._0;
+						},
+						path_));
+				var transform = function (transform) {
+					var _p7 = transform;
+					if (_p7.ctor === 'Just') {
+						return _p7._0;
+					} else {
+						return _elm_lang$core$Native_Utils.crashCase(
+							'Main2',
+							{
+								start: {line: 602, column: 33},
+								end: {line: 607, column: 88}
+							},
+							_p7)(
+							A2(_elm_lang$core$Basics_ops['++'], 'Missing transform for: ', name));
+					}
+				}(
+					_elm_lang$core$List$head(
+						A2(
+							_elm_lang$core$List$filterMap,
+							function (_p9) {
+								var _p10 = _p9;
+								return _elm_lang$core$Native_Utils.eq(_p10._0, name) ? _elm_lang$core$Maybe$Just(_p10._1) : _elm_lang$core$Maybe$Nothing;
+							},
+							layout)));
+				var circuits = A3(
+					_elm_lang$core$List$foldl,
+					function (circuit) {
+						return _elm_lang$core$Result$andThen(
+							A2(toScene2_, path_, circuit));
+					},
+					_elm_lang$core$Result$Ok(scene),
+					_p19.circuits);
+				var shape = A2(
+					_elm_lang$core$Result$andThen,
+					A3(
+						_user$project$Scene$insert,
+						name,
+						_elm_lang$core$Maybe$Just(
+							_user$project$Shape$Rectangle(
+								{
+									origin: {x: -50, y: -50},
+									size: {width: 100, height: 100},
+									stroke: _user$project$Shape$Thin
+								})),
+						function (_p11) {
+							return A2(
+								_elm_lang$core$Maybe$withDefault,
+								_user$project$Bounds$zero,
+								A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p11));
+						}),
+					circuits);
+				var transformed = A2(
+					_elm_lang$core$Result$andThen,
+					_elm_lang$core$Native_Utils.eq(transform, _user$project$Transform2$identity) ? function (scene) {
+						return _elm_lang$core$Result$Ok(scene);
+					} : A2(_user$project$Scene$transform, name, transform),
+					shape);
+				var ports = A3(
+					_elm_lang$core$List$foldl,
+					function (_p12) {
+						var _p13 = _p12;
+						var portName = A2(
+							_elm_lang$core$Basics_ops['++'],
+							name,
 							A2(
 								_elm_lang$core$Basics_ops['++'],
-								'port',
-								_elm_lang$core$Basics$toString(_p6._0 + 1)),
-							_elm_lang$core$Maybe$Just(_p6._1),
-							function (_p7) {
-								return A2(
-									_elm_lang$core$Maybe$withDefault,
-									_user$project$Bounds$zero,
-									A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p7));
-							}));
-				},
-				function () {
-					var name = function () {
-						var _p8 = _p15.name;
-						return _p8._0;
-					}();
-					var transform = A2(
-						_elm_lang$core$Maybe$withDefault,
-						_user$project$Transform2$identity,
-						_elm_lang$core$List$head(
-							A2(
-								_elm_lang$core$List$filterMap,
-								function (_p9) {
-									var _p10 = _p9;
-									return _elm_lang$core$Native_Utils.eq(_p10._0, name) ? _elm_lang$core$Maybe$Just(_p10._1) : _elm_lang$core$Maybe$Nothing;
-								},
-								layout)));
-					return A2(
-						_elm_lang$core$Result$andThen,
-						_elm_lang$core$Native_Utils.eq(transform, _user$project$Transform2$identity) ? function (scene) {
-							return _elm_lang$core$Result$Ok(scene);
-						} : A2(_user$project$Scene$transform, name, transform),
-						A4(
-							_user$project$Scene$insert,
-							name,
-							_elm_lang$core$Maybe$Just(
-								_user$project$Shape$Rectangle(
-									{
-										origin: {x: -50, y: -50},
-										size: {width: 100, height: 100},
-										stroke: _user$project$Shape$Thin
-									})),
-							function (_p11) {
-								return A2(
-									_elm_lang$core$Maybe$withDefault,
-									_user$project$Bounds$zero,
-									A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p11));
-							},
-							A2(
-								_elm_lang$core$Result$withDefault,
-								_user$project$Scene$empty,
-								A3(
-									_elm_lang$core$List$foldl,
-									function (circuit) {
-										return _elm_lang$core$Result$andThen(
-											_user$project$Main2$toScene2(circuit));
-									},
-									_elm_lang$core$Result$Ok(scene),
-									_p15.circuits))));
-				}(),
-				A2(
-					_elm_lang$core$List$indexedMap,
-					F2(
-						function (index, _p12) {
-							var _p13 = _p12;
-							var _p14 = _p13._0.direction;
-							if (_p14.ctor === 'Input') {
-								return {ctor: '_Tuple2', _0: index, _1: _user$project$Main2$inputShape};
-							} else {
-								return {ctor: '_Tuple2', _0: index, _1: _user$project$Main2$outputShape};
-							}
-						}),
-					_p15.ports)));
+								'.port',
+								_elm_lang$core$Basics$toString(_p13._0 + 1)));
+						return function (_p14) {
+							return A2(
+								_elm_lang$core$Result$andThen,
+								_elm_lang$core$Native_Utils.eq(transform, _user$project$Transform2$identity) ? function (scene) {
+									return _elm_lang$core$Result$Ok(scene);
+								} : A2(_user$project$Scene$transform, portName, transform),
+								A2(
+									_elm_lang$core$Result$andThen,
+									A3(
+										_user$project$Scene$insert,
+										portName,
+										_elm_lang$core$Maybe$Just(_p13._1),
+										function (_p15) {
+											return A2(
+												_elm_lang$core$Maybe$withDefault,
+												_user$project$Bounds$zero,
+												A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p15));
+										}),
+									_p14));
+						};
+					},
+					transformed,
+					A2(
+						_elm_lang$core$List$indexedMap,
+						F2(
+							function (index, _p16) {
+								var _p17 = _p16;
+								var _p18 = _p17._0.direction;
+								if (_p18.ctor === 'Input') {
+									return {ctor: '_Tuple2', _0: index, _1: _user$project$Main2$inputShape};
+								} else {
+									return {ctor: '_Tuple2', _0: index, _1: _user$project$Main2$outputShape};
+								}
+							}),
+						_p19.ports));
+				return A2(
+					_elm_lang$core$Debug$log,
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'scene @ ',
+						_elm_lang$core$Basics$toString(path_)),
+					ports);
+			});
+		return A3(
+			toScene2_,
+			{ctor: '[]'},
+			circuit,
+			scene);
 	});
 var _user$project$Main2$State = F2(
 	function (a, b) {
