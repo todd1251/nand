@@ -10947,10 +10947,10 @@ var _user$project$Main2$outputShape = _user$project$Shape$Path(
 	{
 		points: {
 			ctor: '::',
-			_0: {x: -20, y: 0},
+			_0: {x: 0, y: 0},
 			_1: {
 				ctor: '::',
-				_0: {x: 0, y: 0},
+				_0: {x: 20, y: 0},
 				_1: {ctor: '[]'}
 			}
 		},
@@ -10963,7 +10963,7 @@ var _user$project$Main2$inputShape = _user$project$Shape$Path(
 			_0: {x: 0, y: 0},
 			_1: {
 				ctor: '::',
-				_0: {x: 20, y: 0},
+				_0: {x: -20, y: 0},
 				_1: {ctor: '[]'}
 			}
 		},
@@ -10995,7 +10995,7 @@ var _user$project$Main2$toScene2 = F2(
 									ctor: '_Tuple2',
 									_0: 'root.circuit1.group.gate1',
 									_1: _user$project$Transform2$translate(
-										{x: -100, y: 0})
+										{x: -150, y: 0})
 								},
 								_1: {
 									ctor: '::',
@@ -11046,8 +11046,8 @@ var _user$project$Main2$toScene2 = F2(
 						return _elm_lang$core$Native_Utils.crashCase(
 							'Main2',
 							{
-								start: {line: 602, column: 33},
-								end: {line: 607, column: 88}
+								start: {line: 603, column: 33},
+								end: {line: 608, column: 88}
 							},
 							_p7)(
 							A2(_elm_lang$core$Basics_ops['++'], 'Missing transform for: ', name));
@@ -11088,12 +11088,6 @@ var _user$project$Main2$toScene2 = F2(
 								A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p11));
 						}),
 					circuits);
-				var transformed = A2(
-					_elm_lang$core$Result$andThen,
-					_elm_lang$core$Native_Utils.eq(transform, _user$project$Transform2$identity) ? function (scene) {
-						return _elm_lang$core$Result$Ok(scene);
-					} : A2(_user$project$Scene$transform, name, transform),
-					shape);
 				var ports = A3(
 					_elm_lang$core$List$foldl,
 					function (_p12) {
@@ -11139,7 +11133,7 @@ var _user$project$Main2$toScene2 = F2(
 									_p14));
 						};
 					},
-					transformed,
+					shape,
 					A2(
 						_elm_lang$core$List$indexedMap,
 						F2(
@@ -11153,13 +11147,19 @@ var _user$project$Main2$toScene2 = F2(
 								}
 							}),
 						_p20.ports));
+				var transformed = A2(
+					_elm_lang$core$Result$andThen,
+					_elm_lang$core$Native_Utils.eq(transform, _user$project$Transform2$identity) ? function (scene) {
+						return _elm_lang$core$Result$Ok(scene);
+					} : A2(_user$project$Scene$transform, name, transform),
+					ports);
 				return A2(
 					_elm_lang$core$Debug$log,
 					A2(
 						_elm_lang$core$Basics_ops['++'],
 						'scene @ ',
 						_elm_lang$core$Basics$toString(path_)),
-					ports);
+					transformed);
 			});
 		return A3(
 			toScene2_,
