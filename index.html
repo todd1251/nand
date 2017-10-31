@@ -10331,7 +10331,7 @@ var _user$project$Main2$toScene2 = F2(
 		var toScene2_ = F4(
 			function (path, _p3, scene, childrenNames) {
 				var _p4 = _p3;
-				var _p40 = _p4._0;
+				var _p36 = _p4._0;
 				var layout = {
 					ctor: '::',
 					_0: {ctor: '_Tuple3', _0: 'root', _1: _elm_lang$core$Maybe$Nothing, _2: _user$project$Transform2$identity},
@@ -10388,7 +10388,7 @@ var _user$project$Main2$toScene2 = F2(
 					path,
 					{
 						ctor: '::',
-						_0: _p40.name,
+						_0: _p36.name,
 						_1: {ctor: '[]'}
 					});
 				var name = A2(
@@ -10427,6 +10427,7 @@ var _user$project$Main2$toScene2 = F2(
 							layout)));
 				var shape = _p7._0;
 				var transform = _p7._1;
+				var groupName = A2(_elm_lang$core$Basics_ops['++'], name, '.group');
 				var sceneWithChildren = A3(
 					_elm_lang$core$List$foldl,
 					function (circuit) {
@@ -10438,7 +10439,7 @@ var _user$project$Main2$toScene2 = F2(
 					},
 					_elm_lang$core$Result$Ok(
 						{ctor: '_Tuple2', _0: scene, _1: childrenNames}),
-					_p40.circuits);
+					_p36.circuits);
 				var sceneWithShape = A2(
 					_elm_lang$core$Result$andThen,
 					function (_p14) {
@@ -10478,7 +10479,7 @@ var _user$project$Main2$toScene2 = F2(
 										return {ctor: '_Tuple3', _0: index, _1: _user$project$Main2$outputShape, _2: _user$project$Circuit2$Output};
 									}
 								}),
-							_p40.ports);
+							_p36.ports);
 						var sceneWithPorts = function () {
 							var steps = _elm_lang$core$List$length(
 								A2(
@@ -10578,12 +10579,10 @@ var _user$project$Main2$toScene2 = F2(
 					_elm_lang$core$Result$andThen,
 					function (_p33) {
 						var _p34 = _p33;
-						var _p36 = _p34._1;
 						return A2(
 							_elm_lang$core$Result$andThen,
 							function (scene) {
-								return _elm_lang$core$Result$Ok(
-									{ctor: '_Tuple2', _0: scene, _1: _p36});
+								return _elm_lang$core$Result$Ok(scene);
 							},
 							A2(
 								_elm_lang$core$Result$andThen,
@@ -10593,13 +10592,10 @@ var _user$project$Main2$toScene2 = F2(
 											_user$project$Rectangle2$margin,
 											20,
 											_user$project$Bounds$toRectangle(
-												A2(
-													_user$project$Scene$bounds,
-													A2(_elm_lang$core$Basics_ops['++'], name, '.group'),
-													scene))));
+												A2(_user$project$Scene$bounds, groupName, scene))));
 									return A4(
 										_user$project$Scene$update,
-										A2(_elm_lang$core$Basics_ops['++'], name, '.group'),
+										groupName,
 										_elm_lang$core$Maybe$Just(
 											_user$project$Shape$Rectangle(
 												{origin: bounds.origin, size: bounds.size, stroke: _user$project$Shape$Thick})),
@@ -10613,7 +10609,7 @@ var _user$project$Main2$toScene2 = F2(
 								},
 								A3(
 									_user$project$Scene$group,
-									A2(_elm_lang$core$Basics_ops['++'], name, '.group'),
+									groupName,
 									A2(
 										_elm_lang$core$Basics_ops['++'],
 										{
@@ -10621,20 +10617,22 @@ var _user$project$Main2$toScene2 = F2(
 											_0: name,
 											_1: {ctor: '[]'}
 										},
-										_p36),
+										_p34._1),
 									_p34._0)));
 					},
 					sceneWithPorts);
 				return A2(
 					_elm_lang$core$Result$andThen,
-					function (_p37) {
-						var _p38 = _p37;
-						var _p39 = _p38._0;
+					function (scene) {
 						return _elm_lang$core$Native_Utils.eq(transform, _user$project$Transform2$identity) ? _elm_lang$core$Result$Ok(
 							{
 								ctor: '_Tuple2',
-								_0: _p39,
-								_1: {ctor: '[]'}
+								_0: scene,
+								_1: {
+									ctor: '::',
+									_0: groupName,
+									_1: {ctor: '[]'}
+								}
 							}) : A2(
 							_elm_lang$core$Result$andThen,
 							function (scene) {
@@ -10642,22 +10640,22 @@ var _user$project$Main2$toScene2 = F2(
 									{
 										ctor: '_Tuple2',
 										_0: scene,
-										_1: {ctor: '[]'}
+										_1: {
+											ctor: '::',
+											_0: groupName,
+											_1: {ctor: '[]'}
+										}
 									});
 							},
-							A3(
-								_user$project$Scene$transform,
-								A2(_elm_lang$core$Basics_ops['++'], name, '.group'),
-								transform,
-								_p39));
+							A3(_user$project$Scene$transform, groupName, transform, scene));
 					},
 					sceneWithGroup);
 			});
 		return A2(
 			_elm_lang$core$Result$andThen,
-			function (_p41) {
-				var _p42 = _p41;
-				return _elm_lang$core$Result$Ok(_p42._0);
+			function (_p37) {
+				var _p38 = _p37;
+				return _elm_lang$core$Result$Ok(_p38._0);
 			},
 			A4(
 				toScene2_,
