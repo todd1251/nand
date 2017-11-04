@@ -9469,6 +9469,46 @@ var _user$project$Circuit2$addPort = F3(
 						_p11.circuits)
 				}));
 	});
+var _user$project$Circuit2$example = function () {
+	var circuit1 = _user$project$Circuit2$CircuitName('circuit1');
+	var connection1 = _user$project$Circuit2$ConnectionName('connection1');
+	var output1 = _user$project$Circuit2$PortName('output1');
+	var input2 = _user$project$Circuit2$PortName('input2');
+	var input1 = _user$project$Circuit2$PortName('input1');
+	var gate2 = _user$project$Circuit2$CircuitName('gate2');
+	var gate1 = _user$project$Circuit2$CircuitName('gate1');
+	return A3(
+		_user$project$Circuit2$addPort,
+		gate2,
+		A2(_user$project$Circuit2$port_, output1, _user$project$Circuit2$Output),
+		A3(
+			_user$project$Circuit2$addPort,
+			gate2,
+			A2(_user$project$Circuit2$port_, input2, _user$project$Circuit2$Input),
+			A3(
+				_user$project$Circuit2$addPort,
+				gate2,
+				A2(_user$project$Circuit2$port_, input1, _user$project$Circuit2$Input),
+				A2(
+					_user$project$Circuit2$add,
+					_user$project$Circuit2$circuit(gate2),
+					A3(
+						_user$project$Circuit2$addPort,
+						gate1,
+						A2(_user$project$Circuit2$port_, output1, _user$project$Circuit2$Output),
+						A3(
+							_user$project$Circuit2$addPort,
+							gate1,
+							A2(_user$project$Circuit2$port_, input2, _user$project$Circuit2$Input),
+							A3(
+								_user$project$Circuit2$addPort,
+								gate1,
+								A2(_user$project$Circuit2$port_, input1, _user$project$Circuit2$Input),
+								A2(
+									_user$project$Circuit2$add,
+									_user$project$Circuit2$circuit(gate1),
+									_user$project$Circuit2$empty))))))));
+}();
 var _user$project$Circuit2$connect = F2(
 	function (connection, _p12) {
 		var _p13 = _p12;
@@ -9745,86 +9785,6 @@ var _user$project$Circuit2$group = F4(
 						})
 				}));
 	});
-var _user$project$Circuit2$example = function () {
-	var circuit1 = _user$project$Circuit2$CircuitName('circuit1');
-	var connection1 = _user$project$Circuit2$ConnectionName('connection1');
-	var output1 = _user$project$Circuit2$PortName('output1');
-	var input2 = _user$project$Circuit2$PortName('input2');
-	var input1 = _user$project$Circuit2$PortName('input1');
-	var gate2 = _user$project$Circuit2$CircuitName('gate2');
-	var gate1 = _user$project$Circuit2$CircuitName('gate1');
-	return A4(
-		_user$project$Circuit2$group,
-		circuit1,
-		{
-			ctor: '::',
-			_0: gate1,
-			_1: {
-				ctor: '::',
-				_0: gate2,
-				_1: {ctor: '[]'}
-			}
-		},
-		{
-			ctor: '::',
-			_0: connection1,
-			_1: {ctor: '[]'}
-		},
-		A2(
-			_user$project$Circuit2$connect,
-			A3(
-				_user$project$Circuit2$connection,
-				connection1,
-				A2(
-					_user$project$Circuit2$portReference,
-					_user$project$Circuit2$CircuitReference(
-						{
-							ctor: '::',
-							_0: gate1,
-							_1: {ctor: '[]'}
-						}),
-					output1),
-				A2(
-					_user$project$Circuit2$portReference,
-					_user$project$Circuit2$CircuitReference(
-						{
-							ctor: '::',
-							_0: gate2,
-							_1: {ctor: '[]'}
-						}),
-					input1)),
-			A3(
-				_user$project$Circuit2$addPort,
-				gate2,
-				A2(_user$project$Circuit2$port_, output1, _user$project$Circuit2$Output),
-				A3(
-					_user$project$Circuit2$addPort,
-					gate2,
-					A2(_user$project$Circuit2$port_, input2, _user$project$Circuit2$Input),
-					A3(
-						_user$project$Circuit2$addPort,
-						gate2,
-						A2(_user$project$Circuit2$port_, input1, _user$project$Circuit2$Input),
-						A2(
-							_user$project$Circuit2$add,
-							_user$project$Circuit2$circuit(gate2),
-							A3(
-								_user$project$Circuit2$addPort,
-								gate1,
-								A2(_user$project$Circuit2$port_, output1, _user$project$Circuit2$Output),
-								A3(
-									_user$project$Circuit2$addPort,
-									gate1,
-									A2(_user$project$Circuit2$port_, input2, _user$project$Circuit2$Input),
-									A3(
-										_user$project$Circuit2$addPort,
-										gate1,
-										A2(_user$project$Circuit2$port_, input1, _user$project$Circuit2$Input),
-										A2(
-											_user$project$Circuit2$add,
-											_user$project$Circuit2$circuit(gate1),
-											_user$project$Circuit2$empty))))))))));
-}();
 var _user$project$PrintAny$splitLine = function (line) {
 	var newLine = A2(_elm_lang$core$String$dropLeft, 5, line);
 	var indent = A2(
@@ -10948,13 +10908,7 @@ var _user$project$Main2$toScene2 = F2(
 					_0: {ctor: '_Tuple3', _0: 'root', _1: _elm_lang$core$Maybe$Nothing, _2: _user$project$Transform2$identity},
 					_1: {
 						ctor: '::',
-						_0: {
-							ctor: '_Tuple3',
-							_0: 'root.circuit1',
-							_1: _elm_lang$core$Maybe$Nothing,
-							_2: _user$project$Transform2$translate(
-								{x: -100, y: -100})
-						},
+						_0: {ctor: '_Tuple3', _0: 'root.circuit1', _1: _elm_lang$core$Maybe$Nothing, _2: _user$project$Transform2$identity},
 						_1: {
 							ctor: '::',
 							_0: {ctor: '_Tuple3', _0: 'root.circuit1.group', _1: _elm_lang$core$Maybe$Nothing, _2: _user$project$Transform2$identity},
@@ -10962,7 +10916,7 @@ var _user$project$Main2$toScene2 = F2(
 								ctor: '::',
 								_0: {
 									ctor: '_Tuple3',
-									_0: 'root.circuit1.group.gate1',
+									_0: 'root.gate1',
 									_1: _elm_lang$core$Maybe$Just(
 										_user$project$Shape$Rectangle(
 											{
@@ -10977,7 +10931,7 @@ var _user$project$Main2$toScene2 = F2(
 									ctor: '::',
 									_0: {
 										ctor: '_Tuple3',
-										_0: 'root.circuit1.group.gate2',
+										_0: 'root.gate2',
 										_1: _elm_lang$core$Maybe$Just(
 											_user$project$Shape$Rectangle(
 												{
