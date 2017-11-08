@@ -10136,8 +10136,8 @@ var _user$project$Scene$nodeForId = F3(
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Scene',
 				{
-					start: {line: 106, column: 5},
-					end: {line: 115, column: 92}
+					start: {line: 107, column: 5},
+					end: {line: 116, column: 92}
 				},
 				_p0)(
 				A2(
@@ -10360,8 +10360,8 @@ var _user$project$Scene$node = F2(
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Scene',
 				{
-					start: {line: 363, column: 5},
-					end: {line: 374, column: 69}
+					start: {line: 364, column: 5},
+					end: {line: 375, column: 69}
 				},
 				_p12)(
 				A2(
@@ -11020,8 +11020,8 @@ var _user$project$Main2$toScene2 = F2(
 						return _elm_lang$core$Native_Utils.crashCase(
 							'Main2',
 							{
-								start: {line: 642, column: 33},
-								end: {line: 647, column: 85}
+								start: {line: 644, column: 33},
+								end: {line: 649, column: 85}
 							},
 							_p8)(
 							A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', name));
@@ -11253,19 +11253,22 @@ var _user$project$Main2$toScene2 = F2(
 										20,
 										_user$project$Bounds$toRectangle(
 											A2(_user$project$Scene$bounds, groupName, scene))));
-								return A4(
-									_user$project$Scene$update,
-									groupName,
-									_elm_lang$core$Maybe$Just(
-										_user$project$Shape$Rectangle(
-											{origin: bounds.origin, size: bounds.size, stroke: stroke})),
-									function (_p41) {
-										return A2(
-											_elm_lang$core$Maybe$withDefault,
-											_user$project$Bounds$zero,
-											A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p41));
-									},
-									scene);
+								return A2(
+									_elm_lang$core$Result$andThen,
+									A2(_user$project$Scene$parent, groupName, parent),
+									A4(
+										_user$project$Scene$update,
+										groupName,
+										_elm_lang$core$Maybe$Just(
+											_user$project$Shape$Rectangle(
+												{origin: bounds.origin, size: bounds.size, stroke: stroke})),
+										function (_p41) {
+											return A2(
+												_elm_lang$core$Maybe$withDefault,
+												_user$project$Bounds$zero,
+												A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p41));
+										},
+										scene));
 							},
 							A3(
 								_user$project$Scene$group,
@@ -11291,11 +11294,14 @@ var _user$project$Main2$toScene2 = F2(
 					},
 					sceneWithGroup);
 			});
-		return A3(
+		var result = A3(
 			toScene2_,
 			{ctor: '[]'},
 			circuit,
 			scene);
+		var _p44 = _user$project$PrintAny$log(
+			A2(_elm_lang$core$Result$map, _user$project$Scene$state, result));
+		return result;
 	});
 var _user$project$Main2$State = F2(
 	function (a, b) {
