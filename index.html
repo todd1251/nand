@@ -9706,16 +9706,6 @@ var _user$project$Circuit2$group = F4(
 				return A2(_elm_lang$core$List$member, _p48._0.name, connections);
 			},
 			_p49.connections);
-		var group_ = _user$project$Circuit2$Circuit(
-			{
-				name: _user$project$Circuit2$CircuitName('group'),
-				ports: {ctor: '[]'},
-				connections: A2(
-					_elm_lang$core$Basics_ops['++'],
-					groupedConnections,
-					A2(_elm_lang$core$Basics_ops['++'], inputConnections, outputConnections)),
-				circuits: groupedCircuits
-			});
 		var outer = _user$project$Circuit2$Circuit(
 			{
 				name: _p51,
@@ -9723,12 +9713,11 @@ var _user$project$Circuit2$group = F4(
 					_elm_lang$core$Basics_ops['++'],
 					A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$first, inputPorts),
 					A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$first, outputPorts)),
-				connections: {ctor: '[]'},
-				circuits: {
-					ctor: '::',
-					_0: group_,
-					_1: {ctor: '[]'}
-				}
+				connections: A2(
+					_elm_lang$core$Basics_ops['++'],
+					groupedConnections,
+					A2(_elm_lang$core$Basics_ops['++'], inputConnections, outputConnections)),
+				circuits: groupedCircuits
 			});
 		return _user$project$Circuit2$Circuit(
 			_elm_lang$core$Native_Utils.update(
@@ -10957,12 +10946,24 @@ var _user$project$Main2$toScene2 = F2(
 						},
 						_1: {
 							ctor: '::',
-							_0: {ctor: '_Tuple3', _0: 'root.circuit1.group', _1: _elm_lang$core$Maybe$Nothing, _2: _user$project$Transform2$identity},
+							_0: {
+								ctor: '_Tuple3',
+								_0: 'root.circuit1.gate1',
+								_1: _elm_lang$core$Maybe$Just(
+									_user$project$Shape$Rectangle(
+										{
+											origin: {x: -50, y: -50},
+											size: {width: 100, height: 100},
+											stroke: _user$project$Shape$Thin
+										})),
+								_2: _user$project$Transform2$translate(
+									{x: -100, y: 0})
+							},
 							_1: {
 								ctor: '::',
 								_0: {
 									ctor: '_Tuple3',
-									_0: 'root.circuit1.group.gate1',
+									_0: 'root.circuit1.gate2',
 									_1: _elm_lang$core$Maybe$Just(
 										_user$project$Shape$Rectangle(
 											{
@@ -10971,25 +10972,9 @@ var _user$project$Main2$toScene2 = F2(
 												stroke: _user$project$Shape$Thin
 											})),
 									_2: _user$project$Transform2$translate(
-										{x: -100, y: 0})
+										{x: 100, y: 0})
 								},
-								_1: {
-									ctor: '::',
-									_0: {
-										ctor: '_Tuple3',
-										_0: 'root.circuit1.group.gate2',
-										_1: _elm_lang$core$Maybe$Just(
-											_user$project$Shape$Rectangle(
-												{
-													origin: {x: -50, y: -50},
-													size: {width: 100, height: 100},
-													stroke: _user$project$Shape$Thin
-												})),
-										_2: _user$project$Transform2$translate(
-											{x: 100, y: 0})
-									},
-									_1: {ctor: '[]'}
-								}
+								_1: {ctor: '[]'}
 							}
 						}
 					}
@@ -11020,8 +11005,8 @@ var _user$project$Main2$toScene2 = F2(
 						return _elm_lang$core$Native_Utils.crashCase(
 							'Main2',
 							{
-								start: {line: 644, column: 33},
-								end: {line: 649, column: 85}
+								start: {line: 640, column: 33},
+								end: {line: 645, column: 85}
 							},
 							_p8)(
 							A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', name));
