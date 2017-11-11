@@ -10900,6 +10900,15 @@ var _user$project$Main2$update = F2(
 			_1: _elm_lang$core$Platform_Cmd$none
 		};
 	});
+var _user$project$Main2$marginedBounds = F2(
+	function (groupName, scene) {
+		return _user$project$Bounds$fromRectangle(
+			A2(
+				_user$project$Rectangle2$margin,
+				20,
+				_user$project$Bounds$toRectangle(
+					A2(_user$project$Scene$bounds, groupName, scene))));
+	});
 var _user$project$Main2$layout = {
 	ctor: '::',
 	_0: {ctor: '_Tuple3', _0: 'root', _1: _elm_lang$core$Maybe$Nothing, _2: _user$project$Transform2$identity},
@@ -11021,8 +11030,8 @@ var _user$project$Main2$toScene2 = F2(
 						return _elm_lang$core$Native_Utils.crashCase(
 							'Main2',
 							{
-								start: {line: 650, column: 33},
-								end: {line: 655, column: 85}
+								start: {line: 659, column: 33},
+								end: {line: 664, column: 85}
 							},
 							_p10)(
 							A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', name));
@@ -11229,12 +11238,7 @@ var _user$project$Main2$toScene2 = F2(
 							_elm_lang$core$Result$andThen,
 							function (scene) {
 								var stroke = _elm_lang$core$List$isEmpty(_p40.circuits) ? _user$project$Shape$Dashed : _user$project$Shape$Thick;
-								var bounds = _user$project$Bounds$fromRectangle(
-									A2(
-										_user$project$Rectangle2$margin,
-										20,
-										_user$project$Bounds$toRectangle(
-											A2(_user$project$Scene$bounds, groupName, scene))));
+								var bounds = A2(_user$project$Main2$marginedBounds, groupName, scene);
 								return A2(
 									_elm_lang$core$Result$andThen,
 									A2(_user$project$Scene$parent, groupName, parent),
