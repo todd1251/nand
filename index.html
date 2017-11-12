@@ -10960,15 +10960,41 @@ var _user$project$Main2$layout = {
 		}
 	}
 };
+var _user$project$Main2$layoutFor = function (name) {
+	return function (layout) {
+		var _p5 = layout;
+		if (_p5.ctor === 'Just') {
+			return _p5._0;
+		} else {
+			return _elm_lang$core$Native_Utils.crashCase(
+				'Main2',
+				{
+					start: {line: 614, column: 17},
+					end: {line: 619, column: 69}
+				},
+				_p5)(
+				A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', name));
+		}
+	}(
+		_elm_lang$core$List$head(
+			A2(
+				_elm_lang$core$List$filterMap,
+				function (_p7) {
+					var _p8 = _p7;
+					return _elm_lang$core$Native_Utils.eq(_p8._0, name) ? _elm_lang$core$Maybe$Just(
+						{ctor: '_Tuple2', _0: _p8._1, _1: _p8._2}) : _elm_lang$core$Maybe$Nothing;
+				},
+				_user$project$Main2$layout)));
+};
 var _user$project$Main2$pathToString = function (path) {
 	return A2(
 		_elm_lang$core$String$join,
 		'.',
 		A2(
 			_elm_lang$core$List$map,
-			function (_p5) {
-				var _p6 = _p5;
-				return _p6._0;
+			function (_p9) {
+				var _p10 = _p9;
+				return _p10._0;
 			},
 			path));
 };
@@ -10979,9 +11005,9 @@ var _user$project$Main2$nameOf = function (path) {
 			'.',
 			A2(
 				_elm_lang$core$List$map,
-				function (_p7) {
-					var _p8 = _p7;
-					return _p8._0;
+				function (_p11) {
+					var _p12 = _p11;
+					return _p12._0;
 				},
 				path)));
 };
@@ -11014,9 +11040,9 @@ var _user$project$Main2$inputShape = _user$project$Shape$Path(
 var _user$project$Main2$toScene2 = F2(
 	function (circuit, scene) {
 		var toScene2_ = F3(
-			function (path, _p9, scene) {
-				var _p10 = _p9;
-				var _p42 = _p10._0;
+			function (path, _p13, scene) {
+				var _p14 = _p13;
+				var _p42 = _p14._0;
 				var currentPath = A2(
 					_elm_lang$core$Basics_ops['++'],
 					path,
@@ -11026,32 +11052,9 @@ var _user$project$Main2$toScene2 = F2(
 						_1: {ctor: '[]'}
 					});
 				var name = _user$project$Main2$pathToString(currentPath);
-				var _p11 = function (layout) {
-					var _p12 = layout;
-					if (_p12.ctor === 'Just') {
-						return _p12._0;
-					} else {
-						return _elm_lang$core$Native_Utils.crashCase(
-							'Main2',
-							{
-								start: {line: 667, column: 33},
-								end: {line: 672, column: 85}
-							},
-							_p12)(
-							A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', name));
-					}
-				}(
-					_elm_lang$core$List$head(
-						A2(
-							_elm_lang$core$List$filterMap,
-							function (_p14) {
-								var _p15 = _p14;
-								return _elm_lang$core$Native_Utils.eq(_p15._0, name) ? _elm_lang$core$Maybe$Just(
-									{ctor: '_Tuple2', _0: _p15._1, _1: _p15._2}) : _elm_lang$core$Maybe$Nothing;
-							},
-							_user$project$Main2$layout)));
-				var shape = _p11._0;
-				var transform = _p11._1;
+				var _p15 = _user$project$Main2$layoutFor(name);
+				var shape = _p15._0;
+				var transform = _p15._1;
 				var groupName = A2(_elm_lang$core$Basics_ops['++'], name, '.group');
 				var sceneWithChildren = A3(
 					_elm_lang$core$List$foldl,
