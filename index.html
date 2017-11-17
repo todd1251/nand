@@ -10900,6 +10900,10 @@ var _user$project$Main2$update = F2(
 			_1: _elm_lang$core$Platform_Cmd$none
 		};
 	});
+var _user$project$Main2$transformedGroup = F3(
+	function (groupName, transform, scene) {
+		return _elm_lang$core$Native_Utils.eq(transform, _user$project$Transform2$identity) ? _elm_lang$core$Result$Ok(scene) : A3(_user$project$Scene$transform, groupName, transform, scene);
+	});
 var _user$project$Main2$addSceneShape = F4(
 	function (scene, parent, name, shape) {
 		return A2(
@@ -11290,9 +11294,7 @@ var _user$project$Main2$toScene2 = F2(
 					sceneWithPorts);
 				return A2(
 					_elm_lang$core$Result$andThen,
-					function (scene) {
-						return _elm_lang$core$Native_Utils.eq(transform, _user$project$Transform2$identity) ? _elm_lang$core$Result$Ok(scene) : A3(_user$project$Scene$transform, groupName, transform, scene);
-					},
+					A2(_user$project$Main2$transformedGroup, groupName, transform),
 					sceneWithGroup);
 			});
 		var result = A3(
