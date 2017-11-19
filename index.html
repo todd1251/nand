@@ -10994,19 +10994,21 @@ var _user$project$Main2$marginedBounds = F2(
 	});
 var _user$project$Main2$layout = {
 	ctor: '::',
-	_0: {ctor: '_Tuple3', _0: 'root', _1: _elm_lang$core$Maybe$Nothing, _2: _user$project$Transform2$identity},
+	_0: {
+		ctor: '_Tuple3',
+		_0: 'root',
+		_1: _elm_lang$core$Maybe$Nothing,
+		_2: _user$project$Transform2$scale(
+			{x: 0.5, y: 0.5})
+	},
 	_1: {
 		ctor: '::',
 		_0: {
 			ctor: '_Tuple3',
 			_0: 'root.circuit1',
 			_1: _elm_lang$core$Maybe$Nothing,
-			_2: A2(
-				_user$project$Transform2$combine,
-				_user$project$Transform2$scale(
-					{x: 0.5, y: 0.5}),
-				_user$project$Transform2$translate(
-					{x: -100, y: -100}))
+			_2: _user$project$Transform2$translate(
+				{x: -100, y: -100})
 		},
 		_1: {
 			ctor: '::',
@@ -11052,8 +11054,8 @@ var _user$project$Main2$layoutFor = function (name) {
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Main2',
 				{
-					start: {line: 616, column: 17},
-					end: {line: 621, column: 69}
+					start: {line: 613, column: 17},
+					end: {line: 618, column: 69}
 				},
 				_p9)(
 				A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', name));
@@ -11302,7 +11304,10 @@ var _user$project$Main2$toScene2 = F2(
 					sceneWithPorts);
 				return A2(
 					_elm_lang$core$Result$andThen,
-					A2(_user$project$Main2$transformedGroup, groupName, transform),
+					A2(
+						_user$project$Main2$transformedGroup,
+						_elm_lang$core$Native_Utils.eq(name, 'root') ? name : groupName,
+						transform),
 					sceneWithGroup);
 			});
 		var result = A3(
