@@ -10998,8 +10998,12 @@ var _user$project$Main2$layout = {
 		ctor: '_Tuple3',
 		_0: 'root',
 		_1: _elm_lang$core$Maybe$Nothing,
-		_2: _user$project$Transform2$scale(
-			{x: 0.5, y: 0.5})
+		_2: A2(
+			_user$project$Transform2$combine,
+			_user$project$Transform2$translate(
+				{x: 50, y: 50}),
+			_user$project$Transform2$scale(
+				{x: 1.5, y: 1.5}))
 	},
 	_1: {
 		ctor: '::',
@@ -11054,8 +11058,8 @@ var _user$project$Main2$layoutFor = function (name) {
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Main2',
 				{
-					start: {line: 613, column: 17},
-					end: {line: 618, column: 69}
+					start: {line: 614, column: 17},
+					end: {line: 619, column: 69}
 				},
 				_p9)(
 				A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', name));
