@@ -9272,6 +9272,17 @@ var _user$project$Transform2$apply = F2(
 	function (transform, point) {
 		return {x: ((transform.a * point.x) + (transform.b * point.y)) + transform.e, y: ((transform.c * point.x) + (transform.d * point.y)) + transform.f};
 	});
+var _user$project$Transform2$rotate = function (degrees) {
+	var theta = (degrees * _elm_lang$core$Basics$pi) / 180.0;
+	return {
+		a: _elm_lang$core$Basics$cos(theta),
+		b: 0 - _elm_lang$core$Basics$sin(theta),
+		c: _elm_lang$core$Basics$sin(theta),
+		d: _elm_lang$core$Basics$cos(theta),
+		e: 0,
+		f: 0
+	};
+};
 var _user$project$Transform2$scale = function (_p0) {
 	var _p1 = _p0;
 	return {a: _p1.x, b: 0, c: 0, d: _p1.y, e: 0, f: 0};
@@ -11013,10 +11024,21 @@ var _user$project$Main2$marginedBounds = F2(
 	});
 var _user$project$Main2$layout = {
 	ctor: '::',
-	_0: {ctor: '_Tuple3', _0: 'root', _1: _elm_lang$core$Maybe$Nothing, _2: _user$project$Transform2$identity},
+	_0: {
+		ctor: '_Tuple3',
+		_0: 'root',
+		_1: _elm_lang$core$Maybe$Nothing,
+		_2: _user$project$Transform2$rotate(90)
+	},
 	_1: {
 		ctor: '::',
-		_0: {ctor: '_Tuple3', _0: 'root.circuit1', _1: _elm_lang$core$Maybe$Nothing, _2: _user$project$Transform2$identity},
+		_0: {
+			ctor: '_Tuple3',
+			_0: 'root.circuit1',
+			_1: _elm_lang$core$Maybe$Nothing,
+			_2: _user$project$Transform2$translate(
+				{x: -100, y: -100})
+		},
 		_1: {
 			ctor: '::',
 			_0: {
@@ -11061,8 +11083,8 @@ var _user$project$Main2$layoutFor = function (name) {
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Main2',
 				{
-					start: {line: 614, column: 17},
-					end: {line: 619, column: 69}
+					start: {line: 613, column: 17},
+					end: {line: 618, column: 69}
 				},
 				_p11)(
 				A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', name));
