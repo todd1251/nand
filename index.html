@@ -8713,6 +8713,120 @@ var _elm_lang$html$Html_Attributes$classList = function (list) {
 				A2(_elm_lang$core$List$filter, _elm_lang$core$Tuple$second, list))));
 };
 var _elm_lang$html$Html_Attributes$style = _elm_lang$virtual_dom$VirtualDom$style;
+var _elm_lang$html$Html_Events$keyCode = A2(_elm_lang$core$Json_Decode$field, 'keyCode', _elm_lang$core$Json_Decode$int);
+var _elm_lang$html$Html_Events$targetChecked = A2(
+	_elm_lang$core$Json_Decode$at,
+	{
+		ctor: '::',
+		_0: 'target',
+		_1: {
+			ctor: '::',
+			_0: 'checked',
+			_1: {ctor: '[]'}
+		}
+	},
+	_elm_lang$core$Json_Decode$bool);
+var _elm_lang$html$Html_Events$targetValue = A2(
+	_elm_lang$core$Json_Decode$at,
+	{
+		ctor: '::',
+		_0: 'target',
+		_1: {
+			ctor: '::',
+			_0: 'value',
+			_1: {ctor: '[]'}
+		}
+	},
+	_elm_lang$core$Json_Decode$string);
+var _elm_lang$html$Html_Events$defaultOptions = _elm_lang$virtual_dom$VirtualDom$defaultOptions;
+var _elm_lang$html$Html_Events$onWithOptions = _elm_lang$virtual_dom$VirtualDom$onWithOptions;
+var _elm_lang$html$Html_Events$on = _elm_lang$virtual_dom$VirtualDom$on;
+var _elm_lang$html$Html_Events$onFocus = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'focus',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onBlur = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'blur',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onSubmitOptions = _elm_lang$core$Native_Utils.update(
+	_elm_lang$html$Html_Events$defaultOptions,
+	{preventDefault: true});
+var _elm_lang$html$Html_Events$onSubmit = function (msg) {
+	return A3(
+		_elm_lang$html$Html_Events$onWithOptions,
+		'submit',
+		_elm_lang$html$Html_Events$onSubmitOptions,
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onCheck = function (tagger) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'change',
+		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetChecked));
+};
+var _elm_lang$html$Html_Events$onInput = function (tagger) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'input',
+		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetValue));
+};
+var _elm_lang$html$Html_Events$onMouseOut = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseout',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseOver = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseover',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseLeave = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseleave',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseEnter = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseenter',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseUp = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseup',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseDown = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mousedown',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onDoubleClick = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'dblclick',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onClick = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'click',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$Options = F2(
+	function (a, b) {
+		return {stopPropagation: a, preventDefault: b};
+	});
 var _elm_lang$svg$Svg$map = _elm_lang$virtual_dom$VirtualDom$map;
 var _elm_lang$svg$Svg$text = _elm_lang$virtual_dom$VirtualDom$text;
 var _elm_lang$svg$Svg$svgNamespace = A2(
@@ -10867,59 +10981,99 @@ var _user$project$Shape$Dashed = {ctor: 'Dashed'};
 var _user$project$Shape$Thin = {ctor: 'Thin'};
 var _user$project$Shape$Thick = {ctor: 'Thick'};
 var _user$project$Shape$NoStroke = {ctor: 'NoStroke'};
-var _user$project$Main2$view = function (state) {
-	return A2(
-		_elm_lang$html$Html$div,
-		{ctor: '[]'},
-		{
+var _user$project$Main2$labelledRange = F7(
+	function (id, label, minimum, maximum, step, value, message) {
+		return {
 			ctor: '::',
 			_0: A2(
-				_elm_lang$html$Html$pre,
-				{ctor: '[]'},
-				{ctor: '[]'}),
+				_elm_lang$html$Html$label,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$for(id),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(label),
+					_1: {ctor: '[]'}
+				}),
 			_1: {
 				ctor: '::',
-				_0: _user$project$Canvas2$view(
-					A3(
-						_user$project$Scene$render,
-						_user$project$Canvas2$origin(state.canvasSize),
-						F2(
-							function (shape, transform) {
-								var _p0 = shape;
-								if (_p0.ctor === 'Just') {
-									return _elm_lang$core$Maybe$Just(
-										A2(_user$project$Shape$constructor, _p0._0, transform));
-								} else {
-									return _elm_lang$core$Maybe$Nothing;
+				_0: A2(
+					_elm_lang$html$Html$input,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$id(id),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$type_('range'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$min(
+									_elm_lang$core$Basics$toString(minimum)),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$max(
+										_elm_lang$core$Basics$toString(maximum)),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$step(
+											_elm_lang$core$Basics$toString(step)),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$value(
+												_elm_lang$core$Basics$toString(value)),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Events$onInput(message),
+												_1: {ctor: '[]'}
+											}
+										}
+									}
 								}
-							}),
-						state.scene)),
-				_1: {ctor: '[]'}
+							}
+						}
+					},
+					{ctor: '[]'}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$input,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$type_('text'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$placeholder(label),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$value(
+										_elm_lang$core$Basics$toString(value)),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Events$onInput(message),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						},
+						{ctor: '[]'}),
+					_1: {ctor: '[]'}
+				}
 			}
-		});
-};
-var _user$project$Main2$update = F2(
-	function (message, state) {
-		var _p1 = message;
-		var _p2 = _p1._0;
-		return {
-			ctor: '_Tuple2',
-			_0: _elm_lang$core$Native_Utils.update(
-				state,
-				{
-					canvasSize: {
-						width: _elm_lang$core$Basics$toFloat(_p2.width),
-						height: _elm_lang$core$Basics$toFloat(_p2.height)
-					}
-				}),
-			_1: _elm_lang$core$Platform_Cmd$none
 		};
 	});
+var _user$project$Main2$parseFloat = function (_p0) {
+	return A2(
+		_elm_lang$core$Result$withDefault,
+		0.0,
+		_elm_lang$core$String$toFloat(_p0));
+};
 var _user$project$Main2$addSceneShape = F5(
 	function (scene, parent, transform, name, shape) {
 		return A2(
 			_elm_lang$core$Result$andThen,
-			function (_p3) {
+			function (_p1) {
 				return A2(
 					_elm_lang$core$Result$andThen,
 					A2(_user$project$Scene$parent, name, parent),
@@ -10932,13 +11086,13 @@ var _user$project$Main2$addSceneShape = F5(
 							_user$project$Scene$insert,
 							name,
 							shape,
-							function (_p4) {
+							function (_p2) {
 								return A2(
 									_elm_lang$core$Maybe$withDefault,
 									_user$project$Bounds$zero,
-									A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p4));
+									A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p2));
 							},
-							_p3)));
+							_p1)));
 			},
 			scene);
 	});
@@ -10949,8 +11103,8 @@ var _user$project$Main2$portPosition = F5(
 		var to = bounds.origin.y + ((bounds.size.height * 3) / 4);
 		var step = _elm_lang$core$Native_Utils.eq(steps, 0) ? 0 : ((to - from) / _elm_lang$core$Basics$toFloat(steps));
 		var y = _elm_lang$core$Native_Utils.eq(direction, _user$project$Circuit2$Input) ? (_elm_lang$core$Native_Utils.eq(steps, 0) ? (from + ((to - from) / 2)) : (from + (step * _elm_lang$core$Basics$toFloat(index)))) : (bounds.origin.y + (bounds.size.height / 2));
-		var _p5 = direction;
-		if (_p5.ctor === 'Input') {
+		var _p3 = direction;
+		if (_p3.ctor === 'Input') {
 			return {x: bounds.origin.x, y: y};
 		} else {
 			return {x: bounds.origin.x + bounds.size.width, y: y};
@@ -10980,7 +11134,7 @@ var _user$project$Main2$sceneWithPortShape = F7(
 						_user$project$Scene$insert,
 						portName,
 						_elm_lang$core$Maybe$Just(shape),
-						function (_p6) {
+						function (_p4) {
 							return _elm_lang$core$Native_Utils.eq(direction, _user$project$Circuit2$Input) ? {
 								origin: {x: -20, y: 0},
 								size: {width: 20, height: 0}
@@ -11005,13 +11159,13 @@ var _user$project$Main2$transformedPort = F7(
 			},
 			scene);
 	});
-var _user$project$Main2$suffixFor = function (_p7) {
-	var _p8 = _p7;
-	return _elm_lang$core$List$isEmpty(_p8._0.circuits) ? '.group' : '';
+var _user$project$Main2$suffixFor = function (_p5) {
+	var _p6 = _p5;
+	return _elm_lang$core$List$isEmpty(_p6._0.circuits) ? '.group' : '';
 };
-var _user$project$Main2$strokeFor = function (_p9) {
-	var _p10 = _p9;
-	return _elm_lang$core$List$isEmpty(_p10._0.circuits) ? _user$project$Shape$Dashed : _user$project$Shape$Thick;
+var _user$project$Main2$strokeFor = function (_p7) {
+	var _p8 = _p7;
+	return _elm_lang$core$List$isEmpty(_p8._0.circuits) ? _user$project$Shape$Dashed : _user$project$Shape$Thick;
 };
 var _user$project$Main2$marginedBounds = F2(
 	function (groupName, scene) {
@@ -11022,93 +11176,100 @@ var _user$project$Main2$marginedBounds = F2(
 				_user$project$Bounds$toRectangle(
 					A2(_user$project$Scene$bounds, groupName, scene))));
 	});
-var _user$project$Main2$layout = {
-	ctor: '::',
-	_0: {
-		ctor: '_Tuple3',
-		_0: 'root',
-		_1: _elm_lang$core$Maybe$Nothing,
-		_2: _user$project$Transform2$rotate(-90)
-	},
-	_1: {
+var _user$project$Main2$layout = function (angle) {
+	return {
 		ctor: '::',
 		_0: {
 			ctor: '_Tuple3',
-			_0: 'root.circuit1',
+			_0: 'root',
 			_1: _elm_lang$core$Maybe$Nothing,
-			_2: _user$project$Transform2$translate(
-				{x: -100, y: -100})
+			_2: _user$project$Transform2$rotate(angle)
 		},
 		_1: {
 			ctor: '::',
-			_0: {
-				ctor: '_Tuple3',
-				_0: 'root.circuit1.gate1',
-				_1: _elm_lang$core$Maybe$Just(
-					_user$project$Shape$Rectangle(
-						{
-							origin: {x: -50, y: -50},
-							size: {width: 100, height: 100},
-							stroke: _user$project$Shape$Thin
-						})),
-				_2: _user$project$Transform2$translate(
-					{x: -100, y: 0})
-			},
+			_0: {ctor: '_Tuple3', _0: 'root.circuit1', _1: _elm_lang$core$Maybe$Nothing, _2: _user$project$Transform2$identity},
 			_1: {
 				ctor: '::',
 				_0: {
 					ctor: '_Tuple3',
-					_0: 'root.circuit1.gate2',
-					_1: _elm_lang$core$Maybe$Just(
-						_user$project$Shape$Rectangle(
-							{
-								origin: {x: -50, y: -50},
-								size: {width: 100, height: 100},
-								stroke: _user$project$Shape$Thin
-							})),
+					_0: 'root.circuit1.group',
+					_1: _elm_lang$core$Maybe$Nothing,
 					_2: _user$project$Transform2$translate(
-						{x: 100, y: 0})
+						{x: -100, y: -100})
 				},
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple3',
+						_0: 'root.circuit1.gate1',
+						_1: _elm_lang$core$Maybe$Just(
+							_user$project$Shape$Rectangle(
+								{
+									origin: {x: -50, y: -50},
+									size: {width: 100, height: 100},
+									stroke: _user$project$Shape$Thin
+								})),
+						_2: _user$project$Transform2$translate(
+							{x: -100, y: 0})
+					},
+					_1: {
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple3',
+							_0: 'root.circuit1.gate2',
+							_1: _elm_lang$core$Maybe$Just(
+								_user$project$Shape$Rectangle(
+									{
+										origin: {x: -50, y: -50},
+										size: {width: 100, height: 100},
+										stroke: _user$project$Shape$Thin
+									})),
+							_2: _user$project$Transform2$translate(
+								{x: 100, y: 0})
+						},
+						_1: {ctor: '[]'}
+					}
+				}
 			}
 		}
-	}
+	};
 };
-var _user$project$Main2$layoutFor = function (name) {
-	return function (layout) {
-		var _p11 = layout;
-		if (_p11.ctor === 'Just') {
-			return _p11._0;
-		} else {
-			return _elm_lang$core$Native_Utils.crashCase(
-				'Main2',
-				{
-					start: {line: 613, column: 17},
-					end: {line: 618, column: 69}
-				},
-				_p11)(
-				A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', name));
-		}
-	}(
-		_elm_lang$core$List$head(
-			A2(
-				_elm_lang$core$List$filterMap,
-				function (_p13) {
-					var _p14 = _p13;
-					return _elm_lang$core$Native_Utils.eq(_p14._0, name) ? _elm_lang$core$Maybe$Just(
-						{ctor: '_Tuple2', _0: _p14._1, _1: _p14._2}) : _elm_lang$core$Maybe$Nothing;
-				},
-				_user$project$Main2$layout)));
-};
+var _user$project$Main2$layoutFor = F2(
+	function (angle, name) {
+		return function (layout) {
+			var _p9 = layout;
+			if (_p9.ctor === 'Just') {
+				return _p9._0;
+			} else {
+				return _elm_lang$core$Native_Utils.crashCase(
+					'Main2',
+					{
+						start: {line: 621, column: 17},
+						end: {line: 626, column: 69}
+					},
+					_p9)(
+					A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', name));
+			}
+		}(
+			_elm_lang$core$List$head(
+				A2(
+					_elm_lang$core$List$filterMap,
+					function (_p11) {
+						var _p12 = _p11;
+						return _elm_lang$core$Native_Utils.eq(_p12._0, name) ? _elm_lang$core$Maybe$Just(
+							{ctor: '_Tuple2', _0: _p12._1, _1: _p12._2}) : _elm_lang$core$Maybe$Nothing;
+					},
+					_user$project$Main2$layout(angle))));
+	});
 var _user$project$Main2$pathToString = function (path) {
 	return A2(
 		_elm_lang$core$String$join,
 		'.',
 		A2(
 			_elm_lang$core$List$map,
-			function (_p15) {
-				var _p16 = _p15;
-				return _p16._0;
+			function (_p13) {
+				var _p14 = _p13;
+				return _p14._0;
 			},
 			path));
 };
@@ -11119,9 +11280,9 @@ var _user$project$Main2$nameOf = function (path) {
 			'.',
 			A2(
 				_elm_lang$core$List$map,
-				function (_p17) {
-					var _p18 = _p17;
-					return _p18._0;
+				function (_p15) {
+					var _p16 = _p15;
+					return _p16._0;
 				},
 				path)));
 };
@@ -11151,31 +11312,31 @@ var _user$project$Main2$inputShape = _user$project$Shape$Path(
 		},
 		stroke: _user$project$Shape$Thick
 	});
-var _user$project$Main2$toScene2 = F2(
-	function (circuit, scene) {
+var _user$project$Main2$toScene2 = F3(
+	function (angle, circuit, scene) {
 		var toScene2_ = F3(
-			function (path, _p19, scene) {
-				var _p20 = _p19;
-				var _p47 = _p20._0;
+			function (path, _p17, scene) {
+				var _p18 = _p17;
+				var _p45 = _p18._0;
 				var ports = A2(
 					_elm_lang$core$List$indexedMap,
 					F2(
-						function (index, _p21) {
-							var _p22 = _p21;
-							var _p23 = _p22._0.direction;
-							if (_p23.ctor === 'Input') {
+						function (index, _p19) {
+							var _p20 = _p19;
+							var _p21 = _p20._0.direction;
+							if (_p21.ctor === 'Input') {
 								return {ctor: '_Tuple3', _0: index, _1: _user$project$Main2$inputShape, _2: _user$project$Circuit2$Input};
 							} else {
 								return {ctor: '_Tuple3', _0: index, _1: _user$project$Main2$outputShape, _2: _user$project$Circuit2$Output};
 							}
 						}),
-					_p47.ports);
+					_p45.ports);
 				var steps = _elm_lang$core$List$length(
 					A2(
 						_elm_lang$core$List$filter,
-						function (_p24) {
-							var _p25 = _p24;
-							return _elm_lang$core$Native_Utils.eq(_p25._2, _user$project$Circuit2$Input);
+						function (_p22) {
+							var _p23 = _p22;
+							return _elm_lang$core$Native_Utils.eq(_p23._2, _user$project$Circuit2$Input);
 						},
 						ports)) - 1;
 				var currentPath = A2(
@@ -11183,21 +11344,21 @@ var _user$project$Main2$toScene2 = F2(
 					path,
 					{
 						ctor: '::',
-						_0: _p47.name,
+						_0: _p45.name,
 						_1: {ctor: '[]'}
 					});
 				var name = _user$project$Main2$pathToString(currentPath);
-				var _p26 = _user$project$Main2$layoutFor(name);
-				var shape = _p26._0;
-				var transform = _p26._1;
+				var _p24 = A2(_user$project$Main2$layoutFor, angle, name);
+				var shape = _p24._0;
+				var transform = _p24._1;
 				var groupName = A2(_elm_lang$core$Basics_ops['++'], name, '.group');
 				var sceneWithChildren = A3(
 					_elm_lang$core$List$foldl,
 					F2(
-						function (_p28, _p27) {
-							var _p29 = _p28;
-							var _p32 = _p29._0;
-							var _p30 = _p27;
+						function (_p26, _p25) {
+							var _p27 = _p26;
+							var _p30 = _p27._0;
+							var _p28 = _p25;
 							var childPath = A2(
 								_elm_lang$core$Basics_ops['++'],
 								currentPath,
@@ -11207,11 +11368,11 @@ var _user$project$Main2$toScene2 = F2(
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											function () {
-												var _p31 = _p32.name;
-												return _p31._0;
+												var _p29 = _p30.name;
+												return _p29._0;
 											}(),
 											_user$project$Main2$suffixFor(
-												_user$project$Circuit2$Circuit(_p32)))),
+												_user$project$Circuit2$Circuit(_p30)))),
 									_1: {ctor: '[]'}
 								});
 							var childName = _user$project$Main2$pathToString(childPath);
@@ -11222,11 +11383,11 @@ var _user$project$Main2$toScene2 = F2(
 									A2(
 										toScene2_,
 										currentPath,
-										_user$project$Circuit2$Circuit(_p32)),
-									_p30._0),
+										_user$project$Circuit2$Circuit(_p30)),
+									_p28._0),
 								_1: A2(
 									_elm_lang$core$Basics_ops['++'],
-									_p30._1,
+									_p28._1,
 									{
 										ctor: '::',
 										_0: childName,
@@ -11239,10 +11400,10 @@ var _user$project$Main2$toScene2 = F2(
 						_0: _elm_lang$core$Result$Ok(scene),
 						_1: {ctor: '[]'}
 					},
-					_p47.circuits);
-				var _p33 = sceneWithChildren;
-				var sceneWithChildren_ = _p33._0;
-				var childrenNames = _p33._1;
+					_p45.circuits);
+				var _p31 = sceneWithChildren;
+				var sceneWithChildren_ = _p31._0;
+				var childrenNames = _p31._1;
 				var parent = _user$project$Main2$nameOf(path);
 				var sceneWithPorts = A2(
 					_elm_lang$core$Result$andThen,
@@ -11250,23 +11411,23 @@ var _user$project$Main2$toScene2 = F2(
 						var sceneWithPorts1 = A3(
 							_elm_lang$core$List$foldl,
 							F2(
-								function (_p35, _p34) {
-									var _p36 = _p35;
-									var _p38 = _p36._0;
-									var _p37 = _p34;
+								function (_p33, _p32) {
+									var _p34 = _p33;
+									var _p36 = _p34._0;
+									var _p35 = _p32;
 									var portName = A2(
 										_elm_lang$core$Basics_ops['++'],
 										name,
 										A2(
 											_elm_lang$core$Basics_ops['++'],
 											'.port',
-											_elm_lang$core$Basics$toString(_p38 + 1)));
+											_elm_lang$core$Basics$toString(_p36 + 1)));
 									return {
 										ctor: '_Tuple2',
-										_0: A7(_user$project$Main2$sceneWithPortShape, name, portName, _p38, steps, _p36._1, _p36._2, _p37._0),
+										_0: A7(_user$project$Main2$sceneWithPortShape, name, portName, _p36, steps, _p34._1, _p34._2, _p35._0),
 										_1: A2(
 											_elm_lang$core$Basics_ops['++'],
-											_p37._1,
+											_p35._1,
 											{
 												ctor: '::',
 												_0: portName,
@@ -11280,9 +11441,9 @@ var _user$project$Main2$toScene2 = F2(
 								_1: {ctor: '[]'}
 							},
 							ports);
-						var _p39 = sceneWithPorts1;
-						var sceneWithPorts_ = _p39._0;
-						var portNames = _p39._1;
+						var _p37 = sceneWithPorts1;
+						var sceneWithPorts_ = _p37._0;
+						var portNames = _p37._1;
 						return A2(
 							_elm_lang$core$Result$andThen,
 							function (scene) {
@@ -11294,30 +11455,30 @@ var _user$project$Main2$toScene2 = F2(
 					A5(_user$project$Main2$addSceneShape, sceneWithChildren_, parent, transform, name, shape));
 				var sceneWithGroup = A2(
 					_elm_lang$core$Result$andThen,
-					function (_p40) {
-						var _p41 = _p40;
-						var _p46 = _p41._0;
-						return _elm_lang$core$Native_Utils.eq(name, 'root') ? _elm_lang$core$Result$Ok(_p46) : A2(
+					function (_p38) {
+						var _p39 = _p38;
+						var _p44 = _p39._0;
+						return _elm_lang$core$Native_Utils.eq(name, 'root') ? _elm_lang$core$Result$Ok(_p44) : A2(
 							_elm_lang$core$Result$andThen,
 							function (scene) {
 								var stroke = _user$project$Main2$strokeFor(
-									_user$project$Circuit2$Circuit(_p47));
+									_user$project$Circuit2$Circuit(_p45));
 								var bounds = A2(_user$project$Main2$marginedBounds, groupName, scene);
 								return function (scene_) {
-									return _elm_lang$core$List$isEmpty(_p47.circuits) ? scene_ : A3(
+									return _elm_lang$core$List$isEmpty(_p45.circuits) ? scene_ : A3(
 										_elm_lang$core$List$foldl,
 										F2(
-											function (_p42, scene) {
-												var _p43 = _p42;
-												var _p44 = _p43._0;
+											function (_p40, scene) {
+												var _p41 = _p40;
+												var _p42 = _p41._0;
 												var portName = A2(
 													_elm_lang$core$Basics_ops['++'],
 													name,
 													A2(
 														_elm_lang$core$Basics_ops['++'],
 														'.port',
-														_elm_lang$core$Basics$toString(_p44 + 1)));
-												return A7(_user$project$Main2$transformedPort, groupName, portName, _p44, steps, _p43._1, _p43._2, scene);
+														_elm_lang$core$Basics$toString(_p42 + 1)));
+												return A7(_user$project$Main2$transformedPort, groupName, portName, _p42, steps, _p41._1, _p41._2, scene);
 											}),
 										scene_,
 										ports);
@@ -11331,11 +11492,11 @@ var _user$project$Main2$toScene2 = F2(
 											_elm_lang$core$Maybe$Just(
 												_user$project$Shape$Rectangle(
 													{origin: bounds.origin, size: bounds.size, stroke: stroke})),
-											function (_p45) {
+											function (_p43) {
 												return A2(
 													_elm_lang$core$Maybe$withDefault,
 													_user$project$Bounds$zero,
-													A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p45));
+													A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p43));
 											},
 											scene)));
 							},
@@ -11349,8 +11510,8 @@ var _user$project$Main2$toScene2 = F2(
 										_0: name,
 										_1: {ctor: '[]'}
 									},
-									A2(_elm_lang$core$Basics_ops['++'], _p41._1, childrenNames)),
-								_p46));
+									A2(_elm_lang$core$Basics_ops['++'], _p39._1, childrenNames)),
+								_p44));
 					},
 					sceneWithPorts);
 				return sceneWithGroup;
@@ -11362,24 +11523,102 @@ var _user$project$Main2$toScene2 = F2(
 			scene);
 		return result;
 	});
-var _user$project$Main2$State = F2(
-	function (a, b) {
-		return {canvasSize: a, scene: b};
+var _user$project$Main2$update = F2(
+	function (message, state) {
+		var _p46 = message;
+		if (_p46.ctor === 'WindowResizedTo') {
+			var _p47 = _p46._0;
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					state,
+					{
+						canvasSize: {
+							width: _elm_lang$core$Basics$toFloat(_p47.width),
+							height: _elm_lang$core$Basics$toFloat(_p47.height)
+						}
+					}),
+				_1: _elm_lang$core$Platform_Cmd$none
+			};
+		} else {
+			var degrees = _user$project$Main2$parseFloat(_p46._0);
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					state,
+					{
+						angle: degrees,
+						scene: A2(
+							_elm_lang$core$Result$withDefault,
+							_user$project$Scene$empty,
+							A3(_user$project$Main2$toScene2, degrees, _user$project$Circuit2$example, _user$project$Scene$empty))
+					}),
+				_1: _elm_lang$core$Platform_Cmd$none
+			};
+		}
 	});
+var _user$project$Main2$State = F3(
+	function (a, b, c) {
+		return {canvasSize: a, scene: b, angle: c};
+	});
+var _user$project$Main2$ChangeAngle = function (a) {
+	return {ctor: 'ChangeAngle', _0: a};
+};
+var _user$project$Main2$view = function (state) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			A7(_user$project$Main2$labelledRange, 'angle', 'Angle (degrees)', -180, 180, 1, state.angle, _user$project$Main2$ChangeAngle),
+			{
+				ctor: '::',
+				_0: _user$project$Canvas2$view(
+					A3(
+						_user$project$Scene$render,
+						_user$project$Canvas2$origin(state.canvasSize),
+						F2(
+							function (shape, transform) {
+								var _p48 = shape;
+								if (_p48.ctor === 'Just') {
+									return _elm_lang$core$Maybe$Just(
+										A2(_user$project$Shape$constructor, _p48._0, transform));
+								} else {
+									return _elm_lang$core$Maybe$Nothing;
+								}
+							}),
+						state.scene)),
+				_1: {ctor: '[]'}
+			}));
+};
 var _user$project$Main2$WindowResizedTo = function (a) {
 	return {ctor: 'WindowResizedTo', _0: a};
 };
-var _user$project$Main2$init = {
-	ctor: '_Tuple2',
-	_0: {
+var _user$project$Main2$init = function () {
+	var state = {
 		canvasSize: {width: 800, height: 600},
-		scene: A2(
-			_elm_lang$core$Result$withDefault,
-			_user$project$Scene$empty,
-			A2(_user$project$Main2$toScene2, _user$project$Circuit2$example, _user$project$Scene$empty))
-	},
-	_1: A2(_elm_lang$core$Task$perform, _user$project$Main2$WindowResizedTo, _elm_lang$window$Window$size)
-};
+		scene: _user$project$Scene$empty,
+		angle: 0
+	};
+	return {
+		ctor: '_Tuple2',
+		_0: state,
+		_1: _elm_lang$core$Platform_Cmd$batch(
+			{
+				ctor: '::',
+				_0: A2(_elm_lang$core$Task$perform, _user$project$Main2$WindowResizedTo, _elm_lang$window$Window$size),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$core$Task$perform,
+						_user$project$Main2$ChangeAngle,
+						_elm_lang$core$Task$succeed(
+							_elm_lang$core$Basics$toString(state.angle))),
+					_1: {ctor: '[]'}
+				}
+			})
+	};
+}();
 var _user$project$Main2$subscriptions = function (state) {
 	return _elm_lang$window$Window$resizes(_user$project$Main2$WindowResizedTo);
 };
