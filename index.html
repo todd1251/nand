@@ -9368,7 +9368,7 @@ var _user$project$Bounds$Bounds = F2(
 	function (a, b) {
 		return {origin: a, size: b};
 	});
-var _user$project$Styles$css = '\n    html, body {\n        margin: 0;\n        padding: 0;\n    }\n\n    * {\n        user-select: none;\n    }\n\n    .canvas {\n        background: white;\n        height: 100%;\n        position: fixed;\n        width: 100%;\n    }\n    ';
+var _user$project$Styles$css = '\n    html, body {\n        margin: 0;\n        padding: 0;\n    }\n\n    * {\n        user-select: none;\n    }\n\n    .canvas {\n        background: white;\n        height: 100%;\n        position: fixed;\n        width: 100%;\n    }\n\n    .controls {\n        margin: 1em;\n    }\n    ';
 var _user$project$Styles$stylesheet = A3(
 	_elm_lang$html$Html$node,
 	'style',
@@ -11570,7 +11570,18 @@ var _user$project$Main2$view = function (state) {
 		{ctor: '[]'},
 		A2(
 			_elm_lang$core$Basics_ops['++'],
-			A7(_user$project$Main2$labelledRange, 'angle', 'Angle (degrees)', -180, 180, 1, state.angle, _user$project$Main2$ChangeAngle),
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('controls'),
+						_1: {ctor: '[]'}
+					},
+					A7(_user$project$Main2$labelledRange, 'angle', 'Angle (degrees)', -180, 180, 1, state.angle, _user$project$Main2$ChangeAngle)),
+				_1: {ctor: '[]'}
+			},
 			{
 				ctor: '::',
 				_0: _user$project$Canvas2$view(
