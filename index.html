@@ -8364,469 +8364,6 @@ var _elm_lang$html$Html$details = _elm_lang$html$Html$node('details');
 var _elm_lang$html$Html$summary = _elm_lang$html$Html$node('summary');
 var _elm_lang$html$Html$menuitem = _elm_lang$html$Html$node('menuitem');
 var _elm_lang$html$Html$menu = _elm_lang$html$Html$node('menu');
-var _elm_lang$html$Html_Attributes$map = _elm_lang$virtual_dom$VirtualDom$mapProperty;
-var _elm_lang$html$Html_Attributes$attribute = _elm_lang$virtual_dom$VirtualDom$attribute;
-var _elm_lang$html$Html_Attributes$contextmenu = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$attribute, 'contextmenu', value);
-};
-var _elm_lang$html$Html_Attributes$draggable = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$attribute, 'draggable', value);
-};
-var _elm_lang$html$Html_Attributes$itemprop = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$attribute, 'itemprop', value);
-};
-var _elm_lang$html$Html_Attributes$tabindex = function (n) {
-	return A2(
-		_elm_lang$html$Html_Attributes$attribute,
-		'tabIndex',
-		_elm_lang$core$Basics$toString(n));
-};
-var _elm_lang$html$Html_Attributes$charset = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$attribute, 'charset', value);
-};
-var _elm_lang$html$Html_Attributes$height = function (value) {
-	return A2(
-		_elm_lang$html$Html_Attributes$attribute,
-		'height',
-		_elm_lang$core$Basics$toString(value));
-};
-var _elm_lang$html$Html_Attributes$width = function (value) {
-	return A2(
-		_elm_lang$html$Html_Attributes$attribute,
-		'width',
-		_elm_lang$core$Basics$toString(value));
-};
-var _elm_lang$html$Html_Attributes$formaction = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$attribute, 'formAction', value);
-};
-var _elm_lang$html$Html_Attributes$list = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$attribute, 'list', value);
-};
-var _elm_lang$html$Html_Attributes$minlength = function (n) {
-	return A2(
-		_elm_lang$html$Html_Attributes$attribute,
-		'minLength',
-		_elm_lang$core$Basics$toString(n));
-};
-var _elm_lang$html$Html_Attributes$maxlength = function (n) {
-	return A2(
-		_elm_lang$html$Html_Attributes$attribute,
-		'maxlength',
-		_elm_lang$core$Basics$toString(n));
-};
-var _elm_lang$html$Html_Attributes$size = function (n) {
-	return A2(
-		_elm_lang$html$Html_Attributes$attribute,
-		'size',
-		_elm_lang$core$Basics$toString(n));
-};
-var _elm_lang$html$Html_Attributes$form = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$attribute, 'form', value);
-};
-var _elm_lang$html$Html_Attributes$cols = function (n) {
-	return A2(
-		_elm_lang$html$Html_Attributes$attribute,
-		'cols',
-		_elm_lang$core$Basics$toString(n));
-};
-var _elm_lang$html$Html_Attributes$rows = function (n) {
-	return A2(
-		_elm_lang$html$Html_Attributes$attribute,
-		'rows',
-		_elm_lang$core$Basics$toString(n));
-};
-var _elm_lang$html$Html_Attributes$challenge = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$attribute, 'challenge', value);
-};
-var _elm_lang$html$Html_Attributes$media = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$attribute, 'media', value);
-};
-var _elm_lang$html$Html_Attributes$rel = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$attribute, 'rel', value);
-};
-var _elm_lang$html$Html_Attributes$datetime = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$attribute, 'datetime', value);
-};
-var _elm_lang$html$Html_Attributes$pubdate = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$attribute, 'pubdate', value);
-};
-var _elm_lang$html$Html_Attributes$colspan = function (n) {
-	return A2(
-		_elm_lang$html$Html_Attributes$attribute,
-		'colspan',
-		_elm_lang$core$Basics$toString(n));
-};
-var _elm_lang$html$Html_Attributes$rowspan = function (n) {
-	return A2(
-		_elm_lang$html$Html_Attributes$attribute,
-		'rowspan',
-		_elm_lang$core$Basics$toString(n));
-};
-var _elm_lang$html$Html_Attributes$manifest = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$attribute, 'manifest', value);
-};
-var _elm_lang$html$Html_Attributes$property = _elm_lang$virtual_dom$VirtualDom$property;
-var _elm_lang$html$Html_Attributes$stringProperty = F2(
-	function (name, string) {
-		return A2(
-			_elm_lang$html$Html_Attributes$property,
-			name,
-			_elm_lang$core$Json_Encode$string(string));
-	});
-var _elm_lang$html$Html_Attributes$class = function (name) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'className', name);
-};
-var _elm_lang$html$Html_Attributes$id = function (name) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'id', name);
-};
-var _elm_lang$html$Html_Attributes$title = function (name) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'title', name);
-};
-var _elm_lang$html$Html_Attributes$accesskey = function ($char) {
-	return A2(
-		_elm_lang$html$Html_Attributes$stringProperty,
-		'accessKey',
-		_elm_lang$core$String$fromChar($char));
-};
-var _elm_lang$html$Html_Attributes$dir = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'dir', value);
-};
-var _elm_lang$html$Html_Attributes$dropzone = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'dropzone', value);
-};
-var _elm_lang$html$Html_Attributes$lang = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'lang', value);
-};
-var _elm_lang$html$Html_Attributes$content = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'content', value);
-};
-var _elm_lang$html$Html_Attributes$httpEquiv = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'httpEquiv', value);
-};
-var _elm_lang$html$Html_Attributes$language = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'language', value);
-};
-var _elm_lang$html$Html_Attributes$src = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'src', value);
-};
-var _elm_lang$html$Html_Attributes$alt = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'alt', value);
-};
-var _elm_lang$html$Html_Attributes$preload = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'preload', value);
-};
-var _elm_lang$html$Html_Attributes$poster = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'poster', value);
-};
-var _elm_lang$html$Html_Attributes$kind = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'kind', value);
-};
-var _elm_lang$html$Html_Attributes$srclang = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'srclang', value);
-};
-var _elm_lang$html$Html_Attributes$sandbox = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'sandbox', value);
-};
-var _elm_lang$html$Html_Attributes$srcdoc = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'srcdoc', value);
-};
-var _elm_lang$html$Html_Attributes$type_ = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'type', value);
-};
-var _elm_lang$html$Html_Attributes$value = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'value', value);
-};
-var _elm_lang$html$Html_Attributes$defaultValue = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'defaultValue', value);
-};
-var _elm_lang$html$Html_Attributes$placeholder = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'placeholder', value);
-};
-var _elm_lang$html$Html_Attributes$accept = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'accept', value);
-};
-var _elm_lang$html$Html_Attributes$acceptCharset = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'acceptCharset', value);
-};
-var _elm_lang$html$Html_Attributes$action = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'action', value);
-};
-var _elm_lang$html$Html_Attributes$autocomplete = function (bool) {
-	return A2(
-		_elm_lang$html$Html_Attributes$stringProperty,
-		'autocomplete',
-		bool ? 'on' : 'off');
-};
-var _elm_lang$html$Html_Attributes$enctype = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'enctype', value);
-};
-var _elm_lang$html$Html_Attributes$method = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'method', value);
-};
-var _elm_lang$html$Html_Attributes$name = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'name', value);
-};
-var _elm_lang$html$Html_Attributes$pattern = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'pattern', value);
-};
-var _elm_lang$html$Html_Attributes$for = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'htmlFor', value);
-};
-var _elm_lang$html$Html_Attributes$max = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'max', value);
-};
-var _elm_lang$html$Html_Attributes$min = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'min', value);
-};
-var _elm_lang$html$Html_Attributes$step = function (n) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'step', n);
-};
-var _elm_lang$html$Html_Attributes$wrap = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'wrap', value);
-};
-var _elm_lang$html$Html_Attributes$usemap = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'useMap', value);
-};
-var _elm_lang$html$Html_Attributes$shape = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'shape', value);
-};
-var _elm_lang$html$Html_Attributes$coords = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'coords', value);
-};
-var _elm_lang$html$Html_Attributes$keytype = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'keytype', value);
-};
-var _elm_lang$html$Html_Attributes$align = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'align', value);
-};
-var _elm_lang$html$Html_Attributes$cite = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'cite', value);
-};
-var _elm_lang$html$Html_Attributes$href = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'href', value);
-};
-var _elm_lang$html$Html_Attributes$target = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'target', value);
-};
-var _elm_lang$html$Html_Attributes$downloadAs = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'download', value);
-};
-var _elm_lang$html$Html_Attributes$hreflang = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'hreflang', value);
-};
-var _elm_lang$html$Html_Attributes$ping = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'ping', value);
-};
-var _elm_lang$html$Html_Attributes$start = function (n) {
-	return A2(
-		_elm_lang$html$Html_Attributes$stringProperty,
-		'start',
-		_elm_lang$core$Basics$toString(n));
-};
-var _elm_lang$html$Html_Attributes$headers = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'headers', value);
-};
-var _elm_lang$html$Html_Attributes$scope = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'scope', value);
-};
-var _elm_lang$html$Html_Attributes$boolProperty = F2(
-	function (name, bool) {
-		return A2(
-			_elm_lang$html$Html_Attributes$property,
-			name,
-			_elm_lang$core$Json_Encode$bool(bool));
-	});
-var _elm_lang$html$Html_Attributes$hidden = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'hidden', bool);
-};
-var _elm_lang$html$Html_Attributes$contenteditable = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'contentEditable', bool);
-};
-var _elm_lang$html$Html_Attributes$spellcheck = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'spellcheck', bool);
-};
-var _elm_lang$html$Html_Attributes$async = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'async', bool);
-};
-var _elm_lang$html$Html_Attributes$defer = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'defer', bool);
-};
-var _elm_lang$html$Html_Attributes$scoped = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'scoped', bool);
-};
-var _elm_lang$html$Html_Attributes$autoplay = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'autoplay', bool);
-};
-var _elm_lang$html$Html_Attributes$controls = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'controls', bool);
-};
-var _elm_lang$html$Html_Attributes$loop = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'loop', bool);
-};
-var _elm_lang$html$Html_Attributes$default = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'default', bool);
-};
-var _elm_lang$html$Html_Attributes$seamless = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'seamless', bool);
-};
-var _elm_lang$html$Html_Attributes$checked = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'checked', bool);
-};
-var _elm_lang$html$Html_Attributes$selected = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'selected', bool);
-};
-var _elm_lang$html$Html_Attributes$autofocus = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'autofocus', bool);
-};
-var _elm_lang$html$Html_Attributes$disabled = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'disabled', bool);
-};
-var _elm_lang$html$Html_Attributes$multiple = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'multiple', bool);
-};
-var _elm_lang$html$Html_Attributes$novalidate = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'noValidate', bool);
-};
-var _elm_lang$html$Html_Attributes$readonly = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'readOnly', bool);
-};
-var _elm_lang$html$Html_Attributes$required = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'required', bool);
-};
-var _elm_lang$html$Html_Attributes$ismap = function (value) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'isMap', value);
-};
-var _elm_lang$html$Html_Attributes$download = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'download', bool);
-};
-var _elm_lang$html$Html_Attributes$reversed = function (bool) {
-	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'reversed', bool);
-};
-var _elm_lang$html$Html_Attributes$classList = function (list) {
-	return _elm_lang$html$Html_Attributes$class(
-		A2(
-			_elm_lang$core$String$join,
-			' ',
-			A2(
-				_elm_lang$core$List$map,
-				_elm_lang$core$Tuple$first,
-				A2(_elm_lang$core$List$filter, _elm_lang$core$Tuple$second, list))));
-};
-var _elm_lang$html$Html_Attributes$style = _elm_lang$virtual_dom$VirtualDom$style;
-var _elm_lang$html$Html_Events$keyCode = A2(_elm_lang$core$Json_Decode$field, 'keyCode', _elm_lang$core$Json_Decode$int);
-var _elm_lang$html$Html_Events$targetChecked = A2(
-	_elm_lang$core$Json_Decode$at,
-	{
-		ctor: '::',
-		_0: 'target',
-		_1: {
-			ctor: '::',
-			_0: 'checked',
-			_1: {ctor: '[]'}
-		}
-	},
-	_elm_lang$core$Json_Decode$bool);
-var _elm_lang$html$Html_Events$targetValue = A2(
-	_elm_lang$core$Json_Decode$at,
-	{
-		ctor: '::',
-		_0: 'target',
-		_1: {
-			ctor: '::',
-			_0: 'value',
-			_1: {ctor: '[]'}
-		}
-	},
-	_elm_lang$core$Json_Decode$string);
-var _elm_lang$html$Html_Events$defaultOptions = _elm_lang$virtual_dom$VirtualDom$defaultOptions;
-var _elm_lang$html$Html_Events$onWithOptions = _elm_lang$virtual_dom$VirtualDom$onWithOptions;
-var _elm_lang$html$Html_Events$on = _elm_lang$virtual_dom$VirtualDom$on;
-var _elm_lang$html$Html_Events$onFocus = function (msg) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'focus',
-		_elm_lang$core$Json_Decode$succeed(msg));
-};
-var _elm_lang$html$Html_Events$onBlur = function (msg) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'blur',
-		_elm_lang$core$Json_Decode$succeed(msg));
-};
-var _elm_lang$html$Html_Events$onSubmitOptions = _elm_lang$core$Native_Utils.update(
-	_elm_lang$html$Html_Events$defaultOptions,
-	{preventDefault: true});
-var _elm_lang$html$Html_Events$onSubmit = function (msg) {
-	return A3(
-		_elm_lang$html$Html_Events$onWithOptions,
-		'submit',
-		_elm_lang$html$Html_Events$onSubmitOptions,
-		_elm_lang$core$Json_Decode$succeed(msg));
-};
-var _elm_lang$html$Html_Events$onCheck = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'change',
-		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetChecked));
-};
-var _elm_lang$html$Html_Events$onInput = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'input',
-		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetValue));
-};
-var _elm_lang$html$Html_Events$onMouseOut = function (msg) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'mouseout',
-		_elm_lang$core$Json_Decode$succeed(msg));
-};
-var _elm_lang$html$Html_Events$onMouseOver = function (msg) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'mouseover',
-		_elm_lang$core$Json_Decode$succeed(msg));
-};
-var _elm_lang$html$Html_Events$onMouseLeave = function (msg) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'mouseleave',
-		_elm_lang$core$Json_Decode$succeed(msg));
-};
-var _elm_lang$html$Html_Events$onMouseEnter = function (msg) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'mouseenter',
-		_elm_lang$core$Json_Decode$succeed(msg));
-};
-var _elm_lang$html$Html_Events$onMouseUp = function (msg) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'mouseup',
-		_elm_lang$core$Json_Decode$succeed(msg));
-};
-var _elm_lang$html$Html_Events$onMouseDown = function (msg) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'mousedown',
-		_elm_lang$core$Json_Decode$succeed(msg));
-};
-var _elm_lang$html$Html_Events$onDoubleClick = function (msg) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'dblclick',
-		_elm_lang$core$Json_Decode$succeed(msg));
-};
-var _elm_lang$html$Html_Events$onClick = function (msg) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'click',
-		_elm_lang$core$Json_Decode$succeed(msg));
-};
-var _elm_lang$html$Html_Events$Options = F2(
-	function (a, b) {
-		return {stopPropagation: a, preventDefault: b};
-	});
 var _elm_lang$svg$Svg$map = _elm_lang$virtual_dom$VirtualDom$map;
 var _elm_lang$svg$Svg$text = _elm_lang$virtual_dom$VirtualDom$text;
 var _elm_lang$svg$Svg$svgNamespace = A2(
@@ -9322,14 +8859,14 @@ var _user$project$Size$Size = F2(
 	function (a, b) {
 		return {width: a, height: b};
 	});
-var _user$project$Rectangle2$enclose = F2(
+var _user$project$Rectangle$enclose = F2(
 	function (a, b) {
 		return {
 			origin: A2(_user$project$Point$min, a.origin, b.origin),
 			extent: A2(_user$project$Point$max, a.extent, b.extent)
 		};
 	});
-var _user$project$Rectangle2$margin = F2(
+var _user$project$Rectangle$margin = F2(
 	function (margin, _p0) {
 		var _p1 = _p0;
 		var amount = {x: margin, y: margin};
@@ -9338,20 +8875,20 @@ var _user$project$Rectangle2$margin = F2(
 			extent: A2(_user$project$Point$add, _p1.extent, amount)
 		};
 	});
-var _user$project$Rectangle2$size = function (_p2) {
+var _user$project$Rectangle$size = function (_p2) {
 	var _p3 = _p2;
 	var distance = A2(_user$project$Point$subtract, _p3.extent, _p3.origin);
 	return {width: distance.x, height: distance.y};
 };
-var _user$project$Rectangle2$zero = {origin: _user$project$Point$zero, extent: _user$project$Point$zero};
-var _user$project$Rectangle2$Rectangle = F2(
+var _user$project$Rectangle$zero = {origin: _user$project$Point$zero, extent: _user$project$Point$zero};
+var _user$project$Rectangle$Rectangle = F2(
 	function (a, b) {
 		return {origin: a, extent: b};
 	});
 var _user$project$Bounds$fromRectangle = function (rectangle) {
 	return {
 		origin: rectangle.origin,
-		size: _user$project$Rectangle2$size(rectangle)
+		size: _user$project$Rectangle$size(rectangle)
 	};
 };
 var _user$project$Bounds$extent = function (bounds) {
@@ -9378,15 +8915,15 @@ var _user$project$Styles$stylesheet = A3(
 		_0: _elm_lang$html$Html$text(_user$project$Styles$css),
 		_1: {ctor: '[]'}
 	});
-var _user$project$Transform2$combine = F2(
+var _user$project$Transform$combine = F2(
 	function (a, b) {
 		return {a: (a.a * b.a) + (a.b * b.c), b: (a.a * b.b) + (a.b * b.d), c: (a.c * b.a) + (a.d * b.c), d: (a.c * b.b) + (a.d * b.d), e: ((a.a * b.e) + (a.b * b.f)) + a.e, f: ((a.c * b.e) + (a.d * b.f)) + a.f};
 	});
-var _user$project$Transform2$apply = F2(
+var _user$project$Transform$apply = F2(
 	function (transform, point) {
 		return {x: ((transform.a * point.x) + (transform.b * point.y)) + transform.e, y: ((transform.c * point.x) + (transform.d * point.y)) + transform.f};
 	});
-var _user$project$Transform2$rotate = function (degrees) {
+var _user$project$Transform$rotate = function (degrees) {
 	var theta = (degrees * _elm_lang$core$Basics$pi) / 180.0;
 	return {
 		a: _elm_lang$core$Basics$cos(theta),
@@ -9397,20 +8934,20 @@ var _user$project$Transform2$rotate = function (degrees) {
 		f: 0
 	};
 };
-var _user$project$Transform2$scale = function (_p0) {
+var _user$project$Transform$scale = function (_p0) {
 	var _p1 = _p0;
 	return {a: _p1.x, b: 0, c: 0, d: _p1.y, e: 0, f: 0};
 };
-var _user$project$Transform2$translate = function (_p2) {
+var _user$project$Transform$translate = function (_p2) {
 	var _p3 = _p2;
 	return {a: 1, b: 0, c: 0, d: 1, e: _p3.x, f: _p3.y};
 };
-var _user$project$Transform2$identity = {a: 1, b: 0, c: 0, d: 1, e: 0, f: 0};
-var _user$project$Transform2$Transform = F6(
+var _user$project$Transform$identity = {a: 1, b: 0, c: 0, d: 1, e: 0, f: 0};
+var _user$project$Transform$Transform = F6(
 	function (a, b, c, d, e, f) {
 		return {a: a, b: b, c: c, d: d, e: e, f: f};
 	});
-var _user$project$Canvas2$view = function (shapes) {
+var _user$project$Canvas$view = function (shapes) {
 	return A2(
 		_elm_lang$html$Html$div,
 		{ctor: '[]'},
@@ -9431,7 +8968,7 @@ var _user$project$Canvas2$view = function (shapes) {
 			}
 		});
 };
-var _user$project$Canvas2$toSvgTransform = function (transform) {
+var _user$project$Canvas$toSvgTransform = function (transform) {
 	var elements = {
 		ctor: '::',
 		_0: transform.a,
@@ -9468,742 +9005,13 @@ var _user$project$Canvas2$toSvgTransform = function (transform) {
 				A2(_elm_lang$core$List$map, _elm_lang$core$Basics$toString, elements)),
 			')'));
 };
-var _user$project$Canvas2$centre = F2(
+var _user$project$Canvas$centre = F2(
 	function (width, height) {
-		return _user$project$Transform2$translate(
+		return _user$project$Transform$translate(
 			{x: (0 - width) / 2, y: (0 - height) / 2});
 	});
-var _user$project$Canvas2$origin = function (size) {
-	return A2(_user$project$Canvas2$centre, 0 - size.width, 0 - size.height);
-};
-var _user$project$Circuit2$CircuitName = function (a) {
-	return {ctor: 'CircuitName', _0: a};
-};
-var _user$project$Circuit2$CircuitReference = function (a) {
-	return {ctor: 'CircuitReference', _0: a};
-};
-var _user$project$Circuit2$PortName = function (a) {
-	return {ctor: 'PortName', _0: a};
-};
-var _user$project$Circuit2$expand = function (_p0) {
-	var _p1 = _p0;
-	return _user$project$Circuit2$PortName(
-		A2(
-			_elm_lang$core$Basics_ops['++'],
-			function () {
-				var _p2 = _p1._0.circuit;
-				return A2(
-					_elm_lang$core$String$join,
-					'.',
-					A2(
-						_elm_lang$core$List$map,
-						function (_p3) {
-							var _p4 = _p3;
-							return _p4._0;
-						},
-						_p2._0));
-			}(),
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				'.',
-				function () {
-					var _p5 = _p1._0.name;
-					return _p5._0;
-				}())));
-};
-var _user$project$Circuit2$Output = {ctor: 'Output'};
-var _user$project$Circuit2$Input = {ctor: 'Input'};
-var _user$project$Circuit2$Port = function (a) {
-	return {ctor: 'Port', _0: a};
-};
-var _user$project$Circuit2$port_ = F2(
-	function (name, direction) {
-		return _user$project$Circuit2$Port(
-			{name: name, direction: direction});
-	});
-var _user$project$Circuit2$PortReference = function (a) {
-	return {ctor: 'PortReference', _0: a};
-};
-var _user$project$Circuit2$portReference = F2(
-	function (circuit, portName) {
-		return _user$project$Circuit2$PortReference(
-			{circuit: circuit, name: portName});
-	});
-var _user$project$Circuit2$ConnectionName = function (a) {
-	return {ctor: 'ConnectionName', _0: a};
-};
-var _user$project$Circuit2$Connection = function (a) {
-	return {ctor: 'Connection', _0: a};
-};
-var _user$project$Circuit2$connection = F3(
-	function (name, from, to) {
-		return _user$project$Circuit2$Connection(
-			{name: name, from: from, to: to});
-	});
-var _user$project$Circuit2$Circuit = function (a) {
-	return {ctor: 'Circuit', _0: a};
-};
-var _user$project$Circuit2$circuit = function (name) {
-	return _user$project$Circuit2$Circuit(
-		{
-			name: name,
-			ports: {ctor: '[]'},
-			connections: {ctor: '[]'},
-			circuits: {ctor: '[]'}
-		});
-};
-var _user$project$Circuit2$empty = _user$project$Circuit2$circuit(
-	_user$project$Circuit2$CircuitName('root'));
-var _user$project$Circuit2$add = F2(
-	function (circuit1, _p6) {
-		var _p7 = _p6;
-		var _p8 = _p7._0;
-		return _user$project$Circuit2$Circuit(
-			_elm_lang$core$Native_Utils.update(
-				_p8,
-				{
-					circuits: A2(
-						_elm_lang$core$Basics_ops['++'],
-						_p8.circuits,
-						{
-							ctor: '::',
-							_0: circuit1,
-							_1: {ctor: '[]'}
-						})
-				}));
-	});
-var _user$project$Circuit2$addPort = F3(
-	function (circuitName, port_, _p9) {
-		var _p10 = _p9;
-		var _p11 = _p10._0;
-		return _elm_lang$core$Native_Utils.eq(_p11.name, circuitName) ? _user$project$Circuit2$Circuit(
-			_elm_lang$core$Native_Utils.update(
-				_p11,
-				{
-					ports: A2(
-						_elm_lang$core$Basics_ops['++'],
-						_p11.ports,
-						{
-							ctor: '::',
-							_0: port_,
-							_1: {ctor: '[]'}
-						})
-				})) : _user$project$Circuit2$Circuit(
-			_elm_lang$core$Native_Utils.update(
-				_p11,
-				{
-					circuits: A2(
-						_elm_lang$core$List$map,
-						A2(_user$project$Circuit2$addPort, circuitName, port_),
-						_p11.circuits)
-				}));
-	});
-var _user$project$Circuit2$connect = F2(
-	function (connection, _p12) {
-		var _p13 = _p12;
-		var _p14 = _p13._0;
-		return _user$project$Circuit2$Circuit(
-			_elm_lang$core$Native_Utils.update(
-				_p14,
-				{
-					connections: A2(
-						_elm_lang$core$Basics_ops['++'],
-						_p14.connections,
-						{
-							ctor: '::',
-							_0: connection,
-							_1: {ctor: '[]'}
-						})
-				}));
-	});
-var _user$project$Circuit2$group = F4(
-	function (_p16, circuits, connections, _p15) {
-		var _p17 = _p16;
-		var _p51 = _p17;
-		var _p50 = _p17._0;
-		var _p18 = _p15;
-		var _p49 = _p18._0;
-		var ungroupedCircuits = A2(
-			_elm_lang$core$List$filter,
-			function (_p19) {
-				var _p20 = _p19;
-				return !A2(_elm_lang$core$List$member, _p20._0.name, circuits);
-			},
-			_p49.circuits);
-		var groupedCircuits = A2(
-			_elm_lang$core$List$filter,
-			function (_p21) {
-				var _p22 = _p21;
-				return A2(_elm_lang$core$List$member, _p22._0.name, circuits);
-			},
-			_p49.circuits);
-		var _p23 = function () {
-			var gather = _elm_lang$core$List$foldl(
-				F2(
-					function (_p25, _p24) {
-						var _p26 = _p25;
-						var _p36 = _p26._0;
-						var _p27 = _p24;
-						var outputs = A2(
-							_elm_lang$core$List$map,
-							function (_p28) {
-								var _p29 = _p28;
-								return _user$project$Circuit2$PortReference(
-									{
-										circuit: _user$project$Circuit2$CircuitReference(
-											{
-												ctor: '::',
-												_0: _p36.name,
-												_1: {ctor: '[]'}
-											}),
-										name: _p29._0.name
-									});
-							},
-							A2(
-								_elm_lang$core$List$filter,
-								function (_p30) {
-									var _p31 = _p30;
-									return _elm_lang$core$Native_Utils.eq(_p31._0.direction, _user$project$Circuit2$Output);
-								},
-								_p36.ports));
-						var inputs = A2(
-							_elm_lang$core$List$map,
-							function (_p32) {
-								var _p33 = _p32;
-								return _user$project$Circuit2$PortReference(
-									{
-										circuit: _user$project$Circuit2$CircuitReference(
-											{
-												ctor: '::',
-												_0: _p36.name,
-												_1: {ctor: '[]'}
-											}),
-										name: _p33._0.name
-									});
-							},
-							A2(
-								_elm_lang$core$List$filter,
-								function (_p34) {
-									var _p35 = _p34;
-									return _elm_lang$core$Native_Utils.eq(_p35._0.direction, _user$project$Circuit2$Input);
-								},
-								_p36.ports));
-						return A2(
-							gather,
-							{
-								ctor: '_Tuple3',
-								_0: A2(_elm_lang$core$Basics_ops['++'], _p27._0, inputs),
-								_1: A2(_elm_lang$core$Basics_ops['++'], _p27._1, outputs),
-								_2: A2(_elm_lang$core$Basics_ops['++'], _p27._2, _p36.connections)
-							},
-							_p36.circuits);
-					}));
-			return A2(
-				gather,
-				{
-					ctor: '_Tuple3',
-					_0: {ctor: '[]'},
-					_1: {ctor: '[]'},
-					_2: _p49.connections
-				},
-				groupedCircuits);
-		}();
-		var allInputs = _p23._0;
-		var allOutputs = _p23._1;
-		var allConnections = _p23._2;
-		var unconnectedInputs = A2(
-			_elm_lang$core$List$filter,
-			function (input) {
-				return !A2(
-					_elm_lang$core$List$member,
-					input,
-					A2(
-						_elm_lang$core$List$map,
-						function (_p37) {
-							var _p38 = _p37;
-							return _p38._0.to;
-						},
-						allConnections));
-			},
-			allInputs);
-		var inputPorts = A2(
-			_elm_lang$core$List$map,
-			function (input) {
-				return {
-					ctor: '_Tuple2',
-					_0: A2(
-						_user$project$Circuit2$port_,
-						_user$project$Circuit2$expand(input),
-						_user$project$Circuit2$Input),
-					_1: input
-				};
-			},
-			unconnectedInputs);
-		var inputConnections = A2(
-			_elm_lang$core$List$indexedMap,
-			F2(
-				function (index, _p39) {
-					var _p40 = _p39;
-					return A3(
-						_user$project$Circuit2$connection,
-						_user$project$Circuit2$ConnectionName(
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								_p50,
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'.connection.input',
-									_elm_lang$core$Basics$toString(index + 1)))),
-						A2(
-							_user$project$Circuit2$portReference,
-							_user$project$Circuit2$CircuitReference(
-								{
-									ctor: '::',
-									_0: _p51,
-									_1: {ctor: '[]'}
-								}),
-							_p40._0._0.name),
-						_p40._1);
-				}),
-			inputPorts);
-		var unconnectedOutputs = A2(
-			_elm_lang$core$List$filter,
-			function (output) {
-				return !A2(
-					_elm_lang$core$List$member,
-					output,
-					A2(
-						_elm_lang$core$List$map,
-						function (_p41) {
-							var _p42 = _p41;
-							return _p42._0.from;
-						},
-						allConnections));
-			},
-			allOutputs);
-		var outputPorts = A2(
-			_elm_lang$core$List$map,
-			function (output) {
-				return {
-					ctor: '_Tuple2',
-					_0: A2(
-						_user$project$Circuit2$port_,
-						_user$project$Circuit2$expand(output),
-						_user$project$Circuit2$Output),
-					_1: output
-				};
-			},
-			unconnectedOutputs);
-		var outputConnections = A2(
-			_elm_lang$core$List$indexedMap,
-			F2(
-				function (index, _p43) {
-					var _p44 = _p43;
-					return A3(
-						_user$project$Circuit2$connection,
-						_user$project$Circuit2$ConnectionName(
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								_p50,
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'.connection.output',
-									_elm_lang$core$Basics$toString(index + 1)))),
-						A2(
-							_user$project$Circuit2$portReference,
-							_user$project$Circuit2$CircuitReference(
-								{
-									ctor: '::',
-									_0: _p51,
-									_1: {ctor: '[]'}
-								}),
-							_p44._0._0.name),
-						_p44._1);
-				}),
-			outputPorts);
-		var ungroupedConnections = A2(
-			_elm_lang$core$List$filter,
-			function (_p45) {
-				var _p46 = _p45;
-				return !A2(_elm_lang$core$List$member, _p46._0.name, connections);
-			},
-			_p49.connections);
-		var groupedConnections = A2(
-			_elm_lang$core$List$filter,
-			function (_p47) {
-				var _p48 = _p47;
-				return A2(_elm_lang$core$List$member, _p48._0.name, connections);
-			},
-			_p49.connections);
-		var outer = _user$project$Circuit2$Circuit(
-			{
-				name: _p51,
-				ports: A2(
-					_elm_lang$core$Basics_ops['++'],
-					A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$first, inputPorts),
-					A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$first, outputPorts)),
-				connections: A2(
-					_elm_lang$core$Basics_ops['++'],
-					groupedConnections,
-					A2(_elm_lang$core$Basics_ops['++'], inputConnections, outputConnections)),
-				circuits: groupedCircuits
-			});
-		return _user$project$Circuit2$Circuit(
-			_elm_lang$core$Native_Utils.update(
-				_p49,
-				{
-					connections: ungroupedConnections,
-					circuits: A2(
-						_elm_lang$core$Basics_ops['++'],
-						ungroupedCircuits,
-						{
-							ctor: '::',
-							_0: outer,
-							_1: {ctor: '[]'}
-						})
-				}));
-	});
-var _user$project$Circuit2$example = function () {
-	var circuit1 = _user$project$Circuit2$CircuitName('circuit1');
-	var connection1 = _user$project$Circuit2$ConnectionName('connection1');
-	var output1 = _user$project$Circuit2$PortName('output1');
-	var input2 = _user$project$Circuit2$PortName('input2');
-	var input1 = _user$project$Circuit2$PortName('input1');
-	var gate2 = _user$project$Circuit2$CircuitName('gate2');
-	var gate1 = _user$project$Circuit2$CircuitName('gate1');
-	return A4(
-		_user$project$Circuit2$group,
-		circuit1,
-		{
-			ctor: '::',
-			_0: gate1,
-			_1: {
-				ctor: '::',
-				_0: gate2,
-				_1: {ctor: '[]'}
-			}
-		},
-		{
-			ctor: '::',
-			_0: connection1,
-			_1: {ctor: '[]'}
-		},
-		A2(
-			_user$project$Circuit2$connect,
-			A3(
-				_user$project$Circuit2$connection,
-				connection1,
-				A2(
-					_user$project$Circuit2$portReference,
-					_user$project$Circuit2$CircuitReference(
-						{
-							ctor: '::',
-							_0: gate1,
-							_1: {ctor: '[]'}
-						}),
-					output1),
-				A2(
-					_user$project$Circuit2$portReference,
-					_user$project$Circuit2$CircuitReference(
-						{
-							ctor: '::',
-							_0: gate2,
-							_1: {ctor: '[]'}
-						}),
-					input1)),
-			A3(
-				_user$project$Circuit2$addPort,
-				gate2,
-				A2(_user$project$Circuit2$port_, output1, _user$project$Circuit2$Output),
-				A3(
-					_user$project$Circuit2$addPort,
-					gate2,
-					A2(_user$project$Circuit2$port_, input2, _user$project$Circuit2$Input),
-					A3(
-						_user$project$Circuit2$addPort,
-						gate2,
-						A2(_user$project$Circuit2$port_, input1, _user$project$Circuit2$Input),
-						A2(
-							_user$project$Circuit2$add,
-							_user$project$Circuit2$circuit(gate2),
-							A3(
-								_user$project$Circuit2$addPort,
-								gate1,
-								A2(_user$project$Circuit2$port_, output1, _user$project$Circuit2$Output),
-								A3(
-									_user$project$Circuit2$addPort,
-									gate1,
-									A2(_user$project$Circuit2$port_, input2, _user$project$Circuit2$Input),
-									A3(
-										_user$project$Circuit2$addPort,
-										gate1,
-										A2(_user$project$Circuit2$port_, input1, _user$project$Circuit2$Input),
-										A2(
-											_user$project$Circuit2$add,
-											_user$project$Circuit2$circuit(gate1),
-											_user$project$Circuit2$empty))))))))));
-}();
-var _user$project$PrintAny$splitLine = function (line) {
-	var newLine = A2(_elm_lang$core$String$dropLeft, 5, line);
-	var indent = A2(
-		_elm_lang$core$Result$withDefault,
-		0,
-		_elm_lang$core$String$toInt(
-			A2(_elm_lang$core$String$left, 5, line)));
-	return {ctor: '_Tuple2', _0: indent, _1: newLine};
-};
-var _user$project$PrintAny$pad = function (indent) {
-	return A3(
-		_elm_lang$core$String$padLeft,
-		5,
-		_elm_lang$core$Native_Utils.chr('0'),
-		_elm_lang$core$Basics$toString(indent));
-};
-var _user$project$PrintAny$splitWithQuotes = function (string) {
-	return A2(
-		_elm_lang$core$List$indexedMap,
-		F2(
-			function (i, str) {
-				return _elm_lang$core$Native_Utils.eq(
-					A2(_elm_lang$core$Basics$rem, i, 2),
-					1) ? A2(
-					_elm_lang$core$Basics_ops['++'],
-					'\"',
-					A2(_elm_lang$core$Basics_ops['++'], str, '\"')) : str;
-			}),
-		A2(_elm_lang$core$String$split, '\"', string));
-};
-var _user$project$PrintAny$splitWithChar = F2(
-	function (splitter, string) {
-		return A2(
-			_elm_lang$core$List$indexedMap,
-			F2(
-				function (ind, str) {
-					return (_elm_lang$core$Native_Utils.cmp(ind, 0) > 0) ? A2(_elm_lang$core$Basics_ops['++'], splitter, str) : str;
-				}),
-			A2(_elm_lang$core$String$split, splitter, string));
-	});
-var _user$project$PrintAny$splitWithChars = F2(
-	function (splitters, string) {
-		var _p0 = A2(_elm_lang$core$String$left, 1, splitters);
-		if (_p0 === '') {
-			return {
-				ctor: '::',
-				_0: string,
-				_1: {ctor: '[]'}
-			};
-		} else {
-			return A2(
-				_elm_lang$core$List$filter,
-				function (s) {
-					return !_elm_lang$core$Native_Utils.eq(s, '');
-				},
-				_elm_lang$core$List$concat(
-					A2(
-						_elm_lang$core$List$map,
-						_user$project$PrintAny$splitWithChars(
-							A2(_elm_lang$core$String$dropLeft, 1, splitters)),
-						A2(_user$project$PrintAny$splitWithChar, _p0, string))));
-		}
-	});
-var _user$project$PrintAny$px = function ($int) {
-	return A2(
-		_elm_lang$core$Basics_ops['++'],
-		_elm_lang$core$Basics$toString($int),
-		'px');
-};
-var _user$project$PrintAny$logLine = function (_p1) {
-	var _p2 = _p1;
-	var logIndent = A3(
-		_elm_lang$core$String$padLeft,
-		_p2._0,
-		_elm_lang$core$Native_Utils.chr(' '),
-		'');
-	var _p3 = A2(
-		_elm_lang$core$Debug$log,
-		'',
-		A2(_elm_lang$core$Basics_ops['++'], logIndent, _p2._1));
-	return {ctor: '_Tuple0'};
-};
-var _user$project$PrintAny$viewLine = F2(
-	function (_p5, _p4) {
-		var _p6 = _p5;
-		var _p7 = _p4;
-		return A2(
-			_elm_lang$html$Html$p,
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$style(
-					{
-						ctor: '::',
-						_0: {
-							ctor: '_Tuple2',
-							_0: 'paddingLeft',
-							_1: _user$project$PrintAny$px(_p7._0 * _p6._0.increment)
-						},
-						_1: {
-							ctor: '::',
-							_0: {ctor: '_Tuple2', _0: 'marginTop', _1: '0px'},
-							_1: {
-								ctor: '::',
-								_0: {ctor: '_Tuple2', _0: 'marginBottom', _1: '0px'},
-								_1: {ctor: '[]'}
-							}
-						}
-					}),
-				_1: {ctor: '[]'}
-			},
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html$text(_p7._1),
-				_1: {ctor: '[]'}
-			});
-	});
-var _user$project$PrintAny$constants = {quote: '\"', indentChars: '[{(', outdentChars: '}])', newLineChars: ','};
-var _user$project$PrintAny$addIndent = F2(
-	function (string, startList) {
-		var _p8 = _elm_lang$core$List$reverse(startList);
-		if (_p8.ctor === '::') {
-			var _p10 = _p8._0.indentAfter;
-			var firstChar = A2(_elm_lang$core$String$left, 1, string);
-			var _p9 = A2(_elm_lang$core$String$contains, firstChar, _user$project$PrintAny$constants.indentChars) ? {ctor: '_Tuple2', _0: _p10 + 1, _1: _p10 + 1} : (A2(_elm_lang$core$String$contains, firstChar, _user$project$PrintAny$constants.outdentChars) ? {ctor: '_Tuple2', _0: _p10, _1: _p10 - 1} : {ctor: '_Tuple2', _0: _p10, _1: _p10});
-			var newIndentBefore = _p9._0;
-			var newIndentAfter = _p9._1;
-			return A2(
-				_elm_lang$core$Basics_ops['++'],
-				startList,
-				{
-					ctor: '::',
-					_0: {indentBefore: newIndentBefore, string: string, indentAfter: newIndentAfter},
-					_1: {ctor: '[]'}
-				});
-		} else {
-			return {
-				ctor: '::',
-				_0: {indentBefore: 0, string: string, indentAfter: 0},
-				_1: {ctor: '[]'}
-			};
-		}
-	});
-var _user$project$PrintAny$addIndents = function (stringList) {
-	return A2(
-		_elm_lang$core$List$map,
-		function (r) {
-			return {ctor: '_Tuple2', _0: r.indentBefore, _1: r.string};
-		},
-		A3(
-			_elm_lang$core$List$foldl,
-			_user$project$PrintAny$addIndent,
-			{ctor: '[]'},
-			stringList));
-};
-var _user$project$PrintAny$splitUnquotedWithChars = function (stringList) {
-	var splitString = function (string) {
-		return _elm_lang$core$Native_Utils.eq(
-			A2(_elm_lang$core$String$left, 1, string),
-			_user$project$PrintAny$constants.quote) ? {
-			ctor: '::',
-			_0: string,
-			_1: {ctor: '[]'}
-		} : A2(
-			_user$project$PrintAny$splitWithChars,
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				_user$project$PrintAny$constants.indentChars,
-				A2(_elm_lang$core$Basics_ops['++'], _user$project$PrintAny$constants.newLineChars, _user$project$PrintAny$constants.outdentChars)),
-			string);
-	};
-	return A2(_elm_lang$core$List$map, splitString, stringList);
-};
-var _user$project$PrintAny$mergeOneQuote = F2(
-	function (string, startList) {
-		if (_elm_lang$core$Native_Utils.eq(
-			A2(_elm_lang$core$String$left, 1, string),
-			_user$project$PrintAny$constants.quote)) {
-			var _p11 = _elm_lang$core$List$reverse(startList);
-			if (_p11.ctor === '::') {
-				return _elm_lang$core$List$reverse(
-					{
-						ctor: '::',
-						_0: A2(_elm_lang$core$Basics_ops['++'], _p11._0, string),
-						_1: _p11._1
-					});
-			} else {
-				return {
-					ctor: '::',
-					_0: string,
-					_1: {ctor: '[]'}
-				};
-			}
-		} else {
-			return A2(
-				_elm_lang$core$Basics_ops['++'],
-				startList,
-				{
-					ctor: '::',
-					_0: string,
-					_1: {ctor: '[]'}
-				});
-		}
-	});
-var _user$project$PrintAny$mergeQuoted = A2(
-	_elm_lang$core$List$foldl,
-	_user$project$PrintAny$mergeOneQuote,
-	{ctor: '[]'});
-var _user$project$PrintAny$log = function (record) {
-	var lines = _elm_lang$core$List$reverse(
-		_user$project$PrintAny$addIndents(
-			_user$project$PrintAny$mergeQuoted(
-				_elm_lang$core$List$concat(
-					_user$project$PrintAny$splitUnquotedWithChars(
-						_user$project$PrintAny$splitWithQuotes(
-							_elm_lang$core$Basics$toString(record)))))));
-	var _p12 = A2(_elm_lang$core$List$map, _user$project$PrintAny$logLine, lines);
-	return record;
-};
-var _user$project$PrintAny$Constants = F4(
-	function (a, b, c, d) {
-		return {quote: a, indentChars: b, outdentChars: c, newLineChars: d};
-	});
-var _user$project$PrintAny$IndentedString = F3(
-	function (a, b, c) {
-		return {indentBefore: a, string: b, indentAfter: c};
-	});
-var _user$project$PrintAny$Config = function (a) {
-	return {ctor: 'Config', _0: a};
-};
-var _user$project$PrintAny$config = F2(
-	function (increment, className) {
-		return _user$project$PrintAny$Config(
-			{increment: increment, className: className});
-	});
-var _user$project$PrintAny$defaultConfig = _user$project$PrintAny$Config(
-	{increment: 20, className: ''});
-var _user$project$PrintAny$viewWithConfig = F2(
-	function (_p13, record) {
-		var _p14 = _p13;
-		var _p15 = _p14._0;
-		var lines = _user$project$PrintAny$addIndents(
-			_user$project$PrintAny$mergeQuoted(
-				_elm_lang$core$List$concat(
-					_user$project$PrintAny$splitUnquotedWithChars(
-						_user$project$PrintAny$splitWithQuotes(
-							_elm_lang$core$Basics$toString(record))))));
-		return A2(
-			_elm_lang$html$Html$pre,
-			_elm_lang$core$Native_Utils.eq(_p15.className, '') ? {ctor: '[]'} : {
-				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class(_p15.className),
-				_1: {ctor: '[]'}
-			},
-			A2(
-				_elm_lang$core$List$map,
-				_user$project$PrintAny$viewLine(
-					_user$project$PrintAny$Config(_p15)),
-				lines));
-	});
-var _user$project$PrintAny$view = function (record) {
-	return A2(_user$project$PrintAny$viewWithConfig, _user$project$PrintAny$defaultConfig, record);
+var _user$project$Canvas$origin = function (size) {
+	return A2(_user$project$Canvas$centre, 0 - size.width, 0 - size.height);
 };
 var _user$project$Scene$removed = F2(
 	function (id, state) {
@@ -10232,7 +9040,7 @@ var _user$project$Scene$inserted = F4(
 							id: id,
 							node: _elm_lang$core$Maybe$Just(node),
 							parent: _elm_lang$core$Maybe$Nothing,
-							transform: _user$project$Transform2$identity,
+							transform: _user$project$Transform$identity,
 							bounds: bounds
 						},
 						_1: {ctor: '[]'}
@@ -10296,8 +9104,8 @@ var _user$project$Scene$updated = F4(
 var _user$project$Scene$transformed = F3(
 	function (id, transform, state) {
 		var node = A3(_user$project$Scene$nodeForId, 'transformed', id, state.nodes);
-		var newTransform = A2(_user$project$Transform2$combine, node.transform, transform);
-		var origin = A2(_user$project$Transform2$apply, newTransform, node.bounds.origin);
+		var newTransform = A2(_user$project$Transform$combine, node.transform, transform);
+		var origin = A2(_user$project$Transform$apply, newTransform, node.bounds.origin);
 		var bounds = {origin: origin, size: node.bounds.size};
 		return _elm_lang$core$Native_Utils.update(
 			state,
@@ -10367,13 +9175,13 @@ var _user$project$Scene$grouped = F3(
 		var enclose = F2(
 			function (rectangle, bounds) {
 				return A2(
-					_user$project$Rectangle2$enclose,
+					_user$project$Rectangle$enclose,
 					rectangle,
 					_user$project$Bounds$toRectangle(bounds));
 			});
 		return function (_p2) {
 			var _p3 = _p2;
-			var groupNode = {id: id, node: _elm_lang$core$Maybe$Nothing, parent: _elm_lang$core$Maybe$Nothing, transform: _user$project$Transform2$identity, bounds: _p3._0};
+			var groupNode = {id: id, node: _elm_lang$core$Maybe$Nothing, parent: _elm_lang$core$Maybe$Nothing, transform: _user$project$Transform$identity, bounds: _p3._0};
 			return _elm_lang$core$Native_Utils.update(
 				state,
 				{
@@ -10391,7 +9199,7 @@ var _user$project$Scene$grouped = F3(
 				_elm_lang$core$Tuple$mapFirst,
 				function (_p4) {
 					return _user$project$Bounds$fromRectangle(
-						A2(_elm_lang$core$Maybe$withDefault, _user$project$Rectangle2$zero, _p4));
+						A2(_elm_lang$core$Maybe$withDefault, _user$project$Rectangle$zero, _p4));
 				},
 				A3(
 					_elm_lang$core$List$foldl,
@@ -10524,7 +9332,7 @@ var _user$project$Scene$transformAt = F2(
 				var _p14 = node.parent;
 				if (_p14.ctor === 'Just') {
 					return A2(
-						_user$project$Transform2$combine,
+						_user$project$Transform$combine,
 						node.transform,
 						A2(transformAt1, _p14._0, nodes));
 				} else {
@@ -10555,7 +9363,7 @@ var _user$project$Scene$render = F3(
 					A2(
 						_elm_lang$core$List$map,
 						function (node) {
-							var transform = A2(_user$project$Transform2$combine, parentTransform, node.transform);
+							var transform = A2(_user$project$Transform$combine, parentTransform, node.transform);
 							return A2(
 								_elm_lang$core$Basics_ops['++'],
 								function () {
@@ -10843,7 +9651,7 @@ var _user$project$Shape$rectangle = F6(
 				{
 					ctor: '::',
 					_0: _elm_lang$svg$Svg_Attributes$transform(
-						_user$project$Canvas2$toSvgTransform(transform)),
+						_user$project$Canvas$toSvgTransform(transform)),
 					_1: {
 						ctor: '::',
 						_0: _elm_lang$svg$Svg_Attributes$x(
@@ -10878,7 +9686,7 @@ var _user$project$Shape$circle = F5(
 				{
 					ctor: '::',
 					_0: _elm_lang$svg$Svg_Attributes$transform(
-						_user$project$Canvas2$toSvgTransform(transform)),
+						_user$project$Canvas$toSvgTransform(transform)),
 					_1: {
 						ctor: '::',
 						_0: _elm_lang$svg$Svg_Attributes$cx(
@@ -10908,7 +9716,7 @@ var _user$project$Shape$path = F3(
 				{
 					ctor: '::',
 					_0: _elm_lang$svg$Svg_Attributes$transform(
-						_user$project$Canvas2$toSvgTransform(transform)),
+						_user$project$Canvas$toSvgTransform(transform)),
 					_1: {
 						ctor: '::',
 						_0: _elm_lang$svg$Svg_Attributes$d(
@@ -10981,660 +9789,89 @@ var _user$project$Shape$Dashed = {ctor: 'Dashed'};
 var _user$project$Shape$Thin = {ctor: 'Thin'};
 var _user$project$Shape$Thick = {ctor: 'Thick'};
 var _user$project$Shape$NoStroke = {ctor: 'NoStroke'};
-var _user$project$Main2$labelledRange = F7(
-	function (id, label, minimum, maximum, step, value, message) {
-		return {
-			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$label,
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$for(id),
-					_1: {ctor: '[]'}
-				},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text(label),
-					_1: {ctor: '[]'}
-				}),
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$input,
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$id(id),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$type_('range'),
-							_1: {
-								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$min(
-									_elm_lang$core$Basics$toString(minimum)),
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$max(
-										_elm_lang$core$Basics$toString(maximum)),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$step(
-											_elm_lang$core$Basics$toString(step)),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$value(
-												_elm_lang$core$Basics$toString(value)),
-											_1: {
-												ctor: '::',
-												_0: _elm_lang$html$Html_Events$onInput(message),
-												_1: {ctor: '[]'}
-											}
-										}
-									}
-								}
-							}
-						}
-					},
-					{ctor: '[]'}),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$input,
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$type_('text'),
-							_1: {
-								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$placeholder(label),
-								_1: {
-									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$value(
-										_elm_lang$core$Basics$toString(value)),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$html$Html_Events$onInput(message),
-										_1: {ctor: '[]'}
-									}
-								}
-							}
-						},
-						{ctor: '[]'}),
-					_1: {ctor: '[]'}
-				}
-			}
-		};
-	});
-var _user$project$Main2$parseFloat = function (_p0) {
-	return A2(
-		_elm_lang$core$Result$withDefault,
-		0.0,
-		_elm_lang$core$String$toFloat(_p0));
-};
-var _user$project$Main2$addSceneShape = F5(
-	function (scene, parent, transform, name, shape) {
-		return A2(
-			_elm_lang$core$Result$andThen,
-			function (_p1) {
-				return A2(
-					_elm_lang$core$Result$andThen,
-					A2(_user$project$Scene$parent, name, parent),
-					A2(
-						_elm_lang$core$Result$andThen,
-						function (scene) {
-							return _elm_lang$core$Native_Utils.eq(transform, _user$project$Transform2$identity) ? _elm_lang$core$Result$Ok(scene) : A3(_user$project$Scene$transform, name, transform, scene);
-						},
-						A4(
-							_user$project$Scene$insert,
-							name,
-							shape,
-							function (_p2) {
-								return A2(
-									_elm_lang$core$Maybe$withDefault,
-									_user$project$Bounds$zero,
-									A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p2));
-							},
-							_p1)));
-			},
-			scene);
-	});
-var _user$project$Main2$portPosition = F5(
-	function (name, index, direction, steps, scene) {
-		var bounds = A2(_user$project$Scene$bounds, name, scene);
-		var from = bounds.origin.y + ((bounds.size.height * 1) / 4);
-		var to = bounds.origin.y + ((bounds.size.height * 3) / 4);
-		var step = _elm_lang$core$Native_Utils.eq(steps, 0) ? 0 : ((to - from) / _elm_lang$core$Basics$toFloat(steps));
-		var y = _elm_lang$core$Native_Utils.eq(direction, _user$project$Circuit2$Input) ? (_elm_lang$core$Native_Utils.eq(steps, 0) ? (from + ((to - from) / 2)) : (from + (step * _elm_lang$core$Basics$toFloat(index)))) : (bounds.origin.y + (bounds.size.height / 2));
-		var _p3 = direction;
-		if (_p3.ctor === 'Input') {
-			return {x: bounds.origin.x, y: y};
-		} else {
-			return {x: bounds.origin.x + bounds.size.width, y: y};
-		}
-	});
-var _user$project$Main2$sceneWithPortShape = F7(
-	function (name, portName, index, steps, shape, direction, scene) {
-		return A2(
-			_elm_lang$core$Result$andThen,
-			function (scene) {
-				return A3(
-					_user$project$Scene$transform,
-					portName,
-					_user$project$Transform2$translate(
-						A5(_user$project$Main2$portPosition, name, index, direction, steps, scene)),
-					scene);
-			},
-			A2(
-				_elm_lang$core$Result$andThen,
-				A2(
-					_user$project$Scene$parent,
-					portName,
-					_elm_lang$core$Maybe$Just(name)),
-				A2(
-					_elm_lang$core$Result$andThen,
-					A3(
-						_user$project$Scene$insert,
-						portName,
-						_elm_lang$core$Maybe$Just(shape),
-						function (_p4) {
-							return _elm_lang$core$Native_Utils.eq(direction, _user$project$Circuit2$Input) ? {
-								origin: {x: -20, y: 0},
-								size: {width: 20, height: 0}
-							} : {
-								origin: {x: 0, y: 0},
-								size: {width: 20, height: 0}
-							};
-						}),
-					scene)));
-	});
-var _user$project$Main2$transformedPort = F7(
-	function (name, portName, index, steps, shape, direction, scene) {
-		return A2(
-			_elm_lang$core$Result$andThen,
-			function (scene) {
-				return A3(
-					_user$project$Scene$transform,
-					portName,
-					_user$project$Transform2$translate(
-						A5(_user$project$Main2$portPosition, name, index, direction, steps, scene)),
-					scene);
-			},
-			scene);
-	});
-var _user$project$Main2$suffixFor = function (_p5) {
-	var _p6 = _p5;
-	return _elm_lang$core$List$isEmpty(_p6._0.circuits) ? '.group' : '';
-};
-var _user$project$Main2$strokeFor = function (_p7) {
-	var _p8 = _p7;
-	return _elm_lang$core$List$isEmpty(_p8._0.circuits) ? _user$project$Shape$Dashed : _user$project$Shape$Thick;
-};
-var _user$project$Main2$marginedBounds = F2(
-	function (groupName, scene) {
-		return _user$project$Bounds$fromRectangle(
-			A2(
-				_user$project$Rectangle2$margin,
-				20,
-				_user$project$Bounds$toRectangle(
-					A2(_user$project$Scene$bounds, groupName, scene))));
-	});
-var _user$project$Main2$layout = function (angle) {
-	return {
-		ctor: '::',
-		_0: {
-			ctor: '_Tuple3',
-			_0: 'root',
-			_1: _elm_lang$core$Maybe$Nothing,
-			_2: _user$project$Transform2$rotate(angle)
-		},
-		_1: {
-			ctor: '::',
-			_0: {ctor: '_Tuple3', _0: 'root.circuit1', _1: _elm_lang$core$Maybe$Nothing, _2: _user$project$Transform2$identity},
-			_1: {
-				ctor: '::',
-				_0: {
-					ctor: '_Tuple3',
-					_0: 'root.circuit1.group',
-					_1: _elm_lang$core$Maybe$Nothing,
-					_2: _user$project$Transform2$translate(
-						{x: -100, y: -100})
-				},
-				_1: {
-					ctor: '::',
-					_0: {
-						ctor: '_Tuple3',
-						_0: 'root.circuit1.gate1',
-						_1: _elm_lang$core$Maybe$Just(
-							_user$project$Shape$Rectangle(
-								{
-									origin: {x: -50, y: -50},
-									size: {width: 100, height: 100},
-									stroke: _user$project$Shape$Thin
-								})),
-						_2: _user$project$Transform2$translate(
-							{x: -100, y: 0})
-					},
-					_1: {
-						ctor: '::',
-						_0: {
-							ctor: '_Tuple3',
-							_0: 'root.circuit1.gate2',
-							_1: _elm_lang$core$Maybe$Just(
-								_user$project$Shape$Rectangle(
-									{
-										origin: {x: -50, y: -50},
-										size: {width: 100, height: 100},
-										stroke: _user$project$Shape$Thin
-									})),
-							_2: _user$project$Transform2$translate(
-								{x: 100, y: 0})
-						},
-						_1: {ctor: '[]'}
-					}
-				}
-			}
-		}
-	};
-};
-var _user$project$Main2$layoutFor = F2(
-	function (angle, name) {
-		return function (layout) {
-			var _p9 = layout;
-			if (_p9.ctor === 'Just') {
-				return _p9._0;
-			} else {
-				return _elm_lang$core$Native_Utils.crashCase(
-					'Main2',
-					{
-						start: {line: 621, column: 17},
-						end: {line: 626, column: 69}
-					},
-					_p9)(
-					A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', name));
-			}
-		}(
-			_elm_lang$core$List$head(
-				A2(
-					_elm_lang$core$List$filterMap,
-					function (_p11) {
-						var _p12 = _p11;
-						return _elm_lang$core$Native_Utils.eq(_p12._0, name) ? _elm_lang$core$Maybe$Just(
-							{ctor: '_Tuple2', _0: _p12._1, _1: _p12._2}) : _elm_lang$core$Maybe$Nothing;
-					},
-					_user$project$Main2$layout(angle))));
-	});
-var _user$project$Main2$pathToString = function (path) {
-	return A2(
-		_elm_lang$core$String$join,
-		'.',
-		A2(
-			_elm_lang$core$List$map,
-			function (_p13) {
-				var _p14 = _p13;
-				return _p14._0;
-			},
-			path));
-};
-var _user$project$Main2$nameOf = function (path) {
-	return _elm_lang$core$List$isEmpty(path) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(
-		A2(
-			_elm_lang$core$String$join,
-			'.',
-			A2(
-				_elm_lang$core$List$map,
-				function (_p15) {
-					var _p16 = _p15;
-					return _p16._0;
-				},
-				path)));
-};
-var _user$project$Main2$outputShape = _user$project$Shape$Path(
-	{
-		points: {
-			ctor: '::',
-			_0: {x: 0, y: 0},
-			_1: {
-				ctor: '::',
-				_0: {x: 20, y: 0},
-				_1: {ctor: '[]'}
-			}
-		},
-		stroke: _user$project$Shape$Thick
-	});
-var _user$project$Main2$inputShape = _user$project$Shape$Path(
-	{
-		points: {
-			ctor: '::',
-			_0: {x: 0, y: 0},
-			_1: {
-				ctor: '::',
-				_0: {x: -20, y: 0},
-				_1: {ctor: '[]'}
-			}
-		},
-		stroke: _user$project$Shape$Thick
-	});
-var _user$project$Main2$toScene2 = F3(
-	function (angle, circuit, scene) {
-		var toScene2_ = F3(
-			function (path, _p17, scene) {
-				var _p18 = _p17;
-				var _p45 = _p18._0;
-				var ports = A2(
-					_elm_lang$core$List$indexedMap,
-					F2(
-						function (index, _p19) {
-							var _p20 = _p19;
-							var _p21 = _p20._0.direction;
-							if (_p21.ctor === 'Input') {
-								return {ctor: '_Tuple3', _0: index, _1: _user$project$Main2$inputShape, _2: _user$project$Circuit2$Input};
-							} else {
-								return {ctor: '_Tuple3', _0: index, _1: _user$project$Main2$outputShape, _2: _user$project$Circuit2$Output};
-							}
-						}),
-					_p45.ports);
-				var steps = _elm_lang$core$List$length(
-					A2(
-						_elm_lang$core$List$filter,
-						function (_p22) {
-							var _p23 = _p22;
-							return _elm_lang$core$Native_Utils.eq(_p23._2, _user$project$Circuit2$Input);
-						},
-						ports)) - 1;
-				var currentPath = A2(
-					_elm_lang$core$Basics_ops['++'],
-					path,
-					{
-						ctor: '::',
-						_0: _p45.name,
-						_1: {ctor: '[]'}
-					});
-				var name = _user$project$Main2$pathToString(currentPath);
-				var _p24 = A2(_user$project$Main2$layoutFor, angle, name);
-				var shape = _p24._0;
-				var transform = _p24._1;
-				var groupName = A2(_elm_lang$core$Basics_ops['++'], name, '.group');
-				var sceneWithChildren = A3(
-					_elm_lang$core$List$foldl,
-					F2(
-						function (_p26, _p25) {
-							var _p27 = _p26;
-							var _p30 = _p27._0;
-							var _p28 = _p25;
-							var childPath = A2(
-								_elm_lang$core$Basics_ops['++'],
-								currentPath,
-								{
-									ctor: '::',
-									_0: _user$project$Circuit2$CircuitName(
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											function () {
-												var _p29 = _p30.name;
-												return _p29._0;
-											}(),
-											_user$project$Main2$suffixFor(
-												_user$project$Circuit2$Circuit(_p30)))),
-									_1: {ctor: '[]'}
-								});
-							var childName = _user$project$Main2$pathToString(childPath);
-							return {
-								ctor: '_Tuple2',
-								_0: A2(
-									_elm_lang$core$Result$andThen,
-									A2(
-										toScene2_,
-										currentPath,
-										_user$project$Circuit2$Circuit(_p30)),
-									_p28._0),
-								_1: A2(
-									_elm_lang$core$Basics_ops['++'],
-									_p28._1,
-									{
-										ctor: '::',
-										_0: childName,
-										_1: {ctor: '[]'}
-									})
-							};
-						}),
-					{
-						ctor: '_Tuple2',
-						_0: _elm_lang$core$Result$Ok(scene),
-						_1: {ctor: '[]'}
-					},
-					_p45.circuits);
-				var _p31 = sceneWithChildren;
-				var sceneWithChildren_ = _p31._0;
-				var childrenNames = _p31._1;
-				var parent = _user$project$Main2$nameOf(path);
-				var sceneWithPorts = A2(
-					_elm_lang$core$Result$andThen,
-					function (scene1) {
-						var sceneWithPorts1 = A3(
-							_elm_lang$core$List$foldl,
-							F2(
-								function (_p33, _p32) {
-									var _p34 = _p33;
-									var _p36 = _p34._0;
-									var _p35 = _p32;
-									var portName = A2(
-										_elm_lang$core$Basics_ops['++'],
-										name,
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											'.port',
-											_elm_lang$core$Basics$toString(_p36 + 1)));
-									return {
-										ctor: '_Tuple2',
-										_0: A7(_user$project$Main2$sceneWithPortShape, name, portName, _p36, steps, _p34._1, _p34._2, _p35._0),
-										_1: A2(
-											_elm_lang$core$Basics_ops['++'],
-											_p35._1,
-											{
-												ctor: '::',
-												_0: portName,
-												_1: {ctor: '[]'}
-											})
-									};
-								}),
-							{
-								ctor: '_Tuple2',
-								_0: _elm_lang$core$Result$Ok(scene1),
-								_1: {ctor: '[]'}
-							},
-							ports);
-						var _p37 = sceneWithPorts1;
-						var sceneWithPorts_ = _p37._0;
-						var portNames = _p37._1;
-						return A2(
-							_elm_lang$core$Result$andThen,
-							function (scene) {
-								return _elm_lang$core$Result$Ok(
-									{ctor: '_Tuple2', _0: scene, _1: portNames});
-							},
-							sceneWithPorts_);
-					},
-					A5(_user$project$Main2$addSceneShape, sceneWithChildren_, parent, transform, name, shape));
-				var sceneWithGroup = A2(
-					_elm_lang$core$Result$andThen,
-					function (_p38) {
-						var _p39 = _p38;
-						var _p44 = _p39._0;
-						return _elm_lang$core$Native_Utils.eq(name, 'root') ? _elm_lang$core$Result$Ok(_p44) : A2(
-							_elm_lang$core$Result$andThen,
-							function (scene) {
-								var stroke = _user$project$Main2$strokeFor(
-									_user$project$Circuit2$Circuit(_p45));
-								var bounds = A2(_user$project$Main2$marginedBounds, groupName, scene);
-								return function (scene_) {
-									return _elm_lang$core$List$isEmpty(_p45.circuits) ? scene_ : A3(
-										_elm_lang$core$List$foldl,
-										F2(
-											function (_p40, scene) {
-												var _p41 = _p40;
-												var _p42 = _p41._0;
-												var portName = A2(
-													_elm_lang$core$Basics_ops['++'],
-													name,
-													A2(
-														_elm_lang$core$Basics_ops['++'],
-														'.port',
-														_elm_lang$core$Basics$toString(_p42 + 1)));
-												return A7(_user$project$Main2$transformedPort, groupName, portName, _p42, steps, _p41._1, _p41._2, scene);
-											}),
-										scene_,
-										ports);
-								}(
-									A2(
-										_elm_lang$core$Result$andThen,
-										A2(_user$project$Scene$parent, groupName, parent),
-										A4(
-											_user$project$Scene$update,
-											groupName,
-											_elm_lang$core$Maybe$Just(
-												_user$project$Shape$Rectangle(
-													{origin: bounds.origin, size: bounds.size, stroke: stroke})),
-											function (_p43) {
-												return A2(
-													_elm_lang$core$Maybe$withDefault,
-													_user$project$Bounds$zero,
-													A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p43));
-											},
-											scene)));
-							},
-							A3(
-								_user$project$Scene$group,
-								groupName,
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									{
-										ctor: '::',
-										_0: name,
-										_1: {ctor: '[]'}
-									},
-									A2(_elm_lang$core$Basics_ops['++'], _p39._1, childrenNames)),
-								_p44));
-					},
-					sceneWithPorts);
-				return sceneWithGroup;
-			});
-		var result = A3(
-			toScene2_,
-			{ctor: '[]'},
-			circuit,
-			scene);
-		return result;
-	});
-var _user$project$Main2$update = F2(
-	function (message, state) {
-		var _p46 = message;
-		if (_p46.ctor === 'WindowResizedTo') {
-			var _p47 = _p46._0;
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Native_Utils.update(
-					state,
-					{
-						canvasSize: {
-							width: _elm_lang$core$Basics$toFloat(_p47.width),
-							height: _elm_lang$core$Basics$toFloat(_p47.height)
-						}
-					}),
-				_1: _elm_lang$core$Platform_Cmd$none
-			};
-		} else {
-			var degrees = _user$project$Main2$parseFloat(_p46._0);
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Native_Utils.update(
-					state,
-					{
-						angle: degrees,
-						scene: A2(
-							_elm_lang$core$Result$withDefault,
-							_user$project$Scene$empty,
-							A3(_user$project$Main2$toScene2, degrees, _user$project$Circuit2$example, _user$project$Scene$empty))
-					}),
-				_1: _elm_lang$core$Platform_Cmd$none
-			};
-		}
-	});
-var _user$project$Main2$State = F3(
-	function (a, b, c) {
-		return {canvasSize: a, scene: b, angle: c};
-	});
-var _user$project$Main2$ChangeAngle = function (a) {
-	return {ctor: 'ChangeAngle', _0: a};
-};
-var _user$project$Main2$view = function (state) {
+var _user$project$Main$view = function (state) {
 	return A2(
 		_elm_lang$html$Html$div,
 		{ctor: '[]'},
-		A2(
-			_elm_lang$core$Basics_ops['++'],
-			{
-				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$div,
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('controls'),
-						_1: {ctor: '[]'}
-					},
-					A7(_user$project$Main2$labelledRange, 'angle', 'Angle (degrees)', -90, 90, 1, state.angle, _user$project$Main2$ChangeAngle)),
-				_1: {ctor: '[]'}
-			},
-			{
-				ctor: '::',
-				_0: _user$project$Canvas2$view(
-					A3(
-						_user$project$Scene$render,
-						_user$project$Canvas2$origin(state.canvasSize),
-						F2(
-							function (shape, transform) {
-								var _p48 = shape;
-								if (_p48.ctor === 'Just') {
-									return _elm_lang$core$Maybe$Just(
-										A2(_user$project$Shape$constructor, _p48._0, transform));
-								} else {
-									return _elm_lang$core$Maybe$Nothing;
-								}
-							}),
-						state.scene)),
-				_1: {ctor: '[]'}
-			}));
+		{
+			ctor: '::',
+			_0: _user$project$Canvas$view(
+				A3(
+					_user$project$Scene$render,
+					_user$project$Canvas$origin(state.canvasSize),
+					F2(
+						function (shape, transform) {
+							var _p0 = shape;
+							if (_p0.ctor === 'Just') {
+								return _elm_lang$core$Maybe$Just(
+									A2(_user$project$Shape$constructor, _p0._0, transform));
+							} else {
+								return _elm_lang$core$Maybe$Nothing;
+							}
+						}),
+					state.scene)),
+			_1: {ctor: '[]'}
+		});
 };
-var _user$project$Main2$WindowResizedTo = function (a) {
+var _user$project$Main$update = F2(
+	function (message, state) {
+		var _p1 = message;
+		var _p2 = _p1._0;
+		return {
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Native_Utils.update(
+				state,
+				{
+					canvasSize: {
+						width: _elm_lang$core$Basics$toFloat(_p2.width),
+						height: _elm_lang$core$Basics$toFloat(_p2.height)
+					}
+				}),
+			_1: _elm_lang$core$Platform_Cmd$none
+		};
+	});
+var _user$project$Main$State = F2(
+	function (a, b) {
+		return {canvasSize: a, scene: b};
+	});
+var _user$project$Main$WindowResizedTo = function (a) {
 	return {ctor: 'WindowResizedTo', _0: a};
 };
-var _user$project$Main2$init = function () {
+var _user$project$Main$init = function () {
 	var state = {
 		canvasSize: {width: 800, height: 600},
-		scene: _user$project$Scene$empty,
-		angle: 0
+		scene: A2(
+			_elm_lang$core$Result$withDefault,
+			_user$project$Scene$empty,
+			A4(
+				_user$project$Scene$insert,
+				'test',
+				_elm_lang$core$Maybe$Just(
+					_user$project$Shape$Rectangle(
+						{
+							origin: {x: -50, y: -50},
+							size: {width: 100, height: 100},
+							stroke: _user$project$Shape$Thin
+						})),
+				function (_p3) {
+					return A2(
+						_elm_lang$core$Maybe$withDefault,
+						_user$project$Bounds$zero,
+						A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p3));
+				},
+				_user$project$Scene$empty))
 	};
 	return {
 		ctor: '_Tuple2',
 		_0: state,
-		_1: _elm_lang$core$Platform_Cmd$batch(
-			{
-				ctor: '::',
-				_0: A2(_elm_lang$core$Task$perform, _user$project$Main2$WindowResizedTo, _elm_lang$window$Window$size),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$core$Task$perform,
-						_user$project$Main2$ChangeAngle,
-						_elm_lang$core$Task$succeed(
-							_elm_lang$core$Basics$toString(state.angle))),
-					_1: {ctor: '[]'}
-				}
-			})
+		_1: A2(_elm_lang$core$Task$perform, _user$project$Main$WindowResizedTo, _elm_lang$window$Window$size)
 	};
 }();
-var _user$project$Main2$subscriptions = function (state) {
-	return _elm_lang$window$Window$resizes(_user$project$Main2$WindowResizedTo);
+var _user$project$Main$subscriptions = function (state) {
+	return _elm_lang$window$Window$resizes(_user$project$Main$WindowResizedTo);
 };
 var _user$project$EntryPoint$main = _elm_lang$html$Html$program(
-	{init: _user$project$Main2$init, view: _user$project$Main2$view, update: _user$project$Main2$update, subscriptions: _user$project$Main2$subscriptions})();
+	{init: _user$project$Main$init, view: _user$project$Main$view, update: _user$project$Main$update, subscriptions: _user$project$Main$subscriptions})();
 var Elm = {};
 Elm['EntryPoint'] = Elm['EntryPoint'] || {};
 if (typeof _user$project$EntryPoint$main !== 'undefined') {
