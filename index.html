@@ -9013,6 +9013,41 @@ var _user$project$Canvas$centre = F2(
 var _user$project$Canvas$origin = function (size) {
 	return A2(_user$project$Canvas$centre, 0 - size.width, 0 - size.height);
 };
+var _user$project$Circuit$CircuitName = function (a) {
+	return {ctor: 'CircuitName', _0: a};
+};
+var _user$project$Circuit$CircuitReference = function (a) {
+	return {ctor: 'CircuitReference', _0: a};
+};
+var _user$project$Circuit$PortName = function (a) {
+	return {ctor: 'PortName', _0: a};
+};
+var _user$project$Circuit$Output = {ctor: 'Output'};
+var _user$project$Circuit$Input = {ctor: 'Input'};
+var _user$project$Circuit$Port = function (a) {
+	return {ctor: 'Port', _0: a};
+};
+var _user$project$Circuit$PortReference = function (a) {
+	return {ctor: 'PortReference', _0: a};
+};
+var _user$project$Circuit$ConnectionName = function (a) {
+	return {ctor: 'ConnectionName', _0: a};
+};
+var _user$project$Circuit$Circuit = function (a) {
+	return {ctor: 'Circuit', _0: a};
+};
+var _user$project$Circuit$empty = _user$project$Circuit$Circuit(
+	_user$project$Circuit$CircuitName('root'));
+var _user$project$Circuit$example = function () {
+	var circuit1 = _user$project$Circuit$CircuitName('circuit1');
+	var connection1 = _user$project$Circuit$ConnectionName('connection1');
+	var output1 = _user$project$Circuit$PortName('output1');
+	var input2 = _user$project$Circuit$PortName('input2');
+	var input1 = _user$project$Circuit$PortName('input1');
+	var gate2 = _user$project$Circuit$CircuitName('gate2');
+	var gate1 = _user$project$Circuit$CircuitName('gate1');
+	return _user$project$Circuit$empty;
+}();
 var _user$project$Scene$removed = F2(
 	function (id, state) {
 		return _elm_lang$core$Native_Utils.update(
@@ -9830,6 +9865,29 @@ var _user$project$Main$update = F2(
 			_1: _elm_lang$core$Platform_Cmd$none
 		};
 	});
+var _user$project$Main$example = function () {
+	var circuit = _user$project$Circuit$example;
+	return A2(
+		_elm_lang$core$Result$withDefault,
+		_user$project$Scene$empty,
+		A4(
+			_user$project$Scene$insert,
+			'test',
+			_elm_lang$core$Maybe$Just(
+				_user$project$Shape$Rectangle(
+					{
+						origin: {x: -50, y: -50},
+						size: {width: 100, height: 100},
+						stroke: _user$project$Shape$Thin
+					})),
+			function (_p3) {
+				return A2(
+					_elm_lang$core$Maybe$withDefault,
+					_user$project$Bounds$zero,
+					A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p3));
+			},
+			_user$project$Scene$empty));
+}();
 var _user$project$Main$State = F2(
 	function (a, b) {
 		return {canvasSize: a, scene: b};
@@ -9840,26 +9898,7 @@ var _user$project$Main$WindowResizedTo = function (a) {
 var _user$project$Main$init = function () {
 	var state = {
 		canvasSize: {width: 800, height: 600},
-		scene: A2(
-			_elm_lang$core$Result$withDefault,
-			_user$project$Scene$empty,
-			A4(
-				_user$project$Scene$insert,
-				'test',
-				_elm_lang$core$Maybe$Just(
-					_user$project$Shape$Rectangle(
-						{
-							origin: {x: -50, y: -50},
-							size: {width: 100, height: 100},
-							stroke: _user$project$Shape$Thin
-						})),
-				function (_p3) {
-					return A2(
-						_elm_lang$core$Maybe$withDefault,
-						_user$project$Bounds$zero,
-						A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p3));
-				},
-				_user$project$Scene$empty))
+		scene: _user$project$Main$example
 	};
 	return {
 		ctor: '_Tuple2',
