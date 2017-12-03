@@ -9476,7 +9476,10 @@ var _user$project$Circuit$example = function () {
 	var input1 = _user$project$Circuit$PortName('input1');
 	var gate2 = _user$project$Circuit$CircuitName('gate2');
 	var gate1 = _user$project$Circuit$CircuitName('gate1');
-	var _p5 = _user$project$Circuit$named(gate1);
+	var _p5 = A2(
+		_elm_lang$core$Result$andThen,
+		_user$project$Circuit$add(gate2),
+		_user$project$Circuit$named(gate1));
 	if (_p5.ctor === 'Ok') {
 		return _p5._0;
 	} else {
