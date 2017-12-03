@@ -9362,6 +9362,38 @@ var _user$project$Canvas$centre = F2(
 var _user$project$Canvas$origin = function (size) {
 	return A2(_user$project$Canvas$centre, 0 - size.width, 0 - size.height);
 };
+var _user$project$Circuit$added = F2(
+	function (name, state) {
+		return _elm_lang$core$Native_Utils.update(
+			state,
+			{
+				nodes: A2(
+					_elm_lang$core$Basics_ops['++'],
+					state.nodes,
+					{
+						ctor: '::',
+						_0: name,
+						_1: {ctor: '[]'}
+					})
+			});
+	});
+var _user$project$Circuit$apply = function (event) {
+	var _p0 = event;
+	return _user$project$Circuit$added(_p0._0);
+};
+var _user$project$Circuit$state = function (_p1) {
+	var _p2 = _p1;
+	return A3(
+		_elm_lang$core$List$foldl,
+		_user$project$Circuit$apply,
+		{
+			nodes: {ctor: '[]'}
+		},
+		_p2._0);
+};
+var _user$project$Circuit$State = function (a) {
+	return {nodes: a};
+};
 var _user$project$Circuit$CircuitName = function (a) {
 	return {ctor: 'CircuitName', _0: a};
 };
@@ -9388,20 +9420,53 @@ var _user$project$Circuit$Added = function (a) {
 var _user$project$Circuit$Circuit = function (a) {
 	return {ctor: 'Circuit', _0: a};
 };
-var _user$project$Circuit$add = F2(
-	function (_p1, _p0) {
-		var _p2 = _p1;
-		var _p3 = _p0;
+var _user$project$Circuit$append = F2(
+	function (_p3, event) {
+		var _p4 = _p3;
 		return _user$project$Circuit$Circuit(
-			A2(_elm_lang$core$Basics_ops['++'], _p2._0, _p3._0));
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				_p4._0,
+				{
+					ctor: '::',
+					_0: event,
+					_1: {ctor: '[]'}
+				}));
+	});
+var _user$project$Circuit$execute = F2(
+	function (circuit, validate) {
+		return A2(
+			_elm_lang$core$Result$map,
+			_user$project$Circuit$append(circuit),
+			validate(
+				_user$project$Circuit$state(circuit)));
+	});
+var _user$project$Circuit$add = F2(
+	function (name, circuit) {
+		return A2(
+			_user$project$Circuit$execute,
+			circuit,
+			function (state) {
+				return A2(
+					_elm_lang$core$List$any,
+					F2(
+						function (x, y) {
+							return _elm_lang$core$Native_Utils.eq(x, y);
+						})(name),
+					state.nodes) ? _elm_lang$core$Result$Err(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'insert: Node already present with name: ',
+						_elm_lang$core$Basics$toString(name))) : _elm_lang$core$Result$Ok(
+					_user$project$Circuit$Added(name));
+			});
 	});
 var _user$project$Circuit$named = function (name) {
-	return _user$project$Circuit$Circuit(
-		{
-			ctor: '::',
-			_0: _user$project$Circuit$Added(name),
-			_1: {ctor: '[]'}
-		});
+	return A2(
+		_user$project$Circuit$add,
+		name,
+		_user$project$Circuit$Circuit(
+			{ctor: '[]'}));
 };
 var _user$project$Circuit$example = function () {
 	var circuit1 = _user$project$Circuit$CircuitName('circuit1');
@@ -9411,7 +9476,18 @@ var _user$project$Circuit$example = function () {
 	var input1 = _user$project$Circuit$PortName('input1');
 	var gate2 = _user$project$Circuit$CircuitName('gate2');
 	var gate1 = _user$project$Circuit$CircuitName('gate1');
-	return _user$project$Circuit$named(gate1);
+	var _p5 = _user$project$Circuit$named(gate1);
+	if (_p5.ctor === 'Ok') {
+		return _p5._0;
+	} else {
+		return _elm_lang$core$Native_Utils.crashCase(
+			'Circuit',
+			{
+				start: {line: 134, column: 9},
+				end: {line: 142, column: 36}
+			},
+			_p5)(_p5._0);
+	}
 }();
 var _user$project$Scene$removed = F2(
 	function (id, state) {
