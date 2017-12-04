@@ -9461,13 +9461,9 @@ var _user$project$Circuit$add = F2(
 					_user$project$Circuit$Added(name));
 			});
 	});
-var _user$project$Circuit$named = function (name) {
-	return A2(
-		_user$project$Circuit$add,
-		name,
-		_user$project$Circuit$Circuit(
-			{ctor: '[]'}));
-};
+var _user$project$Circuit$empty = _elm_lang$core$Result$Ok(
+	_user$project$Circuit$Circuit(
+		{ctor: '[]'}));
 var _user$project$Circuit$example = function () {
 	var circuit1 = _user$project$Circuit$CircuitName('circuit1');
 	var connection1 = _user$project$Circuit$ConnectionName('connection1');
@@ -9479,15 +9475,18 @@ var _user$project$Circuit$example = function () {
 	var _p5 = A2(
 		_elm_lang$core$Result$andThen,
 		_user$project$Circuit$add(gate2),
-		_user$project$Circuit$named(gate1));
+		A2(
+			_elm_lang$core$Result$andThen,
+			_user$project$Circuit$add(gate1),
+			_user$project$Circuit$empty));
 	if (_p5.ctor === 'Ok') {
 		return _p5._0;
 	} else {
 		return _elm_lang$core$Native_Utils.crashCase(
 			'Circuit',
 			{
-				start: {line: 134, column: 9},
-				end: {line: 142, column: 36}
+				start: {line: 140, column: 9},
+				end: {line: 149, column: 36}
 			},
 			_p5)(_p5._0);
 	}
@@ -10573,26 +10572,97 @@ var _user$project$Main$update = F2(
 	});
 var _user$project$Main$example = function () {
 	var circuit = _user$project$PrintAny$log(_user$project$Circuit$example);
-	return A2(
-		_elm_lang$core$Result$withDefault,
-		_user$project$Scene$empty,
-		A4(
-			_user$project$Scene$insert,
-			'test',
-			_elm_lang$core$Maybe$Just(
+	var events = function () {
+		var _p3 = circuit;
+		return _p3._0;
+	}();
+	var layout = {
+		ctor: '::',
+		_0: {
+			ctor: '_Tuple3',
+			_0: 'gate1',
+			_1: _elm_lang$core$Maybe$Just(
 				_user$project$Shape$Rectangle(
 					{
 						origin: {x: -50, y: -50},
 						size: {width: 100, height: 100},
 						stroke: _user$project$Shape$Thin
 					})),
-			function (_p3) {
-				return A2(
-					_elm_lang$core$Maybe$withDefault,
-					_user$project$Bounds$zero,
-					A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p3));
+			_2: _user$project$Transform$translate(
+				{x: -100, y: 0})
+		},
+		_1: {
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple3',
+				_0: 'gate2',
+				_1: _elm_lang$core$Maybe$Just(
+					_user$project$Shape$Rectangle(
+						{
+							origin: {x: -50, y: -50},
+							size: {width: 100, height: 100},
+							stroke: _user$project$Shape$Thin
+						})),
+				_2: _user$project$Transform$translate(
+					{x: 100, y: 0})
 			},
-			_user$project$Scene$empty));
+			_1: {ctor: '[]'}
+		}
+	};
+	return A2(
+		_elm_lang$core$Result$withDefault,
+		_user$project$Scene$empty,
+		A3(
+			_elm_lang$core$List$foldl,
+			F2(
+				function (event, scene) {
+					var _p4 = event;
+					var _p11 = _p4._0._0;
+					var _p5 = function (layout) {
+						var _p6 = layout;
+						if (_p6.ctor === 'Just') {
+							return _p6._0;
+						} else {
+							return _elm_lang$core$Native_Utils.crashCase(
+								'Main',
+								{
+									start: {line: 85, column: 53},
+									end: {line: 90, column: 105}
+								},
+								_p6)(
+								A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p11));
+						}
+					}(
+						_elm_lang$core$List$head(
+							A2(
+								_elm_lang$core$List$filterMap,
+								function (_p8) {
+									var _p9 = _p8;
+									return _elm_lang$core$Native_Utils.eq(_p9._0, _p11) ? _elm_lang$core$Maybe$Just(
+										{ctor: '_Tuple2', _0: _p9._1, _1: _p9._2}) : _elm_lang$core$Maybe$Nothing;
+								},
+								layout)));
+					var shape = _p5._0;
+					var transform = _p5._1;
+					return A2(
+						_elm_lang$core$Result$andThen,
+						A2(_user$project$Scene$transform, _p11, transform),
+						A2(
+							_elm_lang$core$Result$andThen,
+							A3(
+								_user$project$Scene$insert,
+								_p11,
+								shape,
+								function (_p10) {
+									return A2(
+										_elm_lang$core$Maybe$withDefault,
+										_user$project$Bounds$zero,
+										A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p10));
+								}),
+							scene));
+				}),
+			_elm_lang$core$Result$Ok(_user$project$Scene$empty),
+			events));
 }();
 var _user$project$Main$State = F2(
 	function (a, b) {
