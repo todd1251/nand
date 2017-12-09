@@ -10855,7 +10855,13 @@ var _user$project$Main$example = function () {
 														var bounds = A2(_user$project$Scene$bounds, _p24, scene);
 														var transform = _user$project$Transform$translate(
 															A5(_user$project$Main$portPosition, _p24, _p17._0, _p19.direction, steps, bounds));
-														return A3(_user$project$Scene$transform, portName, transform, scene);
+														return A2(
+															_elm_lang$core$Result$andThen,
+															A2(
+																_user$project$Scene$parent,
+																portName,
+																_elm_lang$core$Maybe$Just(_p24)),
+															A3(_user$project$Scene$transform, portName, transform, scene));
 													},
 													A2(
 														_elm_lang$core$Result$andThen,
