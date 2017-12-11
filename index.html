@@ -10001,6 +10001,20 @@ var _user$project$Scene$render = F4(
 			}(
 				_user$project$Scene$state(scene)));
 	});
+var _user$project$Scene$render2 = F3(
+	function (initial, renderer, scene) {
+		return A3(
+			_elm_lang$core$List$foldl,
+			F2(
+				function (node, rendered) {
+					return rendered;
+				}),
+			initial,
+			function (_) {
+				return _.nodes;
+			}(
+				_user$project$Scene$state(scene)));
+	});
 var _user$project$Scene$Node = F5(
 	function (a, b, c, d, e) {
 		return {id: a, node: b, parent: c, transform: d, bounds: e};
@@ -10186,6 +10200,14 @@ var _user$project$Scene$group = F3(
 	});
 var _user$project$Scene$empty = _user$project$Scene$Scene(
 	{ctor: '[]'});
+var _user$project$Shape$transformed = function (transform) {
+	return _elm_lang$core$Native_Utils.eq(transform, _user$project$Transform$identity) ? {ctor: '[]'} : {
+		ctor: '::',
+		_0: _elm_lang$svg$Svg_Attributes$transform(
+			_user$project$Canvas$toSvgTransform(transform)),
+		_1: {ctor: '[]'}
+	};
+};
 var _user$project$Shape$strokeAttributes = function (stroke) {
 	var _p0 = stroke;
 	switch (_p0.ctor) {
@@ -10249,11 +10271,10 @@ var _user$project$Shape$rectangle = F6(
 			_elm_lang$svg$Svg$rect,
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				{
-					ctor: '::',
-					_0: _elm_lang$svg$Svg_Attributes$transform(
-						_user$project$Canvas$toSvgTransform(transform)),
-					_1: {
+				_user$project$Shape$transformed(transform),
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					{
 						ctor: '::',
 						_0: _elm_lang$svg$Svg_Attributes$x(
 							_elm_lang$core$Basics$toString(left)),
@@ -10273,9 +10294,8 @@ var _user$project$Shape$rectangle = F6(
 								}
 							}
 						}
-					}
-				},
-				_user$project$Shape$strokeAttributes(stroke)),
+					},
+					_user$project$Shape$strokeAttributes(stroke))),
 			{ctor: '[]'});
 	});
 var _user$project$Shape$circle = F5(
@@ -10284,11 +10304,10 @@ var _user$project$Shape$circle = F5(
 			_elm_lang$svg$Svg$circle,
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				{
-					ctor: '::',
-					_0: _elm_lang$svg$Svg_Attributes$transform(
-						_user$project$Canvas$toSvgTransform(transform)),
-					_1: {
+				_user$project$Shape$transformed(transform),
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					{
 						ctor: '::',
 						_0: _elm_lang$svg$Svg_Attributes$cx(
 							_elm_lang$core$Basics$toString(cx)),
@@ -10303,9 +10322,8 @@ var _user$project$Shape$circle = F5(
 								_1: {ctor: '[]'}
 							}
 						}
-					}
-				},
-				_user$project$Shape$strokeAttributes(stroke)),
+					},
+					_user$project$Shape$strokeAttributes(stroke))),
 			{ctor: '[]'});
 	});
 var _user$project$Shape$path = F3(
@@ -10314,11 +10332,10 @@ var _user$project$Shape$path = F3(
 			_elm_lang$svg$Svg$path,
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				{
-					ctor: '::',
-					_0: _elm_lang$svg$Svg_Attributes$transform(
-						_user$project$Canvas$toSvgTransform(transform)),
-					_1: {
+				_user$project$Shape$transformed(transform),
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					{
 						ctor: '::',
 						_0: _elm_lang$svg$Svg_Attributes$d(
 							A2(
@@ -10342,9 +10359,8 @@ var _user$project$Shape$path = F3(
 										}),
 									path))),
 						_1: {ctor: '[]'}
-					}
-				},
-				_user$project$Shape$strokeAttributes(stroke)),
+					},
+					_user$project$Shape$strokeAttributes(stroke))),
 			{ctor: '[]'});
 	});
 var _user$project$Shape$constructor = function (shape) {
