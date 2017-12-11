@@ -9924,8 +9924,8 @@ var _user$project$Scene$transformAt = F2(
 			}(
 				_user$project$Scene$state(scene)));
 	});
-var _user$project$Scene$render = F3(
-	function (origin, renderer, scene) {
+var _user$project$Scene$render = F4(
+	function (origin, renderer, grouper, scene) {
 		var render1 = F3(
 			function (parent, parentTransform, nodes) {
 				var _p15 = A2(
@@ -9940,31 +9940,55 @@ var _user$project$Scene$render = F3(
 					A2(
 						_elm_lang$core$List$map,
 						function (node) {
-							var transform = A2(_user$project$Transform$combine, parentTransform, node.transform);
-							return A2(
-								_elm_lang$core$Basics_ops['++'],
-								function () {
-									var _p16 = node.node;
-									if (_p16.ctor === 'Just') {
-										var _p17 = A2(renderer, _p16._0, transform);
-										if (_p17.ctor === 'Just') {
-											return {
-												ctor: '::',
-												_0: _p17._0,
-												_1: {ctor: '[]'}
-											};
-										} else {
-											return {ctor: '[]'};
-										}
+							var noChildren = _elm_lang$core$List$isEmpty(
+								A2(
+									_elm_lang$core$List$filter,
+									function (other) {
+										return _elm_lang$core$Native_Utils.eq(
+											other.parent,
+											_elm_lang$core$Maybe$Just(node.id));
+									},
+									others));
+							var self = function () {
+								var _p16 = node.node;
+								if (_p16.ctor === 'Just') {
+									var _p17 = A2(
+										renderer,
+										_p16._0,
+										noChildren ? node.transform : _user$project$Transform$identity);
+									if (_p17.ctor === 'Just') {
+										return {
+											ctor: '::',
+											_0: _p17._0,
+											_1: {ctor: '[]'}
+										};
 									} else {
 										return {ctor: '[]'};
 									}
-								}(),
-								A3(
-									render1,
-									_elm_lang$core$Maybe$Just(node.id),
-									transform,
-									others));
+								} else {
+									return {ctor: '[]'};
+								}
+							}();
+							var nodes = noChildren ? self : {
+								ctor: '::',
+								_0: A2(
+									grouper,
+									node.transform,
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										self,
+										A3(
+											render1,
+											_elm_lang$core$Maybe$Just(node.id),
+											node.transform,
+											others))),
+								_1: {ctor: '[]'}
+							};
+							return noChildren ? nodes : {
+								ctor: '::',
+								_0: A2(grouper, parentTransform, nodes),
+								_1: {ctor: '[]'}
+							};
 						},
 						roots));
 			});
@@ -10635,7 +10659,7 @@ var _user$project$Main$view = function (state) {
 		{
 			ctor: '::',
 			_0: _user$project$Canvas$view(
-				A3(
+				A4(
 					_user$project$Scene$render,
 					_user$project$Canvas$origin(state.canvasSize),
 					F2(
@@ -10647,6 +10671,18 @@ var _user$project$Main$view = function (state) {
 							} else {
 								return _elm_lang$core$Maybe$Nothing;
 							}
+						}),
+					F2(
+						function (transform, nodes) {
+							return A2(
+								_elm_lang$svg$Svg$g,
+								{
+									ctor: '::',
+									_0: _elm_lang$svg$Svg_Attributes$transform(
+										_user$project$Canvas$toSvgTransform(transform)),
+									_1: {ctor: '[]'}
+								},
+								nodes);
 						}),
 					state.scene)),
 			_1: {ctor: '[]'}
@@ -10814,8 +10850,8 @@ var _user$project$Main$example = function () {
 									return _elm_lang$core$Native_Utils.crashCase(
 										'Main',
 										{
-											start: {line: 134, column: 57},
-											end: {line: 139, column: 109}
+											start: {line: 136, column: 57},
+											end: {line: 141, column: 109}
 										},
 										_p12)(
 										A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p26));
