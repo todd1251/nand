@@ -9533,59 +9533,63 @@ var _user$project$Circuit$example = function () {
 	var output1 = _user$project$Circuit$PortName('output1');
 	var input2 = _user$project$Circuit$PortName('input2');
 	var input1 = _user$project$Circuit$PortName('input1');
+	var gate3 = _user$project$Circuit$CircuitName('gate3');
 	var gate2 = _user$project$Circuit$CircuitName('gate2');
 	var gate1 = _user$project$Circuit$CircuitName('gate1');
 	var _p10 = A2(
 		_elm_lang$core$Result$andThen,
-		A2(
-			_user$project$Circuit$addPort,
-			gate2,
-			A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
+		_user$project$Circuit$add(gate3),
 		A2(
 			_elm_lang$core$Result$andThen,
 			A2(
 				_user$project$Circuit$addPort,
 				gate2,
-				A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
+				A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
 			A2(
 				_elm_lang$core$Result$andThen,
 				A2(
 					_user$project$Circuit$addPort,
 					gate2,
-					A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
+					A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
 				A2(
 					_elm_lang$core$Result$andThen,
-					_user$project$Circuit$add(gate2),
+					A2(
+						_user$project$Circuit$addPort,
+						gate2,
+						A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
 					A2(
 						_elm_lang$core$Result$andThen,
-						A2(
-							_user$project$Circuit$addPort,
-							gate1,
-							A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
+						_user$project$Circuit$add(gate2),
 						A2(
 							_elm_lang$core$Result$andThen,
 							A2(
 								_user$project$Circuit$addPort,
 								gate1,
-								A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
+								A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
 							A2(
 								_elm_lang$core$Result$andThen,
 								A2(
 									_user$project$Circuit$addPort,
 									gate1,
-									A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
+									A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
 								A2(
 									_elm_lang$core$Result$andThen,
-									_user$project$Circuit$add(gate1),
-									_user$project$Circuit$empty))))))));
+									A2(
+										_user$project$Circuit$addPort,
+										gate1,
+										A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
+									A2(
+										_elm_lang$core$Result$andThen,
+										_user$project$Circuit$add(gate1),
+										_user$project$Circuit$empty)))))))));
 	if (_p10.ctor === 'Ok') {
 		return _p10._0;
 	} else {
 		return _elm_lang$core$Native_Utils.crashCase(
 			'Circuit',
 			{
-				start: {line: 168, column: 9},
-				end: {line: 183, column: 36}
+				start: {line: 171, column: 9},
+				end: {line: 187, column: 36}
 			},
 			_p10)(_p10._0);
 	}
@@ -10796,7 +10800,19 @@ var _user$project$Main$example = function () {
 				_2: _user$project$Transform$translate(
 					{x: 100, y: 0})
 			},
-			_1: {ctor: '[]'}
+			_1: {
+				ctor: '::',
+				_0: {
+					ctor: '_Tuple3',
+					_0: 'gate3',
+					_1: _elm_lang$core$Maybe$Just(
+						_user$project$Shape$Circle(
+							{centre: _user$project$Point$zero, radius: 50, stroke: _user$project$Shape$Thin})),
+					_2: _user$project$Transform$translate(
+						{x: 0, y: 100})
+				},
+				_1: {ctor: '[]'}
+			}
 		}
 	};
 	return A2(
@@ -10866,8 +10882,8 @@ var _user$project$Main$example = function () {
 									return _elm_lang$core$Native_Utils.crashCase(
 										'Main',
 										{
-											start: {line: 136, column: 57},
-											end: {line: 141, column: 109}
+											start: {line: 140, column: 57},
+											end: {line: 145, column: 109}
 										},
 										_p12)(
 										A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p26));
