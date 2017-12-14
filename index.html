@@ -9973,7 +9973,7 @@ var _user$project$Scene$render = F4(
 									return {ctor: '[]'};
 								}
 							}();
-							var nodes = noChildren ? self : {
+							var nodes = (noChildren && (!_elm_lang$core$Native_Utils.eq(node.parent, _elm_lang$core$Maybe$Nothing))) ? self : {
 								ctor: '::',
 								_0: A2(
 									grouper,
@@ -9988,7 +9988,7 @@ var _user$project$Scene$render = F4(
 											others))),
 								_1: {ctor: '[]'}
 							};
-							return noChildren ? nodes : {
+							return (noChildren && (!_elm_lang$core$Native_Utils.eq(node.parent, _elm_lang$core$Maybe$Nothing))) ? nodes : {
 								ctor: '::',
 								_0: A2(grouper, parentTransform, nodes),
 								_1: {ctor: '[]'}
@@ -10809,7 +10809,7 @@ var _user$project$Main$example = function () {
 						_user$project$Shape$Circle(
 							{centre: _user$project$Point$zero, radius: 50, stroke: _user$project$Shape$Thin})),
 					_2: _user$project$Transform$translate(
-						{x: 0, y: 100})
+						{x: 0, y: 75})
 				},
 				_1: {ctor: '[]'}
 			}
