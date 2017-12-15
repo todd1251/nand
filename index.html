@@ -9940,66 +9940,73 @@ var _user$project$Scene$render = F4(
 					nodes);
 				var roots = _p15._0;
 				var others = _p15._1;
-				return _elm_lang$core$List$concat(
-					A2(
-						_elm_lang$core$List$map,
-						function (node) {
-							var noChildren = _elm_lang$core$List$isEmpty(
-								A2(
-									_elm_lang$core$List$filter,
-									function (other) {
-										return _elm_lang$core$Native_Utils.eq(
-											other.parent,
-											_elm_lang$core$Maybe$Just(node.id));
-									},
-									others));
-							var self = function () {
-								var _p16 = node.node;
-								if (_p16.ctor === 'Just') {
-									var _p17 = A2(
-										renderer,
-										_p16._0,
-										noChildren ? node.transform : _user$project$Transform$identity);
+				return function (nodes) {
+					var _p16 = parentTransform;
+					if (_p16.ctor === 'Just') {
+						return {
+							ctor: '::',
+							_0: A2(grouper, _p16._0, nodes),
+							_1: {ctor: '[]'}
+						};
+					} else {
+						return nodes;
+					}
+				}(
+					_elm_lang$core$List$concat(
+						A2(
+							_elm_lang$core$List$map,
+							function (node) {
+								var noChildren = _elm_lang$core$List$isEmpty(
+									A2(
+										_elm_lang$core$List$filter,
+										function (other) {
+											return _elm_lang$core$Native_Utils.eq(
+												other.parent,
+												_elm_lang$core$Maybe$Just(node.id));
+										},
+										others));
+								var self = function () {
+									var _p17 = node.node;
 									if (_p17.ctor === 'Just') {
-										return {
-											ctor: '::',
-											_0: _p17._0,
-											_1: {ctor: '[]'}
-										};
+										var _p18 = A2(
+											renderer,
+											_p17._0,
+											noChildren ? node.transform : _user$project$Transform$identity);
+										if (_p18.ctor === 'Just') {
+											return {
+												ctor: '::',
+												_0: _p18._0,
+												_1: {ctor: '[]'}
+											};
+										} else {
+											return {ctor: '[]'};
+										}
 									} else {
 										return {ctor: '[]'};
 									}
-								} else {
-									return {ctor: '[]'};
-								}
-							}();
-							var nodes = (noChildren && (!_elm_lang$core$Native_Utils.eq(node.parent, _elm_lang$core$Maybe$Nothing))) ? self : {
-								ctor: '::',
-								_0: A2(
-									grouper,
-									node.transform,
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										self,
-										A3(
-											render1,
-											_elm_lang$core$Maybe$Just(node.id),
-											node.transform,
-											others))),
-								_1: {ctor: '[]'}
-							};
-							return (noChildren && (!_elm_lang$core$Native_Utils.eq(node.parent, _elm_lang$core$Maybe$Nothing))) ? nodes : {
-								ctor: '::',
-								_0: A2(grouper, parentTransform, nodes),
-								_1: {ctor: '[]'}
-							};
-						},
-						roots));
+								}();
+								return noChildren ? self : {
+									ctor: '::',
+									_0: A2(
+										grouper,
+										node.transform,
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											self,
+											A3(
+												render1,
+												_elm_lang$core$Maybe$Just(node.id),
+												_elm_lang$core$Maybe$Nothing,
+												others))),
+									_1: {ctor: '[]'}
+								};
+							},
+							roots)));
 			});
 		return A3(
 			render1,
 			_elm_lang$core$Maybe$Nothing,
-			origin,
+			_elm_lang$core$Maybe$Just(origin),
 			function (_) {
 				return _.nodes;
 			}(
@@ -10053,12 +10060,12 @@ var _user$project$Scene$Scene = function (a) {
 	return {ctor: 'Scene', _0: a};
 };
 var _user$project$Scene$append = F2(
-	function (_p18, event) {
-		var _p19 = _p18;
+	function (_p19, event) {
+		var _p20 = _p19;
 		return _user$project$Scene$Scene(
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				_p19._0,
+				_p20._0,
 				{
 					ctor: '::',
 					_0: event,
@@ -10809,7 +10816,7 @@ var _user$project$Main$example = function () {
 						_user$project$Shape$Circle(
 							{centre: _user$project$Point$zero, radius: 50, stroke: _user$project$Shape$Thin})),
 					_2: _user$project$Transform$translate(
-						{x: 0, y: 75})
+						{x: 0, y: 150})
 				},
 				_1: {ctor: '[]'}
 			}
