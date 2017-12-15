@@ -9643,8 +9643,8 @@ var _user$project$Scene$nodeForId = F3(
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Scene',
 				{
-					start: {line: 107, column: 5},
-					end: {line: 116, column: 92}
+					start: {line: 108, column: 5},
+					end: {line: 117, column: 92}
 				},
 				_p0)(
 				A2(
@@ -9867,8 +9867,8 @@ var _user$project$Scene$node = F2(
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Scene',
 				{
-					start: {line: 364, column: 5},
-					end: {line: 375, column: 69}
+					start: {line: 365, column: 5},
+					end: {line: 376, column: 69}
 				},
 				_p12)(
 				A2(
@@ -9928,8 +9928,8 @@ var _user$project$Scene$transformAt = F2(
 			}(
 				_user$project$Scene$state(scene)));
 	});
-var _user$project$Scene$render = F4(
-	function (origin, renderer, grouper, scene) {
+var _user$project$Scene$renderAbsolute = F3(
+	function (origin, renderer, scene) {
 		var render1 = F3(
 			function (parent, parentTransform, nodes) {
 				var _p15 = A2(
@@ -9940,12 +9940,65 @@ var _user$project$Scene$render = F4(
 					nodes);
 				var roots = _p15._0;
 				var others = _p15._1;
+				return _elm_lang$core$List$concat(
+					A2(
+						_elm_lang$core$List$map,
+						function (node) {
+							var transform = A2(_user$project$Transform$combine, parentTransform, node.transform);
+							return A2(
+								_elm_lang$core$Basics_ops['++'],
+								function () {
+									var _p16 = node.node;
+									if (_p16.ctor === 'Just') {
+										var _p17 = A2(renderer, _p16._0, transform);
+										if (_p17.ctor === 'Just') {
+											return {
+												ctor: '::',
+												_0: _p17._0,
+												_1: {ctor: '[]'}
+											};
+										} else {
+											return {ctor: '[]'};
+										}
+									} else {
+										return {ctor: '[]'};
+									}
+								}(),
+								A3(
+									render1,
+									_elm_lang$core$Maybe$Just(node.id),
+									transform,
+									others));
+						},
+						roots));
+			});
+		return A3(
+			render1,
+			_elm_lang$core$Maybe$Nothing,
+			origin,
+			function (_) {
+				return _.nodes;
+			}(
+				_user$project$Scene$state(scene)));
+	});
+var _user$project$Scene$renderRelative = F4(
+	function (origin, renderer, grouper, scene) {
+		var render1 = F3(
+			function (parent, parentTransform, nodes) {
+				var _p18 = A2(
+					_elm_lang$core$List$partition,
+					function (node) {
+						return _elm_lang$core$Native_Utils.eq(node.parent, parent);
+					},
+					nodes);
+				var roots = _p18._0;
+				var others = _p18._1;
 				return function (nodes) {
-					var _p16 = parentTransform;
-					if (_p16.ctor === 'Just') {
+					var _p19 = parentTransform;
+					if (_p19.ctor === 'Just') {
 						return {
 							ctor: '::',
-							_0: A2(grouper, _p16._0, nodes),
+							_0: A2(grouper, _p19._0, nodes),
 							_1: {ctor: '[]'}
 						};
 					} else {
@@ -9966,16 +10019,16 @@ var _user$project$Scene$render = F4(
 										},
 										others));
 								var self = function () {
-									var _p17 = node.node;
-									if (_p17.ctor === 'Just') {
-										var _p18 = A2(
+									var _p20 = node.node;
+									if (_p20.ctor === 'Just') {
+										var _p21 = A2(
 											renderer,
-											_p17._0,
+											_p20._0,
 											noChildren ? node.transform : _user$project$Transform$identity);
-										if (_p18.ctor === 'Just') {
+										if (_p21.ctor === 'Just') {
 											return {
 												ctor: '::',
-												_0: _p18._0,
+												_0: _p21._0,
 												_1: {ctor: '[]'}
 											};
 										} else {
@@ -10060,12 +10113,12 @@ var _user$project$Scene$Scene = function (a) {
 	return {ctor: 'Scene', _0: a};
 };
 var _user$project$Scene$append = F2(
-	function (_p19, event) {
-		var _p20 = _p19;
+	function (_p22, event) {
+		var _p23 = _p22;
 		return _user$project$Scene$Scene(
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				_p20._0,
+				_p23._0,
 				{
 					ctor: '::',
 					_0: event,
@@ -10686,8 +10739,8 @@ var _user$project$Main$view = function (state) {
 		{
 			ctor: '::',
 			_0: _user$project$Canvas$view(
-				A4(
-					_user$project$Scene$render,
+				A3(
+					_user$project$Scene$renderAbsolute,
 					_user$project$Canvas$origin(state.canvasSize),
 					F2(
 						function (shape, transform) {
@@ -10698,18 +10751,6 @@ var _user$project$Main$view = function (state) {
 							} else {
 								return _elm_lang$core$Maybe$Nothing;
 							}
-						}),
-					F2(
-						function (transform, nodes) {
-							return A2(
-								_elm_lang$svg$Svg$g,
-								{
-									ctor: '::',
-									_0: _elm_lang$svg$Svg_Attributes$transform(
-										_user$project$Canvas$toSvgTransform(transform)),
-									_1: {ctor: '[]'}
-								},
-								nodes);
 						}),
 					state.scene)),
 			_1: {ctor: '[]'}
