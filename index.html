@@ -8713,6 +8713,120 @@ var _elm_lang$html$Html_Attributes$classList = function (list) {
 				A2(_elm_lang$core$List$filter, _elm_lang$core$Tuple$second, list))));
 };
 var _elm_lang$html$Html_Attributes$style = _elm_lang$virtual_dom$VirtualDom$style;
+var _elm_lang$html$Html_Events$keyCode = A2(_elm_lang$core$Json_Decode$field, 'keyCode', _elm_lang$core$Json_Decode$int);
+var _elm_lang$html$Html_Events$targetChecked = A2(
+	_elm_lang$core$Json_Decode$at,
+	{
+		ctor: '::',
+		_0: 'target',
+		_1: {
+			ctor: '::',
+			_0: 'checked',
+			_1: {ctor: '[]'}
+		}
+	},
+	_elm_lang$core$Json_Decode$bool);
+var _elm_lang$html$Html_Events$targetValue = A2(
+	_elm_lang$core$Json_Decode$at,
+	{
+		ctor: '::',
+		_0: 'target',
+		_1: {
+			ctor: '::',
+			_0: 'value',
+			_1: {ctor: '[]'}
+		}
+	},
+	_elm_lang$core$Json_Decode$string);
+var _elm_lang$html$Html_Events$defaultOptions = _elm_lang$virtual_dom$VirtualDom$defaultOptions;
+var _elm_lang$html$Html_Events$onWithOptions = _elm_lang$virtual_dom$VirtualDom$onWithOptions;
+var _elm_lang$html$Html_Events$on = _elm_lang$virtual_dom$VirtualDom$on;
+var _elm_lang$html$Html_Events$onFocus = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'focus',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onBlur = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'blur',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onSubmitOptions = _elm_lang$core$Native_Utils.update(
+	_elm_lang$html$Html_Events$defaultOptions,
+	{preventDefault: true});
+var _elm_lang$html$Html_Events$onSubmit = function (msg) {
+	return A3(
+		_elm_lang$html$Html_Events$onWithOptions,
+		'submit',
+		_elm_lang$html$Html_Events$onSubmitOptions,
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onCheck = function (tagger) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'change',
+		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetChecked));
+};
+var _elm_lang$html$Html_Events$onInput = function (tagger) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'input',
+		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetValue));
+};
+var _elm_lang$html$Html_Events$onMouseOut = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseout',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseOver = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseover',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseLeave = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseleave',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseEnter = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseenter',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseUp = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseup',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseDown = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mousedown',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onDoubleClick = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'dblclick',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onClick = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'click',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$Options = F2(
+	function (a, b) {
+		return {stopPropagation: a, preventDefault: b};
+	});
 var _elm_lang$svg$Svg$map = _elm_lang$virtual_dom$VirtualDom$map;
 var _elm_lang$svg$Svg$text = _elm_lang$virtual_dom$VirtualDom$text;
 var _elm_lang$svg$Svg$svgNamespace = A2(
@@ -9594,6 +9708,268 @@ var _user$project$Circuit$example = function () {
 			_p10)(_p10._0);
 	}
 }();
+var _user$project$PrintAny$splitLine = function (line) {
+	var newLine = A2(_elm_lang$core$String$dropLeft, 5, line);
+	var indent = A2(
+		_elm_lang$core$Result$withDefault,
+		0,
+		_elm_lang$core$String$toInt(
+			A2(_elm_lang$core$String$left, 5, line)));
+	return {ctor: '_Tuple2', _0: indent, _1: newLine};
+};
+var _user$project$PrintAny$pad = function (indent) {
+	return A3(
+		_elm_lang$core$String$padLeft,
+		5,
+		_elm_lang$core$Native_Utils.chr('0'),
+		_elm_lang$core$Basics$toString(indent));
+};
+var _user$project$PrintAny$splitWithQuotes = function (string) {
+	return A2(
+		_elm_lang$core$List$indexedMap,
+		F2(
+			function (i, str) {
+				return _elm_lang$core$Native_Utils.eq(
+					A2(_elm_lang$core$Basics$rem, i, 2),
+					1) ? A2(
+					_elm_lang$core$Basics_ops['++'],
+					'\"',
+					A2(_elm_lang$core$Basics_ops['++'], str, '\"')) : str;
+			}),
+		A2(_elm_lang$core$String$split, '\"', string));
+};
+var _user$project$PrintAny$splitWithChar = F2(
+	function (splitter, string) {
+		return A2(
+			_elm_lang$core$List$indexedMap,
+			F2(
+				function (ind, str) {
+					return (_elm_lang$core$Native_Utils.cmp(ind, 0) > 0) ? A2(_elm_lang$core$Basics_ops['++'], splitter, str) : str;
+				}),
+			A2(_elm_lang$core$String$split, splitter, string));
+	});
+var _user$project$PrintAny$splitWithChars = F2(
+	function (splitters, string) {
+		var _p0 = A2(_elm_lang$core$String$left, 1, splitters);
+		if (_p0 === '') {
+			return {
+				ctor: '::',
+				_0: string,
+				_1: {ctor: '[]'}
+			};
+		} else {
+			return A2(
+				_elm_lang$core$List$filter,
+				function (s) {
+					return !_elm_lang$core$Native_Utils.eq(s, '');
+				},
+				_elm_lang$core$List$concat(
+					A2(
+						_elm_lang$core$List$map,
+						_user$project$PrintAny$splitWithChars(
+							A2(_elm_lang$core$String$dropLeft, 1, splitters)),
+						A2(_user$project$PrintAny$splitWithChar, _p0, string))));
+		}
+	});
+var _user$project$PrintAny$px = function ($int) {
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		_elm_lang$core$Basics$toString($int),
+		'px');
+};
+var _user$project$PrintAny$logLine = function (_p1) {
+	var _p2 = _p1;
+	var logIndent = A3(
+		_elm_lang$core$String$padLeft,
+		_p2._0,
+		_elm_lang$core$Native_Utils.chr(' '),
+		'');
+	var _p3 = A2(
+		_elm_lang$core$Debug$log,
+		'',
+		A2(_elm_lang$core$Basics_ops['++'], logIndent, _p2._1));
+	return {ctor: '_Tuple0'};
+};
+var _user$project$PrintAny$viewLine = F2(
+	function (_p5, _p4) {
+		var _p6 = _p5;
+		var _p7 = _p4;
+		return A2(
+			_elm_lang$html$Html$p,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$style(
+					{
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 'paddingLeft',
+							_1: _user$project$PrintAny$px(_p7._0 * _p6._0.increment)
+						},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'marginTop', _1: '0px'},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'marginBottom', _1: '0px'},
+								_1: {ctor: '[]'}
+							}
+						}
+					}),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(_p7._1),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$PrintAny$constants = {quote: '\"', indentChars: '[{(', outdentChars: '}])', newLineChars: ','};
+var _user$project$PrintAny$addIndent = F2(
+	function (string, startList) {
+		var _p8 = _elm_lang$core$List$reverse(startList);
+		if (_p8.ctor === '::') {
+			var _p10 = _p8._0.indentAfter;
+			var firstChar = A2(_elm_lang$core$String$left, 1, string);
+			var _p9 = A2(_elm_lang$core$String$contains, firstChar, _user$project$PrintAny$constants.indentChars) ? {ctor: '_Tuple2', _0: _p10 + 1, _1: _p10 + 1} : (A2(_elm_lang$core$String$contains, firstChar, _user$project$PrintAny$constants.outdentChars) ? {ctor: '_Tuple2', _0: _p10, _1: _p10 - 1} : {ctor: '_Tuple2', _0: _p10, _1: _p10});
+			var newIndentBefore = _p9._0;
+			var newIndentAfter = _p9._1;
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				startList,
+				{
+					ctor: '::',
+					_0: {indentBefore: newIndentBefore, string: string, indentAfter: newIndentAfter},
+					_1: {ctor: '[]'}
+				});
+		} else {
+			return {
+				ctor: '::',
+				_0: {indentBefore: 0, string: string, indentAfter: 0},
+				_1: {ctor: '[]'}
+			};
+		}
+	});
+var _user$project$PrintAny$addIndents = function (stringList) {
+	return A2(
+		_elm_lang$core$List$map,
+		function (r) {
+			return {ctor: '_Tuple2', _0: r.indentBefore, _1: r.string};
+		},
+		A3(
+			_elm_lang$core$List$foldl,
+			_user$project$PrintAny$addIndent,
+			{ctor: '[]'},
+			stringList));
+};
+var _user$project$PrintAny$splitUnquotedWithChars = function (stringList) {
+	var splitString = function (string) {
+		return _elm_lang$core$Native_Utils.eq(
+			A2(_elm_lang$core$String$left, 1, string),
+			_user$project$PrintAny$constants.quote) ? {
+			ctor: '::',
+			_0: string,
+			_1: {ctor: '[]'}
+		} : A2(
+			_user$project$PrintAny$splitWithChars,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				_user$project$PrintAny$constants.indentChars,
+				A2(_elm_lang$core$Basics_ops['++'], _user$project$PrintAny$constants.newLineChars, _user$project$PrintAny$constants.outdentChars)),
+			string);
+	};
+	return A2(_elm_lang$core$List$map, splitString, stringList);
+};
+var _user$project$PrintAny$mergeOneQuote = F2(
+	function (string, startList) {
+		if (_elm_lang$core$Native_Utils.eq(
+			A2(_elm_lang$core$String$left, 1, string),
+			_user$project$PrintAny$constants.quote)) {
+			var _p11 = _elm_lang$core$List$reverse(startList);
+			if (_p11.ctor === '::') {
+				return _elm_lang$core$List$reverse(
+					{
+						ctor: '::',
+						_0: A2(_elm_lang$core$Basics_ops['++'], _p11._0, string),
+						_1: _p11._1
+					});
+			} else {
+				return {
+					ctor: '::',
+					_0: string,
+					_1: {ctor: '[]'}
+				};
+			}
+		} else {
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				startList,
+				{
+					ctor: '::',
+					_0: string,
+					_1: {ctor: '[]'}
+				});
+		}
+	});
+var _user$project$PrintAny$mergeQuoted = A2(
+	_elm_lang$core$List$foldl,
+	_user$project$PrintAny$mergeOneQuote,
+	{ctor: '[]'});
+var _user$project$PrintAny$log = function (record) {
+	var lines = _elm_lang$core$List$reverse(
+		_user$project$PrintAny$addIndents(
+			_user$project$PrintAny$mergeQuoted(
+				_elm_lang$core$List$concat(
+					_user$project$PrintAny$splitUnquotedWithChars(
+						_user$project$PrintAny$splitWithQuotes(
+							_elm_lang$core$Basics$toString(record)))))));
+	var _p12 = A2(_elm_lang$core$List$map, _user$project$PrintAny$logLine, lines);
+	return record;
+};
+var _user$project$PrintAny$Constants = F4(
+	function (a, b, c, d) {
+		return {quote: a, indentChars: b, outdentChars: c, newLineChars: d};
+	});
+var _user$project$PrintAny$IndentedString = F3(
+	function (a, b, c) {
+		return {indentBefore: a, string: b, indentAfter: c};
+	});
+var _user$project$PrintAny$Config = function (a) {
+	return {ctor: 'Config', _0: a};
+};
+var _user$project$PrintAny$config = F2(
+	function (increment, className) {
+		return _user$project$PrintAny$Config(
+			{increment: increment, className: className});
+	});
+var _user$project$PrintAny$defaultConfig = _user$project$PrintAny$Config(
+	{increment: 20, className: ''});
+var _user$project$PrintAny$viewWithConfig = F2(
+	function (_p13, record) {
+		var _p14 = _p13;
+		var _p15 = _p14._0;
+		var lines = _user$project$PrintAny$addIndents(
+			_user$project$PrintAny$mergeQuoted(
+				_elm_lang$core$List$concat(
+					_user$project$PrintAny$splitUnquotedWithChars(
+						_user$project$PrintAny$splitWithQuotes(
+							_elm_lang$core$Basics$toString(record))))));
+		return A2(
+			_elm_lang$html$Html$pre,
+			_elm_lang$core$Native_Utils.eq(_p15.className, '') ? {ctor: '[]'} : {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class(_p15.className),
+				_1: {ctor: '[]'}
+			},
+			A2(
+				_elm_lang$core$List$map,
+				_user$project$PrintAny$viewLine(
+					_user$project$PrintAny$Config(_p15)),
+				lines));
+	});
+var _user$project$PrintAny$view = function (record) {
+	return A2(_user$project$PrintAny$viewWithConfig, _user$project$PrintAny$defaultConfig, record);
+};
 var _user$project$Scene$removed = F2(
 	function (id, state) {
 		return _elm_lang$core$Native_Utils.update(
@@ -10470,308 +10846,32 @@ var _user$project$Shape$Dashed = {ctor: 'Dashed'};
 var _user$project$Shape$Thin = {ctor: 'Thin'};
 var _user$project$Shape$Thick = {ctor: 'Thick'};
 var _user$project$Shape$NoStroke = {ctor: 'NoStroke'};
-var _user$project$PrintAny$splitLine = function (line) {
-	var newLine = A2(_elm_lang$core$String$dropLeft, 5, line);
-	var indent = A2(
-		_elm_lang$core$Result$withDefault,
-		0,
-		_elm_lang$core$String$toInt(
-			A2(_elm_lang$core$String$left, 5, line)));
-	return {ctor: '_Tuple2', _0: indent, _1: newLine};
-};
-var _user$project$PrintAny$pad = function (indent) {
-	return A3(
-		_elm_lang$core$String$padLeft,
-		5,
-		_elm_lang$core$Native_Utils.chr('0'),
-		_elm_lang$core$Basics$toString(indent));
-};
-var _user$project$PrintAny$splitWithQuotes = function (string) {
-	return A2(
-		_elm_lang$core$List$indexedMap,
-		F2(
-			function (i, str) {
-				return _elm_lang$core$Native_Utils.eq(
-					A2(_elm_lang$core$Basics$rem, i, 2),
-					1) ? A2(
-					_elm_lang$core$Basics_ops['++'],
-					'\"',
-					A2(_elm_lang$core$Basics_ops['++'], str, '\"')) : str;
-			}),
-		A2(_elm_lang$core$String$split, '\"', string));
-};
-var _user$project$PrintAny$splitWithChar = F2(
-	function (splitter, string) {
-		return A2(
-			_elm_lang$core$List$indexedMap,
-			F2(
-				function (ind, str) {
-					return (_elm_lang$core$Native_Utils.cmp(ind, 0) > 0) ? A2(_elm_lang$core$Basics_ops['++'], splitter, str) : str;
-				}),
-			A2(_elm_lang$core$String$split, splitter, string));
-	});
-var _user$project$PrintAny$splitWithChars = F2(
-	function (splitters, string) {
-		var _p0 = A2(_elm_lang$core$String$left, 1, splitters);
-		if (_p0 === '') {
-			return {
-				ctor: '::',
-				_0: string,
-				_1: {ctor: '[]'}
-			};
-		} else {
-			return A2(
-				_elm_lang$core$List$filter,
-				function (s) {
-					return !_elm_lang$core$Native_Utils.eq(s, '');
-				},
-				_elm_lang$core$List$concat(
-					A2(
-						_elm_lang$core$List$map,
-						_user$project$PrintAny$splitWithChars(
-							A2(_elm_lang$core$String$dropLeft, 1, splitters)),
-						A2(_user$project$PrintAny$splitWithChar, _p0, string))));
-		}
-	});
-var _user$project$PrintAny$px = function ($int) {
-	return A2(
-		_elm_lang$core$Basics_ops['++'],
-		_elm_lang$core$Basics$toString($int),
-		'px');
-};
-var _user$project$PrintAny$logLine = function (_p1) {
-	var _p2 = _p1;
-	var logIndent = A3(
-		_elm_lang$core$String$padLeft,
-		_p2._0,
-		_elm_lang$core$Native_Utils.chr(' '),
-		'');
-	var _p3 = A2(
-		_elm_lang$core$Debug$log,
-		'',
-		A2(_elm_lang$core$Basics_ops['++'], logIndent, _p2._1));
-	return {ctor: '_Tuple0'};
-};
-var _user$project$PrintAny$viewLine = F2(
-	function (_p5, _p4) {
-		var _p6 = _p5;
-		var _p7 = _p4;
-		return A2(
-			_elm_lang$html$Html$p,
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$style(
-					{
-						ctor: '::',
-						_0: {
-							ctor: '_Tuple2',
-							_0: 'paddingLeft',
-							_1: _user$project$PrintAny$px(_p7._0 * _p6._0.increment)
-						},
-						_1: {
-							ctor: '::',
-							_0: {ctor: '_Tuple2', _0: 'marginTop', _1: '0px'},
-							_1: {
-								ctor: '::',
-								_0: {ctor: '_Tuple2', _0: 'marginBottom', _1: '0px'},
-								_1: {ctor: '[]'}
-							}
-						}
-					}),
-				_1: {ctor: '[]'}
-			},
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html$text(_p7._1),
-				_1: {ctor: '[]'}
-			});
-	});
-var _user$project$PrintAny$constants = {quote: '\"', indentChars: '[{(', outdentChars: '}])', newLineChars: ','};
-var _user$project$PrintAny$addIndent = F2(
-	function (string, startList) {
-		var _p8 = _elm_lang$core$List$reverse(startList);
-		if (_p8.ctor === '::') {
-			var _p10 = _p8._0.indentAfter;
-			var firstChar = A2(_elm_lang$core$String$left, 1, string);
-			var _p9 = A2(_elm_lang$core$String$contains, firstChar, _user$project$PrintAny$constants.indentChars) ? {ctor: '_Tuple2', _0: _p10 + 1, _1: _p10 + 1} : (A2(_elm_lang$core$String$contains, firstChar, _user$project$PrintAny$constants.outdentChars) ? {ctor: '_Tuple2', _0: _p10, _1: _p10 - 1} : {ctor: '_Tuple2', _0: _p10, _1: _p10});
-			var newIndentBefore = _p9._0;
-			var newIndentAfter = _p9._1;
-			return A2(
-				_elm_lang$core$Basics_ops['++'],
-				startList,
-				{
-					ctor: '::',
-					_0: {indentBefore: newIndentBefore, string: string, indentAfter: newIndentAfter},
-					_1: {ctor: '[]'}
-				});
-		} else {
-			return {
-				ctor: '::',
-				_0: {indentBefore: 0, string: string, indentAfter: 0},
-				_1: {ctor: '[]'}
-			};
-		}
-	});
-var _user$project$PrintAny$addIndents = function (stringList) {
-	return A2(
-		_elm_lang$core$List$map,
-		function (r) {
-			return {ctor: '_Tuple2', _0: r.indentBefore, _1: r.string};
-		},
-		A3(
-			_elm_lang$core$List$foldl,
-			_user$project$PrintAny$addIndent,
-			{ctor: '[]'},
-			stringList));
-};
-var _user$project$PrintAny$splitUnquotedWithChars = function (stringList) {
-	var splitString = function (string) {
-		return _elm_lang$core$Native_Utils.eq(
-			A2(_elm_lang$core$String$left, 1, string),
-			_user$project$PrintAny$constants.quote) ? {
-			ctor: '::',
-			_0: string,
-			_1: {ctor: '[]'}
-		} : A2(
-			_user$project$PrintAny$splitWithChars,
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				_user$project$PrintAny$constants.indentChars,
-				A2(_elm_lang$core$Basics_ops['++'], _user$project$PrintAny$constants.newLineChars, _user$project$PrintAny$constants.outdentChars)),
-			string);
-	};
-	return A2(_elm_lang$core$List$map, splitString, stringList);
-};
-var _user$project$PrintAny$mergeOneQuote = F2(
-	function (string, startList) {
-		if (_elm_lang$core$Native_Utils.eq(
-			A2(_elm_lang$core$String$left, 1, string),
-			_user$project$PrintAny$constants.quote)) {
-			var _p11 = _elm_lang$core$List$reverse(startList);
-			if (_p11.ctor === '::') {
-				return _elm_lang$core$List$reverse(
-					{
-						ctor: '::',
-						_0: A2(_elm_lang$core$Basics_ops['++'], _p11._0, string),
-						_1: _p11._1
-					});
-			} else {
-				return {
-					ctor: '::',
-					_0: string,
-					_1: {ctor: '[]'}
-				};
-			}
-		} else {
-			return A2(
-				_elm_lang$core$Basics_ops['++'],
-				startList,
-				{
-					ctor: '::',
-					_0: string,
-					_1: {ctor: '[]'}
-				});
-		}
-	});
-var _user$project$PrintAny$mergeQuoted = A2(
-	_elm_lang$core$List$foldl,
-	_user$project$PrintAny$mergeOneQuote,
-	{ctor: '[]'});
-var _user$project$PrintAny$log = function (record) {
-	var lines = _elm_lang$core$List$reverse(
-		_user$project$PrintAny$addIndents(
-			_user$project$PrintAny$mergeQuoted(
-				_elm_lang$core$List$concat(
-					_user$project$PrintAny$splitUnquotedWithChars(
-						_user$project$PrintAny$splitWithQuotes(
-							_elm_lang$core$Basics$toString(record)))))));
-	var _p12 = A2(_elm_lang$core$List$map, _user$project$PrintAny$logLine, lines);
-	return record;
-};
-var _user$project$PrintAny$Constants = F4(
-	function (a, b, c, d) {
-		return {quote: a, indentChars: b, outdentChars: c, newLineChars: d};
-	});
-var _user$project$PrintAny$IndentedString = F3(
-	function (a, b, c) {
-		return {indentBefore: a, string: b, indentAfter: c};
-	});
-var _user$project$PrintAny$Config = function (a) {
-	return {ctor: 'Config', _0: a};
-};
-var _user$project$PrintAny$config = F2(
-	function (increment, className) {
-		return _user$project$PrintAny$Config(
-			{increment: increment, className: className});
-	});
-var _user$project$PrintAny$defaultConfig = _user$project$PrintAny$Config(
-	{increment: 20, className: ''});
-var _user$project$PrintAny$viewWithConfig = F2(
-	function (_p13, record) {
-		var _p14 = _p13;
-		var _p15 = _p14._0;
-		var lines = _user$project$PrintAny$addIndents(
-			_user$project$PrintAny$mergeQuoted(
-				_elm_lang$core$List$concat(
-					_user$project$PrintAny$splitUnquotedWithChars(
-						_user$project$PrintAny$splitWithQuotes(
-							_elm_lang$core$Basics$toString(record))))));
-		return A2(
-			_elm_lang$html$Html$pre,
-			_elm_lang$core$Native_Utils.eq(_p15.className, '') ? {ctor: '[]'} : {
-				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class(_p15.className),
-				_1: {ctor: '[]'}
-			},
-			A2(
-				_elm_lang$core$List$map,
-				_user$project$PrintAny$viewLine(
-					_user$project$PrintAny$Config(_p15)),
-				lines));
-	});
-var _user$project$PrintAny$view = function (record) {
-	return A2(_user$project$PrintAny$viewWithConfig, _user$project$PrintAny$defaultConfig, record);
-};
-var _user$project$Main$view = function (state) {
-	return A2(
-		_elm_lang$html$Html$div,
-		{ctor: '[]'},
-		{
-			ctor: '::',
-			_0: _user$project$Canvas$view(
-				A3(
-					_user$project$Scene$renderAbsolute,
-					_user$project$Canvas$origin(state.canvasSize),
-					F2(
-						function (shape, transform) {
-							var _p0 = shape;
-							if (_p0.ctor === 'Just') {
-								return _elm_lang$core$Maybe$Just(
-									A2(_user$project$Shape$constructor, _p0._0, transform));
-							} else {
-								return _elm_lang$core$Maybe$Nothing;
-							}
-						}),
-					state.scene)),
-			_1: {ctor: '[]'}
-		});
-};
 var _user$project$Main$update = F2(
 	function (message, state) {
-		var _p1 = message;
-		var _p2 = _p1._0;
-		return {
-			ctor: '_Tuple2',
-			_0: _elm_lang$core$Native_Utils.update(
-				state,
-				{
-					canvasSize: {
-						width: _elm_lang$core$Basics$toFloat(_p2.width),
-						height: _elm_lang$core$Basics$toFloat(_p2.height)
-					}
-				}),
-			_1: _elm_lang$core$Platform_Cmd$none
-		};
+		var _p0 = message;
+		if (_p0.ctor === 'WindowResizedTo') {
+			var _p1 = _p0._0;
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					state,
+					{
+						canvasSize: {
+							width: _elm_lang$core$Basics$toFloat(_p1.width),
+							height: _elm_lang$core$Basics$toFloat(_p1.height)
+						}
+					}),
+				_1: _elm_lang$core$Platform_Cmd$none
+			};
+		} else {
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					state,
+					{absolute: _p0._0}),
+				_1: _elm_lang$core$Platform_Cmd$none
+			};
+		}
 	});
 var _user$project$Main$portPosition = F5(
 	function (name, index, direction, steps, bounds) {
@@ -10779,8 +10879,8 @@ var _user$project$Main$portPosition = F5(
 		var from = bounds.origin.y + ((bounds.size.height * 1) / 4);
 		var step = _elm_lang$core$Native_Utils.eq(steps, 0) ? 0 : ((to - from) / _elm_lang$core$Basics$toFloat(steps));
 		var y = _elm_lang$core$Native_Utils.eq(direction, _user$project$Circuit$Input) ? (_elm_lang$core$Native_Utils.eq(steps, 0) ? (from + ((to - from) / 2)) : (from + (step * _elm_lang$core$Basics$toFloat(index)))) : (bounds.origin.y + (bounds.size.height / 2));
-		var _p3 = direction;
-		if (_p3.ctor === 'Input') {
+		var _p2 = direction;
+		if (_p2.ctor === 'Input') {
 			return {x: bounds.origin.x, y: y};
 		} else {
 			return {x: bounds.origin.x + bounds.size.width, y: y};
@@ -10815,8 +10915,8 @@ var _user$project$Main$inputShape = _user$project$Shape$Path(
 var _user$project$Main$example = function () {
 	var circuit = _user$project$PrintAny$log(_user$project$Circuit$example);
 	var events = function () {
-		var _p4 = circuit;
-		return _p4._0;
+		var _p3 = circuit;
+		return _p3._0;
 	}();
 	var layout = {
 		ctor: '::',
@@ -10871,28 +10971,28 @@ var _user$project$Main$example = function () {
 				_elm_lang$core$List$foldl,
 				F2(
 					function (event, scene) {
-						var bounds = function (_p5) {
+						var bounds = function (_p4) {
 							return A2(
 								_elm_lang$core$Maybe$withDefault,
 								_user$project$Bounds$zero,
-								A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p5));
+								A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p4));
 						};
-						var _p6 = event;
-						if (_p6.ctor === 'Added') {
-							var _p26 = _p6._0._0;
+						var _p5 = event;
+						if (_p5.ctor === 'Added') {
+							var _p25 = _p5._0._0;
 							var outputs = A3(
 								_elm_lang$core$List$foldl,
 								F2(
 									function (event, ports) {
-										var _p7 = event;
-										if (_p7.ctor === 'PortAdded') {
-											var _p8 = _p7._1._0;
-											return (_elm_lang$core$Native_Utils.eq(_p7._0._0, _p26) && _elm_lang$core$Native_Utils.eq(_p8.direction, _user$project$Circuit$Output)) ? A2(
+										var _p6 = event;
+										if (_p6.ctor === 'PortAdded') {
+											var _p7 = _p6._1._0;
+											return (_elm_lang$core$Native_Utils.eq(_p6._0._0, _p25) && _elm_lang$core$Native_Utils.eq(_p7.direction, _user$project$Circuit$Output)) ? A2(
 												_elm_lang$core$Basics_ops['++'],
 												ports,
 												{
 													ctor: '::',
-													_0: _p8,
+													_0: _p7,
 													_1: {ctor: '[]'}
 												}) : ports;
 										} else {
@@ -10905,15 +11005,15 @@ var _user$project$Main$example = function () {
 								_elm_lang$core$List$foldl,
 								F2(
 									function (event, ports) {
-										var _p9 = event;
-										if (_p9.ctor === 'PortAdded') {
-											var _p10 = _p9._1._0;
-											return (_elm_lang$core$Native_Utils.eq(_p9._0._0, _p26) && _elm_lang$core$Native_Utils.eq(_p10.direction, _user$project$Circuit$Input)) ? A2(
+										var _p8 = event;
+										if (_p8.ctor === 'PortAdded') {
+											var _p9 = _p8._1._0;
+											return (_elm_lang$core$Native_Utils.eq(_p8._0._0, _p25) && _elm_lang$core$Native_Utils.eq(_p9.direction, _user$project$Circuit$Input)) ? A2(
 												_elm_lang$core$Basics_ops['++'],
 												ports,
 												{
 													ctor: '::',
-													_0: _p10,
+													_0: _p9,
 													_1: {ctor: '[]'}
 												}) : ports;
 										} else {
@@ -10922,40 +11022,40 @@ var _user$project$Main$example = function () {
 									}),
 								{ctor: '[]'},
 								events);
-							var _p11 = function (layout) {
-								var _p12 = layout;
-								if (_p12.ctor === 'Just') {
-									return _p12._0;
+							var _p10 = function (layout) {
+								var _p11 = layout;
+								if (_p11.ctor === 'Just') {
+									return _p11._0;
 								} else {
 									return _elm_lang$core$Native_Utils.crashCase(
 										'Main',
 										{
-											start: {line: 140, column: 57},
-											end: {line: 145, column: 109}
+											start: {line: 143, column: 57},
+											end: {line: 148, column: 109}
 										},
-										_p12)(
-										A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p26));
+										_p11)(
+										A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p25));
 								}
 							}(
 								_elm_lang$core$List$head(
 									A2(
 										_elm_lang$core$List$filterMap,
-										function (_p14) {
-											var _p15 = _p14;
-											return _elm_lang$core$Native_Utils.eq(_p15._0, _p26) ? _elm_lang$core$Maybe$Just(
-												{ctor: '_Tuple2', _0: _p15._1, _1: _p15._2}) : _elm_lang$core$Maybe$Nothing;
+										function (_p13) {
+											var _p14 = _p13;
+											return _elm_lang$core$Native_Utils.eq(_p14._0, _p25) ? _elm_lang$core$Maybe$Just(
+												{ctor: '_Tuple2', _0: _p14._1, _1: _p14._2}) : _elm_lang$core$Maybe$Nothing;
 										},
 										layout)));
-							var shape = _p11._0;
-							var transform = _p11._1;
+							var shape = _p10._0;
+							var transform = _p10._1;
 							return A2(
 								_elm_lang$core$Result$andThen,
-								A2(_user$project$Scene$transform, _p26, transform),
+								A2(_user$project$Scene$transform, _p25, transform),
 								A2(
 									_elm_lang$core$Result$andThen,
 									function (scene) {
 										var steps = _elm_lang$core$List$length(outputs) - 1;
-										var outputBounds = function (_p16) {
+										var outputBounds = function (_p15) {
 											return {
 												origin: {x: 0, y: 0},
 												size: {width: 20, height: 0}
@@ -10964,28 +11064,28 @@ var _user$project$Main$example = function () {
 										return A3(
 											_elm_lang$core$List$foldl,
 											F2(
-												function (_p17, scene) {
-													var _p18 = _p17;
-													var _p20 = _p18._1;
+												function (_p16, scene) {
+													var _p17 = _p16;
+													var _p19 = _p17._1;
 													var portName = function () {
-														var _p19 = _p20.name;
+														var _p18 = _p19.name;
 														return A2(
 															_elm_lang$core$Basics_ops['++'],
-															_p26,
-															A2(_elm_lang$core$Basics_ops['++'], '.', _p19._0));
+															_p25,
+															A2(_elm_lang$core$Basics_ops['++'], '.', _p18._0));
 													}();
 													return A2(
 														_elm_lang$core$Result$andThen,
 														function (scene) {
-															var bounds = A2(_user$project$Scene$bounds, _p26, scene);
+															var bounds = A2(_user$project$Scene$bounds, _p25, scene);
 															var transform = _user$project$Transform$translate(
-																A5(_user$project$Main$portPosition, _p26, _p18._0, _p20.direction, steps, bounds));
+																A5(_user$project$Main$portPosition, _p25, _p17._0, _p19.direction, steps, bounds));
 															return A2(
 																_elm_lang$core$Result$andThen,
 																A2(
 																	_user$project$Scene$parent,
 																	portName,
-																	_elm_lang$core$Maybe$Just(_p26)),
+																	_elm_lang$core$Maybe$Just(_p25)),
 																A3(_user$project$Scene$transform, portName, transform, scene));
 														},
 														A2(
@@ -11010,7 +11110,7 @@ var _user$project$Main$example = function () {
 										_elm_lang$core$Result$andThen,
 										function (scene) {
 											var steps = _elm_lang$core$List$length(inputs) - 1;
-											var inputBounds = function (_p21) {
+											var inputBounds = function (_p20) {
 												return {
 													origin: {x: -20, y: 0},
 													size: {width: 20, height: 0}
@@ -11019,28 +11119,28 @@ var _user$project$Main$example = function () {
 											return A3(
 												_elm_lang$core$List$foldl,
 												F2(
-													function (_p22, scene) {
-														var _p23 = _p22;
-														var _p25 = _p23._1;
+													function (_p21, scene) {
+														var _p22 = _p21;
+														var _p24 = _p22._1;
 														var portName = function () {
-															var _p24 = _p25.name;
+															var _p23 = _p24.name;
 															return A2(
 																_elm_lang$core$Basics_ops['++'],
-																_p26,
-																A2(_elm_lang$core$Basics_ops['++'], '.', _p24._0));
+																_p25,
+																A2(_elm_lang$core$Basics_ops['++'], '.', _p23._0));
 														}();
 														return A2(
 															_elm_lang$core$Result$andThen,
 															function (scene) {
-																var bounds = A2(_user$project$Scene$bounds, _p26, scene);
+																var bounds = A2(_user$project$Scene$bounds, _p25, scene);
 																var transform = _user$project$Transform$translate(
-																	A5(_user$project$Main$portPosition, _p26, _p23._0, _p25.direction, steps, bounds));
+																	A5(_user$project$Main$portPosition, _p25, _p22._0, _p24.direction, steps, bounds));
 																return A2(
 																	_elm_lang$core$Result$andThen,
 																	A2(
 																		_user$project$Scene$parent,
 																		portName,
-																		_elm_lang$core$Maybe$Just(_p26)),
+																		_elm_lang$core$Maybe$Just(_p25)),
 																	A3(_user$project$Scene$transform, portName, transform, scene));
 															},
 															A2(
@@ -11063,7 +11163,7 @@ var _user$project$Main$example = function () {
 										},
 										A2(
 											_elm_lang$core$Result$andThen,
-											A3(_user$project$Scene$insert, _p26, shape, bounds),
+											A3(_user$project$Scene$insert, _p25, shape, bounds),
 											scene))));
 						} else {
 							return scene;
@@ -11072,16 +11172,103 @@ var _user$project$Main$example = function () {
 				_elm_lang$core$Result$Ok(_user$project$Scene$empty),
 				events)));
 }();
-var _user$project$Main$State = F2(
-	function (a, b) {
-		return {canvasSize: a, scene: b};
+var _user$project$Main$State = F3(
+	function (a, b, c) {
+		return {canvasSize: a, absolute: b, scene: c};
 	});
+var _user$project$Main$Absolute = function (a) {
+	return {ctor: 'Absolute', _0: a};
+};
+var _user$project$Main$view = function (state) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$label,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$for('absolute'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$input,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$id('absolute'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$type_('checkbox'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Events$onCheck(_user$project$Main$Absolute),
+									_1: {ctor: '[]'}
+								}
+							}
+						},
+						{ctor: '[]'}),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Absolute'),
+						_1: {ctor: '[]'}
+					}
+				}),
+			_1: {
+				ctor: '::',
+				_0: _user$project$Canvas$view(
+					state.absolute ? A3(
+						_user$project$Scene$renderAbsolute,
+						_user$project$Canvas$origin(state.canvasSize),
+						F2(
+							function (shape, transform) {
+								var _p26 = shape;
+								if (_p26.ctor === 'Just') {
+									return _elm_lang$core$Maybe$Just(
+										A2(_user$project$Shape$constructor, _p26._0, transform));
+								} else {
+									return _elm_lang$core$Maybe$Nothing;
+								}
+							}),
+						state.scene) : A4(
+						_user$project$Scene$renderRelative,
+						_user$project$Canvas$origin(state.canvasSize),
+						F2(
+							function (shape, transform) {
+								var _p27 = shape;
+								if (_p27.ctor === 'Just') {
+									return _elm_lang$core$Maybe$Just(
+										A2(_user$project$Shape$constructor, _p27._0, transform));
+								} else {
+									return _elm_lang$core$Maybe$Nothing;
+								}
+							}),
+						F2(
+							function (transform, nodes) {
+								return A2(
+									_elm_lang$svg$Svg$g,
+									{
+										ctor: '::',
+										_0: _elm_lang$svg$Svg_Attributes$transform(
+											_user$project$Canvas$toSvgTransform(transform)),
+										_1: {ctor: '[]'}
+									},
+									nodes);
+							}),
+						state.scene)),
+				_1: {ctor: '[]'}
+			}
+		});
+};
 var _user$project$Main$WindowResizedTo = function (a) {
 	return {ctor: 'WindowResizedTo', _0: a};
 };
 var _user$project$Main$init = function () {
 	var state = {
 		canvasSize: {width: 800, height: 600},
+		absolute: false,
 		scene: _user$project$Main$example
 	};
 	return {
