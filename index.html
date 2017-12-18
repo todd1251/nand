@@ -9476,9 +9476,31 @@ var _user$project$Canvas$centre = F2(
 var _user$project$Canvas$origin = function (size) {
 	return A2(_user$project$Canvas$centre, 0 - size.width, 0 - size.height);
 };
+var _user$project$Circuit$grouped = F3(
+	function (name, circuits, state) {
+		return A2(
+			_elm_lang$core$Debug$log,
+			'grouped',
+			_elm_lang$core$Native_Utils.update(
+				state,
+				{
+					circuitNames: A2(
+						_elm_lang$core$List$map,
+						function (_p0) {
+							var _p1 = _p0;
+							var _p2 = _p1._0;
+							return A2(_elm_lang$core$List$member, _p2, circuits) ? {
+								ctor: '_Tuple2',
+								_0: _p2,
+								_1: _elm_lang$core$Maybe$Just(name)
+							} : {ctor: '_Tuple2', _0: _p2, _1: _p1._1};
+						},
+						state.circuitNames)
+				}));
+	});
 var _user$project$Circuit$portAdded = F3(
-	function (name, _p0, state) {
-		var _p1 = _p0;
+	function (name, _p3, state) {
+		var _p4 = _p3;
 		return _elm_lang$core$Native_Utils.update(
 			state,
 			{
@@ -9487,7 +9509,7 @@ var _user$project$Circuit$portAdded = F3(
 					state.portNames,
 					{
 						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: name, _1: _p1._0.name},
+						_0: {ctor: '_Tuple2', _0: name, _1: _p4._0.name},
 						_1: {ctor: '[]'}
 					})
 			});
@@ -9502,21 +9524,24 @@ var _user$project$Circuit$added = F2(
 					state.circuitNames,
 					{
 						ctor: '::',
-						_0: name,
+						_0: {ctor: '_Tuple2', _0: name, _1: _elm_lang$core$Maybe$Nothing},
 						_1: {ctor: '[]'}
 					})
 			});
 	});
 var _user$project$Circuit$apply = function (event) {
-	var _p2 = event;
-	if (_p2.ctor === 'Added') {
-		return _user$project$Circuit$added(_p2._0);
-	} else {
-		return A2(_user$project$Circuit$portAdded, _p2._0, _p2._1);
+	var _p5 = event;
+	switch (_p5.ctor) {
+		case 'Added':
+			return _user$project$Circuit$added(_p5._0);
+		case 'PortAdded':
+			return A2(_user$project$Circuit$portAdded, _p5._0, _p5._1);
+		default:
+			return A2(_user$project$Circuit$grouped, _p5._0, _p5._1);
 	}
 };
-var _user$project$Circuit$state = function (_p3) {
-	var _p4 = _p3;
+var _user$project$Circuit$state = function (_p6) {
+	var _p7 = _p6;
 	return A3(
 		_elm_lang$core$List$foldl,
 		_user$project$Circuit$apply,
@@ -9524,7 +9549,7 @@ var _user$project$Circuit$state = function (_p3) {
 			circuitNames: {ctor: '[]'},
 			portNames: {ctor: '[]'}
 		},
-		_p4._0);
+		_p7._0);
 };
 var _user$project$Circuit$State = F2(
 	function (a, b) {
@@ -9555,6 +9580,10 @@ var _user$project$Circuit$PortReference = function (a) {
 var _user$project$Circuit$ConnectionName = function (a) {
 	return {ctor: 'ConnectionName', _0: a};
 };
+var _user$project$Circuit$Grouped = F2(
+	function (a, b) {
+		return {ctor: 'Grouped', _0: a, _1: b};
+	});
 var _user$project$Circuit$PortAdded = F2(
 	function (a, b) {
 		return {ctor: 'PortAdded', _0: a, _1: b};
@@ -9566,12 +9595,12 @@ var _user$project$Circuit$Circuit = function (a) {
 	return {ctor: 'Circuit', _0: a};
 };
 var _user$project$Circuit$append = F2(
-	function (_p5, event) {
-		var _p6 = _p5;
+	function (_p8, event) {
+		var _p9 = _p8;
 		return _user$project$Circuit$Circuit(
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				_p6._0,
+				_p9._0,
 				{
 					ctor: '::',
 					_0: event,
@@ -9594,22 +9623,27 @@ var _user$project$Circuit$add = F2(
 			function (state) {
 				return A2(
 					_elm_lang$core$List$any,
-					F2(
-						function (x, y) {
-							return _elm_lang$core$Native_Utils.eq(x, y);
-						})(name),
+					function (_p10) {
+						return A2(
+							F2(
+								function (x, y) {
+									return _elm_lang$core$Native_Utils.eq(x, y);
+								}),
+							name,
+							_elm_lang$core$Tuple$first(_p10));
+					},
 					state.circuitNames) ? _elm_lang$core$Result$Err(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						'insert: Circuit already present with name: ',
+						'Circuit already present with name: ',
 						_elm_lang$core$Basics$toString(name))) : _elm_lang$core$Result$Ok(
 					_user$project$Circuit$Added(name));
 			});
 	});
 var _user$project$Circuit$addPort = F3(
-	function (circuitName, _p7, circuit) {
-		var _p8 = _p7;
-		var _p9 = _p8._0;
+	function (circuitName, _p11, circuit) {
+		var _p12 = _p11;
+		var _p13 = _p12._0;
 		return A2(
 			_user$project$Circuit$execute,
 			circuit,
@@ -9620,22 +9654,59 @@ var _user$project$Circuit$addPort = F3(
 						function (x, y) {
 							return _elm_lang$core$Native_Utils.eq(x, y);
 						})(
-						{ctor: '_Tuple2', _0: circuitName, _1: _p9.name}),
+						{ctor: '_Tuple2', _0: circuitName, _1: _p13.name}),
 					state.portNames) ? _elm_lang$core$Result$Err(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						'insert: Port already present for circuit ',
+						'Port already present for circuit ',
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							_elm_lang$core$Basics$toString(circuitName),
 							A2(
 								_elm_lang$core$Basics_ops['++'],
 								' with name: ',
-								_elm_lang$core$Basics$toString(_p9.name))))) : _elm_lang$core$Result$Ok(
+								_elm_lang$core$Basics$toString(_p13.name))))) : _elm_lang$core$Result$Ok(
 					A2(
 						_user$project$Circuit$PortAdded,
 						circuitName,
-						_user$project$Circuit$Port(_p9)));
+						_user$project$Circuit$Port(_p13)));
+			});
+	});
+var _user$project$Circuit$group = F3(
+	function (name, circuits, circuit) {
+		return A2(
+			_user$project$Circuit$execute,
+			circuit,
+			function (state) {
+				return A2(
+					_elm_lang$core$List$any,
+					function (_p14) {
+						return A2(
+							F2(
+								function (x, y) {
+									return _elm_lang$core$Native_Utils.eq(x, y);
+								}),
+							name,
+							_elm_lang$core$Tuple$first(_p14));
+					},
+					state.circuitNames) ? _elm_lang$core$Result$Err(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'Circuit already present with name: ',
+						_elm_lang$core$Basics$toString(name))) : ((!A2(
+					_elm_lang$core$List$all,
+					function (name) {
+						return A2(
+							_elm_lang$core$List$member,
+							name,
+							A2(_elm_lang$core$List$map, _elm_lang$core$Tuple$first, state.circuitNames));
+					},
+					circuits)) ? _elm_lang$core$Result$Err(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'Circuits not present with names: ',
+						_elm_lang$core$Basics$toString(circuits))) : _elm_lang$core$Result$Ok(
+					A2(_user$project$Circuit$Grouped, name, circuits)));
 			});
 	});
 var _user$project$Circuit$empty = _elm_lang$core$Result$Ok(
@@ -9650,62 +9721,76 @@ var _user$project$Circuit$example = function () {
 	var gate3 = _user$project$Circuit$CircuitName('gate3');
 	var gate2 = _user$project$Circuit$CircuitName('gate2');
 	var gate1 = _user$project$Circuit$CircuitName('gate1');
-	var _p10 = A2(
+	var _p15 = A2(
 		_elm_lang$core$Result$andThen,
-		_user$project$Circuit$add(gate3),
+		A2(
+			_user$project$Circuit$group,
+			circuit1,
+			{
+				ctor: '::',
+				_0: gate1,
+				_1: {
+					ctor: '::',
+					_0: gate2,
+					_1: {ctor: '[]'}
+				}
+			}),
 		A2(
 			_elm_lang$core$Result$andThen,
-			A2(
-				_user$project$Circuit$addPort,
-				gate2,
-				A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
+			_user$project$Circuit$add(gate3),
 			A2(
 				_elm_lang$core$Result$andThen,
 				A2(
 					_user$project$Circuit$addPort,
 					gate2,
-					A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
+					A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
 				A2(
 					_elm_lang$core$Result$andThen,
 					A2(
 						_user$project$Circuit$addPort,
 						gate2,
-						A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
+						A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
 					A2(
 						_elm_lang$core$Result$andThen,
-						_user$project$Circuit$add(gate2),
+						A2(
+							_user$project$Circuit$addPort,
+							gate2,
+							A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
 						A2(
 							_elm_lang$core$Result$andThen,
-							A2(
-								_user$project$Circuit$addPort,
-								gate1,
-								A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
+							_user$project$Circuit$add(gate2),
 							A2(
 								_elm_lang$core$Result$andThen,
 								A2(
 									_user$project$Circuit$addPort,
 									gate1,
-									A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
+									A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
 								A2(
 									_elm_lang$core$Result$andThen,
 									A2(
 										_user$project$Circuit$addPort,
 										gate1,
-										A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
+										A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
 									A2(
 										_elm_lang$core$Result$andThen,
-										_user$project$Circuit$add(gate1),
-										_user$project$Circuit$empty)))))))));
-	if (_p10.ctor === 'Ok') {
-		return _p10._0;
+										A2(
+											_user$project$Circuit$addPort,
+											gate1,
+											A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
+										A2(
+											_elm_lang$core$Result$andThen,
+											_user$project$Circuit$add(gate1),
+											_user$project$Circuit$empty))))))))));
+	if (_p15.ctor === 'Ok') {
+		return _p15._0;
 	} else {
 		return _elm_lang$core$Native_Utils.crashCase(
 			'Circuit',
 			{
-				start: {line: 171, column: 9},
-				end: {line: 187, column: 36}
+				start: {line: 206, column: 9},
+				end: {line: 226, column: 36}
 			},
-			_p10)(_p10._0);
+			_p15)(_p15._0);
 	}
 }();
 var _user$project$PrintAny$splitLine = function (line) {
@@ -10966,19 +11051,19 @@ var _user$project$Main$example = function () {
 	return A2(
 		_elm_lang$core$Result$withDefault,
 		_user$project$Scene$empty,
-		_user$project$PrintAny$log(
-			A3(
-				_elm_lang$core$List$foldl,
-				F2(
-					function (event, scene) {
-						var bounds = function (_p4) {
-							return A2(
-								_elm_lang$core$Maybe$withDefault,
-								_user$project$Bounds$zero,
-								A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p4));
-						};
-						var _p5 = event;
-						if (_p5.ctor === 'Added') {
+		A3(
+			_elm_lang$core$List$foldl,
+			F2(
+				function (event, scene) {
+					var bounds = function (_p4) {
+						return A2(
+							_elm_lang$core$Maybe$withDefault,
+							_user$project$Bounds$zero,
+							A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, _p4));
+					};
+					var _p5 = event;
+					switch (_p5.ctor) {
+						case 'Added':
 							var _p25 = _p5._0._0;
 							var outputs = A3(
 								_elm_lang$core$List$foldl,
@@ -11165,12 +11250,27 @@ var _user$project$Main$example = function () {
 											_elm_lang$core$Result$andThen,
 											A3(_user$project$Scene$insert, _p25, shape, bounds),
 											scene))));
-						} else {
+						case 'PortAdded':
 							return scene;
-						}
-					}),
-				_elm_lang$core$Result$Ok(_user$project$Scene$empty),
-				events)));
+						default:
+							var _p26 = A2(
+								_elm_lang$core$Debug$log,
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									'group: ',
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										_elm_lang$core$Basics$toString(_p5._0),
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											', circuits: ',
+											_elm_lang$core$Basics$toString(_p5._1)))),
+								{ctor: '_Tuple0'});
+							return scene;
+					}
+				}),
+			_elm_lang$core$Result$Ok(_user$project$Scene$empty),
+			events));
 }();
 var _user$project$Main$State = F3(
 	function (a, b, c) {
@@ -11224,10 +11324,10 @@ var _user$project$Main$view = function (state) {
 						_user$project$Canvas$origin(state.canvasSize),
 						F2(
 							function (shape, transform) {
-								var _p26 = shape;
-								if (_p26.ctor === 'Just') {
+								var _p27 = shape;
+								if (_p27.ctor === 'Just') {
 									return _elm_lang$core$Maybe$Just(
-										A2(_user$project$Shape$constructor, _p26._0, transform));
+										A2(_user$project$Shape$constructor, _p27._0, transform));
 								} else {
 									return _elm_lang$core$Maybe$Nothing;
 								}
@@ -11237,10 +11337,10 @@ var _user$project$Main$view = function (state) {
 						_user$project$Canvas$origin(state.canvasSize),
 						F2(
 							function (shape, transform) {
-								var _p27 = shape;
-								if (_p27.ctor === 'Just') {
+								var _p28 = shape;
+								if (_p28.ctor === 'Just') {
 									return _elm_lang$core$Maybe$Just(
-										A2(_user$project$Shape$constructor, _p27._0, transform));
+										A2(_user$project$Shape$constructor, _p28._0, transform));
 								} else {
 									return _elm_lang$core$Maybe$Nothing;
 								}
