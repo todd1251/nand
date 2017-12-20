@@ -11116,8 +11116,8 @@ var _user$project$Main$example = function () {
 										return _elm_lang$core$Native_Utils.crashCase(
 											'Main',
 											{
-												start: {line: 143, column: 57},
-												end: {line: 148, column: 109}
+												start: {line: 144, column: 57},
+												end: {line: 149, column: 109}
 											},
 											_p11)(
 											A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p25));
@@ -11255,23 +11255,36 @@ var _user$project$Main$example = function () {
 								return scene;
 							default:
 								var _p28 = _p5._0._0;
-								return function (scene) {
-									return A3(
-										_elm_lang$core$List$foldl,
-										function (_p26) {
-											var _p27 = _p26;
-											return _elm_lang$core$Result$andThen(
-												A2(
-													_user$project$Scene$parent,
-													_p27._0,
-													_elm_lang$core$Maybe$Just(_p28)));
-										},
-										scene,
-										_p5._1);
-								}(
+								return A2(
+									_elm_lang$core$Result$andThen,
+									function (scene) {
+										var groupBounds = _user$project$Bounds$fromRectangle(
+											A2(
+												_user$project$Rectangle$margin,
+												20,
+												_user$project$Bounds$toRectangle(
+													A2(_user$project$Scene$bounds, _p28, scene))));
+										var shape = _user$project$Shape$Rectangle(
+											{origin: groupBounds.origin, size: groupBounds.size, stroke: _user$project$Shape$Thick});
+										return A4(
+											_user$project$Scene$update,
+											_p28,
+											_elm_lang$core$Maybe$Just(shape),
+											bounds,
+											scene);
+									},
 									A2(
 										_elm_lang$core$Result$andThen,
-										A3(_user$project$Scene$insert, _p28, _elm_lang$core$Maybe$Nothing, bounds),
+										A2(
+											_user$project$Scene$group,
+											_p28,
+											A2(
+												_elm_lang$core$List$map,
+												function (_p26) {
+													var _p27 = _p26;
+													return _p27._0;
+												},
+												_p5._1)),
 										scene));
 						}
 					}),
@@ -11355,7 +11368,7 @@ var _user$project$Main$view = function (state) {
 							function (transform, nodes) {
 								return A2(
 									_elm_lang$svg$Svg$g,
-									{
+									_elm_lang$core$Native_Utils.eq(transform, _user$project$Transform$identity) ? {ctor: '[]'} : {
 										ctor: '::',
 										_0: _elm_lang$svg$Svg_Attributes$transform(
 											_user$project$Canvas$toSvgTransform(transform)),
