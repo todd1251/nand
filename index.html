@@ -11044,7 +11044,17 @@ var _user$project$Main$example = function () {
 					_2: _user$project$Transform$translate(
 						{x: 0, y: 150})
 				},
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple3',
+						_0: 'circuit1',
+						_1: _elm_lang$core$Maybe$Nothing,
+						_2: _user$project$Transform$translate(
+							{x: -50, y: -50})
+					},
+					_1: {ctor: '[]'}
+				}
 			}
 		}
 	};
@@ -11145,8 +11155,8 @@ var _user$project$Main$example = function () {
 										return _elm_lang$core$Native_Utils.crashCase(
 											'Main',
 											{
-												start: {line: 144, column: 57},
-												end: {line: 149, column: 109}
+												start: {line: 148, column: 57},
+												end: {line: 153, column: 109}
 											},
 											_p14)(
 											A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p28));
@@ -11274,38 +11284,67 @@ var _user$project$Main$example = function () {
 							case 'PortAdded':
 								return scene;
 							default:
-								var _p31 = _p5._0._0;
+								var _p36 = _p5._0._0;
+								var _p29 = function (layout) {
+									var _p30 = layout;
+									if (_p30.ctor === 'Just') {
+										return _p30._0;
+									} else {
+										return _elm_lang$core$Native_Utils.crashCase(
+											'Main',
+											{
+												start: {line: 320, column: 57},
+												end: {line: 325, column: 109}
+											},
+											_p30)(
+											A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p36));
+									}
+								}(
+									_elm_lang$core$List$head(
+										A2(
+											_elm_lang$core$List$filterMap,
+											function (_p32) {
+												var _p33 = _p32;
+												return _elm_lang$core$Native_Utils.eq(_p33._0, _p36) ? _elm_lang$core$Maybe$Just(
+													{ctor: '_Tuple2', _0: _p33._1, _1: _p33._2}) : _elm_lang$core$Maybe$Nothing;
+											},
+											layout)));
+								var shape = _p29._0;
+								var transform = _p29._1;
 								return A2(
 									_elm_lang$core$Result$andThen,
-									function (scene) {
-										var groupBounds = _user$project$Bounds$fromRectangle(
-											A2(
-												_user$project$Rectangle$margin,
-												10,
-												_user$project$Bounds$toRectangle(
-													A2(_user$project$Scene$bounds, _p31, scene))));
-										var shape = _user$project$Shape$Rectangle(
-											{origin: groupBounds.origin, size: groupBounds.size, stroke: _user$project$Shape$Thick});
-										return A4(
-											_user$project$Scene$update,
-											_p31,
-											_elm_lang$core$Maybe$Just(shape),
-											bounds,
-											scene);
-									},
+									A2(_user$project$Scene$transform, _p36, transform),
 									A2(
 										_elm_lang$core$Result$andThen,
+										function (scene) {
+											var groupBounds = _user$project$Bounds$fromRectangle(
+												A2(
+													_user$project$Rectangle$margin,
+													10,
+													_user$project$Bounds$toRectangle(
+														A2(_user$project$Scene$bounds, _p36, scene))));
+											var shape = _user$project$Shape$Rectangle(
+												{origin: groupBounds.origin, size: groupBounds.size, stroke: _user$project$Shape$Thick});
+											return A4(
+												_user$project$Scene$update,
+												_p36,
+												_elm_lang$core$Maybe$Just(shape),
+												bounds,
+												scene);
+										},
 										A2(
-											_user$project$Scene$group,
-											_p31,
+											_elm_lang$core$Result$andThen,
 											A2(
-												_elm_lang$core$List$map,
-												function (_p29) {
-													var _p30 = _p29;
-													return _p30._0;
-												},
-												_p5._1)),
-										scene));
+												_user$project$Scene$group,
+												_p36,
+												A2(
+													_elm_lang$core$List$map,
+													function (_p34) {
+														var _p35 = _p34;
+														return _p35._0;
+													},
+													_p5._1)),
+											scene)));
 						}
 					}),
 				_elm_lang$core$Result$Ok(_user$project$Scene$empty),
@@ -11363,10 +11402,10 @@ var _user$project$Main$view = function (state) {
 						_user$project$Canvas$origin(state.canvasSize),
 						F2(
 							function (shape, transform) {
-								var _p32 = shape;
-								if (_p32.ctor === 'Just') {
+								var _p37 = shape;
+								if (_p37.ctor === 'Just') {
 									return _elm_lang$core$Maybe$Just(
-										A2(_user$project$Shape$constructor, _p32._0, transform));
+										A2(_user$project$Shape$constructor, _p37._0, transform));
 								} else {
 									return _elm_lang$core$Maybe$Nothing;
 								}
@@ -11376,10 +11415,10 @@ var _user$project$Main$view = function (state) {
 						_user$project$Canvas$origin(state.canvasSize),
 						F2(
 							function (shape, transform) {
-								var _p33 = shape;
-								if (_p33.ctor === 'Just') {
+								var _p38 = shape;
+								if (_p38.ctor === 'Just') {
 									return _elm_lang$core$Maybe$Just(
-										A2(_user$project$Shape$constructor, _p33._0, transform));
+										A2(_user$project$Shape$constructor, _p38._0, transform));
 								} else {
 									return _elm_lang$core$Maybe$Nothing;
 								}
