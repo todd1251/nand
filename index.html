@@ -11178,85 +11178,44 @@ var _user$project$Main$example = function () {
 									A2(_user$project$Scene$transform, _p28, transform),
 									A2(
 										_elm_lang$core$Result$andThen,
-										A2(_user$project$Scene$group, _p28, portNames),
+										A3(_user$project$Scene$update, _p28, shape, bounds),
 										A2(
 											_elm_lang$core$Result$andThen,
-											function (scene) {
-												var steps = _elm_lang$core$List$length(outputs) - 1;
-												var outputBounds = function (_p18) {
-													return {
-														origin: {x: 0, y: 0},
-														size: {width: 20, height: 0}
-													};
-												};
-												return A3(
-													_elm_lang$core$List$foldl,
-													F2(
-														function (_p19, scene) {
-															var _p20 = _p19;
-															var _p22 = _p20._1;
-															var portName = function () {
-																var _p21 = _p22.name;
-																return A2(
-																	_elm_lang$core$Basics_ops['++'],
-																	_p28,
-																	A2(_elm_lang$core$Basics_ops['++'], '.', _p21._0));
-															}();
-															return A2(
-																_elm_lang$core$Result$andThen,
-																function (scene) {
-																	var bounds = A2(_user$project$Scene$bounds, _p28, scene);
-																	var transform = _user$project$Transform$translate(
-																		A5(_user$project$Main$portPosition, _p28, _p20._0, _p22.direction, steps, bounds));
-																	return A3(_user$project$Scene$transform, portName, transform, scene);
-																},
-																A2(
-																	_elm_lang$core$Result$andThen,
-																	A3(
-																		_user$project$Scene$insert,
-																		portName,
-																		_elm_lang$core$Maybe$Just(_user$project$Main$outputShape),
-																		outputBounds),
-																	scene));
-														}),
-													_elm_lang$core$Result$Ok(scene),
-													A2(
-														_elm_lang$core$List$indexedMap,
-														F2(
-															function (v0, v1) {
-																return {ctor: '_Tuple2', _0: v0, _1: v1};
-															}),
-														outputs));
-											},
+											A2(_user$project$Scene$group, _p28, portNames),
 											A2(
 												_elm_lang$core$Result$andThen,
 												function (scene) {
-													var steps = _elm_lang$core$List$length(inputs) - 1;
-													var inputBounds = function (_p23) {
+													var steps = _elm_lang$core$List$length(outputs) - 1;
+													var outputBounds = function (_p18) {
 														return {
-															origin: {x: -20, y: 0},
+															origin: {x: 0, y: 0},
 															size: {width: 20, height: 0}
 														};
 													};
 													return A3(
 														_elm_lang$core$List$foldl,
 														F2(
-															function (_p24, scene) {
-																var _p25 = _p24;
-																var _p27 = _p25._1;
+															function (_p19, scene) {
+																var _p20 = _p19;
+																var _p22 = _p20._1;
 																var portName = function () {
-																	var _p26 = _p27.name;
+																	var _p21 = _p22.name;
 																	return A2(
 																		_elm_lang$core$Basics_ops['++'],
 																		_p28,
-																		A2(_elm_lang$core$Basics_ops['++'], '.', _p26._0));
+																		A2(_elm_lang$core$Basics_ops['++'], '.', _p21._0));
 																}();
 																return A2(
 																	_elm_lang$core$Result$andThen,
 																	function (scene) {
-																		var bounds = A2(_user$project$Scene$bounds, _p28, scene);
 																		var transform = _user$project$Transform$translate(
-																			A5(_user$project$Main$portPosition, _p28, _p25._0, _p27.direction, steps, bounds));
+																			A5(
+																				_user$project$Main$portPosition,
+																				_p28,
+																				_p20._0,
+																				_p22.direction,
+																				steps,
+																				bounds(shape)));
 																		return A3(_user$project$Scene$transform, portName, transform, scene);
 																	},
 																	A2(
@@ -11264,8 +11223,8 @@ var _user$project$Main$example = function () {
 																		A3(
 																			_user$project$Scene$insert,
 																			portName,
-																			_elm_lang$core$Maybe$Just(_user$project$Main$inputShape),
-																			inputBounds),
+																			_elm_lang$core$Maybe$Just(_user$project$Main$outputShape),
+																			outputBounds),
 																		scene));
 															}),
 														_elm_lang$core$Result$Ok(scene),
@@ -11275,11 +11234,62 @@ var _user$project$Main$example = function () {
 																function (v0, v1) {
 																	return {ctor: '_Tuple2', _0: v0, _1: v1};
 																}),
-															inputs));
+															outputs));
 												},
 												A2(
 													_elm_lang$core$Result$andThen,
-													A3(_user$project$Scene$insert, _p28, shape, bounds),
+													function (scene) {
+														var steps = _elm_lang$core$List$length(inputs) - 1;
+														var inputBounds = function (_p23) {
+															return {
+																origin: {x: -20, y: 0},
+																size: {width: 20, height: 0}
+															};
+														};
+														return A3(
+															_elm_lang$core$List$foldl,
+															F2(
+																function (_p24, scene) {
+																	var _p25 = _p24;
+																	var _p27 = _p25._1;
+																	var portName = function () {
+																		var _p26 = _p27.name;
+																		return A2(
+																			_elm_lang$core$Basics_ops['++'],
+																			_p28,
+																			A2(_elm_lang$core$Basics_ops['++'], '.', _p26._0));
+																	}();
+																	return A2(
+																		_elm_lang$core$Result$andThen,
+																		function (scene) {
+																			var transform = _user$project$Transform$translate(
+																				A5(
+																					_user$project$Main$portPosition,
+																					_p28,
+																					_p25._0,
+																					_p27.direction,
+																					steps,
+																					bounds(shape)));
+																			return A3(_user$project$Scene$transform, portName, transform, scene);
+																		},
+																		A2(
+																			_elm_lang$core$Result$andThen,
+																			A3(
+																				_user$project$Scene$insert,
+																				portName,
+																				_elm_lang$core$Maybe$Just(_user$project$Main$inputShape),
+																				inputBounds),
+																			scene));
+																}),
+															_elm_lang$core$Result$Ok(scene),
+															A2(
+																_elm_lang$core$List$indexedMap,
+																F2(
+																	function (v0, v1) {
+																		return {ctor: '_Tuple2', _0: v0, _1: v1};
+																	}),
+																inputs));
+													},
 													scene)))));
 							case 'PortAdded':
 								return scene;
@@ -11293,8 +11303,8 @@ var _user$project$Main$example = function () {
 										return _elm_lang$core$Native_Utils.crashCase(
 											'Main',
 											{
-												start: {line: 320, column: 57},
-												end: {line: 325, column: 109}
+												start: {line: 314, column: 57},
+												end: {line: 319, column: 109}
 											},
 											_p30)(
 											A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p36));
