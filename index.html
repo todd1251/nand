@@ -10248,52 +10248,59 @@ var _user$project$Scene$grouped = F3(
 					F2(
 						function (childId, _p5) {
 							var _p6 = _p5;
-							var _p8 = _p6._1;
-							var node = A3(_user$project$Scene$nodeForId, 'grouped', childId, _p8);
+							var _p12 = _p6._1;
+							var node = A3(_user$project$Scene$nodeForId, 'grouped', childId, _p12);
 							return {
 								ctor: '_Tuple2',
 								_0: function () {
 									var _p7 = _p6._0;
 									if (_p7.ctor === 'Nothing') {
+										var _p8 = _elm_lang$core$Debug$log('no bounds');
 										return _elm_lang$core$Maybe$Just(
 											_user$project$Bounds$toRectangle(node.bounds));
 									} else {
-										return _elm_lang$core$Maybe$Just(
-											A2(enclose, _p7._0, node.bounds));
+										var _p11 = _p7._0;
+										var _p9 = A2(_elm_lang$core$Debug$log, 'node.bounds', node.bounds);
+										var _p10 = A2(_elm_lang$core$Debug$log, 'bounds', _p11);
+										return A2(
+											_elm_lang$core$Debug$log,
+											'enclosed',
+											_elm_lang$core$Maybe$Just(
+												A2(enclose, _p11, node.bounds)));
 									}
 								}(),
-								_1: A3(changeParent, node, id, _p8)
+								_1: A3(changeParent, node, id, _p12)
 							};
 						}),
 					{ctor: '_Tuple2', _0: _elm_lang$core$Maybe$Nothing, _1: state.nodes},
 					nodes)));
 	});
 var _user$project$Scene$apply = function (event) {
-	var _p9 = event;
-	switch (_p9.ctor) {
+	var _p13 = event;
+	switch (_p13.ctor) {
 		case 'Inserted':
-			return A3(_user$project$Scene$inserted, _p9._0, _p9._1, _p9._2);
+			return A3(_user$project$Scene$inserted, _p13._0, _p13._1, _p13._2);
 		case 'Updated':
-			return A3(_user$project$Scene$updated, _p9._0, _p9._1, _p9._2);
+			return A3(_user$project$Scene$updated, _p13._0, _p13._1, _p13._2);
 		case 'Removed':
-			return _user$project$Scene$removed(_p9._0);
+			return _user$project$Scene$removed(_p13._0);
 		case 'Transformed':
-			return A2(_user$project$Scene$transformed, _p9._0, _p9._1);
+			return A2(_user$project$Scene$transformed, _p13._0, _p13._1);
 		case 'Parented':
-			return A2(_user$project$Scene$parented, _p9._0, _p9._1);
+			return A2(_user$project$Scene$parented, _p13._0, _p13._1);
 		default:
-			return A2(_user$project$Scene$grouped, _p9._0, _p9._1);
+			return A2(_user$project$Scene$grouped, _p13._0, _p13._1);
 	}
 };
-var _user$project$Scene$state = function (_p10) {
-	var _p11 = _p10;
+var _user$project$Scene$state = function (_p14) {
+	var _p15 = _p14;
 	return A3(
 		_elm_lang$core$List$foldl,
 		_user$project$Scene$apply,
 		{
 			nodes: {ctor: '[]'}
 		},
-		_p11._0);
+		_p15._0);
 };
 var _user$project$Scene$bounds = F2(
 	function (id, scene) {
@@ -10311,7 +10318,7 @@ var _user$project$Scene$bounds = F2(
 	});
 var _user$project$Scene$node = F2(
 	function (id, scene) {
-		var _p12 = function (_) {
+		var _p16 = function (_) {
 			return _.node;
 		}(
 			A3(
@@ -10322,16 +10329,16 @@ var _user$project$Scene$node = F2(
 					return _.nodes;
 				}(
 					_user$project$Scene$state(scene))));
-		if (_p12.ctor === 'Just') {
-			return _p12._0;
+		if (_p16.ctor === 'Just') {
+			return _p16._0;
 		} else {
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Scene',
 				{
-					start: {line: 366, column: 5},
-					end: {line: 377, column: 69}
+					start: {line: 378, column: 5},
+					end: {line: 389, column: 69}
 				},
-				_p12)(
+				_p16)(
 				A2(
 					_elm_lang$core$Basics_ops['++'],
 					'FIXME: no node with ID ',
@@ -10371,12 +10378,12 @@ var _user$project$Scene$transformAt = F2(
 		var transformAt1 = F2(
 			function (id, nodes) {
 				var node = A3(_user$project$Scene$nodeForId, 'transformAt', id, nodes);
-				var _p14 = node.parent;
-				if (_p14.ctor === 'Just') {
+				var _p18 = node.parent;
+				if (_p18.ctor === 'Just') {
 					return A2(
 						_user$project$Transform$combine,
 						node.transform,
-						A2(transformAt1, _p14._0, nodes));
+						A2(transformAt1, _p18._0, nodes));
 				} else {
 					return node.transform;
 				}
@@ -10393,14 +10400,14 @@ var _user$project$Scene$renderAbsolute = F3(
 	function (origin, renderer, scene) {
 		var render1 = F3(
 			function (parent, parentTransform, nodes) {
-				var _p15 = A2(
+				var _p19 = A2(
 					_elm_lang$core$List$partition,
 					function (node) {
 						return _elm_lang$core$Native_Utils.eq(node.parent, parent);
 					},
 					nodes);
-				var roots = _p15._0;
-				var others = _p15._1;
+				var roots = _p19._0;
+				var others = _p19._1;
 				return _elm_lang$core$List$concat(
 					A2(
 						_elm_lang$core$List$map,
@@ -10409,13 +10416,13 @@ var _user$project$Scene$renderAbsolute = F3(
 							return A2(
 								_elm_lang$core$Basics_ops['++'],
 								function () {
-									var _p16 = node.node;
-									if (_p16.ctor === 'Just') {
-										var _p17 = A2(renderer, _p16._0, transform);
-										if (_p17.ctor === 'Just') {
+									var _p20 = node.node;
+									if (_p20.ctor === 'Just') {
+										var _p21 = A2(renderer, _p20._0, transform);
+										if (_p21.ctor === 'Just') {
 											return {
 												ctor: '::',
-												_0: _p17._0,
+												_0: _p21._0,
 												_1: {ctor: '[]'}
 											};
 										} else {
@@ -10446,20 +10453,20 @@ var _user$project$Scene$renderRelative = F4(
 	function (origin, renderer, grouper, scene) {
 		var render1 = F3(
 			function (parent, parentTransform, nodes) {
-				var _p18 = A2(
+				var _p22 = A2(
 					_elm_lang$core$List$partition,
 					function (node) {
 						return _elm_lang$core$Native_Utils.eq(node.parent, parent);
 					},
 					nodes);
-				var roots = _p18._0;
-				var others = _p18._1;
+				var roots = _p22._0;
+				var others = _p22._1;
 				return function (nodes) {
-					var _p19 = parentTransform;
-					if (_p19.ctor === 'Just') {
+					var _p23 = parentTransform;
+					if (_p23.ctor === 'Just') {
 						return {
 							ctor: '::',
-							_0: A2(grouper, _p19._0, nodes),
+							_0: A2(grouper, _p23._0, nodes),
 							_1: {ctor: '[]'}
 						};
 					} else {
@@ -10480,16 +10487,16 @@ var _user$project$Scene$renderRelative = F4(
 										},
 										others));
 								var self = function () {
-									var _p20 = node.node;
-									if (_p20.ctor === 'Just') {
-										var _p21 = A2(
+									var _p24 = node.node;
+									if (_p24.ctor === 'Just') {
+										var _p25 = A2(
 											renderer,
-											_p20._0,
+											_p24._0,
 											noChildren ? node.transform : _user$project$Transform$identity);
-										if (_p21.ctor === 'Just') {
+										if (_p25.ctor === 'Just') {
 											return {
 												ctor: '::',
-												_0: _p21._0,
+												_0: _p25._0,
 												_1: {ctor: '[]'}
 											};
 										} else {
@@ -10574,12 +10581,12 @@ var _user$project$Scene$Scene = function (a) {
 	return {ctor: 'Scene', _0: a};
 };
 var _user$project$Scene$append = F2(
-	function (_p22, event) {
-		var _p23 = _p22;
+	function (_p26, event) {
+		var _p27 = _p26;
 		return _user$project$Scene$Scene(
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				_p23._0,
+				_p27._0,
 				{
 					ctor: '::',
 					_0: event,
@@ -11043,7 +11050,7 @@ var _user$project$Main$example = function () {
 						_0: 'circuit1',
 						_1: _elm_lang$core$Maybe$Nothing,
 						_2: _user$project$Transform$translate(
-							{x: -50, y: -50})
+							{x: 50, y: 0})
 					},
 					_1: {ctor: '[]'}
 				}
@@ -11062,35 +11069,38 @@ var _user$project$Main$example = function () {
 						switch (_p4.ctor) {
 							case 'Added':
 								var _p25 = _p4._0._0;
-								var portNames = A3(
-									_elm_lang$core$List$foldl,
-									F2(
-										function (event, ports) {
-											var _p5 = event;
-											if (_p5.ctor === 'PortAdded') {
-												var _p7 = _p5._0._0;
-												if (_elm_lang$core$Native_Utils.eq(_p7, _p25)) {
-													var _p6 = _p5._1._0.name;
-													return A2(
-														_elm_lang$core$Basics_ops['++'],
-														ports,
-														{
-															ctor: '::',
-															_0: A2(
-																_elm_lang$core$Basics_ops['++'],
-																_p7,
-																A2(_elm_lang$core$Basics_ops['++'], '.', _p6._0)),
-															_1: {ctor: '[]'}
-														});
+								var portNames = A2(
+									_elm_lang$core$Debug$log,
+									'portNames',
+									A3(
+										_elm_lang$core$List$foldl,
+										F2(
+											function (event, ports) {
+												var _p5 = event;
+												if (_p5.ctor === 'PortAdded') {
+													var _p7 = _p5._0._0;
+													if (_elm_lang$core$Native_Utils.eq(_p7, _p25)) {
+														var _p6 = _p5._1._0.name;
+														return A2(
+															_elm_lang$core$Basics_ops['++'],
+															ports,
+															{
+																ctor: '::',
+																_0: A2(
+																	_elm_lang$core$Basics_ops['++'],
+																	_p7,
+																	A2(_elm_lang$core$Basics_ops['++'], '.', _p6._0)),
+																_1: {ctor: '[]'}
+															});
+													} else {
+														return ports;
+													}
 												} else {
 													return ports;
 												}
-											} else {
-												return ports;
-											}
-										}),
-									{ctor: '[]'},
-									events);
+											}),
+										{ctor: '[]'},
+										events));
 								var outputs = A3(
 									_elm_lang$core$List$foldl,
 									F2(
@@ -11298,8 +11308,8 @@ var _user$project$Main$example = function () {
 										return _elm_lang$core$Native_Utils.crashCase(
 											'Main',
 											{
-												start: {line: 311, column: 53},
-												end: {line: 316, column: 105}
+												start: {line: 312, column: 53},
+												end: {line: 317, column: 105}
 											},
 											_p27)(
 											A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p33));
