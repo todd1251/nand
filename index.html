@@ -9713,6 +9713,7 @@ var _user$project$Circuit$empty = _elm_lang$core$Result$Ok(
 	_user$project$Circuit$Circuit(
 		{ctor: '[]'}));
 var _user$project$Circuit$example = function () {
+	var circuit2 = _user$project$Circuit$CircuitName('circuit2');
 	var circuit1 = _user$project$Circuit$CircuitName('circuit1');
 	var connection1 = _user$project$Circuit$ConnectionName('connection1');
 	var output1 = _user$project$Circuit$PortName('output1');
@@ -9726,13 +9727,13 @@ var _user$project$Circuit$example = function () {
 		_elm_lang$core$Result$andThen,
 		A2(
 			_user$project$Circuit$group,
-			circuit1,
+			circuit2,
 			{
 				ctor: '::',
-				_0: gate1,
+				_0: gate3,
 				_1: {
 					ctor: '::',
-					_0: gate2,
+					_0: gate4,
 					_1: {ctor: '[]'}
 				}
 			}),
@@ -9745,54 +9746,68 @@ var _user$project$Circuit$example = function () {
 				A2(
 					_elm_lang$core$Result$andThen,
 					A2(
-						_user$project$Circuit$addPort,
-						gate2,
-						A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
+						_user$project$Circuit$group,
+						circuit1,
+						{
+							ctor: '::',
+							_0: gate1,
+							_1: {
+								ctor: '::',
+								_0: gate2,
+								_1: {ctor: '[]'}
+							}
+						}),
 					A2(
 						_elm_lang$core$Result$andThen,
 						A2(
 							_user$project$Circuit$addPort,
 							gate2,
-							A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
+							A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
 						A2(
 							_elm_lang$core$Result$andThen,
 							A2(
 								_user$project$Circuit$addPort,
 								gate2,
-								A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
+								A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
 							A2(
 								_elm_lang$core$Result$andThen,
-								_user$project$Circuit$add(gate2),
+								A2(
+									_user$project$Circuit$addPort,
+									gate2,
+									A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
 								A2(
 									_elm_lang$core$Result$andThen,
-									A2(
-										_user$project$Circuit$addPort,
-										gate1,
-										A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
+									_user$project$Circuit$add(gate2),
 									A2(
 										_elm_lang$core$Result$andThen,
 										A2(
 											_user$project$Circuit$addPort,
 											gate1,
-											A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
+											A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
 										A2(
 											_elm_lang$core$Result$andThen,
 											A2(
 												_user$project$Circuit$addPort,
 												gate1,
-												A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
+												A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
 											A2(
 												_elm_lang$core$Result$andThen,
-												_user$project$Circuit$add(gate1),
-												_user$project$Circuit$empty)))))))))));
+												A2(
+													_user$project$Circuit$addPort,
+													gate1,
+													A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
+												A2(
+													_elm_lang$core$Result$andThen,
+													_user$project$Circuit$add(gate1),
+													_user$project$Circuit$empty))))))))))));
 	if (_p15.ctor === 'Ok') {
 		return _p15._0;
 	} else {
 		return _elm_lang$core$Native_Utils.crashCase(
 			'Circuit',
 			{
-				start: {line: 209, column: 9},
-				end: {line: 230, column: 36}
+				start: {line: 212, column: 9},
+				end: {line: 235, column: 36}
 			},
 			_p15)(_p15._0);
 	}
@@ -10928,7 +10943,51 @@ var _user$project$Shape$bounds = function (shape) {
 		case 'Rectangle':
 			return {origin: _p7._0.origin, size: _p7._0.size};
 		default:
-			return _user$project$Bounds$zero;
+			var _p10 = _p7._0.points;
+			var maxY = A2(
+				_elm_lang$core$Maybe$withDefault,
+				0,
+				_elm_lang$core$List$maximum(
+					A2(
+						_elm_lang$core$List$map,
+						function (_) {
+							return _.y;
+						},
+						_p10)));
+			var maxX = A2(
+				_elm_lang$core$Maybe$withDefault,
+				0,
+				_elm_lang$core$List$maximum(
+					A2(
+						_elm_lang$core$List$map,
+						function (_) {
+							return _.x;
+						},
+						_p10)));
+			var minY = A2(
+				_elm_lang$core$Maybe$withDefault,
+				0,
+				_elm_lang$core$List$minimum(
+					A2(
+						_elm_lang$core$List$map,
+						function (_) {
+							return _.y;
+						},
+						_p10)));
+			var minX = A2(
+				_elm_lang$core$Maybe$withDefault,
+				0,
+				_elm_lang$core$List$minimum(
+					A2(
+						_elm_lang$core$List$map,
+						function (_) {
+							return _.x;
+						},
+						_p10)));
+			return {
+				origin: {x: minX, y: minY},
+				size: {width: maxX - minX, height: maxY - minY}
+			};
 	}
 };
 var _user$project$Shape$Path = function (a) {
@@ -11052,50 +11111,60 @@ var _user$project$Main$example = function () {
 				ctor: '::',
 				_0: {
 					ctor: '_Tuple3',
-					_0: 'gate3',
-					_1: _elm_lang$core$Maybe$Just(
-						_user$project$Shape$Circle(
-							{centre: _user$project$Point$zero, radius: 50, stroke: _user$project$Shape$Thin})),
+					_0: 'circuit1',
+					_1: _elm_lang$core$Maybe$Nothing,
 					_2: _user$project$Transform$translate(
-						{x: 0, y: 150})
+						{x: 50, y: 0})
 				},
 				_1: {
 					ctor: '::',
 					_0: {
 						ctor: '_Tuple3',
-						_0: 'gate4',
+						_0: 'gate3',
 						_1: _elm_lang$core$Maybe$Just(
-							_user$project$Shape$Path(
-								{
-									points: {
-										ctor: '::',
-										_0: _user$project$Point$zero,
-										_1: {
-											ctor: '::',
-											_0: {x: 25, y: -50},
-											_1: {
-												ctor: '::',
-												_0: {x: 50, y: 0},
-												_1: {ctor: '[]'}
-											}
-										}
-									},
-									closed: true,
-									stroke: _user$project$Shape$Thin
-								})),
+							_user$project$Shape$Circle(
+								{centre: _user$project$Point$zero, radius: 50, stroke: _user$project$Shape$Thin})),
 						_2: _user$project$Transform$translate(
-							{x: 0, y: -100})
+							{x: 0, y: 150})
 					},
 					_1: {
 						ctor: '::',
 						_0: {
 							ctor: '_Tuple3',
-							_0: 'circuit1',
-							_1: _elm_lang$core$Maybe$Nothing,
+							_0: 'gate4',
+							_1: _elm_lang$core$Maybe$Just(
+								_user$project$Shape$Path(
+									{
+										points: {
+											ctor: '::',
+											_0: _user$project$Point$zero,
+											_1: {
+												ctor: '::',
+												_0: {x: 25, y: -50},
+												_1: {
+													ctor: '::',
+													_0: {x: 50, y: 0},
+													_1: {ctor: '[]'}
+												}
+											}
+										},
+										closed: true,
+										stroke: _user$project$Shape$Thin
+									})),
 							_2: _user$project$Transform$translate(
-								{x: 50, y: 0})
+								{x: 60, y: 140})
 						},
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: {
+								ctor: '_Tuple3',
+								_0: 'circuit2',
+								_1: _elm_lang$core$Maybe$Nothing,
+								_2: _user$project$Transform$translate(
+									{x: 0, y: 20})
+							},
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			}
@@ -11195,8 +11264,8 @@ var _user$project$Main$example = function () {
 										return _elm_lang$core$Native_Utils.crashCase(
 											'Main',
 											{
-												start: {line: 148, column: 53},
-												end: {line: 153, column: 105}
+												start: {line: 152, column: 53},
+												end: {line: 157, column: 105}
 											},
 											_p13)(
 											A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p25));
@@ -11233,10 +11302,6 @@ var _user$project$Main$example = function () {
 												_elm_lang$core$Result$andThen,
 												function (scene) {
 													var steps = _elm_lang$core$List$length(outputs) - 1;
-													var outputBounds = {
-														origin: {x: 0, y: 0},
-														size: {width: 20, height: 0}
-													};
 													return A3(
 														_elm_lang$core$List$foldl,
 														F2(
@@ -11272,7 +11337,7 @@ var _user$project$Main$example = function () {
 																			_user$project$Scene$insert,
 																			portName,
 																			_elm_lang$core$Maybe$Just(_user$project$Main$outputShape),
-																			outputBounds),
+																			_user$project$Shape$bounds(_user$project$Main$outputShape)),
 																		scene));
 															}),
 														_elm_lang$core$Result$Ok(scene),
@@ -11327,7 +11392,7 @@ var _user$project$Main$example = function () {
 																				_user$project$Scene$insert,
 																				portName,
 																				_elm_lang$core$Maybe$Just(_user$project$Main$inputShape),
-																				inputBounds),
+																				_user$project$Shape$bounds(_user$project$Main$inputShape)),
 																			scene));
 																}),
 															_elm_lang$core$Result$Ok(scene),
