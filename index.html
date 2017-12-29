@@ -10474,11 +10474,7 @@ var _user$project$Scene$renderRelative = F4(
 				return function (nodes) {
 					var _p19 = parentTransform;
 					if (_p19.ctor === 'Just') {
-						return {
-							ctor: '::',
-							_0: A2(grouper, _p19._0, nodes),
-							_1: {ctor: '[]'}
-						};
+						return A2(grouper, _p19._0, nodes);
 					} else {
 						return nodes;
 					}
@@ -10516,21 +10512,17 @@ var _user$project$Scene$renderRelative = F4(
 										return {ctor: '[]'};
 									}
 								}();
-								return noChildren ? self : {
-									ctor: '::',
-									_0: A2(
-										grouper,
-										node.transform,
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											self,
-											A3(
-												render1,
-												_elm_lang$core$Maybe$Just(node.id),
-												_elm_lang$core$Maybe$Nothing,
-												others))),
-									_1: {ctor: '[]'}
-								};
+								return noChildren ? self : A2(
+									grouper,
+									node.transform,
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										self,
+										A3(
+											render1,
+											_elm_lang$core$Maybe$Just(node.id),
+											_elm_lang$core$Maybe$Nothing,
+											others)));
 							},
 							roots)));
 			});
@@ -11513,15 +11505,19 @@ var _user$project$Main$view = function (state) {
 							}),
 						F2(
 							function (transform, nodes) {
-								return A2(
-									_elm_lang$svg$Svg$g,
-									_elm_lang$core$Native_Utils.eq(transform, _user$project$Transform$identity) ? {ctor: '[]'} : {
-										ctor: '::',
-										_0: _elm_lang$svg$Svg_Attributes$transform(
-											_user$project$Canvas$toSvgTransform(transform)),
-										_1: {ctor: '[]'}
-									},
-									nodes);
+								return _elm_lang$core$Native_Utils.eq(transform, _user$project$Transform$identity) ? nodes : {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$svg$Svg$g,
+										{
+											ctor: '::',
+											_0: _elm_lang$svg$Svg_Attributes$transform(
+												_user$project$Canvas$toSvgTransform(transform)),
+											_1: {ctor: '[]'}
+										},
+										nodes),
+									_1: {ctor: '[]'}
+								};
 							}),
 						state.scene)),
 				_1: {ctor: '[]'}
