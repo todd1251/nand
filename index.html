@@ -9476,6 +9476,21 @@ var _user$project$Canvas$centre = F2(
 var _user$project$Canvas$origin = function (size) {
 	return A2(_user$project$Canvas$centre, 0 - size.width, 0 - size.height);
 };
+var _user$project$Circuit$connected = F3(
+	function (from, to, state) {
+		return _elm_lang$core$Native_Utils.update(
+			state,
+			{
+				connections: A2(
+					_elm_lang$core$Basics_ops['++'],
+					state.connections,
+					{
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: from, _1: to},
+						_1: {ctor: '[]'}
+					})
+			});
+	});
 var _user$project$Circuit$grouped = F3(
 	function (name, circuits, state) {
 		return _elm_lang$core$Native_Utils.update(
@@ -9540,8 +9555,10 @@ var _user$project$Circuit$apply = function (event) {
 			return _user$project$Circuit$added(_p5._0);
 		case 'PortAdded':
 			return A2(_user$project$Circuit$portAdded, _p5._0, _p5._1);
-		default:
+		case 'Grouped':
 			return A2(_user$project$Circuit$grouped, _p5._0, _p5._1);
+		default:
+			return A2(_user$project$Circuit$connected, _p5._0, _p5._1);
 	}
 };
 var _user$project$Circuit$state = function (_p6) {
@@ -9551,19 +9568,17 @@ var _user$project$Circuit$state = function (_p6) {
 		_user$project$Circuit$apply,
 		{
 			circuitNames: {ctor: '[]'},
-			portNames: {ctor: '[]'}
+			portNames: {ctor: '[]'},
+			connections: {ctor: '[]'}
 		},
 		_p7._0);
 };
-var _user$project$Circuit$State = F2(
-	function (a, b) {
-		return {circuitNames: a, portNames: b};
+var _user$project$Circuit$State = F3(
+	function (a, b, c) {
+		return {circuitNames: a, portNames: b, connections: c};
 	});
 var _user$project$Circuit$CircuitName = function (a) {
 	return {ctor: 'CircuitName', _0: a};
-};
-var _user$project$Circuit$CircuitReference = function (a) {
-	return {ctor: 'CircuitReference', _0: a};
 };
 var _user$project$Circuit$PortName = function (a) {
 	return {ctor: 'PortName', _0: a};
@@ -9581,9 +9596,18 @@ var _user$project$Circuit$port_ = F2(
 var _user$project$Circuit$PortReference = function (a) {
 	return {ctor: 'PortReference', _0: a};
 };
+var _user$project$Circuit$portReference = F2(
+	function (circuit, portName) {
+		return _user$project$Circuit$PortReference(
+			{circuit: circuit, name: portName});
+	});
 var _user$project$Circuit$ConnectionName = function (a) {
 	return {ctor: 'ConnectionName', _0: a};
 };
+var _user$project$Circuit$Connected = F2(
+	function (a, b) {
+		return {ctor: 'Connected', _0: a, _1: b};
+	});
 var _user$project$Circuit$Grouped = F2(
 	function (a, b) {
 		return {ctor: 'Grouped', _0: a, _1: b};
@@ -9713,6 +9737,16 @@ var _user$project$Circuit$group = F3(
 					A2(_user$project$Circuit$Grouped, name, circuits)));
 			});
 	});
+var _user$project$Circuit$connect = F3(
+	function (from, to, circuit) {
+		return A2(
+			_user$project$Circuit$execute,
+			circuit,
+			function (state) {
+				return _elm_lang$core$Result$Ok(
+					A2(_user$project$Circuit$Connected, from, to));
+			});
+	});
 var _user$project$Circuit$empty = _elm_lang$core$Result$Ok(
 	_user$project$Circuit$Circuit(
 		{ctor: '[]'}));
@@ -9779,54 +9813,60 @@ var _user$project$Circuit$example = function () {
 						A2(
 							_elm_lang$core$Result$andThen,
 							A2(
-								_user$project$Circuit$addPort,
-								gate2,
-								A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
+								_user$project$Circuit$connect,
+								A2(_user$project$Circuit$portReference, gate1, output1),
+								A2(_user$project$Circuit$portReference, gate2, input1)),
 							A2(
 								_elm_lang$core$Result$andThen,
 								A2(
 									_user$project$Circuit$addPort,
 									gate2,
-									A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
+									A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
 								A2(
 									_elm_lang$core$Result$andThen,
 									A2(
 										_user$project$Circuit$addPort,
 										gate2,
-										A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
+										A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
 									A2(
 										_elm_lang$core$Result$andThen,
-										_user$project$Circuit$add(gate2),
+										A2(
+											_user$project$Circuit$addPort,
+											gate2,
+											A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
 										A2(
 											_elm_lang$core$Result$andThen,
-											A2(
-												_user$project$Circuit$addPort,
-												gate1,
-												A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
+											_user$project$Circuit$add(gate2),
 											A2(
 												_elm_lang$core$Result$andThen,
 												A2(
 													_user$project$Circuit$addPort,
 													gate1,
-													A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
+													A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
 												A2(
 													_elm_lang$core$Result$andThen,
 													A2(
 														_user$project$Circuit$addPort,
 														gate1,
-														A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
+														A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
 													A2(
 														_elm_lang$core$Result$andThen,
-														_user$project$Circuit$add(gate1),
-														_user$project$Circuit$empty)))))))))))));
+														A2(
+															_user$project$Circuit$addPort,
+															gate1,
+															A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
+														A2(
+															_elm_lang$core$Result$andThen,
+															_user$project$Circuit$add(gate1),
+															_user$project$Circuit$empty))))))))))))));
 	if (_p15.ctor === 'Ok') {
 		return _p15._0;
 	} else {
 		return _elm_lang$core$Native_Utils.crashCase(
 			'Circuit',
 			{
-				start: {line: 216, column: 9},
-				end: {line: 240, column: 36}
+				start: {line: 243, column: 9},
+				end: {line: 272, column: 36}
 			},
 			_p15)(_p15._0);
 	}
@@ -11363,7 +11403,7 @@ var _user$project$Main$example = function () {
 												scene)))));
 						case 'PortAdded':
 							return scene;
-						default:
+						case 'Grouped':
 							var _p33 = _p4._0._0;
 							var _p26 = function (layout) {
 								var _p27 = layout;
@@ -11425,6 +11465,8 @@ var _user$project$Main$example = function () {
 												},
 												_p4._1)),
 										scene)));
+						default:
+							return scene;
 					}
 				}),
 			_elm_lang$core$Result$Ok(_user$project$Scene$empty),
