@@ -10801,6 +10801,59 @@ var _user$project$Circuit$PortReference = function (a) {
 };
 var _user$project$Circuit$grouped = F3(
 	function (name, circuits, state) {
+		var state1 = _elm_lang$core$Native_Utils.update(
+			state,
+			{
+				circuitNames: A2(
+					_elm_lang$core$Basics_ops['++'],
+					A2(
+						_elm_lang$core$List$map,
+						function (_p17) {
+							var _p18 = _p17;
+							var _p19 = _p18._0;
+							return A2(_elm_lang$core$List$member, _p19, circuits) ? {
+								ctor: '_Tuple2',
+								_0: _p19,
+								_1: _elm_lang$core$Maybe$Just(name)
+							} : {ctor: '_Tuple2', _0: _p19, _1: _p18._1};
+						},
+						state.circuitNames),
+					{
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: name, _1: _elm_lang$core$Maybe$Nothing},
+						_1: {ctor: '[]'}
+					}),
+				connections: A2(
+					_elm_lang$core$List$map,
+					function (connection) {
+						var connectionCircuits = {
+							ctor: '::',
+							_0: function () {
+								var _p20 = connection.from;
+								return _p20._0.circuit;
+							}(),
+							_1: {
+								ctor: '::',
+								_0: function () {
+									var _p21 = connection.to;
+									return _p21._0.circuit;
+								}(),
+								_1: {ctor: '[]'}
+							}
+						};
+						return _elm_lang$core$Native_Utils.update(
+							connection,
+							{
+								parent: A2(
+									_elm_lang$core$List$any,
+									function (circuit) {
+										return A2(_elm_lang$core$List$member, circuit, circuits);
+									},
+									connectionCircuits) ? _elm_lang$core$Maybe$Just(name) : connection.parent
+							});
+					},
+					state.connections)
+			});
 		var connectedOutputs = A2(
 			_robertjlooby$elm_generic_dict$GenericSet$fromList,
 			_user$project$Circuit$comparePortReferences,
@@ -10815,13 +10868,13 @@ var _user$project$Circuit$grouped = F3(
 			_user$project$Circuit$comparePortReferences,
 			A2(
 				_elm_lang$core$List$filterMap,
-				function (_p17) {
-					var _p18 = _p17;
-					var _p20 = _p18._1._0;
-					var _p19 = _p18._0;
-					return (A2(_elm_lang$core$List$member, _p19, circuits) && _elm_lang$core$Native_Utils.eq(_p20.direction, _user$project$Circuit$Output)) ? _elm_lang$core$Maybe$Just(
+				function (_p22) {
+					var _p23 = _p22;
+					var _p25 = _p23._1._0;
+					var _p24 = _p23._0;
+					return (A2(_elm_lang$core$List$member, _p24, circuits) && _elm_lang$core$Native_Utils.eq(_p25.direction, _user$project$Circuit$Output)) ? _elm_lang$core$Maybe$Just(
 						_user$project$Circuit$PortReference(
-							{circuit: _p19, name: _p20.name})) : _elm_lang$core$Maybe$Nothing;
+							{circuit: _p24, name: _p25.name})) : _elm_lang$core$Maybe$Nothing;
 				},
 				state.ports));
 		var unconnectedOutputs = A2(
@@ -10845,13 +10898,13 @@ var _user$project$Circuit$grouped = F3(
 			_user$project$Circuit$comparePortReferences,
 			A2(
 				_elm_lang$core$List$filterMap,
-				function (_p21) {
-					var _p22 = _p21;
-					var _p24 = _p22._1._0;
-					var _p23 = _p22._0;
-					return (A2(_elm_lang$core$List$member, _p23, circuits) && _elm_lang$core$Native_Utils.eq(_p24.direction, _user$project$Circuit$Input)) ? _elm_lang$core$Maybe$Just(
+				function (_p26) {
+					var _p27 = _p26;
+					var _p29 = _p27._1._0;
+					var _p28 = _p27._0;
+					return (A2(_elm_lang$core$List$member, _p28, circuits) && _elm_lang$core$Native_Utils.eq(_p29.direction, _user$project$Circuit$Input)) ? _elm_lang$core$Maybe$Just(
 						_user$project$Circuit$PortReference(
-							{circuit: _p23, name: _p24.name})) : _elm_lang$core$Maybe$Nothing;
+							{circuit: _p28, name: _p29.name})) : _elm_lang$core$Maybe$Nothing;
 				},
 				state.ports));
 		var unconnectedInputs = A2(
@@ -10861,75 +10914,75 @@ var _user$project$Circuit$grouped = F3(
 				_elm_lang$core$Basics$toString(name),
 				' unconnectedInputs'),
 			A2(_robertjlooby$elm_generic_dict$GenericSet$diff, allInputs, connectedInputs));
-		return _elm_lang$core$Native_Utils.update(
-			state,
-			{
-				circuitNames: A2(
-					_elm_lang$core$Basics_ops['++'],
-					A2(
-						_elm_lang$core$List$map,
-						function (_p25) {
-							var _p26 = _p25;
-							var _p27 = _p26._0;
-							return A2(_elm_lang$core$List$member, _p27, circuits) ? {
-								ctor: '_Tuple2',
-								_0: _p27,
-								_1: _elm_lang$core$Maybe$Just(name)
-							} : {ctor: '_Tuple2', _0: _p27, _1: _p26._1};
-						},
-						state.circuitNames),
-					{
-						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: name, _1: _elm_lang$core$Maybe$Nothing},
-						_1: {ctor: '[]'}
-					}),
-				connections: A2(
-					_elm_lang$core$List$map,
-					function (connection) {
-						var connectionCircuits = {
-							ctor: '::',
-							_0: function () {
-								var _p28 = connection.from;
-								return _p28._0.circuit;
-							}(),
-							_1: {
-								ctor: '::',
-								_0: function () {
-									var _p29 = connection.to;
-									return _p29._0.circuit;
-								}(),
-								_1: {ctor: '[]'}
-							}
+		var state2 = _elm_lang$core$Tuple$first(
+			A3(
+				_elm_lang$core$List$foldl,
+				F2(
+					function (input, _p30) {
+						var _p31 = _p30;
+						var _p32 = _p31._1;
+						return {
+							ctor: '_Tuple2',
+							_0: A3(
+								_user$project$Circuit$portAdded,
+								name,
+								A2(
+									_user$project$Circuit$port_,
+									_user$project$Circuit$PortName(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'input',
+											_elm_lang$core$Basics$toString(_p32))),
+									_user$project$Circuit$Input),
+								_p31._0),
+							_1: _p32 + 1
 						};
-						return _elm_lang$core$Native_Utils.update(
-							connection,
-							{
-								parent: A2(
-									_elm_lang$core$List$any,
-									function (circuit) {
-										return A2(_elm_lang$core$List$member, circuit, circuits);
-									},
-									connectionCircuits) ? _elm_lang$core$Maybe$Just(name) : connection.parent
-							});
-					},
-					state.connections)
-			});
+					}),
+				{ctor: '_Tuple2', _0: state1, _1: 1},
+				_robertjlooby$elm_generic_dict$GenericSet$toList(unconnectedInputs)));
+		var state3 = _elm_lang$core$Tuple$first(
+			A3(
+				_elm_lang$core$List$foldl,
+				F2(
+					function (output, _p33) {
+						var _p34 = _p33;
+						var _p35 = _p34._1;
+						return {
+							ctor: '_Tuple2',
+							_0: A3(
+								_user$project$Circuit$portAdded,
+								name,
+								A2(
+									_user$project$Circuit$port_,
+									_user$project$Circuit$PortName(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'output',
+											_elm_lang$core$Basics$toString(_p35))),
+									_user$project$Circuit$Output),
+								_p34._0),
+							_1: _p35 + 1
+						};
+					}),
+				{ctor: '_Tuple2', _0: state2, _1: 1},
+				_robertjlooby$elm_generic_dict$GenericSet$toList(unconnectedOutputs)));
+		return A2(_elm_lang$core$Debug$log, 'state', state3);
 	});
 var _user$project$Circuit$apply = function (event) {
-	var _p30 = event;
-	switch (_p30.ctor) {
+	var _p36 = event;
+	switch (_p36.ctor) {
 		case 'Added':
-			return _user$project$Circuit$added(_p30._0);
+			return _user$project$Circuit$added(_p36._0);
 		case 'PortAdded':
-			return A2(_user$project$Circuit$portAdded, _p30._0, _p30._1);
+			return A2(_user$project$Circuit$portAdded, _p36._0, _p36._1);
 		case 'Grouped':
-			return A2(_user$project$Circuit$grouped, _p30._0, _p30._1);
+			return A2(_user$project$Circuit$grouped, _p36._0, _p36._1);
 		default:
-			return A3(_user$project$Circuit$connected, _p30._0, _p30._1, _p30._2);
+			return A3(_user$project$Circuit$connected, _p36._0, _p36._1, _p36._2);
 	}
 };
-var _user$project$Circuit$state = function (_p31) {
-	var _p32 = _p31;
+var _user$project$Circuit$state = function (_p37) {
+	var _p38 = _p37;
 	return A3(
 		_elm_lang$core$List$foldl,
 		_user$project$Circuit$apply,
@@ -10939,7 +10992,7 @@ var _user$project$Circuit$state = function (_p31) {
 			ports: {ctor: '[]'},
 			connections: {ctor: '[]'}
 		},
-		_p32._0);
+		_p38._0);
 };
 var _user$project$Circuit$connectionsInGroup = F2(
 	function (name, circuit) {
@@ -10982,12 +11035,12 @@ var _user$project$Circuit$Circuit = function (a) {
 	return {ctor: 'Circuit', _0: a};
 };
 var _user$project$Circuit$append = F2(
-	function (_p33, event) {
-		var _p34 = _p33;
+	function (_p39, event) {
+		var _p40 = _p39;
 		return _user$project$Circuit$Circuit(
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				_p34._0,
+				_p40._0,
 				{
 					ctor: '::',
 					_0: event,
@@ -11010,14 +11063,14 @@ var _user$project$Circuit$add = F2(
 			function (state) {
 				return A2(
 					_elm_lang$core$List$any,
-					function (_p35) {
+					function (_p41) {
 						return A2(
 							F2(
 								function (x, y) {
 									return _elm_lang$core$Native_Utils.eq(x, y);
 								}),
 							name,
-							_elm_lang$core$Tuple$first(_p35));
+							_elm_lang$core$Tuple$first(_p41));
 					},
 					state.circuitNames) ? _elm_lang$core$Result$Err(
 					A2(
@@ -11028,9 +11081,9 @@ var _user$project$Circuit$add = F2(
 			});
 	});
 var _user$project$Circuit$addPort = F3(
-	function (circuitName, _p36, circuit) {
-		var _p37 = _p36;
-		var _p38 = _p37._0;
+	function (circuitName, _p42, circuit) {
+		var _p43 = _p42;
+		var _p44 = _p43._0;
 		return A2(
 			_user$project$Circuit$execute,
 			circuit,
@@ -11041,7 +11094,7 @@ var _user$project$Circuit$addPort = F3(
 						function (x, y) {
 							return _elm_lang$core$Native_Utils.eq(x, y);
 						})(
-						{ctor: '_Tuple2', _0: circuitName, _1: _p38.name}),
+						{ctor: '_Tuple2', _0: circuitName, _1: _p44.name}),
 					state.portNames) ? _elm_lang$core$Result$Err(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
@@ -11052,11 +11105,11 @@ var _user$project$Circuit$addPort = F3(
 							A2(
 								_elm_lang$core$Basics_ops['++'],
 								' with name: ',
-								_elm_lang$core$Basics$toString(_p38.name))))) : _elm_lang$core$Result$Ok(
+								_elm_lang$core$Basics$toString(_p44.name))))) : _elm_lang$core$Result$Ok(
 					A2(
 						_user$project$Circuit$PortAdded,
 						circuitName,
-						_user$project$Circuit$Port(_p38)));
+						_user$project$Circuit$Port(_p44)));
 			});
 	});
 var _user$project$Circuit$group = F3(
@@ -11067,14 +11120,14 @@ var _user$project$Circuit$group = F3(
 			function (state) {
 				return A2(
 					_elm_lang$core$List$any,
-					function (_p39) {
+					function (_p45) {
 						return A2(
 							F2(
 								function (x, y) {
 									return _elm_lang$core$Native_Utils.eq(x, y);
 								}),
 							name,
-							_elm_lang$core$Tuple$first(_p39));
+							_elm_lang$core$Tuple$first(_p45));
 					},
 					state.circuitNames) ? _elm_lang$core$Result$Err(
 					A2(
@@ -11123,7 +11176,7 @@ var _user$project$Circuit$example = function () {
 	var gate3 = _user$project$Circuit$CircuitName('gate3');
 	var gate2 = _user$project$Circuit$CircuitName('gate2');
 	var gate1 = _user$project$Circuit$CircuitName('gate1');
-	var _p40 = A2(
+	var _p46 = A2(
 		_elm_lang$core$Result$andThen,
 		A2(
 			_user$project$Circuit$group,
@@ -11194,16 +11247,16 @@ var _user$project$Circuit$example = function () {
 												_elm_lang$core$Result$andThen,
 												_user$project$Circuit$add(gate1),
 												_user$project$Circuit$empty)))))))))));
-	if (_p40.ctor === 'Ok') {
-		return _p40._0;
+	if (_p46.ctor === 'Ok') {
+		return _p46._0;
 	} else {
 		return _elm_lang$core$Native_Utils.crashCase(
 			'Circuit',
 			{
-				start: {line: 387, column: 9},
-				end: {line: 420, column: 36}
+				start: {line: 421, column: 9},
+				end: {line: 454, column: 36}
 			},
-			_p40)(_p40._0);
+			_p46)(_p46._0);
 	}
 }();
 var _user$project$PrintAny$splitLine = function (line) {
