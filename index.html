@@ -6145,6 +6145,136 @@ var _elm_lang$core$Json_Decode$Decoder = {ctor: 'Decoder'};
 var _elm_lang$core$Process$kill = _elm_lang$core$Native_Scheduler.kill;
 var _elm_lang$core$Process$sleep = _elm_lang$core$Native_Scheduler.sleep;
 var _elm_lang$core$Process$spawn = _elm_lang$core$Native_Scheduler.spawn;
+var _elm_lang$core$Set$foldr = F3(
+	function (f, b, _p0) {
+		var _p1 = _p0;
+		return A3(
+			_elm_lang$core$Dict$foldr,
+			F3(
+				function (k, _p2, b) {
+					return A2(f, k, b);
+				}),
+			b,
+			_p1._0);
+	});
+var _elm_lang$core$Set$foldl = F3(
+	function (f, b, _p3) {
+		var _p4 = _p3;
+		return A3(
+			_elm_lang$core$Dict$foldl,
+			F3(
+				function (k, _p5, b) {
+					return A2(f, k, b);
+				}),
+			b,
+			_p4._0);
+	});
+var _elm_lang$core$Set$toList = function (_p6) {
+	var _p7 = _p6;
+	return _elm_lang$core$Dict$keys(_p7._0);
+};
+var _elm_lang$core$Set$size = function (_p8) {
+	var _p9 = _p8;
+	return _elm_lang$core$Dict$size(_p9._0);
+};
+var _elm_lang$core$Set$member = F2(
+	function (k, _p10) {
+		var _p11 = _p10;
+		return A2(_elm_lang$core$Dict$member, k, _p11._0);
+	});
+var _elm_lang$core$Set$isEmpty = function (_p12) {
+	var _p13 = _p12;
+	return _elm_lang$core$Dict$isEmpty(_p13._0);
+};
+var _elm_lang$core$Set$Set_elm_builtin = function (a) {
+	return {ctor: 'Set_elm_builtin', _0: a};
+};
+var _elm_lang$core$Set$empty = _elm_lang$core$Set$Set_elm_builtin(_elm_lang$core$Dict$empty);
+var _elm_lang$core$Set$singleton = function (k) {
+	return _elm_lang$core$Set$Set_elm_builtin(
+		A2(
+			_elm_lang$core$Dict$singleton,
+			k,
+			{ctor: '_Tuple0'}));
+};
+var _elm_lang$core$Set$insert = F2(
+	function (k, _p14) {
+		var _p15 = _p14;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A3(
+				_elm_lang$core$Dict$insert,
+				k,
+				{ctor: '_Tuple0'},
+				_p15._0));
+	});
+var _elm_lang$core$Set$fromList = function (xs) {
+	return A3(_elm_lang$core$List$foldl, _elm_lang$core$Set$insert, _elm_lang$core$Set$empty, xs);
+};
+var _elm_lang$core$Set$map = F2(
+	function (f, s) {
+		return _elm_lang$core$Set$fromList(
+			A2(
+				_elm_lang$core$List$map,
+				f,
+				_elm_lang$core$Set$toList(s)));
+	});
+var _elm_lang$core$Set$remove = F2(
+	function (k, _p16) {
+		var _p17 = _p16;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$remove, k, _p17._0));
+	});
+var _elm_lang$core$Set$union = F2(
+	function (_p19, _p18) {
+		var _p20 = _p19;
+		var _p21 = _p18;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$union, _p20._0, _p21._0));
+	});
+var _elm_lang$core$Set$intersect = F2(
+	function (_p23, _p22) {
+		var _p24 = _p23;
+		var _p25 = _p22;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$intersect, _p24._0, _p25._0));
+	});
+var _elm_lang$core$Set$diff = F2(
+	function (_p27, _p26) {
+		var _p28 = _p27;
+		var _p29 = _p26;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$diff, _p28._0, _p29._0));
+	});
+var _elm_lang$core$Set$filter = F2(
+	function (p, _p30) {
+		var _p31 = _p30;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(
+				_elm_lang$core$Dict$filter,
+				F2(
+					function (k, _p32) {
+						return p(k);
+					}),
+				_p31._0));
+	});
+var _elm_lang$core$Set$partition = F2(
+	function (p, _p33) {
+		var _p34 = _p33;
+		var _p35 = A2(
+			_elm_lang$core$Dict$partition,
+			F2(
+				function (k, _p36) {
+					return p(k);
+				}),
+			_p34._0);
+		var p1 = _p35._0;
+		var p2 = _p35._1;
+		return {
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Set$Set_elm_builtin(p1),
+			_1: _elm_lang$core$Set$Set_elm_builtin(p2)
+		};
+	});
 var _elm_lang$dom$Native_Dom = function() {
 
 var fakeNode = {
@@ -9286,6 +9416,1096 @@ var _elm_lang$window$Window$subMap = F2(
 			});
 	});
 _elm_lang$core$Native_Platform.effectManagers['Window'] = {pkg: 'elm-lang/window', init: _elm_lang$window$Window$init, onEffects: _elm_lang$window$Window$onEffects, onSelfMsg: _elm_lang$window$Window$onSelfMsg, tag: 'sub', subMap: _elm_lang$window$Window$subMap};
+var _robertjlooby$elm_generic_dict$GenericDict$foldr = F3(
+	function (f, acc, t) {
+		foldr:
+		while (true) {
+			var _p0 = t;
+			if (_p0.ctor === 'RBEmpty_elm_builtin') {
+				return acc;
+			} else {
+				var _v1 = f,
+					_v2 = A3(
+					f,
+					_p0._1,
+					_p0._2,
+					A3(_robertjlooby$elm_generic_dict$GenericDict$foldr, f, acc, _p0._4)),
+					_v3 = _p0._3;
+				f = _v1;
+				acc = _v2;
+				t = _v3;
+				continue foldr;
+			}
+		}
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$keys = function (dict) {
+	return A3(
+		_robertjlooby$elm_generic_dict$GenericDict$foldr,
+		F3(
+			function (key, value, keyList) {
+				return {ctor: '::', _0: key, _1: keyList};
+			}),
+		{ctor: '[]'},
+		dict);
+};
+var _robertjlooby$elm_generic_dict$GenericDict$values = function (dict) {
+	return A3(
+		_robertjlooby$elm_generic_dict$GenericDict$foldr,
+		F3(
+			function (key, value, valueList) {
+				return {ctor: '::', _0: value, _1: valueList};
+			}),
+		{ctor: '[]'},
+		dict);
+};
+var _robertjlooby$elm_generic_dict$GenericDict$toList = function (dict) {
+	return A3(
+		_robertjlooby$elm_generic_dict$GenericDict$foldr,
+		F3(
+			function (key, value, list) {
+				return {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: key, _1: value},
+					_1: list
+				};
+			}),
+		{ctor: '[]'},
+		dict);
+};
+var _robertjlooby$elm_generic_dict$GenericDict$foldl = F3(
+	function (f, acc, dict) {
+		foldl:
+		while (true) {
+			var _p1 = dict;
+			if (_p1.ctor === 'RBEmpty_elm_builtin') {
+				return acc;
+			} else {
+				var _v5 = f,
+					_v6 = A3(
+					f,
+					_p1._1,
+					_p1._2,
+					A3(_robertjlooby$elm_generic_dict$GenericDict$foldl, f, acc, _p1._3)),
+					_v7 = _p1._4;
+				f = _v5;
+				acc = _v6;
+				dict = _v7;
+				continue foldl;
+			}
+		}
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$reportRemBug = F4(
+	function (msg, c, lgot, rgot) {
+		return _elm_lang$core$Native_Utils.crash(
+			'GenericDict',
+			{
+				start: {line: 346, column: 5},
+				end: {line: 346, column: 16}
+			})(
+			_elm_lang$core$String$concat(
+				{
+					ctor: '::',
+					_0: 'Internal red-black tree invariant violated, expected ',
+					_1: {
+						ctor: '::',
+						_0: msg,
+						_1: {
+							ctor: '::',
+							_0: ' and got ',
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$core$Basics$toString(c),
+								_1: {
+									ctor: '::',
+									_0: '/',
+									_1: {
+										ctor: '::',
+										_0: lgot,
+										_1: {
+											ctor: '::',
+											_0: '/',
+											_1: {
+												ctor: '::',
+												_0: rgot,
+												_1: {
+													ctor: '::',
+													_0: '\nPlease report this bug to <https://github.com/elm-lang/core/issues>',
+													_1: {ctor: '[]'}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}));
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$isBBlack = function (dict) {
+	var _p2 = dict;
+	_v8_2:
+	do {
+		if (_p2.ctor === 'RBNode_elm_builtin') {
+			if (_p2._0.ctor === 'BBlack') {
+				return true;
+			} else {
+				break _v8_2;
+			}
+		} else {
+			if (_p2._0.ctor === 'LBBlack') {
+				return true;
+			} else {
+				break _v8_2;
+			}
+		}
+	} while(false);
+	return false;
+};
+var _robertjlooby$elm_generic_dict$GenericDict$isEmpty = function (dict) {
+	var _p3 = dict;
+	if (_p3.ctor === 'RBEmpty_elm_builtin') {
+		return true;
+	} else {
+		return false;
+	}
+};
+var _robertjlooby$elm_generic_dict$GenericDict$sizeHelp = F2(
+	function (n, dict) {
+		sizeHelp:
+		while (true) {
+			var _p4 = dict;
+			if (_p4.ctor === 'RBEmpty_elm_builtin') {
+				return n;
+			} else {
+				var _v11 = A2(_robertjlooby$elm_generic_dict$GenericDict$sizeHelp, n + 1, _p4._4),
+					_v12 = _p4._3;
+				n = _v11;
+				dict = _v12;
+				continue sizeHelp;
+			}
+		}
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$size = function (dict) {
+	return A2(_robertjlooby$elm_generic_dict$GenericDict$sizeHelp, 0, dict);
+};
+var _robertjlooby$elm_generic_dict$GenericDict$get = F2(
+	function (targetKey, dict) {
+		get:
+		while (true) {
+			var _p5 = dict;
+			if (_p5.ctor === 'RBEmpty_elm_builtin') {
+				return _elm_lang$core$Maybe$Nothing;
+			} else {
+				var _p6 = A2(_p5._5, targetKey, _p5._1);
+				switch (_p6.ctor) {
+					case 'LT':
+						var _v15 = targetKey,
+							_v16 = _p5._3;
+						targetKey = _v15;
+						dict = _v16;
+						continue get;
+					case 'EQ':
+						return _elm_lang$core$Maybe$Just(_p5._2);
+					default:
+						var _v17 = targetKey,
+							_v18 = _p5._4;
+						targetKey = _v17;
+						dict = _v18;
+						continue get;
+				}
+			}
+		}
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$member = F2(
+	function (key, dict) {
+		var _p7 = A2(_robertjlooby$elm_generic_dict$GenericDict$get, key, dict);
+		if (_p7.ctor === 'Just') {
+			return true;
+		} else {
+			return false;
+		}
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$maxWithDefault = F3(
+	function (k, v, r) {
+		maxWithDefault:
+		while (true) {
+			var _p8 = r;
+			if (_p8.ctor === 'RBEmpty_elm_builtin') {
+				return {ctor: '_Tuple2', _0: k, _1: v};
+			} else {
+				var _v21 = _p8._1,
+					_v22 = _p8._2,
+					_v23 = _p8._4;
+				k = _v21;
+				v = _v22;
+				r = _v23;
+				continue maxWithDefault;
+			}
+		}
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$getComparer = function (dict) {
+	var _p9 = dict;
+	if (_p9.ctor === 'RBNode_elm_builtin') {
+		return _p9._5;
+	} else {
+		return _p9._1;
+	}
+};
+var _robertjlooby$elm_generic_dict$GenericDict$NBlack = {ctor: 'NBlack'};
+var _robertjlooby$elm_generic_dict$GenericDict$BBlack = {ctor: 'BBlack'};
+var _robertjlooby$elm_generic_dict$GenericDict$Black = {ctor: 'Black'};
+var _robertjlooby$elm_generic_dict$GenericDict$blackish = function (t) {
+	var _p10 = t;
+	if (_p10.ctor === 'RBNode_elm_builtin') {
+		var _p11 = _p10._0;
+		return _elm_lang$core$Native_Utils.eq(_p11, _robertjlooby$elm_generic_dict$GenericDict$Black) || _elm_lang$core$Native_Utils.eq(_p11, _robertjlooby$elm_generic_dict$GenericDict$BBlack);
+	} else {
+		return true;
+	}
+};
+var _robertjlooby$elm_generic_dict$GenericDict$Red = {ctor: 'Red'};
+var _robertjlooby$elm_generic_dict$GenericDict$moreBlack = function (color) {
+	var _p12 = color;
+	switch (_p12.ctor) {
+		case 'Black':
+			return _robertjlooby$elm_generic_dict$GenericDict$BBlack;
+		case 'Red':
+			return _robertjlooby$elm_generic_dict$GenericDict$Black;
+		case 'NBlack':
+			return _robertjlooby$elm_generic_dict$GenericDict$Red;
+		default:
+			return _elm_lang$core$Native_Utils.crashCase(
+				'GenericDict',
+				{
+					start: {line: 293, column: 5},
+					end: {line: 304, column: 69}
+				},
+				_p12)('Can\'t make a double black node more black!');
+	}
+};
+var _robertjlooby$elm_generic_dict$GenericDict$lessBlack = function (color) {
+	var _p14 = color;
+	switch (_p14.ctor) {
+		case 'BBlack':
+			return _robertjlooby$elm_generic_dict$GenericDict$Black;
+		case 'Black':
+			return _robertjlooby$elm_generic_dict$GenericDict$Red;
+		case 'Red':
+			return _robertjlooby$elm_generic_dict$GenericDict$NBlack;
+		default:
+			return _elm_lang$core$Native_Utils.crashCase(
+				'GenericDict',
+				{
+					start: {line: 309, column: 5},
+					end: {line: 320, column: 71}
+				},
+				_p14)('Can\'t make a negative black node less black!');
+	}
+};
+var _robertjlooby$elm_generic_dict$GenericDict$LBBlack = {ctor: 'LBBlack'};
+var _robertjlooby$elm_generic_dict$GenericDict$LBlack = {ctor: 'LBlack'};
+var _robertjlooby$elm_generic_dict$GenericDict$RBEmpty_elm_builtin = F2(
+	function (a, b) {
+		return {ctor: 'RBEmpty_elm_builtin', _0: a, _1: b};
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$empty = function (comparer) {
+	return A2(_robertjlooby$elm_generic_dict$GenericDict$RBEmpty_elm_builtin, _robertjlooby$elm_generic_dict$GenericDict$LBlack, comparer);
+};
+var _robertjlooby$elm_generic_dict$GenericDict$RBNode_elm_builtin = F6(
+	function (a, b, c, d, e, f) {
+		return {ctor: 'RBNode_elm_builtin', _0: a, _1: b, _2: c, _3: d, _4: e, _5: f};
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$ensureBlackRoot = function (dict) {
+	var _p16 = dict;
+	if ((_p16.ctor === 'RBNode_elm_builtin') && (_p16._0.ctor === 'Red')) {
+		return A6(_robertjlooby$elm_generic_dict$GenericDict$RBNode_elm_builtin, _robertjlooby$elm_generic_dict$GenericDict$Black, _p16._1, _p16._2, _p16._3, _p16._4, _p16._5);
+	} else {
+		return dict;
+	}
+};
+var _robertjlooby$elm_generic_dict$GenericDict$lessBlackTree = function (dict) {
+	var _p17 = dict;
+	if (_p17.ctor === 'RBNode_elm_builtin') {
+		return A6(
+			_robertjlooby$elm_generic_dict$GenericDict$RBNode_elm_builtin,
+			_robertjlooby$elm_generic_dict$GenericDict$lessBlack(_p17._0),
+			_p17._1,
+			_p17._2,
+			_p17._3,
+			_p17._4,
+			_p17._5);
+	} else {
+		return A2(_robertjlooby$elm_generic_dict$GenericDict$RBEmpty_elm_builtin, _robertjlooby$elm_generic_dict$GenericDict$LBlack, _p17._1);
+	}
+};
+var _robertjlooby$elm_generic_dict$GenericDict$balancedTree = function (col) {
+	return function (xk) {
+		return function (xv) {
+			return function (yk) {
+				return function (yv) {
+					return function (zk) {
+						return function (zv) {
+							return function (a) {
+								return function (b) {
+									return function (c) {
+										return function (d) {
+											return function (comparer) {
+												return A6(
+													_robertjlooby$elm_generic_dict$GenericDict$RBNode_elm_builtin,
+													_robertjlooby$elm_generic_dict$GenericDict$lessBlack(col),
+													yk,
+													yv,
+													A6(_robertjlooby$elm_generic_dict$GenericDict$RBNode_elm_builtin, _robertjlooby$elm_generic_dict$GenericDict$Black, xk, xv, a, b, comparer),
+													A6(_robertjlooby$elm_generic_dict$GenericDict$RBNode_elm_builtin, _robertjlooby$elm_generic_dict$GenericDict$Black, zk, zv, c, d, comparer),
+													comparer);
+											};
+										};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};
+var _robertjlooby$elm_generic_dict$GenericDict$blacken = function (t) {
+	var _p18 = t;
+	if (_p18.ctor === 'RBEmpty_elm_builtin') {
+		return A2(_robertjlooby$elm_generic_dict$GenericDict$RBEmpty_elm_builtin, _robertjlooby$elm_generic_dict$GenericDict$LBlack, _p18._1);
+	} else {
+		return A6(_robertjlooby$elm_generic_dict$GenericDict$RBNode_elm_builtin, _robertjlooby$elm_generic_dict$GenericDict$Black, _p18._1, _p18._2, _p18._3, _p18._4, _p18._5);
+	}
+};
+var _robertjlooby$elm_generic_dict$GenericDict$redden = function (t) {
+	var _p19 = t;
+	if (_p19.ctor === 'RBEmpty_elm_builtin') {
+		return _elm_lang$core$Native_Utils.crashCase(
+			'GenericDict',
+			{
+				start: {line: 488, column: 5},
+				end: {line: 493, column: 52}
+			},
+			_p19)('can\'t make a Leaf red');
+	} else {
+		return A6(_robertjlooby$elm_generic_dict$GenericDict$RBNode_elm_builtin, _robertjlooby$elm_generic_dict$GenericDict$Red, _p19._1, _p19._2, _p19._3, _p19._4, _p19._5);
+	}
+};
+var _robertjlooby$elm_generic_dict$GenericDict$balanceHelp = function (tree) {
+	var _p21 = tree;
+	_v32_6:
+	do {
+		_v32_5:
+		do {
+			_v32_4:
+			do {
+				_v32_3:
+				do {
+					_v32_2:
+					do {
+						_v32_1:
+						do {
+							_v32_0:
+							do {
+								if (_p21.ctor === 'RBNode_elm_builtin') {
+									if (_p21._3.ctor === 'RBNode_elm_builtin') {
+										if (_p21._4.ctor === 'RBNode_elm_builtin') {
+											switch (_p21._3._0.ctor) {
+												case 'Red':
+													switch (_p21._4._0.ctor) {
+														case 'Red':
+															if ((_p21._3._3.ctor === 'RBNode_elm_builtin') && (_p21._3._3._0.ctor === 'Red')) {
+																break _v32_0;
+															} else {
+																if ((_p21._3._4.ctor === 'RBNode_elm_builtin') && (_p21._3._4._0.ctor === 'Red')) {
+																	break _v32_1;
+																} else {
+																	if ((_p21._4._3.ctor === 'RBNode_elm_builtin') && (_p21._4._3._0.ctor === 'Red')) {
+																		break _v32_2;
+																	} else {
+																		if ((_p21._4._4.ctor === 'RBNode_elm_builtin') && (_p21._4._4._0.ctor === 'Red')) {
+																			break _v32_3;
+																		} else {
+																			break _v32_6;
+																		}
+																	}
+																}
+															}
+														case 'NBlack':
+															if ((_p21._3._3.ctor === 'RBNode_elm_builtin') && (_p21._3._3._0.ctor === 'Red')) {
+																break _v32_0;
+															} else {
+																if ((_p21._3._4.ctor === 'RBNode_elm_builtin') && (_p21._3._4._0.ctor === 'Red')) {
+																	break _v32_1;
+																} else {
+																	if (((((_p21._0.ctor === 'BBlack') && (_p21._4._3.ctor === 'RBNode_elm_builtin')) && (_p21._4._3._0.ctor === 'Black')) && (_p21._4._4.ctor === 'RBNode_elm_builtin')) && (_p21._4._4._0.ctor === 'Black')) {
+																		break _v32_4;
+																	} else {
+																		break _v32_6;
+																	}
+																}
+															}
+														default:
+															if ((_p21._3._3.ctor === 'RBNode_elm_builtin') && (_p21._3._3._0.ctor === 'Red')) {
+																break _v32_0;
+															} else {
+																if ((_p21._3._4.ctor === 'RBNode_elm_builtin') && (_p21._3._4._0.ctor === 'Red')) {
+																	break _v32_1;
+																} else {
+																	break _v32_6;
+																}
+															}
+													}
+												case 'NBlack':
+													switch (_p21._4._0.ctor) {
+														case 'Red':
+															if ((_p21._4._3.ctor === 'RBNode_elm_builtin') && (_p21._4._3._0.ctor === 'Red')) {
+																break _v32_2;
+															} else {
+																if ((_p21._4._4.ctor === 'RBNode_elm_builtin') && (_p21._4._4._0.ctor === 'Red')) {
+																	break _v32_3;
+																} else {
+																	if (((((_p21._0.ctor === 'BBlack') && (_p21._3._3.ctor === 'RBNode_elm_builtin')) && (_p21._3._3._0.ctor === 'Black')) && (_p21._3._4.ctor === 'RBNode_elm_builtin')) && (_p21._3._4._0.ctor === 'Black')) {
+																		break _v32_5;
+																	} else {
+																		break _v32_6;
+																	}
+																}
+															}
+														case 'NBlack':
+															if (_p21._0.ctor === 'BBlack') {
+																if ((((_p21._4._3.ctor === 'RBNode_elm_builtin') && (_p21._4._3._0.ctor === 'Black')) && (_p21._4._4.ctor === 'RBNode_elm_builtin')) && (_p21._4._4._0.ctor === 'Black')) {
+																	break _v32_4;
+																} else {
+																	if ((((_p21._3._3.ctor === 'RBNode_elm_builtin') && (_p21._3._3._0.ctor === 'Black')) && (_p21._3._4.ctor === 'RBNode_elm_builtin')) && (_p21._3._4._0.ctor === 'Black')) {
+																		break _v32_5;
+																	} else {
+																		break _v32_6;
+																	}
+																}
+															} else {
+																break _v32_6;
+															}
+														default:
+															if (((((_p21._0.ctor === 'BBlack') && (_p21._3._3.ctor === 'RBNode_elm_builtin')) && (_p21._3._3._0.ctor === 'Black')) && (_p21._3._4.ctor === 'RBNode_elm_builtin')) && (_p21._3._4._0.ctor === 'Black')) {
+																break _v32_5;
+															} else {
+																break _v32_6;
+															}
+													}
+												default:
+													switch (_p21._4._0.ctor) {
+														case 'Red':
+															if ((_p21._4._3.ctor === 'RBNode_elm_builtin') && (_p21._4._3._0.ctor === 'Red')) {
+																break _v32_2;
+															} else {
+																if ((_p21._4._4.ctor === 'RBNode_elm_builtin') && (_p21._4._4._0.ctor === 'Red')) {
+																	break _v32_3;
+																} else {
+																	break _v32_6;
+																}
+															}
+														case 'NBlack':
+															if (((((_p21._0.ctor === 'BBlack') && (_p21._4._3.ctor === 'RBNode_elm_builtin')) && (_p21._4._3._0.ctor === 'Black')) && (_p21._4._4.ctor === 'RBNode_elm_builtin')) && (_p21._4._4._0.ctor === 'Black')) {
+																break _v32_4;
+															} else {
+																break _v32_6;
+															}
+														default:
+															break _v32_6;
+													}
+											}
+										} else {
+											switch (_p21._3._0.ctor) {
+												case 'Red':
+													if ((_p21._3._3.ctor === 'RBNode_elm_builtin') && (_p21._3._3._0.ctor === 'Red')) {
+														break _v32_0;
+													} else {
+														if ((_p21._3._4.ctor === 'RBNode_elm_builtin') && (_p21._3._4._0.ctor === 'Red')) {
+															break _v32_1;
+														} else {
+															break _v32_6;
+														}
+													}
+												case 'NBlack':
+													if (((((_p21._0.ctor === 'BBlack') && (_p21._3._3.ctor === 'RBNode_elm_builtin')) && (_p21._3._3._0.ctor === 'Black')) && (_p21._3._4.ctor === 'RBNode_elm_builtin')) && (_p21._3._4._0.ctor === 'Black')) {
+														break _v32_5;
+													} else {
+														break _v32_6;
+													}
+												default:
+													break _v32_6;
+											}
+										}
+									} else {
+										if (_p21._4.ctor === 'RBNode_elm_builtin') {
+											switch (_p21._4._0.ctor) {
+												case 'Red':
+													if ((_p21._4._3.ctor === 'RBNode_elm_builtin') && (_p21._4._3._0.ctor === 'Red')) {
+														break _v32_2;
+													} else {
+														if ((_p21._4._4.ctor === 'RBNode_elm_builtin') && (_p21._4._4._0.ctor === 'Red')) {
+															break _v32_3;
+														} else {
+															break _v32_6;
+														}
+													}
+												case 'NBlack':
+													if (((((_p21._0.ctor === 'BBlack') && (_p21._4._3.ctor === 'RBNode_elm_builtin')) && (_p21._4._3._0.ctor === 'Black')) && (_p21._4._4.ctor === 'RBNode_elm_builtin')) && (_p21._4._4._0.ctor === 'Black')) {
+														break _v32_4;
+													} else {
+														break _v32_6;
+													}
+												default:
+													break _v32_6;
+											}
+										} else {
+											break _v32_6;
+										}
+									}
+								} else {
+									break _v32_6;
+								}
+							} while(false);
+							return _robertjlooby$elm_generic_dict$GenericDict$balancedTree(_p21._0)(_p21._3._3._1)(_p21._3._3._2)(_p21._3._1)(_p21._3._2)(_p21._1)(_p21._2)(_p21._3._3._3)(_p21._3._3._4)(_p21._3._4)(_p21._4)(_p21._5);
+						} while(false);
+						return _robertjlooby$elm_generic_dict$GenericDict$balancedTree(_p21._0)(_p21._3._1)(_p21._3._2)(_p21._3._4._1)(_p21._3._4._2)(_p21._1)(_p21._2)(_p21._3._3)(_p21._3._4._3)(_p21._3._4._4)(_p21._4)(_p21._5);
+					} while(false);
+					return _robertjlooby$elm_generic_dict$GenericDict$balancedTree(_p21._0)(_p21._1)(_p21._2)(_p21._4._3._1)(_p21._4._3._2)(_p21._4._1)(_p21._4._2)(_p21._3)(_p21._4._3._3)(_p21._4._3._4)(_p21._4._4)(_p21._5);
+				} while(false);
+				return _robertjlooby$elm_generic_dict$GenericDict$balancedTree(_p21._0)(_p21._1)(_p21._2)(_p21._4._1)(_p21._4._2)(_p21._4._4._1)(_p21._4._4._2)(_p21._3)(_p21._4._3)(_p21._4._4._3)(_p21._4._4._4)(_p21._5);
+			} while(false);
+			var _p22 = _p21._5;
+			return A6(
+				_robertjlooby$elm_generic_dict$GenericDict$RBNode_elm_builtin,
+				_robertjlooby$elm_generic_dict$GenericDict$Black,
+				_p21._4._3._1,
+				_p21._4._3._2,
+				A6(_robertjlooby$elm_generic_dict$GenericDict$RBNode_elm_builtin, _robertjlooby$elm_generic_dict$GenericDict$Black, _p21._1, _p21._2, _p21._3, _p21._4._3._3, _p22),
+				A5(
+					_robertjlooby$elm_generic_dict$GenericDict$balance,
+					_robertjlooby$elm_generic_dict$GenericDict$Black,
+					_p21._4._1,
+					_p21._4._2,
+					_p21._4._3._4,
+					_robertjlooby$elm_generic_dict$GenericDict$redden(_p21._4._4)),
+				_p22);
+		} while(false);
+		var _p23 = _p21._5;
+		return A6(
+			_robertjlooby$elm_generic_dict$GenericDict$RBNode_elm_builtin,
+			_robertjlooby$elm_generic_dict$GenericDict$Black,
+			_p21._3._4._1,
+			_p21._3._4._2,
+			A5(
+				_robertjlooby$elm_generic_dict$GenericDict$balance,
+				_robertjlooby$elm_generic_dict$GenericDict$Black,
+				_p21._3._1,
+				_p21._3._2,
+				_robertjlooby$elm_generic_dict$GenericDict$redden(_p21._3._3),
+				_p21._3._4._3),
+			A6(_robertjlooby$elm_generic_dict$GenericDict$RBNode_elm_builtin, _robertjlooby$elm_generic_dict$GenericDict$Black, _p21._1, _p21._2, _p21._3._4._4, _p21._4, _p23),
+			_p23);
+	} while(false);
+	return tree;
+};
+var _robertjlooby$elm_generic_dict$GenericDict$balance = F5(
+	function (c, k, v, l, r) {
+		var tree = A6(
+			_robertjlooby$elm_generic_dict$GenericDict$RBNode_elm_builtin,
+			c,
+			k,
+			v,
+			l,
+			r,
+			_robertjlooby$elm_generic_dict$GenericDict$getComparer(l));
+		return _robertjlooby$elm_generic_dict$GenericDict$blackish(tree) ? _robertjlooby$elm_generic_dict$GenericDict$balanceHelp(tree) : tree;
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$bubble = F5(
+	function (c, k, v, l, r) {
+		return (_robertjlooby$elm_generic_dict$GenericDict$isBBlack(l) || _robertjlooby$elm_generic_dict$GenericDict$isBBlack(r)) ? A5(
+			_robertjlooby$elm_generic_dict$GenericDict$balance,
+			_robertjlooby$elm_generic_dict$GenericDict$moreBlack(c),
+			k,
+			v,
+			_robertjlooby$elm_generic_dict$GenericDict$lessBlackTree(l),
+			_robertjlooby$elm_generic_dict$GenericDict$lessBlackTree(r)) : A6(
+			_robertjlooby$elm_generic_dict$GenericDict$RBNode_elm_builtin,
+			c,
+			k,
+			v,
+			l,
+			r,
+			_robertjlooby$elm_generic_dict$GenericDict$getComparer(l));
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$removeMax = F5(
+	function (c, k, v, l, r) {
+		var _p24 = r;
+		if (_p24.ctor === 'RBEmpty_elm_builtin') {
+			return A3(_robertjlooby$elm_generic_dict$GenericDict$rem, c, l, r);
+		} else {
+			return A5(
+				_robertjlooby$elm_generic_dict$GenericDict$bubble,
+				c,
+				k,
+				v,
+				l,
+				A5(_robertjlooby$elm_generic_dict$GenericDict$removeMax, _p24._0, _p24._1, _p24._2, _p24._3, _p24._4));
+		}
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$rem = F3(
+	function (color, left, right) {
+		var _p25 = {ctor: '_Tuple2', _0: left, _1: right};
+		if (_p25._0.ctor === 'RBEmpty_elm_builtin') {
+			if (_p25._1.ctor === 'RBEmpty_elm_builtin') {
+				var _p28 = _p25._0._1;
+				var _p26 = color;
+				switch (_p26.ctor) {
+					case 'Red':
+						return A2(_robertjlooby$elm_generic_dict$GenericDict$RBEmpty_elm_builtin, _robertjlooby$elm_generic_dict$GenericDict$LBlack, _p28);
+					case 'Black':
+						return A2(_robertjlooby$elm_generic_dict$GenericDict$RBEmpty_elm_builtin, _robertjlooby$elm_generic_dict$GenericDict$LBBlack, _p28);
+					default:
+						return _elm_lang$core$Native_Utils.crashCase(
+							'GenericDict',
+							{
+								start: {line: 364, column: 13},
+								end: {line: 372, column: 83}
+							},
+							_p26)('cannot have bblack or nblack nodes at this point');
+				}
+			} else {
+				var _p31 = _p25._1._0;
+				var _p30 = _p25._0._0;
+				var _p29 = {ctor: '_Tuple3', _0: color, _1: _p30, _2: _p31};
+				if ((((_p29.ctor === '_Tuple3') && (_p29._0.ctor === 'Black')) && (_p29._1.ctor === 'LBlack')) && (_p29._2.ctor === 'Red')) {
+					return A6(_robertjlooby$elm_generic_dict$GenericDict$RBNode_elm_builtin, _robertjlooby$elm_generic_dict$GenericDict$Black, _p25._1._1, _p25._1._2, _p25._1._3, _p25._1._4, _p25._0._1);
+				} else {
+					return A4(
+						_robertjlooby$elm_generic_dict$GenericDict$reportRemBug,
+						'Black/LBlack/Red',
+						color,
+						_elm_lang$core$Basics$toString(_p30),
+						_elm_lang$core$Basics$toString(_p31));
+				}
+			}
+		} else {
+			if (_p25._1.ctor === 'RBEmpty_elm_builtin') {
+				var _p34 = _p25._1._0;
+				var _p33 = _p25._0._0;
+				var _p32 = {ctor: '_Tuple3', _0: color, _1: _p33, _2: _p34};
+				if ((((_p32.ctor === '_Tuple3') && (_p32._0.ctor === 'Black')) && (_p32._1.ctor === 'Red')) && (_p32._2.ctor === 'LBlack')) {
+					return A6(_robertjlooby$elm_generic_dict$GenericDict$RBNode_elm_builtin, _robertjlooby$elm_generic_dict$GenericDict$Black, _p25._0._1, _p25._0._2, _p25._0._3, _p25._0._4, _p25._0._5);
+				} else {
+					return A4(
+						_robertjlooby$elm_generic_dict$GenericDict$reportRemBug,
+						'Black/Red/LBlack',
+						color,
+						_elm_lang$core$Basics$toString(_p33),
+						_elm_lang$core$Basics$toString(_p34));
+				}
+			} else {
+				var _p38 = _p25._0._2;
+				var _p37 = _p25._0._4;
+				var _p36 = _p25._0._1;
+				var newLeft = A5(_robertjlooby$elm_generic_dict$GenericDict$removeMax, _p25._0._0, _p36, _p38, _p25._0._3, _p37);
+				var _p35 = A3(_robertjlooby$elm_generic_dict$GenericDict$maxWithDefault, _p36, _p38, _p37);
+				var k = _p35._0;
+				var v = _p35._1;
+				return A5(_robertjlooby$elm_generic_dict$GenericDict$bubble, color, k, v, newLeft, right);
+			}
+		}
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$map = F2(
+	function (f, dict) {
+		var _p39 = dict;
+		if (_p39.ctor === 'RBEmpty_elm_builtin') {
+			return A2(_robertjlooby$elm_generic_dict$GenericDict$RBEmpty_elm_builtin, _robertjlooby$elm_generic_dict$GenericDict$LBlack, _p39._1);
+		} else {
+			var _p40 = _p39._1;
+			return A6(
+				_robertjlooby$elm_generic_dict$GenericDict$RBNode_elm_builtin,
+				_p39._0,
+				_p40,
+				A2(f, _p40, _p39._2),
+				A2(_robertjlooby$elm_generic_dict$GenericDict$map, f, _p39._3),
+				A2(_robertjlooby$elm_generic_dict$GenericDict$map, f, _p39._4),
+				_p39._5);
+		}
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$Same = {ctor: 'Same'};
+var _robertjlooby$elm_generic_dict$GenericDict$Remove = {ctor: 'Remove'};
+var _robertjlooby$elm_generic_dict$GenericDict$Insert = {ctor: 'Insert'};
+var _robertjlooby$elm_generic_dict$GenericDict$update = F3(
+	function (k, alter, dict) {
+		var up = function (dict) {
+			var _p41 = dict;
+			if (_p41.ctor === 'RBEmpty_elm_builtin') {
+				var _p43 = _p41._1;
+				var _p42 = alter(_elm_lang$core$Maybe$Nothing);
+				if (_p42.ctor === 'Nothing') {
+					return {
+						ctor: '_Tuple2',
+						_0: _robertjlooby$elm_generic_dict$GenericDict$Same,
+						_1: _robertjlooby$elm_generic_dict$GenericDict$empty(_p43)
+					};
+				} else {
+					return {
+						ctor: '_Tuple2',
+						_0: _robertjlooby$elm_generic_dict$GenericDict$Insert,
+						_1: A6(
+							_robertjlooby$elm_generic_dict$GenericDict$RBNode_elm_builtin,
+							_robertjlooby$elm_generic_dict$GenericDict$Red,
+							k,
+							_p42._0,
+							_robertjlooby$elm_generic_dict$GenericDict$empty(_p43),
+							_robertjlooby$elm_generic_dict$GenericDict$empty(_p43),
+							_p43)
+					};
+				}
+			} else {
+				var _p55 = _p41._2;
+				var _p54 = _p41._4;
+				var _p53 = _p41._3;
+				var _p52 = _p41._1;
+				var _p51 = _p41._5;
+				var _p50 = _p41._0;
+				var _p44 = A2(_p51, k, _p52);
+				switch (_p44.ctor) {
+					case 'EQ':
+						var _p45 = alter(
+							_elm_lang$core$Maybe$Just(_p55));
+						if (_p45.ctor === 'Nothing') {
+							return {
+								ctor: '_Tuple2',
+								_0: _robertjlooby$elm_generic_dict$GenericDict$Remove,
+								_1: A3(_robertjlooby$elm_generic_dict$GenericDict$rem, _p50, _p53, _p54)
+							};
+						} else {
+							return {
+								ctor: '_Tuple2',
+								_0: _robertjlooby$elm_generic_dict$GenericDict$Same,
+								_1: A6(_robertjlooby$elm_generic_dict$GenericDict$RBNode_elm_builtin, _p50, _p52, _p45._0, _p53, _p54, _p51)
+							};
+						}
+					case 'LT':
+						var _p46 = up(_p53);
+						var flag = _p46._0;
+						var newLeft = _p46._1;
+						var _p47 = flag;
+						switch (_p47.ctor) {
+							case 'Same':
+								return {
+									ctor: '_Tuple2',
+									_0: _robertjlooby$elm_generic_dict$GenericDict$Same,
+									_1: A6(_robertjlooby$elm_generic_dict$GenericDict$RBNode_elm_builtin, _p50, _p52, _p55, newLeft, _p54, _p51)
+								};
+							case 'Insert':
+								return {
+									ctor: '_Tuple2',
+									_0: _robertjlooby$elm_generic_dict$GenericDict$Insert,
+									_1: A5(_robertjlooby$elm_generic_dict$GenericDict$balance, _p50, _p52, _p55, newLeft, _p54)
+								};
+							default:
+								return {
+									ctor: '_Tuple2',
+									_0: _robertjlooby$elm_generic_dict$GenericDict$Remove,
+									_1: A5(_robertjlooby$elm_generic_dict$GenericDict$bubble, _p50, _p52, _p55, newLeft, _p54)
+								};
+						}
+					default:
+						var _p48 = up(_p54);
+						var flag = _p48._0;
+						var newRight = _p48._1;
+						var _p49 = flag;
+						switch (_p49.ctor) {
+							case 'Same':
+								return {
+									ctor: '_Tuple2',
+									_0: _robertjlooby$elm_generic_dict$GenericDict$Same,
+									_1: A6(_robertjlooby$elm_generic_dict$GenericDict$RBNode_elm_builtin, _p50, _p52, _p55, _p53, newRight, _p51)
+								};
+							case 'Insert':
+								return {
+									ctor: '_Tuple2',
+									_0: _robertjlooby$elm_generic_dict$GenericDict$Insert,
+									_1: A5(_robertjlooby$elm_generic_dict$GenericDict$balance, _p50, _p52, _p55, _p53, newRight)
+								};
+							default:
+								return {
+									ctor: '_Tuple2',
+									_0: _robertjlooby$elm_generic_dict$GenericDict$Remove,
+									_1: A5(_robertjlooby$elm_generic_dict$GenericDict$bubble, _p50, _p52, _p55, _p53, newRight)
+								};
+						}
+				}
+			}
+		};
+		var _p56 = up(dict);
+		var flag = _p56._0;
+		var updatedDict = _p56._1;
+		var _p57 = flag;
+		switch (_p57.ctor) {
+			case 'Same':
+				return updatedDict;
+			case 'Insert':
+				return _robertjlooby$elm_generic_dict$GenericDict$ensureBlackRoot(updatedDict);
+			default:
+				return _robertjlooby$elm_generic_dict$GenericDict$blacken(updatedDict);
+		}
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$insert = F3(
+	function (key, value, dict) {
+		return A3(
+			_robertjlooby$elm_generic_dict$GenericDict$update,
+			key,
+			_elm_lang$core$Basics$always(
+				_elm_lang$core$Maybe$Just(value)),
+			dict);
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$singleton = F3(
+	function (comparer, key, value) {
+		return A3(
+			_robertjlooby$elm_generic_dict$GenericDict$insert,
+			key,
+			value,
+			_robertjlooby$elm_generic_dict$GenericDict$empty(comparer));
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$union = F2(
+	function (t1, t2) {
+		var comparer = _robertjlooby$elm_generic_dict$GenericDict$getComparer(t1);
+		var reOrderedT2 = A3(
+			_robertjlooby$elm_generic_dict$GenericDict$foldl,
+			_robertjlooby$elm_generic_dict$GenericDict$insert,
+			_robertjlooby$elm_generic_dict$GenericDict$empty(comparer),
+			t2);
+		return A3(_robertjlooby$elm_generic_dict$GenericDict$foldl, _robertjlooby$elm_generic_dict$GenericDict$insert, reOrderedT2, t1);
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$fromList = F2(
+	function (comparer, assocs) {
+		return A3(
+			_elm_lang$core$List$foldl,
+			F2(
+				function (_p58, dict) {
+					var _p59 = _p58;
+					return A3(_robertjlooby$elm_generic_dict$GenericDict$insert, _p59._0, _p59._1, dict);
+				}),
+			_robertjlooby$elm_generic_dict$GenericDict$empty(comparer),
+			assocs);
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$filter = F2(
+	function (predicate, dictionary) {
+		var add = F3(
+			function (key, value, dict) {
+				return A2(predicate, key, value) ? A3(_robertjlooby$elm_generic_dict$GenericDict$insert, key, value, dict) : dict;
+			});
+		return A3(
+			_robertjlooby$elm_generic_dict$GenericDict$foldl,
+			add,
+			_robertjlooby$elm_generic_dict$GenericDict$empty(
+				_robertjlooby$elm_generic_dict$GenericDict$getComparer(dictionary)),
+			dictionary);
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$intersect = F2(
+	function (t1, t2) {
+		return A2(
+			_robertjlooby$elm_generic_dict$GenericDict$filter,
+			F2(
+				function (k, _p60) {
+					return A2(_robertjlooby$elm_generic_dict$GenericDict$member, k, t2);
+				}),
+			t1);
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$partition = F2(
+	function (predicate, dict) {
+		var add = F3(
+			function (key, value, _p61) {
+				var _p62 = _p61;
+				var _p64 = _p62._1;
+				var _p63 = _p62._0;
+				return A2(predicate, key, value) ? {
+					ctor: '_Tuple2',
+					_0: A3(_robertjlooby$elm_generic_dict$GenericDict$insert, key, value, _p63),
+					_1: _p64
+				} : {
+					ctor: '_Tuple2',
+					_0: _p63,
+					_1: A3(_robertjlooby$elm_generic_dict$GenericDict$insert, key, value, _p64)
+				};
+			});
+		var comparer = _robertjlooby$elm_generic_dict$GenericDict$getComparer(dict);
+		return A3(
+			_robertjlooby$elm_generic_dict$GenericDict$foldl,
+			add,
+			{
+				ctor: '_Tuple2',
+				_0: _robertjlooby$elm_generic_dict$GenericDict$empty(comparer),
+				_1: _robertjlooby$elm_generic_dict$GenericDict$empty(comparer)
+			},
+			dict);
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$remove = F2(
+	function (key, dict) {
+		return A3(
+			_robertjlooby$elm_generic_dict$GenericDict$update,
+			key,
+			_elm_lang$core$Basics$always(_elm_lang$core$Maybe$Nothing),
+			dict);
+	});
+var _robertjlooby$elm_generic_dict$GenericDict$diff = F2(
+	function (t1, t2) {
+		return A3(
+			_robertjlooby$elm_generic_dict$GenericDict$foldl,
+			F3(
+				function (k, v, t) {
+					return A2(_robertjlooby$elm_generic_dict$GenericDict$remove, k, t);
+				}),
+			t1,
+			t2);
+	});
+var _robertjlooby$elm_generic_dict$GenericSet$foldr = F3(
+	function (f, b, _p0) {
+		var _p1 = _p0;
+		return A3(
+			_robertjlooby$elm_generic_dict$GenericDict$foldr,
+			F3(
+				function (k, _p2, b) {
+					return A2(f, k, b);
+				}),
+			b,
+			_p1._0);
+	});
+var _robertjlooby$elm_generic_dict$GenericSet$foldl = F3(
+	function (f, b, _p3) {
+		var _p4 = _p3;
+		return A3(
+			_robertjlooby$elm_generic_dict$GenericDict$foldl,
+			F3(
+				function (k, _p5, b) {
+					return A2(f, k, b);
+				}),
+			b,
+			_p4._0);
+	});
+var _robertjlooby$elm_generic_dict$GenericSet$toList = function (_p6) {
+	var _p7 = _p6;
+	return _robertjlooby$elm_generic_dict$GenericDict$keys(_p7._0);
+};
+var _robertjlooby$elm_generic_dict$GenericSet$size = function (_p8) {
+	var _p9 = _p8;
+	return _robertjlooby$elm_generic_dict$GenericDict$size(_p9._0);
+};
+var _robertjlooby$elm_generic_dict$GenericSet$member = F2(
+	function (k, _p10) {
+		var _p11 = _p10;
+		return A2(_robertjlooby$elm_generic_dict$GenericDict$member, k, _p11._0);
+	});
+var _robertjlooby$elm_generic_dict$GenericSet$isEmpty = function (_p12) {
+	var _p13 = _p12;
+	return _robertjlooby$elm_generic_dict$GenericDict$isEmpty(_p13._0);
+};
+var _robertjlooby$elm_generic_dict$GenericSet$Set_elm_builtin = function (a) {
+	return {ctor: 'Set_elm_builtin', _0: a};
+};
+var _robertjlooby$elm_generic_dict$GenericSet$empty = function (comparer) {
+	return _robertjlooby$elm_generic_dict$GenericSet$Set_elm_builtin(
+		_robertjlooby$elm_generic_dict$GenericDict$empty(comparer));
+};
+var _robertjlooby$elm_generic_dict$GenericSet$singleton = F2(
+	function (comparer, k) {
+		return _robertjlooby$elm_generic_dict$GenericSet$Set_elm_builtin(
+			A3(
+				_robertjlooby$elm_generic_dict$GenericDict$singleton,
+				comparer,
+				k,
+				{ctor: '_Tuple0'}));
+	});
+var _robertjlooby$elm_generic_dict$GenericSet$insert = F2(
+	function (k, _p14) {
+		var _p15 = _p14;
+		return _robertjlooby$elm_generic_dict$GenericSet$Set_elm_builtin(
+			A3(
+				_robertjlooby$elm_generic_dict$GenericDict$insert,
+				k,
+				{ctor: '_Tuple0'},
+				_p15._0));
+	});
+var _robertjlooby$elm_generic_dict$GenericSet$fromList = F2(
+	function (comparer, xs) {
+		return A3(
+			_elm_lang$core$List$foldl,
+			_robertjlooby$elm_generic_dict$GenericSet$insert,
+			_robertjlooby$elm_generic_dict$GenericSet$empty(comparer),
+			xs);
+	});
+var _robertjlooby$elm_generic_dict$GenericSet$map = F3(
+	function (comparer, f, s) {
+		return A2(
+			_robertjlooby$elm_generic_dict$GenericSet$fromList,
+			comparer,
+			A2(
+				_elm_lang$core$List$map,
+				f,
+				_robertjlooby$elm_generic_dict$GenericSet$toList(s)));
+	});
+var _robertjlooby$elm_generic_dict$GenericSet$remove = F2(
+	function (k, _p16) {
+		var _p17 = _p16;
+		return _robertjlooby$elm_generic_dict$GenericSet$Set_elm_builtin(
+			A2(_robertjlooby$elm_generic_dict$GenericDict$remove, k, _p17._0));
+	});
+var _robertjlooby$elm_generic_dict$GenericSet$union = F2(
+	function (_p19, _p18) {
+		var _p20 = _p19;
+		var _p21 = _p18;
+		return _robertjlooby$elm_generic_dict$GenericSet$Set_elm_builtin(
+			A2(_robertjlooby$elm_generic_dict$GenericDict$union, _p20._0, _p21._0));
+	});
+var _robertjlooby$elm_generic_dict$GenericSet$intersect = F2(
+	function (_p23, _p22) {
+		var _p24 = _p23;
+		var _p25 = _p22;
+		return _robertjlooby$elm_generic_dict$GenericSet$Set_elm_builtin(
+			A2(_robertjlooby$elm_generic_dict$GenericDict$intersect, _p24._0, _p25._0));
+	});
+var _robertjlooby$elm_generic_dict$GenericSet$diff = F2(
+	function (_p27, _p26) {
+		var _p28 = _p27;
+		var _p29 = _p26;
+		return _robertjlooby$elm_generic_dict$GenericSet$Set_elm_builtin(
+			A2(_robertjlooby$elm_generic_dict$GenericDict$diff, _p28._0, _p29._0));
+	});
+var _robertjlooby$elm_generic_dict$GenericSet$filter = F2(
+	function (p, _p30) {
+		var _p31 = _p30;
+		return _robertjlooby$elm_generic_dict$GenericSet$Set_elm_builtin(
+			A2(
+				_robertjlooby$elm_generic_dict$GenericDict$filter,
+				F2(
+					function (k, _p32) {
+						return p(k);
+					}),
+				_p31._0));
+	});
+var _robertjlooby$elm_generic_dict$GenericSet$partition = F2(
+	function (p, _p33) {
+		var _p34 = _p33;
+		var _p35 = A2(
+			_robertjlooby$elm_generic_dict$GenericDict$partition,
+			F2(
+				function (k, _p36) {
+					return p(k);
+				}),
+			_p34._0);
+		var p1 = _p35._0;
+		var p2 = _p35._1;
+		return {
+			ctor: '_Tuple2',
+			_0: _robertjlooby$elm_generic_dict$GenericSet$Set_elm_builtin(p1),
+			_1: _robertjlooby$elm_generic_dict$GenericSet$Set_elm_builtin(p2)
+		};
+	});
 var _user$project$Point$max = F2(
 	function (a, b) {
 		return {
@@ -9491,8 +10711,156 @@ var _user$project$Circuit$connected = F4(
 					})
 			});
 	});
+var _user$project$Circuit$added = F2(
+	function (name, state) {
+		return _elm_lang$core$Native_Utils.update(
+			state,
+			{
+				circuitNames: A2(
+					_elm_lang$core$Basics_ops['++'],
+					state.circuitNames,
+					{
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: name, _1: _elm_lang$core$Maybe$Nothing},
+						_1: {ctor: '[]'}
+					})
+			});
+	});
+var _user$project$Circuit$comparePortNames = F2(
+	function (_p1, _p0) {
+		var _p2 = _p1;
+		var _p3 = _p0;
+		return A2(_elm_lang$core$Basics$compare, _p2._0, _p3._0);
+	});
+var _user$project$Circuit$compareCircuitNames = F2(
+	function (_p5, _p4) {
+		var _p6 = _p5;
+		var _p7 = _p4;
+		return A2(_elm_lang$core$Basics$compare, _p6._0, _p7._0);
+	});
+var _user$project$Circuit$comparePortReferences = F2(
+	function (_p9, _p8) {
+		var _p10 = _p9;
+		var _p13 = _p10._0;
+		var _p11 = _p8;
+		var _p12 = _p11._0;
+		var comparison = A2(_user$project$Circuit$compareCircuitNames, _p13.circuit, _p12.circuit);
+		return _elm_lang$core$Native_Utils.eq(comparison, _elm_lang$core$Basics$EQ) ? A2(_user$project$Circuit$comparePortNames, _p13.name, _p12.name) : comparison;
+	});
+var _user$project$Circuit$State = F4(
+	function (a, b, c, d) {
+		return {circuitNames: a, portNames: b, ports: c, connections: d};
+	});
+var _user$project$Circuit$CircuitName = function (a) {
+	return {ctor: 'CircuitName', _0: a};
+};
+var _user$project$Circuit$PortName = function (a) {
+	return {ctor: 'PortName', _0: a};
+};
+var _user$project$Circuit$Output = {ctor: 'Output'};
+var _user$project$Circuit$Input = {ctor: 'Input'};
+var _user$project$Circuit$Port = function (a) {
+	return {ctor: 'Port', _0: a};
+};
+var _user$project$Circuit$portAdded = F3(
+	function (name, _p14, state) {
+		var _p15 = _p14;
+		var _p16 = _p15._0;
+		return _elm_lang$core$Native_Utils.update(
+			state,
+			{
+				portNames: A2(
+					_elm_lang$core$Basics_ops['++'],
+					state.portNames,
+					{
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: name, _1: _p16.name},
+						_1: {ctor: '[]'}
+					}),
+				ports: A2(
+					_elm_lang$core$Basics_ops['++'],
+					state.ports,
+					{
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: name,
+							_1: _user$project$Circuit$Port(_p16)
+						},
+						_1: {ctor: '[]'}
+					})
+			});
+	});
+var _user$project$Circuit$port_ = F2(
+	function (name, direction) {
+		return _user$project$Circuit$Port(
+			{name: name, direction: direction});
+	});
+var _user$project$Circuit$PortReference = function (a) {
+	return {ctor: 'PortReference', _0: a};
+};
 var _user$project$Circuit$grouped = F3(
 	function (name, circuits, state) {
+		var connectedOutputs = A2(
+			_robertjlooby$elm_generic_dict$GenericSet$fromList,
+			_user$project$Circuit$comparePortReferences,
+			A2(
+				_elm_lang$core$List$map,
+				function (_) {
+					return _.from;
+				},
+				state.connections));
+		var allOutputs = A2(
+			_robertjlooby$elm_generic_dict$GenericSet$fromList,
+			_user$project$Circuit$comparePortReferences,
+			A2(
+				_elm_lang$core$List$filterMap,
+				function (_p17) {
+					var _p18 = _p17;
+					var _p20 = _p18._1._0;
+					var _p19 = _p18._0;
+					return (A2(_elm_lang$core$List$member, _p19, circuits) && _elm_lang$core$Native_Utils.eq(_p20.direction, _user$project$Circuit$Output)) ? _elm_lang$core$Maybe$Just(
+						_user$project$Circuit$PortReference(
+							{circuit: _p19, name: _p20.name})) : _elm_lang$core$Maybe$Nothing;
+				},
+				state.ports));
+		var unconnectedOutputs = A2(
+			_elm_lang$core$Debug$log,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				_elm_lang$core$Basics$toString(name),
+				' unconnectedOutputs'),
+			A2(_robertjlooby$elm_generic_dict$GenericSet$diff, allOutputs, connectedOutputs));
+		var connectedInputs = A2(
+			_robertjlooby$elm_generic_dict$GenericSet$fromList,
+			_user$project$Circuit$comparePortReferences,
+			A2(
+				_elm_lang$core$List$map,
+				function (_) {
+					return _.to;
+				},
+				state.connections));
+		var allInputs = A2(
+			_robertjlooby$elm_generic_dict$GenericSet$fromList,
+			_user$project$Circuit$comparePortReferences,
+			A2(
+				_elm_lang$core$List$filterMap,
+				function (_p21) {
+					var _p22 = _p21;
+					var _p24 = _p22._1._0;
+					var _p23 = _p22._0;
+					return (A2(_elm_lang$core$List$member, _p23, circuits) && _elm_lang$core$Native_Utils.eq(_p24.direction, _user$project$Circuit$Input)) ? _elm_lang$core$Maybe$Just(
+						_user$project$Circuit$PortReference(
+							{circuit: _p23, name: _p24.name})) : _elm_lang$core$Maybe$Nothing;
+				},
+				state.ports));
+		var unconnectedInputs = A2(
+			_elm_lang$core$Debug$log,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				_elm_lang$core$Basics$toString(name),
+				' unconnectedInputs'),
+			A2(_robertjlooby$elm_generic_dict$GenericSet$diff, allInputs, connectedInputs));
 		return _elm_lang$core$Native_Utils.update(
 			state,
 			{
@@ -9500,14 +10868,14 @@ var _user$project$Circuit$grouped = F3(
 					_elm_lang$core$Basics_ops['++'],
 					A2(
 						_elm_lang$core$List$map,
-						function (_p0) {
-							var _p1 = _p0;
-							var _p2 = _p1._0;
-							return A2(_elm_lang$core$List$member, _p2, circuits) ? {
+						function (_p25) {
+							var _p26 = _p25;
+							var _p27 = _p26._0;
+							return A2(_elm_lang$core$List$member, _p27, circuits) ? {
 								ctor: '_Tuple2',
-								_0: _p2,
+								_0: _p27,
 								_1: _elm_lang$core$Maybe$Just(name)
-							} : {ctor: '_Tuple2', _0: _p2, _1: _p1._1};
+							} : {ctor: '_Tuple2', _0: _p27, _1: _p26._1};
 						},
 						state.circuitNames),
 					{
@@ -9521,14 +10889,14 @@ var _user$project$Circuit$grouped = F3(
 						var connectionCircuits = {
 							ctor: '::',
 							_0: function () {
-								var _p3 = connection.from;
-								return _p3._0.circuit;
+								var _p28 = connection.from;
+								return _p28._0.circuit;
 							}(),
 							_1: {
 								ctor: '::',
 								_0: function () {
-									var _p4 = connection.to;
-									return _p4._0.circuit;
+									var _p29 = connection.to;
+									return _p29._0.circuit;
 								}(),
 								_1: {ctor: '[]'}
 							}
@@ -9547,61 +10915,31 @@ var _user$project$Circuit$grouped = F3(
 					state.connections)
 			});
 	});
-var _user$project$Circuit$portAdded = F3(
-	function (name, _p5, state) {
-		var _p6 = _p5;
-		return _elm_lang$core$Native_Utils.update(
-			state,
-			{
-				portNames: A2(
-					_elm_lang$core$Basics_ops['++'],
-					state.portNames,
-					{
-						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: name, _1: _p6._0.name},
-						_1: {ctor: '[]'}
-					})
-			});
-	});
-var _user$project$Circuit$added = F2(
-	function (name, state) {
-		return _elm_lang$core$Native_Utils.update(
-			state,
-			{
-				circuitNames: A2(
-					_elm_lang$core$Basics_ops['++'],
-					state.circuitNames,
-					{
-						ctor: '::',
-						_0: {ctor: '_Tuple2', _0: name, _1: _elm_lang$core$Maybe$Nothing},
-						_1: {ctor: '[]'}
-					})
-			});
-	});
 var _user$project$Circuit$apply = function (event) {
-	var _p7 = event;
-	switch (_p7.ctor) {
+	var _p30 = event;
+	switch (_p30.ctor) {
 		case 'Added':
-			return _user$project$Circuit$added(_p7._0);
+			return _user$project$Circuit$added(_p30._0);
 		case 'PortAdded':
-			return A2(_user$project$Circuit$portAdded, _p7._0, _p7._1);
+			return A2(_user$project$Circuit$portAdded, _p30._0, _p30._1);
 		case 'Grouped':
-			return A2(_user$project$Circuit$grouped, _p7._0, _p7._1);
+			return A2(_user$project$Circuit$grouped, _p30._0, _p30._1);
 		default:
-			return A3(_user$project$Circuit$connected, _p7._0, _p7._1, _p7._2);
+			return A3(_user$project$Circuit$connected, _p30._0, _p30._1, _p30._2);
 	}
 };
-var _user$project$Circuit$state = function (_p8) {
-	var _p9 = _p8;
+var _user$project$Circuit$state = function (_p31) {
+	var _p32 = _p31;
 	return A3(
 		_elm_lang$core$List$foldl,
 		_user$project$Circuit$apply,
 		{
 			circuitNames: {ctor: '[]'},
 			portNames: {ctor: '[]'},
+			ports: {ctor: '[]'},
 			connections: {ctor: '[]'}
 		},
-		_p9._0);
+		_p32._0);
 };
 var _user$project$Circuit$connectionsInGroup = F2(
 	function (name, circuit) {
@@ -9617,29 +10955,6 @@ var _user$project$Circuit$connectionsInGroup = F2(
 			}(
 				_user$project$Circuit$state(circuit)));
 	});
-var _user$project$Circuit$State = F3(
-	function (a, b, c) {
-		return {circuitNames: a, portNames: b, connections: c};
-	});
-var _user$project$Circuit$CircuitName = function (a) {
-	return {ctor: 'CircuitName', _0: a};
-};
-var _user$project$Circuit$PortName = function (a) {
-	return {ctor: 'PortName', _0: a};
-};
-var _user$project$Circuit$Output = {ctor: 'Output'};
-var _user$project$Circuit$Input = {ctor: 'Input'};
-var _user$project$Circuit$Port = function (a) {
-	return {ctor: 'Port', _0: a};
-};
-var _user$project$Circuit$port_ = F2(
-	function (name, direction) {
-		return _user$project$Circuit$Port(
-			{name: name, direction: direction});
-	});
-var _user$project$Circuit$PortReference = function (a) {
-	return {ctor: 'PortReference', _0: a};
-};
 var _user$project$Circuit$portReference = F2(
 	function (circuit, portName) {
 		return _user$project$Circuit$PortReference(
@@ -9667,12 +10982,12 @@ var _user$project$Circuit$Circuit = function (a) {
 	return {ctor: 'Circuit', _0: a};
 };
 var _user$project$Circuit$append = F2(
-	function (_p10, event) {
-		var _p11 = _p10;
+	function (_p33, event) {
+		var _p34 = _p33;
 		return _user$project$Circuit$Circuit(
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				_p11._0,
+				_p34._0,
 				{
 					ctor: '::',
 					_0: event,
@@ -9695,14 +11010,14 @@ var _user$project$Circuit$add = F2(
 			function (state) {
 				return A2(
 					_elm_lang$core$List$any,
-					function (_p12) {
+					function (_p35) {
 						return A2(
 							F2(
 								function (x, y) {
 									return _elm_lang$core$Native_Utils.eq(x, y);
 								}),
 							name,
-							_elm_lang$core$Tuple$first(_p12));
+							_elm_lang$core$Tuple$first(_p35));
 					},
 					state.circuitNames) ? _elm_lang$core$Result$Err(
 					A2(
@@ -9713,9 +11028,9 @@ var _user$project$Circuit$add = F2(
 			});
 	});
 var _user$project$Circuit$addPort = F3(
-	function (circuitName, _p13, circuit) {
-		var _p14 = _p13;
-		var _p15 = _p14._0;
+	function (circuitName, _p36, circuit) {
+		var _p37 = _p36;
+		var _p38 = _p37._0;
 		return A2(
 			_user$project$Circuit$execute,
 			circuit,
@@ -9726,7 +11041,7 @@ var _user$project$Circuit$addPort = F3(
 						function (x, y) {
 							return _elm_lang$core$Native_Utils.eq(x, y);
 						})(
-						{ctor: '_Tuple2', _0: circuitName, _1: _p15.name}),
+						{ctor: '_Tuple2', _0: circuitName, _1: _p38.name}),
 					state.portNames) ? _elm_lang$core$Result$Err(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
@@ -9737,11 +11052,11 @@ var _user$project$Circuit$addPort = F3(
 							A2(
 								_elm_lang$core$Basics_ops['++'],
 								' with name: ',
-								_elm_lang$core$Basics$toString(_p15.name))))) : _elm_lang$core$Result$Ok(
+								_elm_lang$core$Basics$toString(_p38.name))))) : _elm_lang$core$Result$Ok(
 					A2(
 						_user$project$Circuit$PortAdded,
 						circuitName,
-						_user$project$Circuit$Port(_p15)));
+						_user$project$Circuit$Port(_p38)));
 			});
 	});
 var _user$project$Circuit$group = F3(
@@ -9752,14 +11067,14 @@ var _user$project$Circuit$group = F3(
 			function (state) {
 				return A2(
 					_elm_lang$core$List$any,
-					function (_p16) {
+					function (_p39) {
 						return A2(
 							F2(
 								function (x, y) {
 									return _elm_lang$core$Native_Utils.eq(x, y);
 								}),
 							name,
-							_elm_lang$core$Tuple$first(_p16));
+							_elm_lang$core$Tuple$first(_p39));
 					},
 					state.circuitNames) ? _elm_lang$core$Result$Err(
 					A2(
@@ -9808,121 +11123,87 @@ var _user$project$Circuit$example = function () {
 	var gate3 = _user$project$Circuit$CircuitName('gate3');
 	var gate2 = _user$project$Circuit$CircuitName('gate2');
 	var gate1 = _user$project$Circuit$CircuitName('gate1');
-	var _p17 = A2(
+	var _p40 = A2(
 		_elm_lang$core$Result$andThen,
 		A2(
 			_user$project$Circuit$group,
-			circuit3,
+			circuit1,
 			{
 				ctor: '::',
-				_0: circuit1,
+				_0: gate1,
 				_1: {
 					ctor: '::',
-					_0: circuit2,
+					_0: gate2,
 					_1: {ctor: '[]'}
 				}
 			}),
 		A2(
 			_elm_lang$core$Result$andThen,
-			A2(
-				_user$project$Circuit$group,
-				circuit2,
-				{
-					ctor: '::',
-					_0: gate3,
-					_1: {
-						ctor: '::',
-						_0: gate4,
-						_1: {ctor: '[]'}
-					}
-				}),
+			A3(
+				_user$project$Circuit$connect,
+				connection2,
+				A2(_user$project$Circuit$portReference, gate1, output1),
+				A2(_user$project$Circuit$portReference, gate2, input2)),
 			A2(
 				_elm_lang$core$Result$andThen,
-				_user$project$Circuit$add(gate4),
+				A3(
+					_user$project$Circuit$connect,
+					connection1,
+					A2(_user$project$Circuit$portReference, gate1, output1),
+					A2(_user$project$Circuit$portReference, gate2, input1)),
 				A2(
 					_elm_lang$core$Result$andThen,
-					_user$project$Circuit$add(gate3),
+					A2(
+						_user$project$Circuit$addPort,
+						gate2,
+						A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
 					A2(
 						_elm_lang$core$Result$andThen,
 						A2(
-							_user$project$Circuit$group,
-							circuit1,
-							{
-								ctor: '::',
-								_0: gate1,
-								_1: {
-									ctor: '::',
-									_0: gate2,
-									_1: {ctor: '[]'}
-								}
-							}),
+							_user$project$Circuit$addPort,
+							gate2,
+							A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
 						A2(
 							_elm_lang$core$Result$andThen,
-							A3(
-								_user$project$Circuit$connect,
-								connection2,
-								A2(_user$project$Circuit$portReference, gate1, output1),
-								A2(_user$project$Circuit$portReference, gate2, input2)),
+							A2(
+								_user$project$Circuit$addPort,
+								gate2,
+								A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
 							A2(
 								_elm_lang$core$Result$andThen,
-								A3(
-									_user$project$Circuit$connect,
-									connection1,
-									A2(_user$project$Circuit$portReference, gate1, output1),
-									A2(_user$project$Circuit$portReference, gate2, input1)),
+								_user$project$Circuit$add(gate2),
 								A2(
 									_elm_lang$core$Result$andThen,
 									A2(
 										_user$project$Circuit$addPort,
-										gate2,
+										gate1,
 										A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
 									A2(
 										_elm_lang$core$Result$andThen,
 										A2(
 											_user$project$Circuit$addPort,
-											gate2,
+											gate1,
 											A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
 										A2(
 											_elm_lang$core$Result$andThen,
 											A2(
 												_user$project$Circuit$addPort,
-												gate2,
+												gate1,
 												A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
 											A2(
 												_elm_lang$core$Result$andThen,
-												_user$project$Circuit$add(gate2),
-												A2(
-													_elm_lang$core$Result$andThen,
-													A2(
-														_user$project$Circuit$addPort,
-														gate1,
-														A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
-													A2(
-														_elm_lang$core$Result$andThen,
-														A2(
-															_user$project$Circuit$addPort,
-															gate1,
-															A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
-														A2(
-															_elm_lang$core$Result$andThen,
-															A2(
-																_user$project$Circuit$addPort,
-																gate1,
-																A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
-															A2(
-																_elm_lang$core$Result$andThen,
-																_user$project$Circuit$add(gate1),
-																_user$project$Circuit$empty)))))))))))))));
-	if (_p17.ctor === 'Ok') {
-		return _p17._0;
+												_user$project$Circuit$add(gate1),
+												_user$project$Circuit$empty)))))))))));
+	if (_p40.ctor === 'Ok') {
+		return _p40._0;
 	} else {
 		return _elm_lang$core$Native_Utils.crashCase(
 			'Circuit',
 			{
-				start: {line: 301, column: 9},
-				end: {line: 334, column: 36}
+				start: {line: 387, column: 9},
+				end: {line: 420, column: 36}
 			},
-			_p17)(_p17._0);
+			_p40)(_p40._0);
 	}
 }();
 var _user$project$PrintAny$splitLine = function (line) {
@@ -11212,72 +12493,62 @@ var _user$project$Main$example = function () {
 				ctor: '::',
 				_0: {
 					ctor: '_Tuple3',
-					_0: 'fanout1',
+					_0: 'circuit1',
 					_1: _elm_lang$core$Maybe$Nothing,
 					_2: _user$project$Transform$translate(
-						{x: -25, y: 0})
+						{x: 50, y: 0})
 				},
 				_1: {
 					ctor: '::',
 					_0: {
 						ctor: '_Tuple3',
-						_0: 'circuit1',
-						_1: _elm_lang$core$Maybe$Nothing,
+						_0: 'gate3',
+						_1: _elm_lang$core$Maybe$Just(
+							_user$project$Shape$Circle(
+								{centre: _user$project$Point$zero, radius: 50, stroke: _user$project$Shape$Thin})),
 						_2: _user$project$Transform$translate(
-							{x: 50, y: 0})
+							{x: 0, y: 150})
 					},
 					_1: {
 						ctor: '::',
 						_0: {
 							ctor: '_Tuple3',
-							_0: 'gate3',
+							_0: 'gate4',
 							_1: _elm_lang$core$Maybe$Just(
-								_user$project$Shape$Circle(
-									{centre: _user$project$Point$zero, radius: 50, stroke: _user$project$Shape$Thin})),
+								_user$project$Shape$Path(
+									{
+										points: {
+											ctor: '::',
+											_0: _user$project$Point$zero,
+											_1: {
+												ctor: '::',
+												_0: {x: 25, y: -50},
+												_1: {
+													ctor: '::',
+													_0: {x: 50, y: 0},
+													_1: {ctor: '[]'}
+												}
+											}
+										},
+										closed: true,
+										stroke: _user$project$Shape$Thin
+									})),
 							_2: _user$project$Transform$translate(
-								{x: 0, y: 150})
+								{x: 60, y: 140})
 						},
 						_1: {
 							ctor: '::',
 							_0: {
 								ctor: '_Tuple3',
-								_0: 'gate4',
-								_1: _elm_lang$core$Maybe$Just(
-									_user$project$Shape$Path(
-										{
-											points: {
-												ctor: '::',
-												_0: _user$project$Point$zero,
-												_1: {
-													ctor: '::',
-													_0: {x: 25, y: -50},
-													_1: {
-														ctor: '::',
-														_0: {x: 50, y: 0},
-														_1: {ctor: '[]'}
-													}
-												}
-											},
-											closed: true,
-											stroke: _user$project$Shape$Thin
-										})),
+								_0: 'circuit2',
+								_1: _elm_lang$core$Maybe$Nothing,
 								_2: _user$project$Transform$translate(
-									{x: 60, y: 140})
+									{x: 0, y: 20})
 							},
 							_1: {
 								ctor: '::',
-								_0: {
-									ctor: '_Tuple3',
-									_0: 'circuit2',
-									_1: _elm_lang$core$Maybe$Nothing,
-									_2: _user$project$Transform$translate(
-										{x: 0, y: 20})
-								},
-								_1: {
-									ctor: '::',
-									_0: {ctor: '_Tuple3', _0: 'circuit3', _1: _elm_lang$core$Maybe$Nothing, _2: _user$project$Transform$identity},
-									_1: {ctor: '[]'}
-								}
+								_0: {ctor: '_Tuple3', _0: 'circuit3', _1: _elm_lang$core$Maybe$Nothing, _2: _user$project$Transform$identity},
+								_1: {ctor: '[]'}
 							}
 						}
 					}
@@ -11387,8 +12658,8 @@ var _user$project$Main$example = function () {
 										return _elm_lang$core$Native_Utils.crashCase(
 											'Main',
 											{
-												start: {line: 161, column: 53},
-												end: {line: 166, column: 105}
+												start: {line: 162, column: 53},
+												end: {line: 167, column: 105}
 											},
 											_p13)(
 											A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p25));
@@ -11540,8 +12811,8 @@ var _user$project$Main$example = function () {
 										return _elm_lang$core$Native_Utils.crashCase(
 											'Main',
 											{
-												start: {line: 319, column: 53},
-												end: {line: 324, column: 105}
+												start: {line: 320, column: 53},
+												end: {line: 325, column: 105}
 											},
 											_p27)(
 											A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p35));
