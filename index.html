@@ -11076,7 +11076,9 @@ var _user$project$Circuit$isGroup = F2(
 				_elm_lang$core$List$filter,
 				function (_p57) {
 					var _p58 = _p57;
-					return _elm_lang$core$Native_Utils.eq(_p58._0, name);
+					return _elm_lang$core$Native_Utils.eq(
+						_p58._1,
+						_elm_lang$core$Maybe$Just(name));
 				},
 				function (_) {
 					return _.circuitNames;
@@ -12641,7 +12643,7 @@ var _user$project$Main$connectionPath = F5(
 			_user$project$Point$zero,
 			_elm_lang$core$List$head(
 				function (points) {
-					return (!fromIsGroup) ? A2(
+					return fromIsGroup ? A2(
 						_elm_lang$core$List$drop,
 						_elm_lang$core$List$length(points) - 1,
 						points) : points;
@@ -12897,7 +12899,7 @@ var _user$project$Main$example = function () {
 									return A2(
 										_elm_lang$core$Result$andThen,
 										function (scene) {
-											return (!toIsGroup) ? _elm_lang$core$Result$Ok(scene) : A2(
+											return toIsGroup ? _elm_lang$core$Result$Ok(scene) : A2(
 												_user$project$Scene$select,
 												_user$project$Main$portName(_p19),
 												scene);
