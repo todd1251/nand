@@ -11836,6 +11836,12 @@ var _user$project$Scene$grouped = F3(
 	});
 var _user$project$Scene$parented = F3(
 	function (id, parent, state) {
+		var parentNode = A2(
+			_elm_lang$core$Maybe$map,
+			function (parent) {
+				return A3(_user$project$Scene$nodeForId, 'parented parent', parent, state.nodes);
+			},
+			parent);
 		var node = A3(_user$project$Scene$nodeForId, 'parented', id, state.nodes);
 		return _elm_lang$core$Native_Utils.update(
 			state,
@@ -11845,39 +11851,64 @@ var _user$project$Scene$parented = F3(
 					A2(
 						_elm_lang$core$List$filter,
 						function (node) {
-							return !_elm_lang$core$Native_Utils.eq(node.id, id);
+							return (!_elm_lang$core$Native_Utils.eq(node.id, id)) && (!_elm_lang$core$Native_Utils.eq(
+								_elm_lang$core$Maybe$Just(node.id),
+								parent));
 						},
 						state.nodes),
-					{
-						ctor: '::',
-						_0: _elm_lang$core$Native_Utils.update(
-							node,
-							{parent: parent}),
-						_1: {ctor: '[]'}
-					})
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						{
+							ctor: '::',
+							_0: _elm_lang$core$Native_Utils.update(
+								node,
+								{parent: parent}),
+							_1: {ctor: '[]'}
+						},
+						function () {
+							var _p9 = parentNode;
+							if (_p9.ctor === 'Just') {
+								var _p10 = _p9._0;
+								return {
+									ctor: '::',
+									_0: _elm_lang$core$Native_Utils.update(
+										_p10,
+										{
+											bounds: _user$project$Bounds$fromRectangle(
+												A2(
+													_user$project$Scene$enclose,
+													_user$project$Bounds$toRectangle(_p10.bounds),
+													node.bounds))
+										}),
+									_1: {ctor: '[]'}
+								};
+							} else {
+								return {ctor: '[]'};
+							}
+						}()))
 			});
 	});
 var _user$project$Scene$apply = function (event) {
-	var _p9 = event;
-	switch (_p9.ctor) {
+	var _p11 = event;
+	switch (_p11.ctor) {
 		case 'Inserted':
-			return A3(_user$project$Scene$inserted, _p9._0, _p9._1, _p9._2);
+			return A3(_user$project$Scene$inserted, _p11._0, _p11._1, _p11._2);
 		case 'Updated':
-			return A3(_user$project$Scene$updated, _p9._0, _p9._1, _p9._2);
+			return A3(_user$project$Scene$updated, _p11._0, _p11._1, _p11._2);
 		case 'Removed':
-			return _user$project$Scene$removed(_p9._0);
+			return _user$project$Scene$removed(_p11._0);
 		case 'Transformed':
-			return A2(_user$project$Scene$transformed, _p9._0, _p9._1);
+			return A2(_user$project$Scene$transformed, _p11._0, _p11._1);
 		case 'Grouped':
-			return A2(_user$project$Scene$grouped, _p9._0, _p9._1);
+			return A2(_user$project$Scene$grouped, _p11._0, _p11._1);
 		case 'Parented':
-			return A2(_user$project$Scene$parented, _p9._0, _p9._1);
+			return A2(_user$project$Scene$parented, _p11._0, _p11._1);
 		default:
-			return _user$project$Scene$selected(_p9._0);
+			return _user$project$Scene$selected(_p11._0);
 	}
 };
-var _user$project$Scene$state = function (_p10) {
-	var _p11 = _p10;
+var _user$project$Scene$state = function (_p12) {
+	var _p13 = _p12;
 	return A3(
 		_elm_lang$core$List$foldl,
 		_user$project$Scene$apply,
@@ -11885,7 +11916,7 @@ var _user$project$Scene$state = function (_p10) {
 			nodes: {ctor: '[]'},
 			selected: {ctor: '[]'}
 		},
-		_p11._0);
+		_p13._0);
 };
 var _user$project$Scene$selection = function (scene) {
 	return function (_) {
@@ -11909,7 +11940,7 @@ var _user$project$Scene$bounds = F2(
 	});
 var _user$project$Scene$node = F2(
 	function (id, scene) {
-		var _p12 = function (_) {
+		var _p14 = function (_) {
 			return _.node;
 		}(
 			A3(
@@ -11920,16 +11951,16 @@ var _user$project$Scene$node = F2(
 					return _.nodes;
 				}(
 					_user$project$Scene$state(scene))));
-		if (_p12.ctor === 'Just') {
-			return _p12._0;
+		if (_p14.ctor === 'Just') {
+			return _p14._0;
 		} else {
 			return _elm_lang$core$Native_Utils.crashCase(
 				'Scene',
 				{
-					start: {line: 409, column: 5},
-					end: {line: 420, column: 69}
+					start: {line: 426, column: 5},
+					end: {line: 437, column: 69}
 				},
-				_p12)(
+				_p14)(
 				A2(
 					_elm_lang$core$Basics_ops['++'],
 					'FIXME: no node with ID ',
@@ -11969,12 +12000,12 @@ var _user$project$Scene$transformAt = F2(
 		var transformAt1 = F2(
 			function (id, nodes) {
 				var node = A3(_user$project$Scene$nodeForId, 'transformAt', id, nodes);
-				var _p14 = node.parent;
-				if (_p14.ctor === 'Just') {
+				var _p16 = node.parent;
+				if (_p16.ctor === 'Just') {
 					return A2(
 						_user$project$Transform$combine,
 						node.transform,
-						A2(transformAt1, _p14._0, nodes));
+						A2(transformAt1, _p16._0, nodes));
 				} else {
 					return node.transform;
 				}
@@ -11991,14 +12022,14 @@ var _user$project$Scene$renderAbsolute = F3(
 	function (origin, renderer, scene) {
 		var render1 = F3(
 			function (parent, parentTransform, nodes) {
-				var _p15 = A2(
+				var _p17 = A2(
 					_elm_lang$core$List$partition,
 					function (node) {
 						return _elm_lang$core$Native_Utils.eq(node.parent, parent);
 					},
 					nodes);
-				var roots = _p15._0;
-				var others = _p15._1;
+				var roots = _p17._0;
+				var others = _p17._1;
 				return _elm_lang$core$List$concat(
 					A2(
 						_elm_lang$core$List$map,
@@ -12007,13 +12038,13 @@ var _user$project$Scene$renderAbsolute = F3(
 							return A2(
 								_elm_lang$core$Basics_ops['++'],
 								function () {
-									var _p16 = node.node;
-									if (_p16.ctor === 'Just') {
-										var _p17 = A2(renderer, _p16._0, transform);
-										if (_p17.ctor === 'Just') {
+									var _p18 = node.node;
+									if (_p18.ctor === 'Just') {
+										var _p19 = A2(renderer, _p18._0, transform);
+										if (_p19.ctor === 'Just') {
 											return {
 												ctor: '::',
-												_0: _p17._0,
+												_0: _p19._0,
 												_1: {ctor: '[]'}
 											};
 										} else {
@@ -12044,18 +12075,18 @@ var _user$project$Scene$renderRelative = F4(
 	function (origin, renderer, grouper, scene) {
 		var render1 = F3(
 			function (parent, parentTransform, nodes) {
-				var _p18 = A2(
+				var _p20 = A2(
 					_elm_lang$core$List$partition,
 					function (node) {
 						return _elm_lang$core$Native_Utils.eq(node.parent, parent);
 					},
 					nodes);
-				var roots = _p18._0;
-				var others = _p18._1;
+				var roots = _p20._0;
+				var others = _p20._1;
 				return function (nodes) {
-					var _p19 = parentTransform;
-					if (_p19.ctor === 'Just') {
-						return A2(grouper, _p19._0, nodes);
+					var _p21 = parentTransform;
+					if (_p21.ctor === 'Just') {
+						return A2(grouper, _p21._0, nodes);
 					} else {
 						return nodes;
 					}
@@ -12074,16 +12105,16 @@ var _user$project$Scene$renderRelative = F4(
 										},
 										others));
 								var self = function () {
-									var _p20 = node.node;
-									if (_p20.ctor === 'Just') {
-										var _p21 = A2(
+									var _p22 = node.node;
+									if (_p22.ctor === 'Just') {
+										var _p23 = A2(
 											renderer,
-											_p20._0,
+											_p22._0,
 											noChildren ? node.transform : _user$project$Transform$identity);
-										if (_p21.ctor === 'Just') {
+										if (_p23.ctor === 'Just') {
 											return {
 												ctor: '::',
-												_0: _p21._0,
+												_0: _p23._0,
 												_1: {ctor: '[]'}
 											};
 										} else {
@@ -12168,12 +12199,12 @@ var _user$project$Scene$Scene = function (a) {
 	return {ctor: 'Scene', _0: a};
 };
 var _user$project$Scene$append = F2(
-	function (_p22, event) {
-		var _p23 = _p22;
+	function (_p24, event) {
+		var _p25 = _p24;
 		return _user$project$Scene$Scene(
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				_p23._0,
+				_p25._0,
 				{
 					ctor: '::',
 					_0: event,
