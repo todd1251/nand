@@ -10991,9 +10991,9 @@ var _user$project$Circuit$grouped = F3(
 										_elm_lang$core$Basics_ops['++'],
 										'.connection',
 										_elm_lang$core$Basics$toString(_p47)))),
+							output,
 							_user$project$Circuit$PortReference(
 								{circuit: name, name: portName}),
-							output,
 							A3(
 								_user$project$Circuit$portAdded,
 								name,
@@ -11357,8 +11357,8 @@ var _user$project$Circuit$example = function () {
 		return _elm_lang$core$Native_Utils.crashCase(
 			'Circuit',
 			{
-				start: {line: 487, column: 9},
-				end: {line: 520, column: 36}
+				start: {line: 489, column: 9},
+				end: {line: 521, column: 36}
 			},
 			_p66)(_p66._0);
 	}
@@ -12694,11 +12694,17 @@ var _user$project$Main$connectionPath = F5(
 			_user$project$Point$zero,
 			_elm_lang$core$List$head(
 				function (points) {
-					return toIsGroup ? A2(
+					return A2(
 						_elm_lang$core$List$drop,
 						_elm_lang$core$List$length(points) - 1,
-						points) : points;
-				}(toPoints)));
+						points);
+				}(
+					A2(
+						_elm_lang$core$List$sortBy,
+						function (_) {
+							return _.x;
+						},
+						toPoints))));
 		var fromPoints = A2(
 			_user$project$Main$transformPoints,
 			_user$project$Main$portName(from),
@@ -12708,11 +12714,14 @@ var _user$project$Main$connectionPath = F5(
 			_user$project$Point$zero,
 			_elm_lang$core$List$head(
 				function (points) {
-					return fromIsGroup ? A2(
-						_elm_lang$core$List$drop,
-						_elm_lang$core$List$length(points) - 1,
-						points) : points;
-				}(fromPoints)));
+					return points;
+				}(
+					A2(
+						_elm_lang$core$List$sortBy,
+						function (_) {
+							return _.x;
+						},
+						fromPoints))));
 		var midX = fromPoint.x + ((toPoint.x - fromPoint.x) / 2);
 		var path = _user$project$Shape$Path(
 			{
@@ -12741,7 +12750,7 @@ var _user$project$Main$portPosition = F5(
 		var to = bounds.origin.y + ((bounds.size.height * 3) / 4);
 		var from = bounds.origin.y + ((bounds.size.height * 1) / 4);
 		var step = _elm_lang$core$Native_Utils.eq(steps, 0) ? 0 : ((to - from) / _elm_lang$core$Basics$toFloat(steps));
-		var y = _elm_lang$core$Native_Utils.eq(direction, _user$project$Circuit$Input) ? (_elm_lang$core$Native_Utils.eq(steps, 0) ? (from + ((to - from) / 2)) : (from + (step * _elm_lang$core$Basics$toFloat(index)))) : (bounds.origin.y + (bounds.size.height / 2));
+		var y = _elm_lang$core$Native_Utils.eq(steps, 0) ? (from + ((to - from) / 2)) : (from + (step * _elm_lang$core$Basics$toFloat(index)));
 		var _p6 = direction;
 		if (_p6.ctor === 'Input') {
 			return {x: bounds.origin.x, y: y};
@@ -13075,8 +13084,8 @@ var _user$project$Main$example = function () {
 											return _elm_lang$core$Native_Utils.crashCase(
 												'Main',
 												{
-													start: {line: 285, column: 53},
-													end: {line: 290, column: 105}
+													start: {line: 281, column: 53},
+													end: {line: 286, column: 105}
 												},
 												_p29)(
 												A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p33));
@@ -13188,8 +13197,8 @@ var _user$project$Main$example = function () {
 											return _elm_lang$core$Native_Utils.crashCase(
 												'Main',
 												{
-													start: {line: 375, column: 53},
-													end: {line: 380, column: 105}
+													start: {line: 371, column: 53},
+													end: {line: 376, column: 105}
 												},
 												_p42)(
 												A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p48));
