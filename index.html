@@ -10795,8 +10795,8 @@ var _user$project$Circuit$ConnectionName = function (a) {
 var _user$project$Circuit$Connection = function (a) {
 	return {ctor: 'Connection', _0: a};
 };
-var _user$project$Circuit$connected = F4(
-	function (name, from, to, state) {
+var _user$project$Circuit$connected = F5(
+	function (name, from, to, internal, state) {
 		return _elm_lang$core$Native_Utils.update(
 			state,
 			{
@@ -10806,7 +10806,7 @@ var _user$project$Circuit$connected = F4(
 					{
 						ctor: '::',
 						_0: _user$project$Circuit$Connection(
-							{name: name, from: from, to: to, parent: _elm_lang$core$Maybe$Nothing}),
+							{name: name, from: from, to: to, parent: _elm_lang$core$Maybe$Nothing, internal: internal}),
 						_1: {ctor: '[]'}
 					})
 			});
@@ -10864,7 +10864,8 @@ var _user$project$Circuit$grouped = F3(
 										function (circuit) {
 											return A2(_elm_lang$core$List$member, circuit, circuits);
 										},
-										connectionCircuits) ? _elm_lang$core$Maybe$Just(name) : _p24.parent
+										connectionCircuits) ? _elm_lang$core$Maybe$Just(name) : _p24.parent,
+									internal: false
 								}));
 					},
 					state.connections)
@@ -10937,7 +10938,7 @@ var _user$project$Circuit$grouped = F3(
 					}();
 					return {
 						ctor: '_Tuple3',
-						_0: A4(
+						_0: A5(
 							_user$project$Circuit$connected,
 							_user$project$Circuit$ConnectionName(
 								A2(
@@ -10950,6 +10951,7 @@ var _user$project$Circuit$grouped = F3(
 							_user$project$Circuit$PortReference(
 								{circuit: name, name: portName}),
 							input,
+							true,
 							A3(
 								_user$project$Circuit$portAdded,
 								name,
@@ -10981,7 +10983,7 @@ var _user$project$Circuit$grouped = F3(
 					}();
 					return {
 						ctor: '_Tuple3',
-						_0: A4(
+						_0: A5(
 							_user$project$Circuit$connected,
 							_user$project$Circuit$ConnectionName(
 								A2(
@@ -10994,6 +10996,7 @@ var _user$project$Circuit$grouped = F3(
 							output,
 							_user$project$Circuit$PortReference(
 								{circuit: name, name: portName}),
+							true,
 							A3(
 								_user$project$Circuit$portAdded,
 								name,
@@ -11018,7 +11021,7 @@ var _user$project$Circuit$apply = function (event) {
 		case 'Grouped':
 			return A2(_user$project$Circuit$grouped, _p49._0, _p49._1);
 		default:
-			return A3(_user$project$Circuit$connected, _p49._0, _p49._1, _p49._2);
+			return A4(_user$project$Circuit$connected, _p49._0, _p49._1, _p49._2, false);
 	}
 };
 var _user$project$Circuit$state = function (_p50) {
@@ -11357,8 +11360,8 @@ var _user$project$Circuit$example = function () {
 		return _elm_lang$core$Native_Utils.crashCase(
 			'Circuit',
 			{
-				start: {line: 489, column: 9},
-				end: {line: 521, column: 36}
+				start: {line: 494, column: 9},
+				end: {line: 526, column: 36}
 			},
 			_p66)(_p66._0);
 	}
@@ -12683,8 +12686,8 @@ var _user$project$Main$transformPoints = F2(
 				}
 			}());
 	});
-var _user$project$Main$connectionPath = F5(
-	function (from, fromIsGroup, to, toIsGroup, scene) {
+var _user$project$Main$connectionPath = F6(
+	function (from, fromIsGroup, to, toIsGroup, internal, scene) {
 		var toPoints = A2(
 			_user$project$Main$transformPoints,
 			_user$project$Main$portName(to),
@@ -12953,7 +12956,8 @@ var _user$project$Main$example = function () {
 						_elm_lang$core$List$foldl,
 						function (_p13) {
 							var _p14 = _p13;
-							var _p19 = _p14._0.to;
+							var _p20 = _p14._0.to;
+							var _p19 = _p14._0.internal;
 							var _p18 = _p14._0.from;
 							return _elm_lang$core$Result$andThen(
 								function (scene) {
@@ -12962,26 +12966,26 @@ var _user$project$Main$example = function () {
 										return _p15._0;
 									}();
 									var toIsGroup = function () {
-										var _p16 = _p19;
+										var _p16 = _p20;
 										return A2(_user$project$Circuit$isGroup, _p16._0.circuit, circuit);
 									}();
 									var fromIsGroup = function () {
 										var _p17 = _p18;
 										return A2(_user$project$Circuit$isGroup, _p17._0.circuit, circuit);
 									}();
-									var path = A5(_user$project$Main$connectionPath, _p18, fromIsGroup, _p19, toIsGroup, scene);
+									var path = A6(_user$project$Main$connectionPath, _p18, fromIsGroup, _p20, toIsGroup, _p19, scene);
 									return A2(
 										_elm_lang$core$Result$andThen,
 										function (scene) {
-											return toIsGroup ? _elm_lang$core$Result$Ok(scene) : A2(
+											return _p19 ? _elm_lang$core$Result$Ok(scene) : A2(
 												_user$project$Scene$select,
-												_user$project$Main$portName(_p19),
+												_user$project$Main$portName(_p20),
 												scene);
 										},
 										A2(
 											_elm_lang$core$Result$andThen,
 											function (scene) {
-												return fromIsGroup ? _elm_lang$core$Result$Ok(scene) : A2(
+												return _p19 ? _elm_lang$core$Result$Ok(scene) : A2(
 													_user$project$Scene$select,
 													_user$project$Main$portName(_p18),
 													scene);
@@ -13001,19 +13005,19 @@ var _user$project$Main$example = function () {
 					_elm_lang$core$List$foldl,
 					F2(
 						function (event, scene) {
-							var _p20 = event;
-							switch (_p20.ctor) {
+							var _p21 = event;
+							switch (_p21.ctor) {
 								case 'Added':
-									var _p33 = _p20._0._0;
+									var _p34 = _p21._0._0;
 									var portNames = A3(
 										_elm_lang$core$List$foldl,
 										F2(
 											function (event, ports) {
-												var _p21 = event;
-												if (_p21.ctor === 'PortAdded') {
-													var _p23 = _p21._0._0;
-													if (_elm_lang$core$Native_Utils.eq(_p23, _p33)) {
-														var _p22 = _p21._1._0.name;
+												var _p22 = event;
+												if (_p22.ctor === 'PortAdded') {
+													var _p24 = _p22._0._0;
+													if (_elm_lang$core$Native_Utils.eq(_p24, _p34)) {
+														var _p23 = _p22._1._0.name;
 														return A2(
 															_elm_lang$core$Basics_ops['++'],
 															ports,
@@ -13021,8 +13025,8 @@ var _user$project$Main$example = function () {
 																ctor: '::',
 																_0: A2(
 																	_elm_lang$core$Basics_ops['++'],
-																	_p23,
-																	A2(_elm_lang$core$Basics_ops['++'], '.', _p22._0)),
+																	_p24,
+																	A2(_elm_lang$core$Basics_ops['++'], '.', _p23._0)),
 																_1: {ctor: '[]'}
 															});
 													} else {
@@ -13038,15 +13042,15 @@ var _user$project$Main$example = function () {
 										_elm_lang$core$List$foldl,
 										F2(
 											function (event, ports) {
-												var _p24 = event;
-												if (_p24.ctor === 'PortAdded') {
-													var _p25 = _p24._1._0;
-													return (_elm_lang$core$Native_Utils.eq(_p24._0._0, _p33) && _elm_lang$core$Native_Utils.eq(_p25.direction, _user$project$Circuit$Output)) ? A2(
+												var _p25 = event;
+												if (_p25.ctor === 'PortAdded') {
+													var _p26 = _p25._1._0;
+													return (_elm_lang$core$Native_Utils.eq(_p25._0._0, _p34) && _elm_lang$core$Native_Utils.eq(_p26.direction, _user$project$Circuit$Output)) ? A2(
 														_elm_lang$core$Basics_ops['++'],
 														ports,
 														{
 															ctor: '::',
-															_0: _user$project$Circuit$Port(_p25),
+															_0: _user$project$Circuit$Port(_p26),
 															_1: {ctor: '[]'}
 														}) : ports;
 												} else {
@@ -13059,15 +13063,15 @@ var _user$project$Main$example = function () {
 										_elm_lang$core$List$foldl,
 										F2(
 											function (event, ports) {
-												var _p26 = event;
-												if (_p26.ctor === 'PortAdded') {
-													var _p27 = _p26._1._0;
-													return (_elm_lang$core$Native_Utils.eq(_p26._0._0, _p33) && _elm_lang$core$Native_Utils.eq(_p27.direction, _user$project$Circuit$Input)) ? A2(
+												var _p27 = event;
+												if (_p27.ctor === 'PortAdded') {
+													var _p28 = _p27._1._0;
+													return (_elm_lang$core$Native_Utils.eq(_p27._0._0, _p34) && _elm_lang$core$Native_Utils.eq(_p28.direction, _user$project$Circuit$Input)) ? A2(
 														_elm_lang$core$Basics_ops['++'],
 														ports,
 														{
 															ctor: '::',
-															_0: _user$project$Circuit$Port(_p27),
+															_0: _user$project$Circuit$Port(_p28),
 															_1: {ctor: '[]'}
 														}) : ports;
 												} else {
@@ -13076,10 +13080,10 @@ var _user$project$Main$example = function () {
 											}),
 										{ctor: '[]'},
 										events);
-									var _p28 = function (layout) {
-										var _p29 = layout;
-										if (_p29.ctor === 'Just') {
-											return _p29._0;
+									var _p29 = function (layout) {
+										var _p30 = layout;
+										if (_p30.ctor === 'Just') {
+											return _p30._0;
 										} else {
 											return _elm_lang$core$Native_Utils.crashCase(
 												'Main',
@@ -13087,29 +13091,29 @@ var _user$project$Main$example = function () {
 													start: {line: 281, column: 53},
 													end: {line: 286, column: 105}
 												},
-												_p29)(
-												A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p33));
+												_p30)(
+												A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p34));
 										}
 									}(
 										_elm_lang$core$List$head(
 											A2(
 												_elm_lang$core$List$filterMap,
-												function (_p31) {
-													var _p32 = _p31;
-													return _elm_lang$core$Native_Utils.eq(_p32._0, _p33) ? _elm_lang$core$Maybe$Just(
-														{ctor: '_Tuple2', _0: _p32._1, _1: _p32._2}) : _elm_lang$core$Maybe$Nothing;
+												function (_p32) {
+													var _p33 = _p32;
+													return _elm_lang$core$Native_Utils.eq(_p33._0, _p34) ? _elm_lang$core$Maybe$Just(
+														{ctor: '_Tuple2', _0: _p33._1, _1: _p33._2}) : _elm_lang$core$Maybe$Nothing;
 												},
 												layout)));
-									var shape = _p28._0;
-									var transform = _p28._1;
+									var shape = _p29._0;
+									var transform = _p29._1;
 									return A2(
 										_elm_lang$core$Result$andThen,
-										A2(_user$project$Scene$transform, _p33, transform),
+										A2(_user$project$Scene$transform, _p34, transform),
 										A2(
 											_elm_lang$core$Result$andThen,
 											A3(
 												_user$project$Scene$update,
-												_p33,
+												_p34,
 												shape,
 												A2(
 													_elm_lang$core$Maybe$withDefault,
@@ -13117,12 +13121,12 @@ var _user$project$Main$example = function () {
 													A2(_elm_lang$core$Maybe$map, _user$project$Shape$bounds, shape))),
 											A2(
 												_elm_lang$core$Result$andThen,
-												A2(_user$project$Scene$group, _p33, portNames),
+												A2(_user$project$Scene$group, _p34, portNames),
 												A2(
 													_elm_lang$core$Result$andThen,
 													A4(
 														_user$project$Main$addPorts,
-														_p33,
+														_p34,
 														A2(
 															_elm_lang$core$Maybe$withDefault,
 															_user$project$Bounds$zero,
@@ -13133,7 +13137,7 @@ var _user$project$Main$example = function () {
 														_elm_lang$core$Result$andThen,
 														A4(
 															_user$project$Main$addPorts,
-															_p33,
+															_p34,
 															A2(
 																_elm_lang$core$Maybe$withDefault,
 																_user$project$Bounds$zero,
@@ -13144,55 +13148,55 @@ var _user$project$Main$example = function () {
 								case 'PortAdded':
 									return scene;
 								case 'Grouped':
-									var _p48 = _p20._0._0;
+									var _p49 = _p21._0._0;
 									var portNames = A2(
 										_elm_lang$core$List$filterMap,
-										function (_p34) {
-											var _p35 = _p34;
+										function (_p35) {
+											var _p36 = _p35;
 											return _elm_lang$core$Maybe$Just(
 												A2(
 													_elm_lang$core$Basics_ops['++'],
-													_p48,
+													_p49,
 													A2(
 														_elm_lang$core$Basics_ops['++'],
 														'.',
 														function () {
-															var _p36 = _p35._0.name;
-															return _p36._0;
+															var _p37 = _p36._0.name;
+															return _p37._0;
 														}())));
 										},
 										A2(
 											_user$project$Circuit$portsForCircuit,
-											_user$project$Circuit$CircuitName(_p48),
+											_user$project$Circuit$CircuitName(_p49),
 											circuit));
 									var outputs = A2(
 										_elm_lang$core$List$filter,
-										function (_p37) {
-											var _p38 = _p37;
-											return _elm_lang$core$Native_Utils.eq(_p38._0.direction, _user$project$Circuit$Output);
+										function (_p38) {
+											var _p39 = _p38;
+											return _elm_lang$core$Native_Utils.eq(_p39._0.direction, _user$project$Circuit$Output);
 										},
 										A2(
 											_user$project$Circuit$portsForCircuit,
-											_user$project$Circuit$CircuitName(_p48),
+											_user$project$Circuit$CircuitName(_p49),
 											circuit));
 									var inputs = A2(
 										_elm_lang$core$List$filter,
-										function (_p39) {
-											var _p40 = _p39;
-											return _elm_lang$core$Native_Utils.eq(_p40._0.direction, _user$project$Circuit$Input);
+										function (_p40) {
+											var _p41 = _p40;
+											return _elm_lang$core$Native_Utils.eq(_p41._0.direction, _user$project$Circuit$Input);
 										},
 										A2(
 											_user$project$Circuit$portsForCircuit,
-											_user$project$Circuit$CircuitName(_p48),
+											_user$project$Circuit$CircuitName(_p49),
 											circuit));
 									var connections = A2(
 										_user$project$Circuit$connectionsInGroup,
-										_user$project$Circuit$CircuitName(_p48),
+										_user$project$Circuit$CircuitName(_p49),
 										circuit);
-									var _p41 = function (layout) {
-										var _p42 = layout;
-										if (_p42.ctor === 'Just') {
-											return _p42._0;
+									var _p42 = function (layout) {
+										var _p43 = layout;
+										if (_p43.ctor === 'Just') {
+											return _p43._0;
 										} else {
 											return _elm_lang$core$Native_Utils.crashCase(
 												'Main',
@@ -13200,24 +13204,24 @@ var _user$project$Main$example = function () {
 													start: {line: 371, column: 53},
 													end: {line: 376, column: 105}
 												},
-												_p42)(
-												A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p48));
+												_p43)(
+												A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p49));
 										}
 									}(
 										_elm_lang$core$List$head(
 											A2(
 												_elm_lang$core$List$filterMap,
-												function (_p44) {
-													var _p45 = _p44;
-													return _elm_lang$core$Native_Utils.eq(_p45._0, _p48) ? _elm_lang$core$Maybe$Just(
-														{ctor: '_Tuple2', _0: _p45._1, _1: _p45._2}) : _elm_lang$core$Maybe$Nothing;
+												function (_p45) {
+													var _p46 = _p45;
+													return _elm_lang$core$Native_Utils.eq(_p46._0, _p49) ? _elm_lang$core$Maybe$Just(
+														{ctor: '_Tuple2', _0: _p46._1, _1: _p46._2}) : _elm_lang$core$Maybe$Nothing;
 												},
 												layout)));
-									var shape = _p41._0;
-									var transform = _p41._1;
+									var shape = _p42._0;
+									var transform = _p42._1;
 									return A2(
 										_elm_lang$core$Result$andThen,
-										A2(_user$project$Scene$transform, _p48, transform),
+										A2(_user$project$Scene$transform, _p49, transform),
 										A2(
 											_elm_lang$core$Result$andThen,
 											function (scene) {
@@ -13226,7 +13230,7 @@ var _user$project$Main$example = function () {
 														_user$project$Rectangle$margin,
 														20,
 														_user$project$Bounds$toRectangle(
-															A2(_user$project$Scene$bounds, _p48, scene))));
+															A2(_user$project$Scene$bounds, _p49, scene))));
 												var shape = _user$project$Shape$Rectangle(
 													{origin: groupBounds.origin, size: groupBounds.size, stroke: _user$project$Shape$Thick});
 												return A2(
@@ -13239,7 +13243,7 @@ var _user$project$Main$example = function () {
 																	A2(
 																		_user$project$Scene$parent,
 																		portName,
-																		_elm_lang$core$Maybe$Just(_p48)));
+																		_elm_lang$core$Maybe$Just(_p49)));
 															},
 															_elm_lang$core$Result$Ok(scene),
 															portNames);
@@ -13248,7 +13252,7 @@ var _user$project$Main$example = function () {
 														_elm_lang$core$Result$andThen,
 														A4(
 															_user$project$Main$addPorts,
-															_p48,
+															_p49,
 															_user$project$Shape$bounds(shape),
 															_user$project$Main$outputShape,
 															outputs),
@@ -13256,13 +13260,13 @@ var _user$project$Main$example = function () {
 															_elm_lang$core$Result$andThen,
 															A4(
 																_user$project$Main$addPorts,
-																_p48,
+																_p49,
 																_user$project$Shape$bounds(shape),
 																_user$project$Main$inputShape,
 																inputs),
 															A4(
 																_user$project$Scene$update,
-																_p48,
+																_p49,
 																_elm_lang$core$Maybe$Just(shape),
 																_user$project$Shape$bounds(shape),
 																scene))));
@@ -13271,14 +13275,14 @@ var _user$project$Main$example = function () {
 												_elm_lang$core$Result$andThen,
 												A2(
 													_user$project$Scene$group,
-													_p48,
+													_p49,
 													A2(
 														_elm_lang$core$List$map,
-														function (_p46) {
-															var _p47 = _p46;
-															return _p47._0;
+														function (_p47) {
+															var _p48 = _p47;
+															return _p48._0;
 														},
-														_p20._1)),
+														_p21._1)),
 												scene)));
 								default:
 									return scene;
@@ -13339,10 +13343,10 @@ var _user$project$Main$view = function (state) {
 						_user$project$Canvas$origin(state.canvasSize),
 						F2(
 							function (shape, transform) {
-								var _p49 = shape;
-								if (_p49.ctor === 'Just') {
+								var _p50 = shape;
+								if (_p50.ctor === 'Just') {
 									return _elm_lang$core$Maybe$Just(
-										A2(_user$project$Shape$constructor, _p49._0, transform));
+										A2(_user$project$Shape$constructor, _p50._0, transform));
 								} else {
 									return _elm_lang$core$Maybe$Nothing;
 								}
@@ -13352,10 +13356,10 @@ var _user$project$Main$view = function (state) {
 						_user$project$Canvas$origin(state.canvasSize),
 						F2(
 							function (shape, transform) {
-								var _p50 = shape;
-								if (_p50.ctor === 'Just') {
+								var _p51 = shape;
+								if (_p51.ctor === 'Just') {
 									return _elm_lang$core$Maybe$Just(
-										A2(_user$project$Shape$constructor, _p50._0, transform));
+										A2(_user$project$Shape$constructor, _p51._0, transform));
 								} else {
 									return _elm_lang$core$Maybe$Nothing;
 								}
