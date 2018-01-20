@@ -11239,12 +11239,14 @@ var _user$project$Circuit$example = function () {
 	var circuit3 = _user$project$Circuit$CircuitName('circuit3');
 	var circuit2 = _user$project$Circuit$CircuitName('circuit2');
 	var circuit1 = _user$project$Circuit$CircuitName('circuit1');
+	var connection3 = _user$project$Circuit$ConnectionName('connection3');
 	var connection2 = _user$project$Circuit$ConnectionName('connection2');
 	var connection1 = _user$project$Circuit$ConnectionName('connection1');
 	var output2 = _user$project$Circuit$PortName('output2');
 	var output1 = _user$project$Circuit$PortName('output1');
 	var input2 = _user$project$Circuit$PortName('input2');
 	var input1 = _user$project$Circuit$PortName('input1');
+	var gate5 = _user$project$Circuit$CircuitName('gate5');
 	var gate4 = _user$project$Circuit$CircuitName('gate4');
 	var gate3 = _user$project$Circuit$CircuitName('gate3');
 	var gate2 = _user$project$Circuit$CircuitName('gate2');
@@ -11256,19 +11258,19 @@ var _user$project$Circuit$example = function () {
 			circuit2,
 			{
 				ctor: '::',
-				_0: gate3,
+				_0: gate4,
 				_1: {
 					ctor: '::',
-					_0: gate4,
+					_0: gate5,
 					_1: {ctor: '[]'}
 				}
 			}),
 		A2(
 			_elm_lang$core$Result$andThen,
-			_user$project$Circuit$add(gate4),
+			_user$project$Circuit$add(gate5),
 			A2(
 				_elm_lang$core$Result$andThen,
-				_user$project$Circuit$add(gate3),
+				_user$project$Circuit$add(gate4),
 				A2(
 					_elm_lang$core$Result$andThen,
 					A2(
@@ -11280,74 +11282,106 @@ var _user$project$Circuit$example = function () {
 							_1: {
 								ctor: '::',
 								_0: gate2,
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: gate3,
+									_1: {ctor: '[]'}
+								}
 							}
 						}),
 					A2(
 						_elm_lang$core$Result$andThen,
 						A3(
 							_user$project$Circuit$connect,
-							connection2,
+							connection3,
 							A2(_user$project$Circuit$portReference, gate1, output1),
-							A2(_user$project$Circuit$portReference, gate2, input2)),
+							A2(_user$project$Circuit$portReference, gate3, input1)),
 						A2(
 							_elm_lang$core$Result$andThen,
 							A3(
 								_user$project$Circuit$connect,
-								connection1,
+								connection2,
 								A2(_user$project$Circuit$portReference, gate1, output1),
-								A2(_user$project$Circuit$portReference, gate2, input1)),
+								A2(_user$project$Circuit$portReference, gate2, input2)),
 							A2(
 								_elm_lang$core$Result$andThen,
-								A2(
-									_user$project$Circuit$addPort,
-									gate2,
-									A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
+								A3(
+									_user$project$Circuit$connect,
+									connection1,
+									A2(_user$project$Circuit$portReference, gate1, output1),
+									A2(_user$project$Circuit$portReference, gate2, input1)),
 								A2(
 									_elm_lang$core$Result$andThen,
 									A2(
 										_user$project$Circuit$addPort,
-										gate2,
-										A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
+										gate3,
+										A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
 									A2(
 										_elm_lang$core$Result$andThen,
 										A2(
 											_user$project$Circuit$addPort,
-											gate2,
-											A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
+											gate3,
+											A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
 										A2(
 											_elm_lang$core$Result$andThen,
-											_user$project$Circuit$add(gate2),
+											A2(
+												_user$project$Circuit$addPort,
+												gate3,
+												A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
 											A2(
 												_elm_lang$core$Result$andThen,
-												A2(
-													_user$project$Circuit$addPort,
-													gate1,
-													A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
+												_user$project$Circuit$add(gate3),
 												A2(
 													_elm_lang$core$Result$andThen,
 													A2(
 														_user$project$Circuit$addPort,
-														gate1,
-														A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
+														gate2,
+														A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
 													A2(
 														_elm_lang$core$Result$andThen,
 														A2(
 															_user$project$Circuit$addPort,
-															gate1,
-															A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
+															gate2,
+															A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
 														A2(
 															_elm_lang$core$Result$andThen,
-															_user$project$Circuit$add(gate1),
-															_user$project$Circuit$empty))))))))))))));
+															A2(
+																_user$project$Circuit$addPort,
+																gate2,
+																A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
+															A2(
+																_elm_lang$core$Result$andThen,
+																_user$project$Circuit$add(gate2),
+																A2(
+																	_elm_lang$core$Result$andThen,
+																	A2(
+																		_user$project$Circuit$addPort,
+																		gate1,
+																		A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
+																	A2(
+																		_elm_lang$core$Result$andThen,
+																		A2(
+																			_user$project$Circuit$addPort,
+																			gate1,
+																			A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
+																		A2(
+																			_elm_lang$core$Result$andThen,
+																			A2(
+																				_user$project$Circuit$addPort,
+																				gate1,
+																				A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
+																			A2(
+																				_elm_lang$core$Result$andThen,
+																				_user$project$Circuit$add(gate1),
+																				_user$project$Circuit$empty)))))))))))))))))));
 	if (_p66.ctor === 'Ok') {
 		return _p66._0;
 	} else {
 		return _elm_lang$core$Native_Utils.crashCase(
 			'Circuit',
 			{
-				start: {line: 494, column: 9},
-				end: {line: 526, column: 36}
+				start: {line: 500, column: 9},
+				end: {line: 542, column: 36}
 			},
 			_p66)(_p66._0);
 	}
@@ -12893,21 +12927,21 @@ var _user$project$Main$example = function () {
 				ctor: '::',
 				_0: {
 					ctor: '_Tuple3',
-					_0: 'circuit1',
-					_1: _elm_lang$core$Maybe$Nothing,
+					_0: 'gate3',
+					_1: _elm_lang$core$Maybe$Just(
+						_user$project$Shape$Circle(
+							{centre: _user$project$Point$zero, radius: 50, stroke: _user$project$Shape$Thin})),
 					_2: _user$project$Transform$translate(
-						{x: 50, y: 0})
+						{x: 100, y: 140})
 				},
 				_1: {
 					ctor: '::',
 					_0: {
 						ctor: '_Tuple3',
-						_0: 'gate3',
-						_1: _elm_lang$core$Maybe$Just(
-							_user$project$Shape$Circle(
-								{centre: _user$project$Point$zero, radius: 50, stroke: _user$project$Shape$Thin})),
+						_0: 'circuit1',
+						_1: _elm_lang$core$Maybe$Nothing,
 						_2: _user$project$Transform$translate(
-							{x: 0, y: 150})
+							{x: 50, y: -140})
 					},
 					_1: {
 						ctor: '::',
@@ -12915,40 +12949,52 @@ var _user$project$Main$example = function () {
 							ctor: '_Tuple3',
 							_0: 'gate4',
 							_1: _elm_lang$core$Maybe$Just(
-								_user$project$Shape$Path(
-									{
-										points: {
-											ctor: '::',
-											_0: _user$project$Point$zero,
-											_1: {
-												ctor: '::',
-												_0: {x: 25, y: -50},
-												_1: {
-													ctor: '::',
-													_0: {x: 50, y: 0},
-													_1: {ctor: '[]'}
-												}
-											}
-										},
-										closed: true,
-										stroke: _user$project$Shape$Thin
-									})),
+								_user$project$Shape$Circle(
+									{centre: _user$project$Point$zero, radius: 50, stroke: _user$project$Shape$Thin})),
 							_2: _user$project$Transform$translate(
-								{x: 60, y: 140})
+								{x: 0, y: 150})
 						},
 						_1: {
 							ctor: '::',
 							_0: {
 								ctor: '_Tuple3',
-								_0: 'circuit2',
-								_1: _elm_lang$core$Maybe$Nothing,
+								_0: 'gate5',
+								_1: _elm_lang$core$Maybe$Just(
+									_user$project$Shape$Path(
+										{
+											points: {
+												ctor: '::',
+												_0: _user$project$Point$zero,
+												_1: {
+													ctor: '::',
+													_0: {x: 25, y: -50},
+													_1: {
+														ctor: '::',
+														_0: {x: 50, y: 0},
+														_1: {ctor: '[]'}
+													}
+												}
+											},
+											closed: true,
+											stroke: _user$project$Shape$Thin
+										})),
 								_2: _user$project$Transform$translate(
-									{x: 0, y: 20})
+									{x: 60, y: 140})
 							},
 							_1: {
 								ctor: '::',
-								_0: {ctor: '_Tuple3', _0: 'circuit3', _1: _elm_lang$core$Maybe$Nothing, _2: _user$project$Transform$identity},
-								_1: {ctor: '[]'}
+								_0: {
+									ctor: '_Tuple3',
+									_0: 'circuit2',
+									_1: _elm_lang$core$Maybe$Nothing,
+									_2: _user$project$Transform$translate(
+										{x: 0, y: 20})
+								},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple3', _0: 'circuit3', _1: _elm_lang$core$Maybe$Nothing, _2: _user$project$Transform$identity},
+									_1: {ctor: '[]'}
+								}
 							}
 						}
 					}
@@ -13111,8 +13157,8 @@ var _user$project$Main$example = function () {
 											return _elm_lang$core$Native_Utils.crashCase(
 												'Main',
 												{
-													start: {line: 321, column: 53},
-													end: {line: 326, column: 105}
+													start: {line: 325, column: 53},
+													end: {line: 330, column: 105}
 												},
 												_p30)(
 												A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p34));
@@ -13248,8 +13294,8 @@ var _user$project$Main$example = function () {
 											return _elm_lang$core$Native_Utils.crashCase(
 												'Main',
 												{
-													start: {line: 412, column: 53},
-													end: {line: 417, column: 105}
+													start: {line: 416, column: 53},
+													end: {line: 421, column: 105}
 												},
 												_p45)(
 												A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p51));
