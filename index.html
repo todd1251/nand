@@ -12402,7 +12402,7 @@ var _user$project$Shape$strokeAttributes = function (stroke) {
 					}
 				}
 			};
-		default:
+		case 'Dashed':
 			return {
 				ctor: '::',
 				_0: _elm_lang$svg$Svg_Attributes$strokeWidth('1'),
@@ -12417,6 +12417,20 @@ var _user$project$Shape$strokeAttributes = function (stroke) {
 							_0: _elm_lang$svg$Svg_Attributes$fill('none'),
 							_1: {ctor: '[]'}
 						}
+					}
+				}
+			};
+		default:
+			return {
+				ctor: '::',
+				_0: _elm_lang$svg$Svg_Attributes$strokeWidth('3'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$fill('black'),
+						_1: {ctor: '[]'}
 					}
 				}
 			};
@@ -12613,6 +12627,7 @@ var _user$project$Shape$Rectangle = function (a) {
 var _user$project$Shape$Circle = function (a) {
 	return {ctor: 'Circle', _0: a};
 };
+var _user$project$Shape$Filled = {ctor: 'Filled'};
 var _user$project$Shape$Dashed = {ctor: 'Dashed'};
 var _user$project$Shape$Thin = {ctor: 'Thin'};
 var _user$project$Shape$Thick = {ctor: 'Thick'};
@@ -12829,14 +12844,14 @@ var _user$project$Main$addPorts = F6(
 var _user$project$Main$outputShape = _user$project$Shape$Circle(
 	{
 		centre: {x: 0, y: 0},
-		radius: 1,
-		stroke: _user$project$Shape$Thick
+		radius: 2,
+		stroke: _user$project$Shape$Filled
 	});
 var _user$project$Main$inputShape = _user$project$Shape$Circle(
 	{
 		centre: {x: 0, y: 0},
-		radius: 1,
-		stroke: _user$project$Shape$Thick
+		radius: 2,
+		stroke: _user$project$Shape$Filled
 	});
 var _user$project$Main$example = function () {
 	var circuit = _user$project$Circuit$example;
@@ -13282,7 +13297,7 @@ var _user$project$Main$example = function () {
 														_user$project$Bounds$toRectangle(
 															A2(_user$project$Scene$bounds, _p51, scene))));
 												var shape = _user$project$Shape$Rectangle(
-													{origin: groupBounds.origin, size: groupBounds.size, stroke: _user$project$Shape$Dashed});
+													{origin: groupBounds.origin, size: groupBounds.size, stroke: _user$project$Shape$Thick});
 												return A2(
 													_elm_lang$core$Result$andThen,
 													function (scene) {
