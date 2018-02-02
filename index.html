@@ -12841,17 +12841,33 @@ var _user$project$Main$addPorts = F6(
 					}),
 				ports));
 	});
-var _user$project$Main$outputShape = _user$project$Shape$Circle(
+var _user$project$Main$outputShape = _user$project$Shape$Path(
 	{
-		centre: {x: 0, y: 0},
-		radius: 2,
-		stroke: _user$project$Shape$Filled
+		points: {
+			ctor: '::',
+			_0: {x: 0, y: 0},
+			_1: {
+				ctor: '::',
+				_0: {x: 0, y: 0},
+				_1: {ctor: '[]'}
+			}
+		},
+		closed: false,
+		stroke: _user$project$Shape$Thick
 	});
-var _user$project$Main$inputShape = _user$project$Shape$Circle(
+var _user$project$Main$inputShape = _user$project$Shape$Path(
 	{
-		centre: {x: 0, y: 0},
-		radius: 2,
-		stroke: _user$project$Shape$Filled
+		points: {
+			ctor: '::',
+			_0: {x: 0, y: 0},
+			_1: {
+				ctor: '::',
+				_0: {x: 0, y: 0},
+				_1: {ctor: '[]'}
+			}
+		},
+		closed: false,
+		stroke: _user$project$Shape$Thick
 	});
 var _user$project$Main$example = function () {
 	var circuit = _user$project$Circuit$example;
