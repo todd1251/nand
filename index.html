@@ -11167,21 +11167,25 @@ var _user$project$Circuit$grouped = F3(
 					return _p32._0.to;
 				},
 				state.connections));
-		var allInputs = A2(
-			_robertjlooby$elm_generic_dict$GenericSet$fromList,
-			_user$project$Circuit$comparePortReferences,
-			A2(
-				_elm_lang$core$List$filterMap,
-				function (_p33) {
-					var _p34 = _p33;
-					var _p36 = _p34._1._0;
-					var _p35 = _p34._0;
-					return (A2(_elm_lang$core$List$member, _p35, circuits) && _elm_lang$core$Native_Utils.eq(_p36.direction, _user$project$Circuit$Input)) ? _elm_lang$core$Maybe$Just(
-						_user$project$Circuit$PortReference(
-							{circuit: _p35, name: _p36.name})) : _elm_lang$core$Maybe$Nothing;
-				},
-				state.ports));
+		var allInputsOrdered = A2(
+			_elm_lang$core$List$filterMap,
+			function (_p33) {
+				var _p34 = _p33;
+				var _p36 = _p34._1._0;
+				var _p35 = _p34._0;
+				return (A2(_elm_lang$core$List$member, _p35, circuits) && _elm_lang$core$Native_Utils.eq(_p36.direction, _user$project$Circuit$Input)) ? _elm_lang$core$Maybe$Just(
+					_user$project$Circuit$PortReference(
+						{circuit: _p35, name: _p36.name})) : _elm_lang$core$Maybe$Nothing;
+			},
+			state.ports);
+		var allInputs = A2(_robertjlooby$elm_generic_dict$GenericSet$fromList, _user$project$Circuit$comparePortReferences, allInputsOrdered);
 		var unconnectedInputs = A2(_robertjlooby$elm_generic_dict$GenericSet$diff, allInputs, connectedInputs);
+		var unconnectedInputsOrdered = A2(
+			_elm_lang$core$List$filterMap,
+			function (input) {
+				return A2(_robertjlooby$elm_generic_dict$GenericSet$member, input, unconnectedInputs) ? _elm_lang$core$Maybe$Just(input) : _elm_lang$core$Maybe$Nothing;
+			},
+			allInputsOrdered);
 		var _p37 = A3(
 			_elm_lang$core$List$foldl,
 			F2(
@@ -11224,7 +11228,7 @@ var _user$project$Circuit$grouped = F3(
 					};
 				}),
 			{ctor: '_Tuple3', _0: state1, _1: 1, _2: 1},
-			_robertjlooby$elm_generic_dict$GenericSet$toList(unconnectedInputs));
+			unconnectedInputsOrdered);
 		var state2 = _p37._0;
 		var absoluteIndex = _p37._2;
 		var _p43 = A3(
@@ -11679,8 +11683,8 @@ var _user$project$Circuit$example = function () {
 		return _elm_lang$core$Native_Utils.crashCase(
 			'Circuit',
 			{
-				start: {line: 510, column: 9},
-				end: {line: 563, column: 36}
+				start: {line: 522, column: 9},
+				end: {line: 575, column: 36}
 			},
 			_p66)(_p66._0);
 	}
