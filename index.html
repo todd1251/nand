@@ -10588,7 +10588,7 @@ var _user$project$Bounds$Bounds = F2(
 	function (a, b) {
 		return {origin: a, size: b};
 	});
-var _user$project$Styles$css = '\n    html, body {\n        margin: 0;\n        padding: 0;\n    }\n\n    * {\n        user-select: none;\n    }\n\n    .canvas {\n        background: #fafafa;\n        height: 100%;\n        position: fixed;\n        width: 100%;\n    }\n\n    label {\n        margin: 1em;\n        position: absolute;\n        z-index: 1;\n    }\n    ';
+var _user$project$Styles$css = '\n    html, body {\n        margin: 0;\n        padding: 0;\n    }\n\n    * {\n        user-select: none;\n    }\n\n    .canvas {\n        background: #eeeeee;\n        height: 100%;\n        position: fixed;\n        width: 100%;\n    }\n\n    label {\n        margin: 1em;\n        position: absolute;\n        z-index: 1;\n    }\n    ';
 var _user$project$Styles$stylesheet = A3(
 	_elm_lang$html$Html$node,
 	'style',
@@ -12439,77 +12439,78 @@ var _user$project$Shape$transformed = function (transform) {
 		_1: {ctor: '[]'}
 	};
 };
-var _user$project$Shape$strokeAttributes = function (stroke) {
-	var _p0 = stroke;
-	switch (_p0.ctor) {
-		case 'NoStroke':
-			return {
-				ctor: '::',
-				_0: _elm_lang$svg$Svg_Attributes$fill('none'),
-				_1: {ctor: '[]'}
-			};
-		case 'Thick':
-			return {
-				ctor: '::',
-				_0: _elm_lang$svg$Svg_Attributes$strokeWidth('3'),
-				_1: {
+var _user$project$Shape$strokeAttributes = F2(
+	function (stroke, fill) {
+		var _p0 = stroke;
+		switch (_p0.ctor) {
+			case 'NoStroke':
+				return {
 					ctor: '::',
-					_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
+					_0: _elm_lang$svg$Svg_Attributes$fill('none'),
+					_1: {ctor: '[]'}
+				};
+			case 'Thick':
+				return {
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$strokeWidth('3'),
 					_1: {
 						ctor: '::',
-						_0: _elm_lang$svg$Svg_Attributes$fill('none'),
-						_1: {ctor: '[]'}
-					}
-				}
-			};
-		case 'Thin':
-			return {
-				ctor: '::',
-				_0: _elm_lang$svg$Svg_Attributes$strokeWidth('2'),
-				_1: {
-					ctor: '::',
-					_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$svg$Svg_Attributes$fill('none'),
-						_1: {ctor: '[]'}
-					}
-				}
-			};
-		case 'Dashed':
-			return {
-				ctor: '::',
-				_0: _elm_lang$svg$Svg_Attributes$strokeWidth('1'),
-				_1: {
-					ctor: '::',
-					_0: _elm_lang$svg$Svg_Attributes$strokeDasharray('2,2'),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$svg$Svg_Attributes$stroke('#ccc'),
+						_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
 						_1: {
 							ctor: '::',
-							_0: _elm_lang$svg$Svg_Attributes$fill('none'),
+							_0: _elm_lang$svg$Svg_Attributes$fill(fill),
 							_1: {ctor: '[]'}
 						}
 					}
-				}
-			};
-		default:
-			return {
-				ctor: '::',
-				_0: _elm_lang$svg$Svg_Attributes$strokeWidth('3'),
-				_1: {
+				};
+			case 'Thin':
+				return {
 					ctor: '::',
-					_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
+					_0: _elm_lang$svg$Svg_Attributes$strokeWidth('2'),
 					_1: {
 						ctor: '::',
-						_0: _elm_lang$svg$Svg_Attributes$fill('black'),
-						_1: {ctor: '[]'}
+						_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$fill(fill),
+							_1: {ctor: '[]'}
+						}
 					}
-				}
-			};
-	}
-};
+				};
+			case 'Dashed':
+				return {
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$strokeWidth('1'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$strokeDasharray('2,2'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$stroke('#ccc'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$svg$Svg_Attributes$fill(fill),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				};
+			default:
+				return {
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$strokeWidth('3'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$stroke('black'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$fill(fill),
+							_1: {ctor: '[]'}
+						}
+					}
+				};
+		}
+	});
 var _user$project$Shape$rectangle = F6(
 	function (left, top, width, height, stroke, transform) {
 		return A2(
@@ -12540,7 +12541,7 @@ var _user$project$Shape$rectangle = F6(
 							}
 						}
 					},
-					_user$project$Shape$strokeAttributes(stroke))),
+					A2(_user$project$Shape$strokeAttributes, stroke, 'white'))),
 			{ctor: '[]'});
 	});
 var _user$project$Shape$circle = F5(
@@ -12568,7 +12569,7 @@ var _user$project$Shape$circle = F5(
 							}
 						}
 					},
-					_user$project$Shape$strokeAttributes(stroke))),
+					A2(_user$project$Shape$strokeAttributes, stroke, 'white'))),
 			{ctor: '[]'});
 	});
 var _user$project$Shape$path = F4(
@@ -12615,7 +12616,7 @@ var _user$project$Shape$path = F4(
 										path)))),
 						_1: {ctor: '[]'}
 					},
-					_user$project$Shape$strokeAttributes(stroke))),
+					A2(_user$project$Shape$strokeAttributes, stroke, 'none'))),
 			{ctor: '[]'});
 	});
 var _user$project$Shape$constructor = function (shape) {
@@ -13223,8 +13224,8 @@ var _user$project$Main$example = function () {
 											return _elm_lang$core$Native_Utils.crashCase(
 												'Main',
 												{
-													start: {line: 326, column: 53},
-													end: {line: 331, column: 105}
+													start: {line: 327, column: 53},
+													end: {line: 332, column: 105}
 												},
 												_p30)(
 												A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p34));
@@ -13360,8 +13361,8 @@ var _user$project$Main$example = function () {
 											return _elm_lang$core$Native_Utils.crashCase(
 												'Main',
 												{
-													start: {line: 417, column: 53},
-													end: {line: 422, column: 105}
+													start: {line: 418, column: 53},
+													end: {line: 423, column: 105}
 												},
 												_p45)(
 												A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p51));
