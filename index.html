@@ -10588,7 +10588,7 @@ var _user$project$Bounds$Bounds = F2(
 	function (a, b) {
 		return {origin: a, size: b};
 	});
-var _user$project$Styles$css = '\n    html, body {\n        margin: 0;\n        padding: 0;\n    }\n\n    * {\n        user-select: none;\n    }\n\n    .canvas {\n        background: #ccc;\n        height: 100%;\n        position: fixed;\n        width: 100%;\n    }\n\n    label {\n        margin: 1em;\n        position: absolute;\n        z-index: 1;\n    }\n    ';
+var _user$project$Styles$css = '\n    html, body {\n        margin: 0;\n        padding: 0;\n    }\n\n    * {\n        user-select: none;\n    }\n\n    .canvas {\n        background: #eee;\n        height: 100%;\n        position: fixed;\n        width: 100%;\n    }\n\n    label {\n        margin: 1em;\n        position: absolute;\n        z-index: 1;\n    }\n    ';
 var _user$project$Styles$stylesheet = A3(
 	_elm_lang$html$Html$node,
 	'style',
@@ -12560,73 +12560,8 @@ var _user$project$Shape$circle = F6(
 					A2(_user$project$Shape$attributes, stroke, fill))),
 			{ctor: '[]'});
 	});
-var _user$project$Shape$bounds = function (shape) {
-	var _p2 = shape;
-	switch (_p2.ctor) {
-		case 'Circle':
-			var _p4 = _p2._0.radius;
-			var _p3 = _p2._0.centre;
-			return {
-				origin: {x: _p3.x - _p4, y: _p3.y - _p4},
-				size: {width: _p4 * 2, height: _p4 * 2}
-			};
-		case 'Rectangle':
-			return {origin: _p2._0.origin, size: _p2._0.size};
-		default:
-			var _p5 = _p2._0.points;
-			var maxY = A2(
-				_elm_lang$core$Maybe$withDefault,
-				0,
-				_elm_lang$core$List$maximum(
-					A2(
-						_elm_lang$core$List$map,
-						function (_) {
-							return _.y;
-						},
-						_p5)));
-			var maxX = A2(
-				_elm_lang$core$Maybe$withDefault,
-				0,
-				_elm_lang$core$List$maximum(
-					A2(
-						_elm_lang$core$List$map,
-						function (_) {
-							return _.x;
-						},
-						_p5)));
-			var minY = A2(
-				_elm_lang$core$Maybe$withDefault,
-				0,
-				_elm_lang$core$List$minimum(
-					A2(
-						_elm_lang$core$List$map,
-						function (_) {
-							return _.y;
-						},
-						_p5)));
-			var minX = A2(
-				_elm_lang$core$Maybe$withDefault,
-				0,
-				_elm_lang$core$List$minimum(
-					A2(
-						_elm_lang$core$List$map,
-						function (_) {
-							return _.x;
-						},
-						_p5)));
-			return {
-				origin: {x: minX, y: minY},
-				size: {width: maxX - minX, height: maxY - minY}
-			};
-	}
-};
-var _user$project$Shape$Dashed = {ctor: 'Dashed'};
-var _user$project$Shape$Thick = {ctor: 'Thick'};
-var _user$project$Shape$Thin = {ctor: 'Thin'};
-var _user$project$Shape$Filled = {ctor: 'Filled'};
-var _user$project$Shape$NotFilled = {ctor: 'NotFilled'};
-var _user$project$Shape$path = F4(
-	function (path, closed, stroke, transform) {
+var _user$project$Shape$path = F5(
+	function (path, closed, stroke, fill, transform) {
 		return A2(
 			_elm_lang$svg$Svg$path,
 			A2(
@@ -12653,39 +12588,104 @@ var _user$project$Shape$path = F4(
 									A2(
 										_elm_lang$core$List$indexedMap,
 										F2(
-											function (index, _p6) {
-												var _p7 = _p6;
+											function (index, _p2) {
+												var _p3 = _p2;
 												return A2(
 													_elm_lang$core$Basics_ops['++'],
 													_elm_lang$core$Native_Utils.eq(index, 0) ? 'M' : 'L',
 													A2(
 														_elm_lang$core$Basics_ops['++'],
-														_elm_lang$core$Basics$toString(_p7.x),
+														_elm_lang$core$Basics$toString(_p3.x),
 														A2(
 															_elm_lang$core$Basics_ops['++'],
 															',',
-															_elm_lang$core$Basics$toString(_p7.y))));
+															_elm_lang$core$Basics$toString(_p3.y))));
 											}),
 										path)))),
 						_1: {ctor: '[]'}
 					},
-					A2(_user$project$Shape$attributes, stroke, _user$project$Shape$NotFilled))),
+					A2(_user$project$Shape$attributes, stroke, fill))),
 			{ctor: '[]'});
 	});
 var _user$project$Shape$constructor = function (shape) {
+	var _p4 = shape;
+	switch (_p4.ctor) {
+		case 'Circle':
+			var _p5 = _p4._0.centre;
+			return A5(_user$project$Shape$circle, _p5.x, _p5.y, _p4._0.radius, _p4._0.stroke, _p4._0.fill);
+		case 'Rectangle':
+			var _p7 = _p4._0.size;
+			var _p6 = _p4._0.origin;
+			return A6(_user$project$Shape$rectangle, _p6.x, _p6.y, _p7.width, _p7.height, _p4._0.stroke, _p4._0.fill);
+		default:
+			return A4(_user$project$Shape$path, _p4._0.points, _p4._0.closed, _p4._0.stroke, _p4._0.fill);
+	}
+};
+var _user$project$Shape$bounds = function (shape) {
 	var _p8 = shape;
 	switch (_p8.ctor) {
 		case 'Circle':
+			var _p10 = _p8._0.radius;
 			var _p9 = _p8._0.centre;
-			return A5(_user$project$Shape$circle, _p9.x, _p9.y, _p8._0.radius, _p8._0.stroke, _p8._0.fill);
+			return {
+				origin: {x: _p9.x - _p10, y: _p9.y - _p10},
+				size: {width: _p10 * 2, height: _p10 * 2}
+			};
 		case 'Rectangle':
-			var _p11 = _p8._0.size;
-			var _p10 = _p8._0.origin;
-			return A6(_user$project$Shape$rectangle, _p10.x, _p10.y, _p11.width, _p11.height, _p8._0.stroke, _p8._0.fill);
+			return {origin: _p8._0.origin, size: _p8._0.size};
 		default:
-			return A3(_user$project$Shape$path, _p8._0.points, _p8._0.closed, _p8._0.stroke);
+			var _p11 = _p8._0.points;
+			var maxY = A2(
+				_elm_lang$core$Maybe$withDefault,
+				0,
+				_elm_lang$core$List$maximum(
+					A2(
+						_elm_lang$core$List$map,
+						function (_) {
+							return _.y;
+						},
+						_p11)));
+			var maxX = A2(
+				_elm_lang$core$Maybe$withDefault,
+				0,
+				_elm_lang$core$List$maximum(
+					A2(
+						_elm_lang$core$List$map,
+						function (_) {
+							return _.x;
+						},
+						_p11)));
+			var minY = A2(
+				_elm_lang$core$Maybe$withDefault,
+				0,
+				_elm_lang$core$List$minimum(
+					A2(
+						_elm_lang$core$List$map,
+						function (_) {
+							return _.y;
+						},
+						_p11)));
+			var minX = A2(
+				_elm_lang$core$Maybe$withDefault,
+				0,
+				_elm_lang$core$List$minimum(
+					A2(
+						_elm_lang$core$List$map,
+						function (_) {
+							return _.x;
+						},
+						_p11)));
+			return {
+				origin: {x: minX, y: minY},
+				size: {width: maxX - minX, height: maxY - minY}
+			};
 	}
 };
+var _user$project$Shape$Dashed = {ctor: 'Dashed'};
+var _user$project$Shape$Thick = {ctor: 'Thick'};
+var _user$project$Shape$Thin = {ctor: 'Thin'};
+var _user$project$Shape$Filled = {ctor: 'Filled'};
+var _user$project$Shape$NotFilled = {ctor: 'NotFilled'};
 var _user$project$Shape$Path = function (a) {
 	return {ctor: 'Path', _0: a};
 };
@@ -12814,7 +12814,8 @@ var _user$project$Main$connectionPath = F6(
 						},
 						toPoints)),
 				closed: false,
-				stroke: _user$project$Shape$Thin
+				stroke: _user$project$Shape$Thin,
+				fill: _user$project$Shape$NotFilled
 			});
 		return path;
 	});
@@ -12916,7 +12917,8 @@ var _user$project$Main$outputShape = _user$project$Shape$Path(
 			}
 		},
 		closed: false,
-		stroke: _user$project$Shape$Thick
+		stroke: _user$project$Shape$Thick,
+		fill: _user$project$Shape$NotFilled
 	});
 var _user$project$Main$inputShape = _user$project$Shape$Path(
 	{
@@ -12930,7 +12932,8 @@ var _user$project$Main$inputShape = _user$project$Shape$Path(
 			}
 		},
 		closed: false,
-		stroke: _user$project$Shape$Thick
+		stroke: _user$project$Shape$Thick,
+		fill: _user$project$Shape$NotFilled
 	});
 var _user$project$Main$example = function () {
 	var circuit = _user$project$Circuit$example;
@@ -13028,7 +13031,8 @@ var _user$project$Main$example = function () {
 												}
 											},
 											closed: true,
-											stroke: _user$project$Shape$Thick
+											stroke: _user$project$Shape$Thick,
+											fill: _user$project$Shape$Filled
 										})),
 								_2: _user$project$Transform$translate(
 									{x: -300, y: 25})
@@ -13215,8 +13219,8 @@ var _user$project$Main$example = function () {
 											return _elm_lang$core$Native_Utils.crashCase(
 												'Main',
 												{
-													start: {line: 326, column: 53},
-													end: {line: 331, column: 105}
+													start: {line: 327, column: 53},
+													end: {line: 332, column: 105}
 												},
 												_p30)(
 												A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p34));
@@ -13352,8 +13356,8 @@ var _user$project$Main$example = function () {
 											return _elm_lang$core$Native_Utils.crashCase(
 												'Main',
 												{
-													start: {line: 417, column: 53},
-													end: {line: 422, column: 105}
+													start: {line: 418, column: 53},
+													end: {line: 423, column: 105}
 												},
 												_p45)(
 												A2(_elm_lang$core$Basics_ops['++'], 'Missing layout for: ', _p51));
