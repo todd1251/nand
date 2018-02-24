@@ -11523,16 +11523,16 @@ var _user$project$Circuit$example = function () {
 		_elm_lang$core$Result$andThen,
 		A2(
 			_user$project$Circuit$group,
-			circuit3,
+			circuit1,
 			{
 				ctor: '::',
-				_0: circuit1,
+				_0: gate1,
 				_1: {
 					ctor: '::',
-					_0: gate4,
+					_0: gate2,
 					_1: {
 						ctor: '::',
-						_0: gate5,
+						_0: gate3,
 						_1: {ctor: '[]'}
 					}
 				}
@@ -11541,142 +11541,74 @@ var _user$project$Circuit$example = function () {
 			_elm_lang$core$Result$andThen,
 			A3(
 				_user$project$Circuit$connect,
-				connection4,
-				A2(_user$project$Circuit$portReference, gate5, output1),
-				A2(_user$project$Circuit$portReference, circuit1, input3)),
+				connection2,
+				A2(_user$project$Circuit$portReference, gate1, output1),
+				A2(_user$project$Circuit$portReference, gate3, input1)),
 			A2(
 				_elm_lang$core$Result$andThen,
-				A2(
-					_user$project$Circuit$addPort,
-					gate5,
-					A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
+				A3(
+					_user$project$Circuit$connect,
+					connection1,
+					A2(_user$project$Circuit$portReference, gate1, output1),
+					A2(_user$project$Circuit$portReference, gate2, input1)),
 				A2(
 					_elm_lang$core$Result$andThen,
 					A2(
 						_user$project$Circuit$addPort,
-						gate5,
-						A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
+						gate3,
+						A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
 					A2(
 						_elm_lang$core$Result$andThen,
-						_user$project$Circuit$add(gate5),
+						A2(
+							_user$project$Circuit$addPort,
+							gate3,
+							A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
 						A2(
 							_elm_lang$core$Result$andThen,
-							A3(
-								_user$project$Circuit$connect,
-								connection3,
-								A2(_user$project$Circuit$portReference, circuit1, output2),
-								A2(_user$project$Circuit$portReference, gate4, input1)),
+							A2(
+								_user$project$Circuit$addPort,
+								gate3,
+								A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
 							A2(
 								_elm_lang$core$Result$andThen,
-								A2(
-									_user$project$Circuit$addPort,
-									gate4,
-									A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
+								_user$project$Circuit$add(gate3),
 								A2(
 									_elm_lang$core$Result$andThen,
 									A2(
 										_user$project$Circuit$addPort,
-										gate4,
-										A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
+										gate2,
+										A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
 									A2(
 										_elm_lang$core$Result$andThen,
 										A2(
 											_user$project$Circuit$addPort,
-											gate4,
+											gate2,
 											A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
 										A2(
 											_elm_lang$core$Result$andThen,
-											_user$project$Circuit$add(gate4),
+											_user$project$Circuit$add(gate2),
 											A2(
 												_elm_lang$core$Result$andThen,
 												A2(
-													_user$project$Circuit$group,
-													circuit1,
-													{
-														ctor: '::',
-														_0: gate1,
-														_1: {
-															ctor: '::',
-															_0: gate2,
-															_1: {
-																ctor: '::',
-																_0: gate3,
-																_1: {ctor: '[]'}
-															}
-														}
-													}),
+													_user$project$Circuit$addPort,
+													gate1,
+													A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
 												A2(
 													_elm_lang$core$Result$andThen,
-													A3(
-														_user$project$Circuit$connect,
-														connection2,
-														A2(_user$project$Circuit$portReference, gate1, output1),
-														A2(_user$project$Circuit$portReference, gate3, input1)),
+													A2(
+														_user$project$Circuit$addPort,
+														gate1,
+														A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
 													A2(
 														_elm_lang$core$Result$andThen,
-														A3(
-															_user$project$Circuit$connect,
-															connection1,
-															A2(_user$project$Circuit$portReference, gate1, output1),
-															A2(_user$project$Circuit$portReference, gate2, input1)),
+														A2(
+															_user$project$Circuit$addPort,
+															gate1,
+															A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
 														A2(
 															_elm_lang$core$Result$andThen,
-															A2(
-																_user$project$Circuit$addPort,
-																gate3,
-																A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
-															A2(
-																_elm_lang$core$Result$andThen,
-																A2(
-																	_user$project$Circuit$addPort,
-																	gate3,
-																	A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
-																A2(
-																	_elm_lang$core$Result$andThen,
-																	A2(
-																		_user$project$Circuit$addPort,
-																		gate3,
-																		A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
-																	A2(
-																		_elm_lang$core$Result$andThen,
-																		_user$project$Circuit$add(gate3),
-																		A2(
-																			_elm_lang$core$Result$andThen,
-																			A2(
-																				_user$project$Circuit$addPort,
-																				gate2,
-																				A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
-																			A2(
-																				_elm_lang$core$Result$andThen,
-																				A2(
-																					_user$project$Circuit$addPort,
-																					gate2,
-																					A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
-																				A2(
-																					_elm_lang$core$Result$andThen,
-																					_user$project$Circuit$add(gate2),
-																					A2(
-																						_elm_lang$core$Result$andThen,
-																						A2(
-																							_user$project$Circuit$addPort,
-																							gate1,
-																							A2(_user$project$Circuit$port_, output1, _user$project$Circuit$Output)),
-																						A2(
-																							_elm_lang$core$Result$andThen,
-																							A2(
-																								_user$project$Circuit$addPort,
-																								gate1,
-																								A2(_user$project$Circuit$port_, input2, _user$project$Circuit$Input)),
-																							A2(
-																								_elm_lang$core$Result$andThen,
-																								A2(
-																									_user$project$Circuit$addPort,
-																									gate1,
-																									A2(_user$project$Circuit$port_, input1, _user$project$Circuit$Input)),
-																								A2(
-																									_elm_lang$core$Result$andThen,
-																									_user$project$Circuit$add(gate1),
-																									_user$project$Circuit$empty))))))))))))))))))))))));
+															_user$project$Circuit$add(gate1),
+															_user$project$Circuit$empty))))))))))))));
 	if (_p66.ctor === 'Ok') {
 		return _p66._0;
 	} else {
@@ -11684,7 +11616,7 @@ var _user$project$Circuit$example = function () {
 			'Circuit',
 			{
 				start: {line: 522, column: 9},
-				end: {line: 575, column: 36}
+				end: {line: 574, column: 36}
 			},
 			_p66)(_p66._0);
 	}
